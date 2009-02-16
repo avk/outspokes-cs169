@@ -1,11 +1,12 @@
-#include <stdio.h> 
+#include <stdio.h>
 
-int main(void) 
-{ 
+int main(void)
+{
 
   printf("Arthur Klepchukov\n");
   printf("James Duncan\n");
   printf("Andrew Bernstein\n");
-	printf("Hannah HU\n");
+        printf("Hannah HU\n");
+  printf("Maxwell (Alex) Pretzlav\n");
 
 }
