@@ -7,5 +7,6 @@ int main(void)
   printf("James Duncan\n");
   printf("Andrew Bernstein\n");
 	printf("Hannah HU\n");
+	printf("Sanja Curgus\n");
 
 }
