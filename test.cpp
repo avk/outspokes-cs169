@@ -4,5 +4,6 @@ int main(void)
 { 
 
   printf("Arthur Klepchukov\n");
+  printf("James Duncan\n");
 
 }
