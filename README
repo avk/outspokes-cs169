@@ -1,0 +1,9 @@
+Setup:
+
+  Download and install Git (http://git-scm.com/download)
+  git config --global user.email example@berkeley.edu
+  git checkout git@github.com:avk/feedback.git
+
+Assignment 1:
+  Add your name to the end of test.cpp
+  Compile and execute test.cpp to make sure it prints everyone's names
