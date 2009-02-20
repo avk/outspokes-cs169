@@ -20,6 +20,14 @@ class IdeasControllerTest < ActionController::TestCase
     assert_redirected_to idea_path(assigns(:idea))
   end
 
+  test "should go back to new when trying to create an invalid idea" do
+    assert_no_difference('Idea.count') do
+      post :create, :idea => { }
+    end
+    
+    assert_template "new"
+  end
+
   test "should show idea" do
     get :show, :id => ideas(:one).id
     assert_response :success
@@ -33,6 +41,11 @@ class IdeasControllerTest < ActionController::TestCase
   test "should update idea" do
     put :update, :id => ideas(:one).id, :idea => { }
     assert_redirected_to idea_path(assigns(:idea))
+  end
+
+  test "should go back to edit if updating an idea with invalid parameters" do
+    put :update, :id => ideas(:one).id, :idea => { :name => nil }
+    assert_template "edit"
   end
 
   test "should destroy idea" do
