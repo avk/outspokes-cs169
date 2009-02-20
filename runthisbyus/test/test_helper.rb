@@ -35,4 +35,17 @@ class Test::Unit::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def valid_options_for_idea
+    { :name => 'quire', :body => 'quire@example.com' }
+  end
+  
+  def create_idea(options = {})
+    Idea.new(valid_options_for_idea.merge(options))
+  end
+  
+  def create_idea!(options)
+    create_idea(options).save
+  end
+
 end
