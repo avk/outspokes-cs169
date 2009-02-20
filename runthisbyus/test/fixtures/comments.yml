@@ -2,10 +2,12 @@
 
 one:
   id: 1
-  name: MyString
+  author: MyString
   body: MyText
+  idea_id: 1
 
 two:
   id: 2
-  name: MyString
+  author: MyString
   body: MyText
+  idea_id: 1

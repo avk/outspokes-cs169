@@ -14,6 +14,8 @@ class IdeasController < ApplicationController
   # GET /ideas/1.xml
   def show
     @idea = Idea.find(params[:id])
+    @comment = session[:new_comment] || Comment.new
+    session[:new_comment] = nil
 
     respond_to do |format|
       format.html # show.html.erb

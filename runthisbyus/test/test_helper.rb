@@ -36,16 +36,36 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+
+# Ideas
+
   def valid_options_for_idea
     { :name => 'quire', :body => 'quire@example.com' }
   end
   
+  def invalid_options_for_idea
+    valid = valid_options_for_idea
+    valid.shift # makes valid invalid
+    valid # now invalid
+  end
+
   def create_idea(options = {})
     Idea.new(valid_options_for_idea.merge(options))
   end
+    
+  def invalid_idea(options = {})
+    Idea.new(invalid_options_for_idea.merge(options))
+  end
   
-  def create_idea!(options)
-    create_idea(options).save
+
+# Comments
+
+  def valid_options_for_comment
+    { :author => 'quire', :body => 'quire@example.com', :idea_id => Idea.find(:first).id }
+  end
+  
+  def create_comment(options = {})
+    Comment.new(valid_options_for_comment.merge(options))
   end
 
 end

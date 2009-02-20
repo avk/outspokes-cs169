@@ -21,11 +21,13 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should go back to new when trying to create an invalid idea" do
-    assert_no_difference('Idea.count') do
-      post :create, :idea => { }
-    end
+    unless valid_options_for_idea.empty?
+      assert_no_difference('Idea.count') do
+        post :create, :idea => invalid_options_for_idea
+      end
     
-    assert_template "new"
+      assert_template "new"
+    end
   end
 
   test "should show idea" do
@@ -44,8 +46,10 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should go back to edit if updating an idea with invalid parameters" do
-    put :update, :id => ideas(:one).id, :idea => { :name => nil }
-    assert_template "edit"
+    unless valid_options_for_idea.keys.empty?
+      put :update, :id => ideas(:one).id, :idea => { valid_options_for_idea.keys.first => nil }
+      assert_template "edit"
+    end
   end
 
   test "should destroy idea" do
