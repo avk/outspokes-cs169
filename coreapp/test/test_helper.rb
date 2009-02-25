@@ -35,4 +35,19 @@ class Test::Unit::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def valid_options_for_site
+    { :url => "http://www.runthisby.us/" }
+  end
+  
+  def invalid_options_for_site
+    valid = valid_options_for_site
+    valid.shift # makes valid invalid
+    valid # now invalid
+  end
+  
+  def create_site(options = {})
+    Site.create(valid_options_for_site.merge(options))
+  end
+
 end
