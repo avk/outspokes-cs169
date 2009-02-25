@@ -35,4 +35,15 @@ class Test::Unit::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  # Commenters
+
+  def valid_options_for_commenters
+	{ :email => "abc@abc.com" }
+  end
+
+  def create_commenter(options = {})
+    Commenter.create(valid_options_for_commenters.merge(options))
+  end
+
 end

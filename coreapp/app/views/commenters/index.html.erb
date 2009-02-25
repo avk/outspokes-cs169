@@ -1,0 +1,20 @@
+<h1>Listing commenters</h1>
+
+<table>
+  <tr>
+    <th>Email</th>
+  </tr>
+
+<% for commenter in @commenters %>
+  <tr>
+    <td><%=h commenter.email %></td>
+    <td><%= link_to 'Show', commenter %></td>
+    <td><%= link_to 'Edit', edit_commenter_path(commenter) %></td>
+    <td><%= link_to 'Destroy', commenter, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New commenter', new_commenter_path %>
