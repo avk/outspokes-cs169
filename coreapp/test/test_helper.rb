@@ -36,18 +36,32 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  include AuthenticatedTestHelper
+
+  # Sites
+
   def valid_options_for_site
     { :url => "http://www.runthisby.us/" }
   end
-  
+
   def invalid_options_for_site
     valid = valid_options_for_site
     valid.shift # makes valid invalid
     valid # now invalid
   end
-  
+
   def create_site(options = {})
     Site.create(valid_options_for_site.merge(options))
+  end
+
+  # Commenters
+
+  def valid_options_for_commenters
+	{ :email => "abc@abc.com" }
+  end
+
+  def create_commenter(options = {})
+    Commenter.create(valid_options_for_commenters.merge(options))
   end
 
 end
