@@ -34,5 +34,14 @@ class Test::Unit::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  # Feedback
+  
+  def valid_options_for_feedback
+    {:content=>'Hello, this is a feedback!', :page_id=>Page.find(:first).id, 
+      :commenter_id=>Commenter.find(:first).id}
+  end
+  
+  def create_feedback(options={})
+    Feedback.new(valid_options_for_feedback.merge(options))
+  end
 end
