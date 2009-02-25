@@ -39,56 +39,56 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   def test_should_reset_password
-    accounts(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal accounts(:quentin), Account.authenticate('quentin@example.com', 'new password')
+    commenters(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
+    assert_equal commenters(:quentin), Account.authenticate('quentin@example.com', 'new password')
   end
 
   def test_should_not_rehash_password
-    accounts(:quentin).update_attributes(:email => 'quentin2@example.com')
-    assert_equal accounts(:quentin), Account.authenticate('quentin2@example.com', 'monkey')
+    commenters(:quentin).update_attributes(:email => 'quentin2@example.com')
+    assert_equal commenters(:quentin), Account.authenticate('quentin2@example.com', 'monkey')
   end
 
   def test_should_authenticate_account
-    assert_equal accounts(:quentin), Account.authenticate('quentin@example.com', 'monkey')
+    assert_equal commenters(:quentin), Account.authenticate('quentin@example.com', 'monkey')
   end
 
   def test_should_set_remember_token
-    accounts(:quentin).remember_me
-    assert_not_nil accounts(:quentin).remember_token
-    assert_not_nil accounts(:quentin).remember_token_expires_at
+    commenters(:quentin).remember_me
+    assert_not_nil commenters(:quentin).remember_token
+    assert_not_nil commenters(:quentin).remember_token_expires_at
   end
 
   def test_should_unset_remember_token
-    accounts(:quentin).remember_me
-    assert_not_nil accounts(:quentin).remember_token
-    accounts(:quentin).forget_me
-    assert_nil accounts(:quentin).remember_token
+    commenters(:quentin).remember_me
+    assert_not_nil commenters(:quentin).remember_token
+    commenters(:quentin).forget_me
+    assert_nil commenters(:quentin).remember_token
   end
 
   def test_should_remember_me_for_one_week
     before = 1.week.from_now.utc
-    accounts(:quentin).remember_me_for 1.week
+    commenters(:quentin).remember_me_for 1.week
     after = 1.week.from_now.utc
-    assert_not_nil accounts(:quentin).remember_token
-    assert_not_nil accounts(:quentin).remember_token_expires_at
-    assert accounts(:quentin).remember_token_expires_at.between?(before, after)
+    assert_not_nil commenters(:quentin).remember_token
+    assert_not_nil commenters(:quentin).remember_token_expires_at
+    assert commenters(:quentin).remember_token_expires_at.between?(before, after)
   end
 
   def test_should_remember_me_until_one_week
     time = 1.week.from_now.utc
-    accounts(:quentin).remember_me_until time
-    assert_not_nil accounts(:quentin).remember_token
-    assert_not_nil accounts(:quentin).remember_token_expires_at
-    assert_equal accounts(:quentin).remember_token_expires_at, time
+    commenters(:quentin).remember_me_until time
+    assert_not_nil commenters(:quentin).remember_token
+    assert_not_nil commenters(:quentin).remember_token_expires_at
+    assert_equal commenters(:quentin).remember_token_expires_at, time
   end
 
   def test_should_remember_me_default_two_weeks
     before = 2.weeks.from_now.utc
-    accounts(:quentin).remember_me
+    commenters(:quentin).remember_me
     after = 2.weeks.from_now.utc
-    assert_not_nil accounts(:quentin).remember_token
-    assert_not_nil accounts(:quentin).remember_token_expires_at
-    assert accounts(:quentin).remember_token_expires_at.between?(before, after)
+    assert_not_nil commenters(:quentin).remember_token
+    assert_not_nil commenters(:quentin).remember_token_expires_at
+    assert commenters(:quentin).remember_token_expires_at.between?(before, after)
   end
 
 protected

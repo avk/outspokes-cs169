@@ -9,6 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090225203645) do
+ActiveRecord::Schema.define(:version => 20090225212717) do
+
+  create_table "commenters", :force => true do |t|
+    t.string   "email",                     :limit => 100
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name",                      :limit => 100, :default => ""
+    t.string   "crypted_password",          :limit => 40
+    t.string   "salt",                      :limit => 40
+    t.string   "remember_token",            :limit => 40
+    t.datetime "remember_token_expires_at"
+    t.string   "type"
+  end
+
+  add_index "commenters", ["email"], :name => "index_commenters_on_email", :unique => true
 
 end
