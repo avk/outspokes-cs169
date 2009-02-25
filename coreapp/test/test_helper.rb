@@ -36,6 +36,8 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  include AuthenticatedTestHelper
+
   # Commenters
 
   def valid_options_for_commenters
