@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>app/controllers/application.rb - C0 code coverage information</title>
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>app/helpers/sessions_helper.rb - C0 code coverage information</title>
     <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
     <style type='text/css'>span.cross-ref-title {
  font-size: 140%;
@@ -569,11 +569,11 @@ span.run100 {
       <td class='heading'>Code coverage</td>
       </tr>
     </thead>
-  <tbody><tr class='light'><td><a href='app-controllers-application_rb.html'>app/controllers/application.rb</a>
+  <tbody><tr class='light'><td><a href='app-helpers-sessions_helper_rb.html'>app/helpers/sessions_helper.rb</a>
         </td>
-      <td class='lines_total'><tt>15</tt>
+      <td class='lines_total'><tt>2</tt>
         </td>
-      <td class='lines_code'><tt>4</tt>
+      <td class='lines_code'><tt>2</tt>
         </td>
       <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -598,21 +598,8 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="inferred1"><a name="line1"></a> 1 # Filters added to this controller apply to all controllers in the application.
-</span><span class="inferred0"><a name="line2"></a> 2 # Likewise, all the methods added will be available for all controllers.
-</span><span class="inferred1"><a name="line3"></a> 3 
-</span><span class="marked0"><a name="line4"></a> 4 class ApplicationController &lt; ActionController::Base
-</span><span class="marked1"><a name="line5"></a> 5   helper :all # include all helpers, all the time
-</span><span class="inferred0"><a name="line6"></a> 6 
-</span><span class="inferred1"><a name="line7"></a> 7   # See ActionController::RequestForgeryProtection for details
-</span><span class="inferred0"><a name="line8"></a> 8   # Uncomment the :secret if you're not using the cookie session store
-</span><span class="marked1"><a name="line9"></a> 9   protect_from_forgery # :secret =&gt; '8bebb5a04cdeb49f59ca9bc51a08d827'
-</span><span class="inferred0"><a name="line10"></a>10   
-</span><span class="inferred1"><a name="line11"></a>11   # See ActionController::Base for details 
-</span><span class="inferred0"><a name="line12"></a>12   # Uncomment this to filter the contents of submitted sensitive data parameters
-</span><span class="inferred1"><a name="line13"></a>13   # from your application log (in this case, all fields with names like &quot;password&quot;). 
-</span><span class="inferred0"><a name="line14"></a>14   # filter_parameter_logging :password
-</span><span class="inferred1"><a name="line15"></a>15 end
+<pre><span class="marked1"><a name="line1"></a>1 module SessionsHelper
+</span><span class="inferred0"><a name="line2"></a>2 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>app/controllers/application.rb - C0 code coverage information</title>
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>app/controllers/accounts_controller.rb - C0 code coverage information</title>
     <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
     <style type='text/css'>span.cross-ref-title {
  font-size: 140%;
@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Wed Feb 25 15:37:56 -0800 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Wed Feb 25 15:37:55 -0800 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -569,26 +569,26 @@ span.run100 {
       <td class='heading'>Code coverage</td>
       </tr>
     </thead>
-  <tbody><tr class='light'><td><a href='app-controllers-application_rb.html'>app/controllers/application.rb</a>
+  <tbody><tr class='light'><td><a href='app-controllers-accounts_controller_rb.html'>app/controllers/accounts_controller.rb</a>
         </td>
-      <td class='lines_total'><tt>15</tt>
+      <td class='lines_total'><tt>28</tt>
         </td>
-      <td class='lines_code'><tt>4</tt>
+      <td class='lines_code'><tt>19</tt>
         </td>
-      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_total'>100.0%</tt>
+      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_total'>92.9%</tt>
               &nbsp;</td>
-            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='100'/>
-                  <td class='uncovered' width='0'/>
+            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='93'/>
+                  <td class='uncovered' width='7'/>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
         </td>
-      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_code'>100.0%</tt>
+      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_code'>89.5%</tt>
               &nbsp;</td>
-            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='100'/>
-                  <td class='uncovered' width='0'/>
+            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='89'/>
+                  <td class='uncovered' width='11'/>
                   </tr>
                 </table>
               </td>
@@ -598,21 +598,34 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="inferred1"><a name="line1"></a> 1 # Filters added to this controller apply to all controllers in the application.
-</span><span class="inferred0"><a name="line2"></a> 2 # Likewise, all the methods added will be available for all controllers.
-</span><span class="inferred1"><a name="line3"></a> 3 
-</span><span class="marked0"><a name="line4"></a> 4 class ApplicationController &lt; ActionController::Base
-</span><span class="marked1"><a name="line5"></a> 5   helper :all # include all helpers, all the time
-</span><span class="inferred0"><a name="line6"></a> 6 
-</span><span class="inferred1"><a name="line7"></a> 7   # See ActionController::RequestForgeryProtection for details
-</span><span class="inferred0"><a name="line8"></a> 8   # Uncomment the :secret if you're not using the cookie session store
-</span><span class="marked1"><a name="line9"></a> 9   protect_from_forgery # :secret =&gt; '8bebb5a04cdeb49f59ca9bc51a08d827'
-</span><span class="inferred0"><a name="line10"></a>10   
-</span><span class="inferred1"><a name="line11"></a>11   # See ActionController::Base for details 
-</span><span class="inferred0"><a name="line12"></a>12   # Uncomment this to filter the contents of submitted sensitive data parameters
-</span><span class="inferred1"><a name="line13"></a>13   # from your application log (in this case, all fields with names like &quot;password&quot;). 
-</span><span class="inferred0"><a name="line14"></a>14   # filter_parameter_logging :password
-</span><span class="inferred1"><a name="line15"></a>15 end
+<pre><span class="marked1"><a name="line1"></a> 1 class AccountsController &lt; ApplicationController
+</span><span class="inferred0"><a name="line2"></a> 2   # Be sure to include AuthenticationSystem in Application Controller instead
+</span><span class="marked1"><a name="line3"></a> 3   include AuthenticatedSystem
+</span><span class="inferred0"><a name="line4"></a> 4   
+</span><span class="inferred1"><a name="line5"></a> 5 
+</span><span class="inferred0"><a name="line6"></a> 6   # render new.rhtml
+</span><span class="marked1"><a name="line7"></a> 7   def new
+</span><span class="uncovered0"><a name="line8"></a> 8     @account = Account.new
+</span><span class="uncovered1"><a name="line9"></a> 9   end
+</span><span class="inferred0"><a name="line10"></a>10  
+</span><span class="marked1"><a name="line11"></a>11   def create
+</span><span class="marked0"><a name="line12"></a>12     logout_keeping_session!
+</span><span class="marked1"><a name="line13"></a>13     @account = Account.new(params[:account])
+</span><span class="marked0"><a name="line14"></a>14     success = @account &amp;&amp; @account.save
+</span><span class="marked1"><a name="line15"></a>15     if success &amp;&amp; @account.errors.empty?
+</span><span class="inferred0"><a name="line16"></a>16             # Protects against session fixation attacks, causes request forgery
+</span><span class="inferred1"><a name="line17"></a>17       # protection if visitor resubmits an earlier form using back
+</span><span class="inferred0"><a name="line18"></a>18       # button. Uncomment if you understand the tradeoffs.
+</span><span class="inferred1"><a name="line19"></a>19       # reset session
+</span><span class="marked0"><a name="line20"></a>20       self.current_account = @account # !! now logged in
+</span><span class="marked1"><a name="line21"></a>21       redirect_back_or_default('/')
+</span><span class="marked0"><a name="line22"></a>22       flash[:notice] = &quot;Thanks for signing up!  We're sending you an email with your activation code.&quot;
+</span><span class="inferred1"><a name="line23"></a>23     else
+</span><span class="marked0"><a name="line24"></a>24       flash[:error]  = &quot;We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above).&quot;
+</span><span class="marked1"><a name="line25"></a>25       render :action =&gt; 'new'
+</span><span class="inferred0"><a name="line26"></a>26     end
+</span><span class="inferred1"><a name="line27"></a>27   end
+</span><span class="inferred0"><a name="line28"></a>28 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

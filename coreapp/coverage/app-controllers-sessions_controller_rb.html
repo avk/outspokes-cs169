@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>app/controllers/application.rb - C0 code coverage information</title>
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>app/controllers/sessions_controller.rb - C0 code coverage information</title>
     <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
     <style type='text/css'>span.cross-ref-title {
  font-size: 140%;
@@ -569,11 +569,11 @@ span.run100 {
       <td class='heading'>Code coverage</td>
       </tr>
     </thead>
-  <tbody><tr class='light'><td><a href='app-controllers-application_rb.html'>app/controllers/application.rb</a>
+  <tbody><tr class='light'><td><a href='app-controllers-sessions_controller_rb.html'>app/controllers/sessions_controller.rb</a>
         </td>
-      <td class='lines_total'><tt>15</tt>
+      <td class='lines_total'><tt>43</tt>
         </td>
-      <td class='lines_code'><tt>4</tt>
+      <td class='lines_code'><tt>31</tt>
         </td>
       <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -598,21 +598,49 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="inferred1"><a name="line1"></a> 1 # Filters added to this controller apply to all controllers in the application.
-</span><span class="inferred0"><a name="line2"></a> 2 # Likewise, all the methods added will be available for all controllers.
-</span><span class="inferred1"><a name="line3"></a> 3 
-</span><span class="marked0"><a name="line4"></a> 4 class ApplicationController &lt; ActionController::Base
-</span><span class="marked1"><a name="line5"></a> 5   helper :all # include all helpers, all the time
-</span><span class="inferred0"><a name="line6"></a> 6 
-</span><span class="inferred1"><a name="line7"></a> 7   # See ActionController::RequestForgeryProtection for details
-</span><span class="inferred0"><a name="line8"></a> 8   # Uncomment the :secret if you're not using the cookie session store
-</span><span class="marked1"><a name="line9"></a> 9   protect_from_forgery # :secret =&gt; '8bebb5a04cdeb49f59ca9bc51a08d827'
-</span><span class="inferred0"><a name="line10"></a>10   
-</span><span class="inferred1"><a name="line11"></a>11   # See ActionController::Base for details 
-</span><span class="inferred0"><a name="line12"></a>12   # Uncomment this to filter the contents of submitted sensitive data parameters
-</span><span class="inferred1"><a name="line13"></a>13   # from your application log (in this case, all fields with names like &quot;password&quot;). 
-</span><span class="inferred0"><a name="line14"></a>14   # filter_parameter_logging :password
-</span><span class="inferred1"><a name="line15"></a>15 end
+<pre><span class="inferred0"><a name="line1"></a> 1 # This controller handles the login/logout function of the site.  
+</span><span class="marked1"><a name="line2"></a> 2 class SessionsController &lt; ApplicationController
+</span><span class="inferred0"><a name="line3"></a> 3   # Be sure to include AuthenticationSystem in Application Controller instead
+</span><span class="marked1"><a name="line4"></a> 4   include AuthenticatedSystem
+</span><span class="inferred0"><a name="line5"></a> 5 
+</span><span class="inferred1"><a name="line6"></a> 6   # render new.rhtml
+</span><span class="marked0"><a name="line7"></a> 7   def new
+</span><span class="marked1"><a name="line8"></a> 8   end
+</span><span class="inferred0"><a name="line9"></a> 9 
+</span><span class="marked1"><a name="line10"></a>10   def create
+</span><span class="marked0"><a name="line11"></a>11     logout_keeping_session!
+</span><span class="marked1"><a name="line12"></a>12     account = Account.authenticate(params[:email], params[:password])
+</span><span class="marked0"><a name="line13"></a>13     if account
+</span><span class="inferred1"><a name="line14"></a>14       # Protects against session fixation attacks, causes request forgery
+</span><span class="inferred0"><a name="line15"></a>15       # protection if user resubmits an earlier form using back
+</span><span class="inferred1"><a name="line16"></a>16       # button. Uncomment if you understand the tradeoffs.
+</span><span class="inferred0"><a name="line17"></a>17       # reset_session
+</span><span class="marked1"><a name="line18"></a>18       self.current_account = account
+</span><span class="marked0"><a name="line19"></a>19       new_cookie_flag = (params[:remember_me] == &quot;1&quot;)
+</span><span class="marked1"><a name="line20"></a>20       handle_remember_cookie! new_cookie_flag
+</span><span class="marked0"><a name="line21"></a>21       redirect_back_or_default('/')
+</span><span class="marked1"><a name="line22"></a>22       flash[:notice] = &quot;Logged in successfully&quot;
+</span><span class="inferred0"><a name="line23"></a>23     else
+</span><span class="marked1"><a name="line24"></a>24       note_failed_signin
+</span><span class="marked0"><a name="line25"></a>25       @email       = params[:email]
+</span><span class="marked1"><a name="line26"></a>26       @remember_me = params[:remember_me]
+</span><span class="marked0"><a name="line27"></a>27       render :action =&gt; 'new'
+</span><span class="inferred1"><a name="line28"></a>28     end
+</span><span class="inferred0"><a name="line29"></a>29   end
+</span><span class="inferred1"><a name="line30"></a>30 
+</span><span class="marked0"><a name="line31"></a>31   def destroy
+</span><span class="marked1"><a name="line32"></a>32     logout_killing_session!
+</span><span class="marked0"><a name="line33"></a>33     flash[:notice] = &quot;You have been logged out.&quot;
+</span><span class="marked1"><a name="line34"></a>34     redirect_back_or_default('/')
+</span><span class="inferred0"><a name="line35"></a>35   end
+</span><span class="inferred1"><a name="line36"></a>36 
+</span><span class="marked0"><a name="line37"></a>37 protected
+</span><span class="inferred1"><a name="line38"></a>38   # Track failed login attempts
+</span><span class="marked0"><a name="line39"></a>39   def note_failed_signin
+</span><span class="marked1"><a name="line40"></a>40     flash[:error] = &quot;Couldn't log you in as '#{params[:email]}'&quot;
+</span><span class="marked0"><a name="line41"></a>41     logger.warn &quot;Failed login for '#{params[:email]}' from #{request.remote_ip} at #{Time.now.utc}&quot;
+</span><span class="inferred1"><a name="line42"></a>42   end
+</span><span class="inferred0"><a name="line43"></a>43 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
