@@ -62,4 +62,25 @@ class SiteTest < ActiveSupport::TestCase
     end
   end
 
+  test 'should always return pages they order they were created' do
+    site = create_site
+    %w(about contact_us FAQ).each do |page|
+      site.pages << Page.new(:url => site.url + page)
+    end
+    ordered_pages = Page.find_by_sql "SELECT * FROM pages p WHERE p.site_id = #{site.id} ORDER BY created_at ASC"
+    assert site.pages == ordered_pages
+  end
+  
+  test 'should require at least one page' do
+    url = "http://yahoo.com/"
+    site = create_site(:url => url)
+    assert site.pages.size >= 1
+    assert site.pages[0].url == url
+  end
+
+  test 'should respond to home page' do
+    url = "http://yahoo.com/"
+    site = create_site(:url => url)
+    assert site.pages[0] == site.home_page
+  end
 end
