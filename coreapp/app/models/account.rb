@@ -6,6 +6,7 @@ class Account < Commenter
   include Authentication::ByCookieToken
 
   has_many :pages
+  has_many :sites
 
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
   validates_length_of       :name,     :maximum => 100

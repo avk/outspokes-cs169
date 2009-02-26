@@ -1,7 +1,13 @@
 class HomeController < ApplicationController
 
-  def index
 
+  def index
+    @sites = Site.find(:all)
+    respond_to do |format|
+      format.html
+    end
   end
 
+private
+  
 end

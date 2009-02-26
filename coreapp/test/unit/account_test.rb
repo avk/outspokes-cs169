@@ -91,10 +91,4 @@ class AccountTest < ActiveSupport::TestCase
     assert commenters(:quentin).remember_token_expires_at.between?(before, after)
   end
 
-protected
-  def create_account(options = {})
-    record = Account.new({  :email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }.merge(options))
-    record.save
-    record
-  end
 end

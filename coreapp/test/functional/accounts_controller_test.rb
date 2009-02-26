@@ -5,9 +5,11 @@ require 'accounts_controller'
 class AccountsController; def rescue_action(e) raise e end; end
 
 class AccountsControllerTest < ActionController::TestCase
-  # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead
-  # Then, you can remove it from this and the units test.
-  include AuthenticatedTestHelper
+
+  def test_should_render_signup_form
+    get :new
+    assert_response :success
+  end
 
   def test_should_allow_signup
     assert_difference 'Account.count' do
