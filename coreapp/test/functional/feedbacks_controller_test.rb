@@ -6,11 +6,11 @@ class FeedbacksControllerTest < ActionController::TestCase
   #   assert_response :success
   #   assert_not_nil assigns(:feedbacks)
   # end
-  # 
-  # test "should get new" do
-  #   get :new
-  #   assert_response :success
-  # end
+  
+  test "should get new" do
+    get :new
+    assert_response :success
+  end
 
   test "should create feedback" do
     assert_difference('Feedback.count') do
@@ -18,6 +18,16 @@ class FeedbacksControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to feedback_path(assigns(:feedback))
+  end
+
+  test "should go back to new when trying to create an invalid feedback" do
+    unless valid_options_for_feedback.empty?
+      assert_no_difference('Feedback.count') do
+        post :create, :feedback => invalid_options_for_feedback
+      end
+      
+      assert_template "new"
+    end
   end
 
   # test "should show feedback" do

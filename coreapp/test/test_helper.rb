@@ -72,6 +72,12 @@ class Test::Unit::TestCase
     }
   end
   
+  def invalid_options_for_feedback
+    valid = valid_options_for_feedback
+    valid.shift # makes valid invalid
+    valid # now invalid
+  end
+  
   def create_feedback(options={})
     Feedback.new(valid_options_for_feedback.merge(options))
   end
