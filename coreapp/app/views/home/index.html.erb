@@ -1,11 +1,3 @@
-OMG WELCOME TO RUNTHISBY.US
-<div style = "display: none">
-<BR><BR>
-AREN'T WE AWESOM?
-<BR><BR>
-OMG BEST SITE EVAR <a href = "http://www.cs.berkeley.edu/~bh/">OMG HERE</a>
-<br><br>
-<i>I'm from the future! Don't click on the link!</i>
-<BR><BR>
-OMG WTF STFU ASSHOL
-</div>
+<h2>Hello <% if logged_in? %><%= current_account.email %><% end %></h2>
+
+<%= render :partial => '/accounts/account_bar' %>
