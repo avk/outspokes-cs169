@@ -30,4 +30,14 @@ class CommenterTest < ActiveSupport::TestCase
     end
   end
 
+  test "cannot give non-unique email" do
+	assert_difference 'Commenter.count' do
+      commenter = create_commenter(:email => 'abc@abc.com')
+    end  
+  	assert_no_difference 'Commenter.count' do
+       commenter2 = create_commenter(:email => 'abc@abc.com')
+       assert commenter2.errors.on(:email)
+    end
+  end
+
 end
