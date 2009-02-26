@@ -41,7 +41,8 @@ class Test::Unit::TestCase
   # Sites
 
   def valid_options_for_site
-    { :url => "http://www.runthisby.us/" }
+    valid_acct = commenters(:quentin)
+    { :url => "http://www.runthisby.us/", :account => valid_acct }
   end
 
   def invalid_options_for_site
@@ -62,6 +63,24 @@ class Test::Unit::TestCase
 
   def create_commenter(options = {})
     Commenter.create(valid_options_for_commenters.merge(options))
+  end
+
+  # Accounts
+  
+  def valid_options_for_account
+    { :email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }
+  end
+  
+  def invalid_options_for_account
+    valid = valid_options_for_account
+    valid.shift # makes valid invalid
+    valid # now valid
+  end
+  
+  def create_account(options = {})
+    record = Account.new(valid_options_for_account.merge(options))
+    record.save
+    record
   end
   
   # Feedback
