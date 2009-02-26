@@ -9,6 +9,7 @@ class Commenter < ActiveRecord::Base
 
   validates_presence_of :email, :allow_blank => false
   validates_format_of :email, :with => @@email_regex  
+  validates_uniqueness_of :email
 
 
 
