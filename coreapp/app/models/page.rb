@@ -5,7 +5,8 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
-  validates_uniqueness_of :url, :scope => :account_id
+  validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
+  validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
   
   validate :has_account_xor_site
 
