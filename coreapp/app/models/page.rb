@@ -5,6 +5,8 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
+  validates_uniqueness_of :url, :scope => :account_id
+  
   validate :has_account_xor_site
 
 protected
