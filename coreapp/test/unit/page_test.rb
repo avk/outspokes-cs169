@@ -9,9 +9,16 @@ class PageTest < ActiveSupport::TestCase
     end
   end
   
-  test 'should also create page with Site instead of Account' do
+  test 'should also create page with site' do
     assert_difference 'Page.count' do
       page = Page.create(valid_options_for_page_site)
+      assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
+    end
+  end
+  
+  test 'should also create page with an account' do
+    assert_difference 'Page.count' do
+      page = Page.create(valid_options_for_page_account)
       assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
     end
   end

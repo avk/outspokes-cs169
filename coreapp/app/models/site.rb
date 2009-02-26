@@ -1,6 +1,5 @@
 class Site < ActiveRecord::Base
   has_many :pages
-
   belongs_to :account
 
   validates_presence_of :url

@@ -7,6 +7,7 @@ class Page < ActiveRecord::Base
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
   validate :has_account_xor_site
 
+protected
   # A page can (and must!) have a site or an account, but not both
   def has_account_xor_site
     if not (account_id.blank? ^ site_id.blank?)
