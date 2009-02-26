@@ -1,0 +1,18 @@
+<p>
+  <b>Account:</b>
+  <%=h @page.account_id %>
+</p>
+
+<p>
+  <b>Site:</b>
+  <%=h @page.site_id %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @page.url %>
+</p>
+
+
+<%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Back', pages_path %>

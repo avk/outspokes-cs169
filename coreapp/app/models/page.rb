@@ -1,0 +1,17 @@
+class Page < ActiveRecord::Base
+#  has_many :invitations
+  belongs_to :site
+  belongs_to :account
+  
+  validates_presence_of :url
+  validates_format_of :url, :with => URI.regexp(['http', 'https'])
+  validate :has_account_xor_site
+
+  # A page can (and must!) have a site or an account, but not both
+  def has_account_xor_site
+    if not (account_id.blank? ^ site_id.blank?)
+      errors.add_to_base 'Either an account or a site is required, but not both'
+    end
+  end
+  
+end

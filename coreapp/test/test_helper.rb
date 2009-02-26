@@ -53,6 +53,26 @@ class Test::Unit::TestCase
   def create_site(options = {})
     Site.create(valid_options_for_site.merge(options))
   end
+  
+  # Pages
+  
+  def valid_options_for_page_account 
+    { :account_id => Account.find(:first).id, :url => 'http://runthisby.us' }
+  end
+  
+  def valid_options_for_page_site
+    { :site_id => Site.find(:first).id, :url => 'http://runthisby.us' }
+  end
+  
+  def invalid_options_for_page
+    valid = valid_options_for_page_account
+    valid.shift
+    valid
+  end
+  
+  def create_page(options = {})
+    Page.create(valid_options_for_page_account.merge(options))
+  end
 
   # Commenters
 
