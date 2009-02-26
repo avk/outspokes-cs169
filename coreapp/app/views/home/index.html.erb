@@ -1,3 +1,20 @@
 <h2>Hello <% if logged_in? %><%= current_account.email %><% end %></h2>
 
 <%= render :partial => '/accounts/account_bar' %>
+
+<table>
+	<tr>
+		<th>Site name</th>
+		<th>Owner</th>
+	</tr>
+<% for site in @sites %>
+	<tr>
+		<td><%= link_to site.url, site.url %></td>
+		<td><%= site.account.email %></td>
+	</tr>
+<% end %>
+</table>
+
+<% if logged_in? %> 
+	<%= link_to "New site", new_site_path %>
+<% end %>
