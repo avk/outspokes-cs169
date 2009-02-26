@@ -63,5 +63,22 @@ class Test::Unit::TestCase
   def create_commenter(options = {})
     Commenter.create(valid_options_for_commenters.merge(options))
   end
-
+  
+  # Feedback
+  
+  def valid_options_for_feedback
+    {:content=>'Hello, this is a feedback!'#, :page_id=>Page.find(:first).id, 
+      #:commenter_id=>Commenter.find(:first).id
+    }
+  end
+  
+  def invalid_options_for_feedback
+    valid = valid_options_for_feedback
+    valid.shift # makes valid invalid
+    valid # now invalid
+  end
+  
+  def create_feedback(options={})
+    Feedback.new(valid_options_for_feedback.merge(options))
+  end
 end
