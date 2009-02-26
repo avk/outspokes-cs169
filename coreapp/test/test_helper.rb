@@ -37,8 +37,9 @@ class Test::Unit::TestCase
   # Feedback
   
   def valid_options_for_feedback
-    {:content=>'Hello, this is a feedback!', :page_id=>Page.find(:first).id, 
-      :commenter_id=>Commenter.find(:first).id}
+    {:content=>'Hello, this is a feedback!'#, :page_id=>Page.find(:first).id, 
+      #:commenter_id=>Commenter.find(:first).id
+    }
   end
   
   def create_feedback(options={})
