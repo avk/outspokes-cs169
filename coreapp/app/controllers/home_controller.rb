@@ -1,7 +1,12 @@
 class HomeController < ApplicationController
 
-  def index
 
+  def index
+    respond_to do |format|
+      format.html
+    end
   end
 
+private
+  
 end
