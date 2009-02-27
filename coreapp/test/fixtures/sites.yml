@@ -1,9 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  url: MyString
+linkedin:
+  url: http://www.linkedin.com/
   account_id: 1
 
-two:
-  url: MyString
+facebook:
+  url: http://www.facebook.com/
   account_id: 2

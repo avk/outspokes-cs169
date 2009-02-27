@@ -5,8 +5,12 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
+  validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
+  validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
+  
   validate :has_account_xor_site
 
+protected
   # A page can (and must!) have a site or an account, but not both
   def has_account_xor_site
     if not (account_id.blank? ^ site_id.blank?)

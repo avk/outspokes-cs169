@@ -57,12 +57,14 @@ class Test::Unit::TestCase
   
   # Pages
   
-  def valid_options_for_page_account 
-    { :account_id => Account.find(:first).id, :url => 'http://runthisby.us' }
+  def valid_options_for_page_account
+    valid_acct = commenters(:quentin)
+    { :account => valid_acct, :url => 'http://runthisby.us' }
   end
   
   def valid_options_for_page_site
-    { :site_id => Site.find(:first).id, :url => 'http://runthisby.us' }
+    valid_site = sites(:linkedin)
+    { :site => valid_site, :url => 'http://runthisbyus.com' }
   end
   
   def invalid_options_for_page
