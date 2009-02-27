@@ -25,6 +25,8 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks/new.xml
   def new
     @feedback = Feedback.new
+    @page = Page.find(params[:page_id])
+    @commenter = Commenter.find(params[:commenter_id])
   
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +38,8 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks.xml
   def create
     @feedback = Feedback.new(params[:feedback])
+    @feedback.page = Page.find params[:feedback][:page_id]
+    @feedback.commenter = Commenter.find params[:feedback][:commenter_id]
 
     respond_to do |format|
       if @feedback.save

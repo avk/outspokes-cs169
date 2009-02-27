@@ -7,14 +7,15 @@ class FeedbacksControllerTest < ActionController::TestCase
   #   assert_not_nil assigns(:feedbacks)
   # end
   
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
+  # test "should get new" do
+  #   get :new
+  #   assert_response :success
+  # end
 
   test "should create feedback" do
     assert_difference('Feedback.count') do
       post :create, :feedback => valid_options_for_feedback
+      puts assigns(:feedback).errors.full_messages.to_sentence
     end
 
     assert_redirected_to feedback_path(assigns(:feedback))

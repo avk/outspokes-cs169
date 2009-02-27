@@ -3,9 +3,9 @@
 one:
 #  account_id: nil
   site_id: 1
-  url: MyText
+  url: http://www.msn.com/
 
 two:
   account_id: 1
 #  site_id: nil
-  url: MyText
+  url: http://www.myspace.com/

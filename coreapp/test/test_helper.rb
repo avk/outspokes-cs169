@@ -106,9 +106,9 @@ class Test::Unit::TestCase
   # Feedback
   
   def valid_options_for_feedback
-    {:content=>'Hello, this is a feedback!'#, :page_id=>Page.find(:first).id, 
-      #:commenter_id=>Commenter.find(:first).id
-    }
+    page = pages(:one)
+    commenter = commenters(:one)
+    { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id }
   end
   
   def invalid_options_for_feedback
@@ -118,6 +118,6 @@ class Test::Unit::TestCase
   end
   
   def create_feedback(options={})
-    Feedback.new(valid_options_for_feedback.merge(options))
+    Feedback.create(valid_options_for_feedback.merge(options))
   end
 end
