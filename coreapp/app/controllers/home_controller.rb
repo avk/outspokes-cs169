@@ -4,8 +4,10 @@ class HomeController < ApplicationController
   def index
     if logged_in?
       @sites = @user.sites
+      @pages = @user.pages
     else
       @sites = Site.find(:all)
+      @pages = Page.find(:all)
     end
     respond_to do |format|
       format.html
