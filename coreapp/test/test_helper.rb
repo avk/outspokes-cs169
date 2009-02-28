@@ -83,6 +83,10 @@ class Test::Unit::TestCase
 	{ :email => "abc@abc.com" }
   end
 
+  def invalid_options_for_commenters
+    { :email => "foo" }
+  end
+
   def create_commenter(options = {})
     Commenter.create(valid_options_for_commenters.merge(options))
   end
