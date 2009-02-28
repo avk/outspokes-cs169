@@ -1,5 +1,4 @@
 <% if logged_in? -%>
-  <div id="account-bar-greeting">Logged in as <%= link_to_current_account :content_method => :email %></div>
   <div id="account-bar-action"  >(<%= link_to "Log out", logout_path, { :title => "Log out" }    %>)</div>
 <% else -%>
   <div id="account-bar-greeting"><%= link_to_login_with_IP 'Not logged in', :style => 'border: none;' %></div>
