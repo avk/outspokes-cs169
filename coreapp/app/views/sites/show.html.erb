@@ -1,8 +1,8 @@
 <p>
   <b>Url:</b>
-  <%=h @site.url %>
+  <%=h @site.homepage.url %>
 </p>
 
 
 <%= link_to 'Edit', edit_site_path(@site) %> |
-<%= link_to 'Back', sites_path %>
+<%= link_to 'Back', root_url %>

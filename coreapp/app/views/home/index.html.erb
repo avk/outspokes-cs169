@@ -2,15 +2,24 @@
 
 <%= render :partial => '/accounts/account_bar' %>
 
+<%if logged_in?%>
+<h3>Your Sites</h3>
+<% else %>
+<h3>All Sites</h3>
+<% end %>
 <table>
 	<tr>
 		<th>Site name</th>
-		<th>Owner</th>
+		<% if !logged_in?%><th>Owner</th><% end %>
 	</tr>
 <% for site in @sites %>
 	<tr>
-		<td><%= link_to site.url, site.url %></td>
-		<td><%= site.account.email %></td>
+		<td><%= link_to site.homepage.url, site.homepage.url %></td>
+		<% if !logged_in?%><td><%= site.account.email %></td><% end %>
+		<% if site.account ==  current_account %>
+		<td><%= link_to 'Edit', edit_site_path(site) %></td>
+    <td><%= link_to 'Delete', site, :confirm => 'Are you sure?', :method => :delete %></td>
+		<% end %>
 	</tr>
 <% end %>
 </table>
