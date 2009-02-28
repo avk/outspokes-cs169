@@ -2,6 +2,8 @@ class Page < ActiveRecord::Base
 #  has_many :invitations
   belongs_to :site
   belongs_to :account
+
+  has_many :feedbacks
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])

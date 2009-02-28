@@ -1,8 +1,15 @@
 <p>
   <b>Url:</b>
-  <%=h @site.url %>
+  <%=h @site.home_page.url %>
 </p>
 
+<iframe  SRC=<%= @site.home_page.url %>; >
+
+<% for comment in @site.home_page.feedbacks %>
+   <p> <%= comment.content %> </p>
+   <p> Left by <%= comment.commenter %> </p>
+   <p> Created on <%= comment.created_at %> </p>
+<% end %>
 
 <%= link_to 'Edit', edit_site_path(@site) %> |
 <%= link_to 'Back', sites_path %>

@@ -9,7 +9,7 @@
 	</tr>
 <% for site in @sites %>
 	<tr>
-		<td><%= link_to site.url, site.url %></td>
+		<td><%= link_to site.url, site_path(:id => site.id) %></td>
 		<td><%= site.account.email %></td>
 	</tr>
 <% end %>
