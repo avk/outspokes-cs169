@@ -8,8 +8,9 @@
     <%= f.text_field :url %>
   </p>
   <p>
+    <%= f.hidden_field :account_id, :value => current_account.id %>
     <%= f.submit "Create" %>
   </p>
 <% end %>
 
-<%= link_to 'Back', sites_path %>
+<%= link_to 'Back', root_url %>

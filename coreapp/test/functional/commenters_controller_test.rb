@@ -42,4 +42,19 @@ class CommentersControllerTest < ActionController::TestCase
 
     assert_redirected_to commenters_path
   end
+
+  test "should render new when new commenter fails" do
+	assert_no_difference('Commenter.count') do
+      post :create, :commenter => invalid_options_for_commenters
+    end
+
+    assert_template "new"
+  end
+
+  test "should render update when update commenter fails" do
+	put :update, :id => commenters(:one).id, :commenter => invalid_options_for_commenters    
+	
+	assert_template "edit"
+
+  end
 end

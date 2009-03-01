@@ -2,19 +2,62 @@
 
 <%= render :partial => '/accounts/account_bar' %>
 
+<%if logged_in?%>
+<h3>Your Sites</h3>
+<% else %>
+<h3>All Sites</h3>
+<% end %>
 <table>
 	<tr>
 		<th>Site name</th>
-		<th>Owner</th>
+		<% if !logged_in?%><th>Owner</th><% end %>
 	</tr>
 <% for site in @sites %>
 	<tr>
-		<td><%= link_to site.url, site.url %></td>
-		<td><%= site.account.email %></td>
+		<td><%= link_to site.home_page.url, site_path(:id => site.id) %></td>
+
+		<% if !logged_in?%><td><%= site.account.email %></td><% end %>
+		<% if site.account ==  current_account %>
+		<td><%= link_to 'Edit', edit_site_path(site) %></td>
+    <td><%= link_to 'Delete', site, :confirm => 'Are you sure?', :method => :delete %></td>
+		<% end %>
 	</tr>
 <% end %>
 </table>
 
 <% if logged_in? %> 
 	<%= link_to "New site", new_site_path %>
+<% end %>
+
+<%if logged_in?%>
+<h3>Your Pages</h3>
+<% else %>
+<h3>All Pages</h3>
+<% end %>
+
+<table>
+	<tr>
+		<th>Page name</th>
+		<% if !logged_in?%><th>Owner</th><% end %>
+	</tr>
+<% for page in @pages %>
+	<tr>
+		<td><%= link_to page.url, page.url %></td>
+		<% if !logged_in?%><td>
+			<% if page.account %><%= page.account.email %>
+			<% else %>
+				<%= page.site.home_page.url %>
+			<% end %>
+			</td>
+		<% end %>
+		<% if page.account ==  current_account %>
+		<td><%= link_to 'Edit', edit_page_path(page) %></td>
+    <td><%= link_to 'Delete', page, :confirm => 'Are you sure?', :method => :delete %></td>
+		<% end %>
+	</tr>
+<% end %>
+</table>
+
+<% if logged_in? %> 
+	<%= link_to "New page", new_page_path %>
 <% end %>
