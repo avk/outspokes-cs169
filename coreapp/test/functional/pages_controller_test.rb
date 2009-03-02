@@ -14,10 +14,11 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   test "should create page" do
+    login_as :quentin
     assert_difference('Page.count') do
-      post :create, :page => valid_options_for_page_account
+      post :create, :page => { :url => 'http://runthisby.us/' }
     end
-    assert_redirected_to page_path(assigns(:page))
+    assert_redirected_to new_page_commenter_path(assigns(:page))
   end
   
   test "should go back to new when trying to create an invalid page" do
