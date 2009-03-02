@@ -1,0 +1,35 @@
+<h2>Welcome to betaJunkies!</h2>
+
+<% if @feature != nil %>
+<h3>Our featured beta: </h3>
+<table>
+  <%= render :partial => 'projects/header' %>
+
+  <tr>
+    <td><%= link_to @feature.name, @feature %></td>
+    <td><%= link_to @feature.user.login, :controller => "users", :action => "view", :id => @feature.user.id %></td>
+    <td><%=h @feature.summary %>
+    </td>
+    <td>
+        <% if @feature.ratings.average('value') != nil %> 
+	      <%= @feature.ratings.average('value').truncate(1) %> </p>
+            <% else %>
+	      Unrated
+	    <% end %>
+    </td>
+    <td><a href="http://<%=h @feature.link %>"><%=h @feature.link %></a></td>
+  </tr>
+</table>
+<% end %>
+
+<h3>Other betas: </h3>
+<table>
+
+  <%= render :partial => 'projects/header' %>
+
+  <%= render :partial => 'projects/row', :collection => @projects %>
+</table>
+
+<br />
+
+<%if @current_user %><%= link_to 'New project', new_project_path %><% end %>

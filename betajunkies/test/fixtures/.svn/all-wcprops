@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/56/trunk/test/fixtures
+END
+users.yml
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/56/trunk/test/fixtures/users.yml
+END
+comments.yml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/5/trunk/test/fixtures/comments.yml
+END
+ratings.yml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/34/trunk/test/fixtures/ratings.yml
+END
+projects.yml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/4/trunk/test/fixtures/projects.yml
+END

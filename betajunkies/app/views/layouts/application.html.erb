@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Beta Junkies: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'reset-min' %>
+  <%= stylesheet_link_tag 'scaffold' %>
+	<%= javascript_include_tag :defaults %>
+</head>
+<body>
+<div id="header">
+ <div id="inside">
+	<a href="/" alt="Home" style="padding: 0;"><img id="logo" src="/images/betajunkies_logo.png" width="230px" height="100px" alt="Beta Junkies" title="Beta Junkies" /></a>
+		<%= render :partial => '/users/user' %> 
+ 	<div style="float:right;"><%= link_to "Home", "/" %> | 
+  	<%= link_to "Projects", :controller => "projects", :action => "index" %> | 
+  	<%= link_to "Users", :controller => "users", :action => "index" %></div>
+  	<p>betaJunkies is a site for connecting you with the newest software out on the internet.  Cruise through our list of projects, give them a whirl, and be sure to get your opinion heard!</p>
+
+
+ </div>
+</div>
+<div id="bigwrap">
+<p style="color: green;"><%= flash[:notice] %></p>
+
+<%= yield  %>
+</div>
+</body>
+</html>

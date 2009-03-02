@@ -1,0 +1,13 @@
+<h2> Profile for <%= @user.login %> </h2>
+<p>Email: <%= @user.email %> </p>
+
+<h3><%= @user.login %>'s Projects </h3>
+<table>
+  <%= render :partial => 'projects/header' %>
+  <%= render :partial => 'project', :collection => @user.projects %>
+</table>
+
+<h3><%= @user.login %>'s Comments </h3>
+<%= render :partial => 'comment', :collection => @user.comments %>
+
+<p><%= link_to "Back to Users", :controller => "users", :action => "index" %></p>

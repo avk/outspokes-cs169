@@ -1,0 +1,203 @@
+html{min-height: 825px; background-image: url('/images/gradient_bottom.png'); background-position: left bottom; background-repeat: repeat-x;
+}
+body {
+  font-family: "Lucida Grande", helvetica, sans-serif;
+  font-size:   10pt;
+  line-height: 15pt;
+  background-color: transparent;
+  color: #131313;
+  padding-bottom: 5px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { color: blue; }
+a:visited { color: navy; }
+a:hover { color: #fff; background-color:navy; }
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+/************* BETA JUNKIES! ************/
+h1 {
+
+}
+
+h2 {
+font-size: 15pt;
+font-weight: bold;
+}
+
+h3 {
+font-size: 13pt;
+font-weight: bold;
+margin-top: 20px;
+}
+
+p {
+margin: 3px 0;
+}
+
+a {
+padding: 5px;
+}
+
+div.comments {
+	width: 100%;
+}
+div.commentparent {
+	border: 1px ridge silver;
+	padding: 1em;
+	margin-bottom: 1px;
+}
+div.commentsheader {
+	font-weight: bold;
+	padding: 1em;
+}
+div.commentchild {
+	margin-left: 50px;
+}
+
+div.project {
+	float: left;
+	height: 550px;
+	width: 27%;
+	padding: 10px 1%;
+	overflow-y: auto;
+	margin-bottom: 20px;
+	border: 1px solid #666;
+}
+div.frame {
+	float: right;
+	height: 570px;
+	width: 70%;
+	margin-bottom: 20px;
+}
+
+div.project .comments {
+font-size:8pt;
+}
+
+div.project div.commentchild {
+margin-left: 15px;
+}
+
+table {
+width: 100%;
+}
+
+table td {
+border: 1px ridge silver;
+padding: 1em;
+}
+
+th {
+font-weight: bold;
+padding: 1em;
+}
+
+blockquote {
+font-style: oblique;
+text-align: right;
+}
+
+form {
+margin: 0 auto;
+}
+
+textarea {
+width: 100%;
+height: 10em;
+}
+
+#header {
+width: 100%;
+background-color: #ddd;
+background-image: url(/images/gradient_header.png);
+background-attachment: fixed;
+background-position: top left;
+background-repeat:repeat-x;
+height: 160px;
+border-bottom: 3px dotted #555;
+padding: 15px 0;
+}
+
+#header #inside {
+width: 80%;
+max-width: 1000px;
+margin: 0 auto;
+}
+
+#header #inside p {
+clear: both;
+font-size: 15pt;
+line-height: 20pt;
+}
+
+#logo {
+float: left;
+}
+
+#bigwrap {
+width: 80%;
+max-width: 1000px;
+margin: 0 auto;
+padding: 2em 10% 0;	
+}
+
+#login_bar {
+float: right;
+background-color: #8BC1DF;
+padding: 10px 15px;
+border: 1px dashed grey;
+margin-left: 10px;
+font-size: 8pt;
+
+}
+
+#login, #password {
+height: 10pt;
+font-size: 8pt;
+}
+
+.css1 { font-size: 1.0em; }
+  .css2 { font-size: 1.2em; }
+  .css3 { font-size: 1.4em; }
+  .css4 { font-size: 1.6em; }
