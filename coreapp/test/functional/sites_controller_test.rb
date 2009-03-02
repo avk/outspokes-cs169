@@ -1,12 +1,6 @@
 require 'test_helper'
 
 class SitesControllerTest < ActionController::TestCase
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:sites)
-  end
-
   test "should get new" do
     get :new
     assert_response :success
@@ -29,12 +23,6 @@ class SitesControllerTest < ActionController::TestCase
     
       assert_template "new"
     end
-  end
-
-
-  test "should show site" do
-    get :show, :id => sites(:linkedin).id
-    assert_response :success
   end
 
   test "should get edit" do
