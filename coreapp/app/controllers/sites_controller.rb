@@ -41,7 +41,7 @@ class SitesController < ApplicationController
   # POST /sites.xml
   def create
     @site = Site.new(params[:site])
-    @site.account = Account.find(session[:account_id])
+    @site.account = current_account
 
     respond_to do |format|
       if @site.save

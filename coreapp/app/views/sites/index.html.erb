@@ -7,7 +7,7 @@
 
 <% for site in @sites %>
   <tr>
-    <td><%=h site.homepage.url %></td>
+    <td><%=h site.home_page.url %></td>
     <td><%= link_to 'Show', site %></td>
     <td><%= link_to 'Edit', edit_site_path(site) %></td>
     <td><%= link_to 'Destroy', site, :confirm => 'Are you sure?', :method => :delete %></td>

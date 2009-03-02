@@ -9,3 +9,11 @@ two:
   account_id: 1
 #  site_id: nil
   url: http://www.myspace.com/
+
+from_li:
+  url: http://www.linkedin.com/
+  site_id: 1
+  
+from_fb:
+  url: http://www.facebook.com/
+  site_id: 2

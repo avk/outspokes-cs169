@@ -13,6 +13,7 @@ class SitesControllerTest < ActionController::TestCase
   end
 
   test "should create site" do
+    login_as :quentin
     assert_difference('Site.count') do
       post :create, :site => valid_options_for_site
     end
