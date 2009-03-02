@@ -9,7 +9,7 @@ class PagesControllerTest < ActionController::TestCase
 
   test "should not load new if not logged in" do
     get :new
-    assert_redirected_to login_path
+    assert_redirected_to new_session_path
   end
 
   test "should load new if logged in" do
@@ -55,8 +55,9 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "should go back to edit if updating a page with invalid parameters" do
+	login_as :quentin
     unless valid_options_for_page_account.keys.empty?
-      put :update, :id => pages(:one).id, :page => { valid_options_for_page_account.keys.first => nil }
+      put :update, :id => pages(:one).id, :page => { :url => nil }
       assert_template "edit"
     end
   end

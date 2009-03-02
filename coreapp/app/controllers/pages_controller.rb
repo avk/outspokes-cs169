@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+
+  before_filter :login_required, :only => [ :new ]
   # GET /pages
   # GET /pages.xml
   def index
@@ -25,6 +27,7 @@ class PagesController < ApplicationController
   # GET /pages/new.xml
   def new
     @page = Page.new
+    @page.account_id = current_account.id
 
     respond_to do |format|
       format.html # new.html.erb
