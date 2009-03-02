@@ -1,15 +1,8 @@
-<h1>New commenter</h1>
+<h1>Invite people to give feedback</h1>
 
-<% form_for(@commenter) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+<% form_tag page_commenters_path(@page) do %>
+  <%= label_tag 'emails', "Comma-separated email addresses:" %><br />
+  <%= text_area_tag :emails, '', :size => '50' %><br />
+  <%= submit_tag 'Invite!' %>
 <% end %>
 
-<%= link_to 'Back', commenters_path %>
