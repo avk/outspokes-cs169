@@ -1,16 +1,6 @@
 class PagesController < ApplicationController
 
   before_filter :login_required, :only => [ :new ]
-  # GET /pages
-  # GET /pages.xml
-  def index
-    @pages = Page.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @pages }
-    end
-  end
 
   # GET /pages/1
   # GET /pages/1.xml
