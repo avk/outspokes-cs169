@@ -7,23 +7,28 @@
 <% else %>
 <h3>All Sites</h3>
 <% end %>
-<table>
-	<tr>
-		<th>Site name</th>
-		<% if !logged_in?%><th>Owner</th><% end %>
-	</tr>
-<% for site in @sites %>
-	<tr>
-		<td><%= link_to site.home_page.url, site_path(:id => site.id) %></td>
 
-		<% if !logged_in?%><td><%= site.account.email %></td><% end %>
-		<% if site.account ==  current_account %>
-		<td><%= link_to 'Edit', edit_site_path(site) %></td>
-    <td><%= link_to 'Delete', site, :confirm => 'Are you sure?', :method => :delete %></td>
-		<% end %>
-	</tr>
-<% end %>
-</table>
+<%- if @sites.empty? -%>
+  No sites.
+<%- else -%>
+  <table>
+  	<tr>
+  		<th>Site name</th>
+  		<% if !logged_in?%><th>Owner</th><% end %>
+  	</tr>
+  <% for site in @sites %>
+  	<tr>
+  		<td><%= link_to site.home_page.url, site_path(:id => site.id) %></td>
+
+  		<% if !logged_in?%><td><%= site.account.email %></td><% end %>
+  		<% if site.account ==  current_account %>
+  		<td><%= link_to 'Edit', edit_site_path(site) %></td>
+      <td><%= link_to 'Delete', site, :confirm => 'Are you sure?', :method => :delete %></td>
+  		<% end %>
+  	</tr>
+  <% end %>
+  </table>
+<% end -%>
 
 <% if logged_in? %> 
 	<%= link_to "New site", new_site_path %>
