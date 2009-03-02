@@ -1,6 +1,6 @@
 <h1>Editing commenter</h1>
 
-<% form_for(@commenter) do |f| %>
+<% form_for [@page, @commenter] do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -12,5 +12,5 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @commenter %> |
-<%= link_to 'Back', commenters_path %>
+<%= link_to 'Show', page_commenter_path(@page, @commenter) %> |
+<%= link_to 'Back', page_commenters_path(@page) %>
