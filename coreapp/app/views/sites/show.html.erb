@@ -3,7 +3,8 @@
   <%=h @site.home_page.url %>
 </p>
 
-<iframe  SRC=<%= @site.home_page.url %>; >
+<iframe  SRC="<%= @site.home_page.url %>" >
+</iframe>
 
 <% for comment in @site.home_page.feedbacks %>
    <p> <%= comment.content %> </p>
