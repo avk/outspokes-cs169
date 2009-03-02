@@ -15,7 +15,7 @@
 <h4>Leave feedback</h4>
 <% form_for :feedback, @feedback, :url => { :controller => "feedbacks", :action => "create" } do |f| %>
 	<p><%= f.text_area :content %></p>
-	<p><%= f.hidden_field :page_id, :value => @page.id %></p>
+	<p><%= f.hidden_field :page_id, :value => @site.home_page.id %></p>
 	<p><%= f.hidden_field :commenter_id %></p>
 	<p><%= f.submit "Create" %></p>
 <% end %>
