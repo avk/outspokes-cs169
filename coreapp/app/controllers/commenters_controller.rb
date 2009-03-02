@@ -1,6 +1,9 @@
 class CommentersController < ApplicationController
-  # GET /commenters
-  # GET /commenters.xml
+  
+  before_filter :get_page
+  
+  # GET /pages/1/commenters
+  # GET /pages/1/commenters.xml
   def index
     @commenters = Commenter.find(:all)
 
@@ -10,8 +13,8 @@ class CommentersController < ApplicationController
     end
   end
 
-  # GET /commenters/1
-  # GET /commenters/1.xml
+  # GET /pages/1/commenters/1
+  # GET /pages/1/commenters/1.xml
   def show
     @commenter = Commenter.find(params[:id])
 
@@ -21,31 +24,29 @@ class CommentersController < ApplicationController
     end
   end
 
-  # GET /commenters/new
-  # GET /commenters/new.xml
+  # GET /pages/1/commenters/new
+  # GET /pages/1/commenters/new.xml
   def new
-    @commenter = Commenter.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @commenter }
     end
   end
 
-  # GET /commenters/1/edit
+  # GET /pages/1/commenters/1/edit
   def edit
     @commenter = Commenter.find(params[:id])
   end
 
-  # POST /commenters
-  # POST /commenters.xml
+  # POST /pages/1/commenters
+  # POST /pages/1/commenters.xml
   def create
     @commenter = Commenter.new(params[:commenter])
 
     respond_to do |format|
       if @commenter.save
         flash[:notice] = 'Commenter was successfully created.'
-        format.html { redirect_to(@commenter) }
+        format.html { redirect_to( page_commenter_path(@page, @commenter) ) }
         format.xml  { render :xml => @commenter, :status => :created, :location => @commenter }
       else
         format.html { render :action => "new" }
@@ -54,15 +55,15 @@ class CommentersController < ApplicationController
     end
   end
 
-  # PUT /commenters/1
-  # PUT /commenters/1.xml
+  # PUT /pages/1/commenters/1
+  # PUT /pages/1/commenters/1.xml
   def update
     @commenter = Commenter.find(params[:id])
 
     respond_to do |format|
       if @commenter.update_attributes(params[:commenter])
         flash[:notice] = 'Commenter was successfully updated.'
-        format.html { redirect_to(@commenter) }
+        format.html { redirect_to( page_commenter_path(@page, @commenter) ) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -71,15 +72,22 @@ class CommentersController < ApplicationController
     end
   end
 
-  # DELETE /commenters/1
-  # DELETE /commenters/1.xml
+  # DELETE /pages/1/commenters/1
+  # DELETE /pages/1/commenters/1.xml
   def destroy
     @commenter = Commenter.find(params[:id])
     @commenter.destroy
 
     respond_to do |format|
-      format.html { redirect_to(commenters_url) }
+      format.html { redirect_to( page_commenters_url(@page) ) }
       format.xml  { head :ok }
     end
   end
+
+protected
+  
+  def get_page
+    @page = Page.find(params[:page_id])
+  end
+  
 end

@@ -8,10 +8,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :session
 
-  map.resources :commenters
   map.resources :sites
   map.resources :pages do |page|
     page.resources :feedbacks
+    page.resources :commenters
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
