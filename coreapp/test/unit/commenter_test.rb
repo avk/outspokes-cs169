@@ -31,13 +31,21 @@ class CommenterTest < ActiveSupport::TestCase
   end
 
   test "cannot give non-unique email" do
-	assert_difference 'Commenter.count' do
+	  assert_difference 'Commenter.count' do
       commenter = create_commenter(:email => 'abc@abc.com')
     end  
   	assert_no_difference 'Commenter.count' do
        commenter2 = create_commenter(:email => 'abc@abc.com')
        assert commenter2.errors.on(:email)
     end
+  end
+
+  test "should parse email addresses" do
+    legal = ["avk@berkeley.edu", "hlhu@berkeley.edu", "mkocher@berkeley.edu"]
+    illegal = ['bullshit', '@.com', '2394872039487323423432']
+    results = Commenter.parse_email_addresses( (legal + illegal).join(', ') )
+    assert legal == results[:legal]
+    assert illegal == results[:illegal]
   end
 
 end

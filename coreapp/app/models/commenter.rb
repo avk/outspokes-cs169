@@ -13,6 +13,20 @@ class Commenter < ActiveRecord::Base
   validates_format_of :email, :with => @@email_regex  
   validates_uniqueness_of :email
 
-
+  def self.parse_email_addresses(emails)
+    separated = emails.split(',')
+    separated.map! {|str| str.strip}
+    
+    legal, illegal = [], []
+    separated.each do |email|
+      if email.match @@email_regex
+        legal << email
+      else
+        illegal << email
+      end
+    end
+    
+    {:legal => legal, :illegal => illegal}
+  end
 
 end
