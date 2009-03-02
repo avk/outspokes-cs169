@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
-#  has_many :invitations
+
+  has_many :invites
   belongs_to :site
   belongs_to :account
 
