@@ -7,7 +7,13 @@ class PagesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:pages)
   end
 
-  test "should get new" do
+  test "should not load new if not logged in" do
+    get :new
+    assert_redirected_to login_path
+  end
+
+  test "should load new if logged in" do
+    login_as :quentin
     get :new
     assert_response :success
   end
@@ -20,14 +26,16 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "should go back to new when trying to create an invalid page" do
-    unless valid_options_for_page_account.empty?
+	login_as :quentin    
+	unless valid_options_for_page_account.empty?
       assert_no_difference('Site.count') do
         post :create, :page => invalid_options_for_page
       end 
       assert_template "new"
     end
   end
-  
+
+    
 
   test "should show page" do
     get :show, :id => pages(:one).id
