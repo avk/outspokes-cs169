@@ -17,12 +17,15 @@ class CommentersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create commenter" do
-    assert_difference('Commenter.count') do
-      post :create, :commenter => valid_options_for_commenters, :page_id => @page.id
+  test "should create commenters" do
+    assert_difference 'Commenter.count', 3 do
+      assert_difference "Invite.count", 3 do
+        emails = ["avk@berkeley.edu", "hlhu@berkeley.edu", "mkocher@berkeley.edu"]
+        post :create, :emails => emails.join(', '), :page_id => @page.id
+      end
     end
 
-    assert_redirected_to page_commenter_path(@page, assigns(:commenter))
+    assert_redirected_to page_commenters_path(@page)
   end
 
   test "should show commenter" do
@@ -48,12 +51,15 @@ class CommentersControllerTest < ActionController::TestCase
     assert_redirected_to page_commenters_path(@page)
   end
 
-  test "should render new when new commenter fails" do
-  	assert_no_difference('Commenter.count') do
-      post :create, :commenter => invalid_options_for_commenters, :page_id => @page.id
+  test "should render page when new fails" do
+    assert_no_difference('Commenter.count') do
+      assert_no_difference "Invite.count" do
+        emails = ['bullshit', '@.c', '9238740923874092837049823']
+        post :create, :emails => emails.join(', '), :page_id => @page.id
+      end
     end
-
-    assert_template "new"
+  
+    assert_redirected_to @page
   end
 
   test "should render update when update commenter fails" do

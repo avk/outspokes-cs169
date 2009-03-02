@@ -26,7 +26,7 @@ class SitesController < ApplicationController
     respond_to do |format|
       if @site.save
         flash[:notice] = 'Site was successfully created.'
-        format.html { redirect_to(page_url(@site.home_page)) }
+        format.html { redirect_to new_page_commenter_path(@site.home_page) }
         format.xml  { render :xml => @site, :status => :created, :location => @site }
       else
         format.html { render :action => "new" }
