@@ -1,5 +1,6 @@
 class SitesController < ApplicationController
 
+    before_filter :login_required, :only => [ :new, :edit, :create, :destroy, :update ]
   # GET /sites/new
   # GET /sites/new.xml
   def new
