@@ -52,17 +52,23 @@ class CommentersControllerTest < ActionController::TestCase
   end
 
 <<<<<<< HEAD:coreapp/test/functional/commenters_controller_test.rb
+<<<<<<< HEAD:coreapp/test/functional/commenters_controller_test.rb
+=======
+>>>>>>> you can now create commenters and invites (but not send invite emails) after making sites and pages:coreapp/test/functional/commenters_controller_test.rb
   test "should render page when new fails" do
     assert_no_difference('Commenter.count') do
       assert_no_difference "Invite.count" do
         emails = ['bullshit', '@.c', '9238740923874092837049823']
         post :create, :emails => emails.join(', '), :page_id => @page.id
       end
+<<<<<<< HEAD:coreapp/test/functional/commenters_controller_test.rb
 =======
   test "should render new when new commenter fails" do
   	assert_no_difference('Commenter.count') do
       post :create, :commenter => invalid_options_for_commenters, :page_id => @page.id
 >>>>>>> commenters are now a nested resource of pages:coreapp/test/functional/commenters_controller_test.rb
+=======
+>>>>>>> you can now create commenters and invites (but not send invite emails) after making sites and pages:coreapp/test/functional/commenters_controller_test.rb
     end
   
     assert_redirected_to @page
