@@ -13,6 +13,19 @@
   <%=h @page.url %>
 </p>
 
+<% for comment in @page.feedbacks %>
+   <p> <%= comment.content %> </p>
+   <p> Left by <%= comment.commenter %> </p>
+   <p> Created on <%= comment.created_at %> </p>
+<% end %>
+
+<h4>Leave feedback</h4>
+<% form_for :feedback, @feedback, :url => { :controller => "feedbacks", :action => "create" } do |f| %>
+	<p><%= f.text_area :content %></p>
+	<p><%= f.hidden_field :page_id, :value => @page.id %></p>
+	<p><%= f.hidden_field :commenter_id %></p>
+	<p><%= f.submit "Create" %></p>
+<% end %>
 
 <%= link_to 'Edit', edit_page_path(@page) %> |
 <%= link_to 'Back', pages_path %>

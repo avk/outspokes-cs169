@@ -1,0 +1,12 @@
+<h2>All users</h2>
+
+<table>
+  <tr>
+    <th>User name</th>
+    <th>Links</th>
+<% for user in @users %>
+  <tr>
+    <td><%= user.login %></td>
+    <td><%= link_to "Profile", :controller => "users", :action => "view", :id => user.id %></td>
+  </tr>
+<% end %>

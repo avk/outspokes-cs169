@@ -1,0 +1,44 @@
+<h2>Welcome to betaJunkies!</h2>
+<p>betaJunkies is a site for connecting you with the newest software out on the internet.  Cruise through our list of projects, give them a whirl, and be sure to get your opinion heard!</p>
+<% if @feature != nil %>
+<p>Our featured beta: </p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>User</th>
+    <th>Summary</th>
+    <th>Link</th>    
+  </tr>
+
+  <tr>
+    <td><%= link_to @feature.name, @feature %></td>
+    <td><%= link_to @feature.user.login, :controller => "users", :action => "view", :id => @feature.user.id %></td>
+    <td><%=h @feature.summary %>
+    </td>
+    <td><a href="http://<%=h @feature.link %>"><%=h @feature.link %></a></td>
+  </tr>
+</table>
+<% end %>
+
+<p>Other betas: </p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>User</th>
+    <th>Summary</th>
+    <th>Link</th>    
+  </tr>
+
+<% for project in @projects %>
+  <tr>
+    <td><%= link_to project.name, project %></td>
+    <td><%= link_to project.user.login, :controller => "users", :action => "view", :id => project.user.id %></td>
+    <td><%=h project.summary %></td>
+    <td><a href="http://<%=h project.link %>"><%=h project.link %></a></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%if @current_user %><%= link_to 'New project', new_project_path %><% end %>

@@ -1,0 +1,32 @@
+<h2>Editing project</h2>
+
+
+<p><%= link_to 'Cancel Editing', @project %> |
+<%= link_to 'Back to Projects List', projects_path %></p>
+
+
+<% form_for(@project) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :link %><br />
+    <%= f.text_field :link %>
+  </p>
+  <%= f.hidden_field :user_id %>
+   <p>
+    <%= f.label :summary %><br />
+    <%= f.text_area :summary %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>

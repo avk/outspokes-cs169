@@ -42,7 +42,7 @@
 	</tr>
 <% for page in @pages %>
 	<tr>
-		<td><%= link_to page.url, page.url %></td>
+		<td><%= link_to page.url, page %></td>
 		<% if !logged_in?%><td>
 			<% if page.account %><%= page.account.email %>
 			<% else %>
