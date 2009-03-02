@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:pages)
-  end
 
   test "should not load new if not logged in" do
     get :new
@@ -43,8 +38,6 @@ class PagesControllerTest < ActionController::TestCase
       assert_template "new"
     end
   end
-
-    
 
   test "should show page" do
     get :show, :id => pages(:one).id
