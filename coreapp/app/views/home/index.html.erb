@@ -35,28 +35,32 @@
 <h3>All Pages</h3>
 <% end %>
 
-<table>
-	<tr>
-		<th>Page name</th>
-		<% if !logged_in?%><th>Owner</th><% end %>
-	</tr>
-<% for page in @pages %>
-	<tr>
-		<td><%= link_to page.url, page %></td>
-		<% if !logged_in?%><td>
-			<% if page.account %><%= page.account.email %>
-			<% else %>
-				<%= page.site.home_page.url %>
-			<% end %>
-			</td>
-		<% end %>
-		<% if page.account ==  current_account %>
-		<td><%= link_to 'Edit', edit_page_path(page) %></td>
-    <td><%= link_to 'Delete', page, :confirm => 'Are you sure?', :method => :delete %></td>
-		<% end %>
-	</tr>
-<% end %>
-</table>
+<% if @pages.empty? -%>
+  No pages.
+<% else -%>
+  <table>
+  	<tr>
+  		<th>Page name</th>
+  		<% if !logged_in?%><th>Owner</th><% end %>
+  	</tr>
+  <% for page in @pages %>
+  	<tr>
+  		<td><%= link_to page.url, page %></td>
+  		<% if !logged_in?%><td>
+  			<% if page.account %><%= page.account.email %>
+  			<% else %>
+  				<%= page.site.home_page.url %>
+  			<% end %>
+  			</td>
+  		<% end %>
+  		<% if page.account ==  current_account %>
+  		<td><%= link_to 'Edit', edit_page_path(page) %></td>
+      <td><%= link_to 'Delete', page, :confirm => 'Are you sure?', :method => :delete %></td>
+  		<% end %>
+  	</tr>
+  <% end %>
+  </table>
+<% end -%>
 
 <% if logged_in? %> 
 	<%= link_to "New page", new_page_path %>
