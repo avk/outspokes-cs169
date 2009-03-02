@@ -1,18 +1,27 @@
-<p>
-  <b>Account:</b>
-  <%=h @page.account_id %>
-</p>
 
+<% if @page.account_id != nil %>
+<p>
+  <b>Owned by</b>
+  <%=h @page.account.email %>
+</p>
+<% end %>
+
+<% if @page.site_id != nil %>
 <p>
   <b>Site:</b>
   <%=h @page.site_id %>
 </p>
+<% end %>
 
 <p>
   <b>Url:</b>
   <%=h @page.url %>
 </p>
 
+<iframe  SRC=<%= @page.url %>; >
 
-<%= link_to 'Edit', edit_page_path(@page) %> |
-<%= link_to 'Back', pages_path %>
+<% for comment in @page.feedbacks %>
+   <p> <%= comment.content %> </p>
+   <p> Left by <%= comment.commenter %> </p>
+   <p> Created on <%= comment.created_at %> </p>
+<% end %>
