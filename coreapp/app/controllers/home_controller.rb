@@ -6,7 +6,7 @@ class HomeController < ApplicationController
       @pages = current_account.pages
     else
       @sites = Site.find(:all)
-      @pages = Page.find_all_by_site_id(:null)
+      @pages = Page.find_all_by_site_id(nil)
     end
     respond_to do |format|
       format.html

@@ -17,3 +17,7 @@ from_li:
 from_fb:
   url: http://www.facebook.com/
   site_id: 2
+
+fb_profile:
+  url: http://www.facebook.com/asfdasdfsad
+  account_id: 2
