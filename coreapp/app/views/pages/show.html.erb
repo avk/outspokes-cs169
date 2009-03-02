@@ -21,11 +21,25 @@
 <iframe  SRC="<%= @page.url %>" >
 </iframe>
 
-<% for comment in @page.feedbacks %>
-   <p> <%= comment.content %> </p>
-   <p> Left by <%= comment.commenter %> </p>
-   <p> Created on <%= comment.created_at %> </p>
-<% end %>
+<%- if @page.site_id != nil -%>
+	<table>
+	<% for page in @page.site.pages %>
+		<th>Feedback for: <%=h page.url %></th>
+		<% for comment in page.feedbacks %>
+			<tr><td> <%= comment.content %> </td></tr>
+	   	<tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
+		<% end %>
+	<% end %>
+	</table>
+
+<% else %>
+	<table>
+	<% for comment in @page.feedbacks %>
+	   <tr><td> <%= comment.content %> </td></tr>
+	   <tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
+	<% end %>
+	</table>
+<%- end -%>
 
 <h4>Leave feedback</h4>
 <% form_for :feedback, @feedback, :url => { :controller => "feedbacks", :action => "create" } do |f| %>
