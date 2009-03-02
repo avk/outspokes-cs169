@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
 
   has_many :invites
+  has_many :commenters, :through => :invites
   belongs_to :site
   belongs_to :account
 

@@ -97,5 +97,9 @@ class PageTest < ActiveSupport::TestCase
   #     end
   #     
   #   end
+
+  test 'should respond to commenters' do
+    assert create_page.respond_to? :commenters
+  end
   
 end
