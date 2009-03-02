@@ -1,0 +1,26 @@
+<div class="commentchunk" id=<%= "commentchunk#{comment.id}" %>>
+	<div class="commentparent" id=<%= "commentparent#{comment.id}" %>>
+		<% if (@parent = comment).project == nil
+		     @parent = Comment.find_by_id(comment.parent)
+		     while @parent.project == nil
+               @parent = Comment.find_by_id(@parent.parent)
+	         end
+          end
+		%>
+		<p>Comment in <%= link_to Project.find_by_id(@parent.project_id).name, :controller => "projects", :action => "show", :id => @parent.project_id %></p>
+		<p><%=h comment.content %></p>
+		<p>Average opinion:
+		<% if comment.ratings.average('value') == nil %>
+		    Unrated
+		<% elsif (comment.ratings.average('value') > 0) %>
+		    Good 
+		<% elsif (comment.ratings.average('value') < 0) %>
+		    Bad
+		<% else %>
+                    Neutral
+		<% end %>
+		</p>
+				<blockquote style="text-align: right;">
+			<%=h comment.user.login %> - <%=h comment.date.strftime("%b %d, %Y, %I:%M %p")%> 
+		</blockquote>
+</div>

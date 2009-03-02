@@ -1,0 +1,14 @@
+<tr>
+    <td><%= link_to row.name, row %></td>
+    <td><%= link_to row.user.login, :controller => "users", :action => "view", :id => row.user.id %></td>
+    <td><%=h row.summary %>
+    </td>
+    <td>
+        <% if row.ratings.average('value') != nil %> 
+	      <%= row.ratings.average('value').truncate(1) %> </p>
+            <% else %>
+	      Unrated
+	    <% end %>
+    </td>
+    <td><a href="http://<%=h row.link %>"><%=h row.link %></a></td>
+  </tr>

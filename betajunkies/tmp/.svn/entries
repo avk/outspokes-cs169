@@ -1,0 +1,40 @@
+9
+
+dir
+58
+https://betajunkies.googlecode.com/svn/trunk/tmp
+https://betajunkies.googlecode.com/svn
+
+
+
+2009-02-14T02:14:15.583726Z
+2
+ashwooddayton
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+53699296-fa3b-11dd-b507-8b4ecd5210be
+
+pids
+dir
+
+cache
+dir
+
+sessions
+dir
+
+sockets
+dir
+
