@@ -5,7 +5,7 @@ class CommentersController < ApplicationController
   # GET /pages/1/commenters
   # GET /pages/1/commenters.xml
   def index
-    @commenters = Commenter.find(:all)
+    @commenters = @page.commenters
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,16 +41,34 @@ class CommentersController < ApplicationController
   # POST /pages/1/commenters
   # POST /pages/1/commenters.xml
   def create
-    @commenter = Commenter.new(params[:commenter])
+    emails = Commenter.parse_email_addresses(params[:emails])
+
+    success = false
+    Commenter.transaction do
+      begin
+        emails[:legal].each do |email|
+          c = Commenter.new(:email => email)
+          c.save!
+          i = Invite.new(:page => @page, :commenter => c)
+          i.save!
+        end
+        
+        # mail out invites ?
+        
+        unless emails[:illegal].empty?
+          flash[:error] = "Could not invite #{emails[:illegal].join(', ')}"
+        end
+        success = true unless emails[:legal].empty?
+      rescue
+        flash[:error] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
+      end
+    end
 
     respond_to do |format|
-      if @commenter.save
-        flash[:notice] = 'Commenter was successfully created.'
-        format.html { redirect_to( page_commenter_path(@page, @commenter) ) }
-        format.xml  { render :xml => @commenter, :status => :created, :location => @commenter }
+      if success
+        format.html { redirect_to( page_commenters_path(@page) ) }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @commenter.errors, :status => :unprocessable_entity }
+        format.html { redirect_to(@page) }
       end
     end
   end

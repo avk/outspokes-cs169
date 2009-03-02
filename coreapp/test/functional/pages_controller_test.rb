@@ -16,9 +16,9 @@ class PagesControllerTest < ActionController::TestCase
   test "should create page" do
     login_as :quentin
     assert_difference('Page.count') do
-      post :create, :page => valid_options_for_page_account
+      post :create, :page => { :url => 'http://runthisby.us/' }
     end
-    assert_redirected_to page_path(assigns(:page))
+    assert_redirected_to new_page_commenter_path(assigns(:page))
   end
 
   test "not logged in should not create page" do
