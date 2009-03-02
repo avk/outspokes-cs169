@@ -7,16 +7,16 @@ class FeedbacksControllerTest < ActionController::TestCase
       puts assigns(:feedback).errors.full_messages.to_sentence
     end
 
-    assert_redirected_to feedback_path(assigns(:feedback))
+    assert_redirected_to page_path(valid_options_for_feedback[:page_id])
   end
 
-  test "should go back to new when trying to create an invalid feedback" do
+  test "should go back to page when trying to create an invalid feedback" do
     unless valid_options_for_feedback.empty?
       assert_no_difference('Feedback.count') do
-        post :create, :feedback => invalid_options_for_feedback
+        post :create, :feedback => { :page_id => pages(:one).id, :commenter_id => commenters(:one).id }
       end
-      
-      assert_template "new"
+
+      assert_redirected_to page_path(pages(:one))
     end
   end
 

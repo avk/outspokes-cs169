@@ -117,12 +117,6 @@ class Test::Unit::TestCase
     { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id }
   end
   
-  def invalid_options_for_feedback
-    valid = valid_options_for_feedback
-    valid.shift # makes valid invalid
-    valid # now invalid
-  end
-  
   def create_feedback(options={})
     Feedback.create(valid_options_for_feedback.merge(options))
   end

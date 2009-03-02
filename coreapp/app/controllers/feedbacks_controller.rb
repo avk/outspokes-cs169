@@ -5,8 +5,8 @@ class FeedbacksController < ApplicationController
   def create
     #puts Page.find params[:feedback][:page_id]
     @feedback = Feedback.new(params[:feedback])
-    @feedback.page = Page.find(params[:page_id])
-    @feedback.commenter = Commenter.find(params[:commenter_id])
+    @feedback.page = Page.find(params[:feedback][:page_id])
+    @feedback.commenter = Commenter.find(params[:feedback][:commenter_id])
 
     respond_to do |format|
       if @feedback.save
