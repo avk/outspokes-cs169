@@ -1,38 +1,4 @@
 class FeedbacksController < ApplicationController
-  # GET /feedbacks
-  # GET /feedbacks.xml
-  # def index
-  #   @feedbacks = Feedback.find(:all)
-  # 
-  #   respond_to do |format|
-  #     format.html # index.html.erb
-  #     format.xml  { render :xml => @feedbacks }
-  #   end
-  # end
-  # 
-  # # GET /feedbacks/1
-  # # GET /feedbacks/1.xml
-  # def show
-  #   @feedback = Feedback.find(params[:id])
-  # 
-  #   respond_to do |format|
-  #     format.html # show.html.erb
-  #     format.xml  { render :xml => @feedback }
-  #   end
-  # end
-  
-  # GET /feedbacks/new
-  # GET /feedbacks/new.xml
-  def new
-    @feedback = Feedback.new
-    @page = Page.find(params[:page_id])
-    @commenter = Commenter.find(params[:commenter_id])
-  
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @feedback }
-    end
-  end
 
   # POST /feedbacks
   # POST /feedbacks.xml
