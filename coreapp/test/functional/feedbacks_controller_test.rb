@@ -1,17 +1,6 @@
 require 'test_helper'
 
 class FeedbacksControllerTest < ActionController::TestCase
-  # test "should get index" do
-  #   get :index
-  #   assert_response :success
-  #   assert_not_nil assigns(:feedbacks)
-  # end
-  
-  # test "should get new" do
-  #   get :new
-  #   assert_response :success
-  # end
-
   test "should create feedback" do
     assert_difference('Feedback.count') do
       post :create, :feedback => valid_options_for_feedback
@@ -31,11 +20,6 @@ class FeedbacksControllerTest < ActionController::TestCase
     end
   end
 
-  # test "should show feedback" do
-  #   get :show, :id => feedbacks(:one).id
-  #   assert_response :success
-  # end
-  # 
   # test "should get edit" do
   #   get :edit, :id => feedbacks(:one).id
   #   assert_response :success
