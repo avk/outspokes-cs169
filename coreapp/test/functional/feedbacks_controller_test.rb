@@ -4,7 +4,6 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should create feedback" do
     assert_difference('Feedback.count') do
       post :create, :feedback => valid_options_for_feedback
-      puts assigns(:feedback).errors.full_messages.to_sentence
     end
 
     assert_redirected_to page_path(valid_options_for_feedback[:page_id])
