@@ -32,7 +32,8 @@ class PageTest < ActiveSupport::TestCase
   
   test 'cannot create a page without a site or an account' do
     assert_no_difference 'Page.count' do
-      page = Page.create(valid_options_for_page_account.merge({ :account_id => nil }))
+      page = Page.create(valid_options_for_page_account.merge({ :account => nil }))
+      puts page.inspect
       assert page.errors.on_base, "allowing pages to be created with no account or site"
     end
   end
