@@ -48,4 +48,8 @@ class CommenterTest < ActiveSupport::TestCase
     assert illegal == results[:illegal]
   end
 
+  test "should respond to pages" do
+    assert create_commenter.respond_to? :pages
+  end
+
 end

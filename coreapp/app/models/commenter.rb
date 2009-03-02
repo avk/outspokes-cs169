@@ -1,6 +1,7 @@
 class Commenter < ActiveRecord::Base
 
   has_many :invites
+  has_many :pages, :through => :invites
 
   #stolen from the restful_authentication plugin
   @@email_name_regex  = '[\w\.%\+\-]+'.freeze
