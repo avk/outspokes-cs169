@@ -1,5 +1,7 @@
 class Commenter < ActiveRecord::Base
 
+  has_many :invites
+
   #stolen from the restful_authentication plugin
   @@email_name_regex  = '[\w\.%\+\-]+'.freeze
   @@domain_head_regex = '(?:[A-Z0-9\-]+\.)+'.freeze
