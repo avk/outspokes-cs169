@@ -1,25 +1,4 @@
 class SitesController < ApplicationController
-  # GET /sites
-  # GET /sites.xml
-  def index
-    @sites = Site.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @sites }
-    end
-  end
-
-  # GET /sites/1
-  # GET /sites/1.xml
-  def show
-    @site = Site.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @site }
-    end
-  end
 
   # GET /sites/new
   # GET /sites/new.xml
