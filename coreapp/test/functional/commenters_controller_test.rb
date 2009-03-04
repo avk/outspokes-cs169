@@ -52,6 +52,16 @@ class CommentersControllerTest < ActionController::TestCase
       end
     end
   end
+  
+  test "should be able to invite the same commenter to different pages" do
+    commenter = "artvankilmer@berkeley.edu"
+    assert_difference "Commenter.count", 1 do
+      assert_difference "Invite.count", 2 do
+        post :create, :emails => commenter, :page_id => pages(:rails_spikes).id
+        post :create, :emails => commenter, :page_id => pages(:transactions).id
+      end
+    end
+  end
 
   test "should show commenter" do
     get :show, :id => commenters(:one).id, :page_id => @page.id

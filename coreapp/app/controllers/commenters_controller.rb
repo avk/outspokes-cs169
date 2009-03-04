@@ -46,8 +46,13 @@ class CommentersController < ApplicationController
     emails[:legal].each do |email|
       begin
         Commenter.transaction do
-          c = Commenter.new(:email => email)
-          c.save!
+          if c = Commenter.find_by_email(email)
+            # fails transaction if already invited to this page
+            raise "double invite!" if c.pages.include? @page 
+          else
+            c = Commenter.new(:email => email)
+            c.save!
+          end
           i = Invite.new(:page => @page, :commenter => c)
           i.save!
         end
