@@ -30,11 +30,12 @@ class FeedbacksControllerTest < ActionController::TestCase
   # end
 
   test "should destroy feedback" do
-    feedback = create_feedback
+    feedback = feedbacks(:one)
+    page = feedback.page
     assert_difference('Feedback.count', -1) do
       delete :destroy, :id => feedback.id
     end
 
-    assert_redirected_to page_path(feedback.page)
+    assert_redirected_to page_path(page)
   end
 end
