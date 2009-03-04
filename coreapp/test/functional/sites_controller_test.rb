@@ -82,6 +82,7 @@ class SitesControllerTest < ActionController::TestCase
         put :update, :id => sites(:linkedin).id, :site => { :account => nil }
         assert_template "edit"
       end
+    end
 
   test "should destroy site" do
     login_as :quentin

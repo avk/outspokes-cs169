@@ -13,8 +13,8 @@ class Site < ActiveRecord::Base
   
   before_validation :commit_home_page
 
-<<<<<<< HEAD:coreapp/app/models/site.rb
 #  after_save :create_home_page
+#  after_update :update_home_page
 
 #   def self.create_new_site(home_url, options = {})
 #     s = Site.new(options)
@@ -36,11 +36,6 @@ class Site < ActiveRecord::Base
 #     s
 #   end
 
-=======
-  after_save :create_home_page
-  after_update :update_home_page
-  
->>>>>>> 4366dea6dc73166a9ec2da9e2032098921ffd577:coreapp/app/models/site.rb
   def home_page
     self.pages.first
   end
@@ -68,7 +63,7 @@ class Site < ActiveRecord::Base
     end
   end
   
-<<<<<<< HEAD:coreapp/app/models/site.rb
+
  protected
  def has_valid_home_page
    if not self.pages.first or not self.pages.first.valid?
@@ -93,10 +88,8 @@ class Site < ActiveRecord::Base
 #   def create_home_page(page)
 #     self.pages << page
 #   end
-=======
-  def update_home_page
-    #self.pages.first = Page.new(:url => url)
-  end
->>>>>>> 4366dea6dc73166a9ec2da9e2032098921ffd577:coreapp/app/models/site.rb
+#  def update_home_page
+#    #self.pages.first = Page.new(:url => url)
+#  end
 
 end
