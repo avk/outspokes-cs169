@@ -91,23 +91,4 @@ class CommentersControllerTest < ActionController::TestCase
     assert_redirected_to page_commenters_path(@page)
   end
 
-  test "should render page when new fails" do
-    assert_no_difference('Commenter.count') do
-      assert_no_difference "Invite.count" do
-        emails = ['bullshit', '@.c', '9238740923874092837049823']
-        post :create, :emails => emails.join(', '), :page_id => @page.id
-      end
-
-  test "should render new when new commenter fails" do
-  	assert_no_difference('Commenter.count') do
-      post :create, :commenter => invalid_options_for_commenters, :page_id => @page.id
-    end
-  
-    assert_redirected_to @page
-  end
-
-  test "should render update when update commenter fails" do
-	  put :update, :id => commenters(:one).id, :commenter => invalid_options_for_commenters, :page_id => @page.id
-	  assert_template "edit"
-  end
 end
