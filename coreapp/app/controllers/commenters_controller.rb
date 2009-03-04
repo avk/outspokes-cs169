@@ -43,29 +43,25 @@ class CommentersController < ApplicationController
   def create
     emails = Commenter.parse_email_addresses(params[:emails])
 
-    success = false
-    Commenter.transaction do
+    emails[:legal].each do |email|
       begin
-        emails[:legal].each do |email|
+        Commenter.transaction do
           c = Commenter.new(:email => email)
           c.save!
           i = Invite.new(:page => @page, :commenter => c)
           i.save!
         end
-        
-        # mail out invites ?
-        
-        unless emails[:illegal].empty?
-          flash[:error] = "Could not invite #{emails[:illegal].join(', ')}"
-        end
-        success = true unless emails[:legal].empty?
       rescue
-        flash[:error] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
+        flash[:warning] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
       end
+    end
+    
+    unless emails[:illegal].empty?
+      flash[:error] = "Could not invite #{emails[:illegal].join(', ')}"
     end
 
     respond_to do |format|
-      if success
+      unless emails[:legal].empty?
         format.html { redirect_to( page_commenters_path(@page) ) }
       else
         format.html { redirect_to(@page) }
