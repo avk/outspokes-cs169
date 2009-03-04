@@ -10,7 +10,8 @@ class Site < ActiveRecord::Base
   validates_associated :account
 
   after_save :create_home_page
-
+  after_update :update_home_page
+  
   def home_page
     self.pages.first
   end
@@ -18,6 +19,10 @@ class Site < ActiveRecord::Base
 protected
   def create_home_page
     self.pages << Page.new(:url => url)
+  end
+  
+  def update_home_page
+    #self.pages.first = Page.new(:url => url)
   end
 
 end

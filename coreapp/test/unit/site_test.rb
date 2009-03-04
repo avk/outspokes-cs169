@@ -83,4 +83,8 @@ class SiteTest < ActiveSupport::TestCase
     site = create_site(:url => url)
     assert site.pages[0] == site.home_page
   end
+  
+  test 'should update home page when site.url is changed' do
+    # Test code here
+  end
 end

@@ -23,13 +23,13 @@
 
 <%- if @page.site_id != nil -%>
 	<table>
-	<% for page in @page.site.pages %>
-		<th>Feedback for: <%=h page.url %></th>
+	<%- for page in @page.site.pages -%>
+		<tr><th>Feedback for: <%=h page.url %></th></tr>
 		<% for comment in page.feedbacks %>
 			<tr><td> <%= comment.content %> </td></tr>
 	   	<tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
-		<% end %>
-	<% end %>
+		<%- end -%>
+	<%- end -%>
 	</table>
 
 <% else %>
