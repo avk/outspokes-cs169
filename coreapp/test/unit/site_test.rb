@@ -43,14 +43,14 @@ class SiteTest < ActiveSupport::TestCase
 
   test 'should require an account' do
     assert_no_difference "Site.count" do
-      site = create_site("http://google.com", :account => nil)
+      site = create_site("http://google.com", { :account => nil })
       assert site.errors.on(:account_id)
     end
   end
   
   test 'should not be saved with an invalid account' do
     assert_no_difference "Site.count" do
-      site = create_site("http://google.com", :account => Account.new(invalid_options_for_account))
+      site = Site.create_new_site("http://google.com", :account => Account.new(invalid_options_for_account))
       assert site.errors.on(:account)
     end
   end

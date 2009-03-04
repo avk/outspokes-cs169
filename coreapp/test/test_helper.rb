@@ -52,14 +52,7 @@ class Test::Unit::TestCase
   end
 
   def create_site(url, options = {})
-    s = Site.new(valid_options_for_site.merge(options))
-    p = Page.new({ :url => url })
-    Site.transaction do
-      s.save
-      p.site = s
-      s.home_page = p
-      p.save
-    end
+    s = Site.create_new_site(url, valid_options_for_site.merge(options))
     s
   end
   
