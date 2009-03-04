@@ -88,4 +88,12 @@ class PagesControllerTest < ActionController::TestCase
 
     assert_redirected_to root_path
   end
+
+  test "should not destroy page if not logged in" do
+    assert_no_difference('Page.count') do
+      delete :destroy, :id => pages(:one).id
+    end
+
+    assert_redirected_to new_session_path
+  end
 end
