@@ -55,6 +55,10 @@ class Site < ActiveRecord::Base
     end
   end
   
+  # TODO: Ideally we should be able to change the home page -- but do we create a new page
+  # and make it the first in the list (breaking our "created_at ASC" ordering scheme)
+  # or do we directly change the URL of the existing home_page object and all associated
+  # pages?  Do we delete associated pages?
   def home_page=(page)
     if (home_page)
       errors.add_to_base("Cannot set the homepage of a site once created")

@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class SitesControllerTest < ActionController::TestCase
+  
+  self.use_transactional_fixtures = false
+  
   test "should get new" do
     login_as :quentin
     get :new
@@ -29,19 +32,16 @@ class SitesControllerTest < ActionController::TestCase
     assert_redirected_to new_session_path
   end
 
-  ### Sites only need accounts to be valid; since SitesController#create associates the logged in account
-  ### with the newly created site, it is currently impossible for a logged in user to fail to create a
-  ### site
-  # test "should go back to new when trying to create an invalid site" do
-  #   login_as :quentin
-  #   unless valid_options_for_site.empty?
-  #     assert_no_difference('Site.count') do
-  #       post :create, :site => invalid_options_for_site
-  #     end
-  #   
-  #     assert_template "new"
-  #   end
-  # end
+   test "should go back to new when trying to create an invalid site" do
+     login_as :quentin
+     unless valid_options_for_site.empty?
+       assert_no_difference('Site.count') do
+         post :create, :site => invalid_options_for_site
+       end
+     
+       assert_template "new"
+     end
+   end
 
   test "should get edit" do
     login_as :quentin
@@ -56,8 +56,7 @@ class SitesControllerTest < ActionController::TestCase
   end
 
 
-  # TODO: Not sure about these tests, as a site's home_page shouldn't be updated, right??
-  
+  # TODO: Not sure about these tests, as a site's home_page shouldn't be updated, right?
   #   test "should update site" do
   # login_as :quentin
   # url = "http://www.facebook.com"

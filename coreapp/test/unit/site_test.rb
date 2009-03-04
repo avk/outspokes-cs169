@@ -109,4 +109,17 @@ class SiteTest < ActiveSupport::TestCase
     # Test code here
   end
   
+  test 'should be able to get url via Site#url' do
+    url = "http://google.com"
+    site = create_site(url)
+    assert site.url == url
+  end
+  
+  test 'for now cannot change site.url' do
+    url = "http://google.com"
+    site = create_site(url)
+    site.url = "http://yahoo.com"
+    assert site.url == url
+  end
+  
 end
