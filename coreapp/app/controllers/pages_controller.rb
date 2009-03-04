@@ -18,7 +18,6 @@ class PagesController < ApplicationController
   # GET /pages/new.xml
   def new
     @page = Page.new
-    @page.account_id = current_account.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +34,7 @@ class PagesController < ApplicationController
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
+    @page.account = current_account
 
     respond_to do |format|
       if @page.save
@@ -72,7 +72,7 @@ class PagesController < ApplicationController
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to(pages_url) }
+      format.html { redirect_to root_path }
       format.xml  { head :ok }
     end
   end
