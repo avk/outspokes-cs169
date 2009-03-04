@@ -70,7 +70,7 @@ class SitesControllerTest < ActionController::TestCase
       account = commenters(:aaron)
       put :update, :id => sites(:linkedin).id, :site => { :account_id => account.id }
       site = Site.find(sites(:linkedin).id) 
-      assert account.id != id
+      assert account.object_id != id
       assert_redirected_to new_session_path
     end
   
@@ -78,7 +78,7 @@ class SitesControllerTest < ActionController::TestCase
     test "should go back to edit if updating an site with invalid parameters" do
       login_as :quentin
       unless valid_options_for_site.keys.empty?
-        put :update, :id => sites(:linkedin).id, :site => { valid_options_for_site.keys.first => nil }
+        put :update, :id => sites(:linkedin).id, :site => { :account => nil }
         assert_template "edit"
       end
     end

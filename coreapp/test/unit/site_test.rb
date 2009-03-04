@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class SiteTest < ActiveSupport::TestCase
+  
+  self.use_transactional_fixtures = false
 
   test 'should create site' do
     assert_difference 'Site.count' do
@@ -50,7 +52,7 @@ class SiteTest < ActiveSupport::TestCase
   
   test 'should not be saved with an invalid account' do
     assert_no_difference "Site.count" do
-      site = Site.create_new_site("http://google.com", :account => Account.new(invalid_options_for_account))
+      site = create_site("http://google.com", :account => Account.new(invalid_options_for_account))
       assert site.errors.on(:account)
     end
   end
@@ -74,7 +76,7 @@ class SiteTest < ActiveSupport::TestCase
   test 'should require at least one page' do
     url = "http://yahoo.com/"
     site = create_site(url)
-    assert site.pages.size >= 1, "Site as more than one page"
+    assert site.pages.size >= 1, "Site has at least one page"
     assert site.pages[0].url == url, "Site's home_page's url is not its first page's url"
   end
 
@@ -90,5 +92,16 @@ class SiteTest < ActiveSupport::TestCase
     site.home_page = new_page
     assert site.errors.on_base
     assert site.home_page != new_page
+  end
+  
+  test "can't create a site without a home page" do 
+    assert_no_difference "Site.count" do
+      site = create_site(nil)
+    end
+  end
+  
+  test "site isn't valid without a home page" do
+    site = create_site(nil)
+    assert(! site.valid?)
   end
 end

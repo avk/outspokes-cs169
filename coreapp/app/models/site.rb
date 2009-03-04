@@ -9,7 +9,9 @@ class Site < ActiveRecord::Base
   validates_presence_of :account_id
   validates_associated :account
   
-  validate :has_home_page
+  validate :has_valid_home_page
+  
+  before_validation :commit_home_page
 
 #  after_save :create_home_page
 
@@ -37,6 +39,21 @@ class Site < ActiveRecord::Base
     self.pages.first
   end
   
+  def url=(url)
+    if (home_page)
+      return false
+    end
+    self.home_page = Page.new(:url => url, :site => self)
+  end
+  
+  def url
+    if (not home_page)
+      nil
+    else
+      home_page.url
+    end
+  end
+  
   def home_page=(page)
     if (home_page)
       errors.add_to_base("Cannot set the homepage of a site once created")
@@ -45,15 +62,26 @@ class Site < ActiveRecord::Base
     end
   end
   
-  def after_initialize
-
-  end
-  
  protected
- def has_home_page
-   if not self.pages.first
-     errors.add_to_base("Site must have a home_page to be valid")
+ def has_valid_home_page
+   if not self.pages.first or not self.pages.first.valid?
+     errors.add_to_base("Site must have a valid home_page to be valid")
    end
+ end
+ 
+ def commit_home_page
+   if (not home_page or not home_page.valid?)
+     begin
+       Site.transaction do
+         save_with_validation(false)
+         home_page.save!
+         save!
+       end
+     rescue
+       return false
+     end
+   end
+   true
  end
 #   def create_home_page(page)
 #     self.pages << page

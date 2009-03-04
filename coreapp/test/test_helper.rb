@@ -42,7 +42,7 @@ class Test::Unit::TestCase
 
   def valid_options_for_site
     valid_acct = commenters(:quentin)
-    { :account => valid_acct }
+    { :account => valid_acct, :url => "http://google.com" }
   end
 
   def invalid_options_for_site
@@ -52,7 +52,10 @@ class Test::Unit::TestCase
   end
 
   def create_site(url, options = {})
-    s = Site.create_new_site(url, valid_options_for_site.merge(options))
+    options[:url] = url
+    s = Site.new(valid_options_for_site.merge(options))
+#    s.home_page = Page.new(:url => url, :site => s)
+    s.save
     s
   end
   
