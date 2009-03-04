@@ -3,7 +3,6 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks
   # POST /feedbacks.xml
   def create
-    #puts Page.find params[:feedback][:page_id]
     @feedback = Feedback.new(params[:feedback])
     @feedback.page = Page.find(params[:feedback][:page_id])
     @feedback.commenter = Commenter.find(params[:feedback][:commenter_id])
@@ -27,7 +26,7 @@ class FeedbacksController < ApplicationController
     @feedback.destroy
 
     respond_to do |format|
-      format.html { redirect_to(feedbacks_url) }
+      format.html { redirect_to(@feedback.page) }
       format.xml  { head :ok }
     end
   end

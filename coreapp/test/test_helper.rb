@@ -47,7 +47,7 @@ class Test::Unit::TestCase
 
   def invalid_options_for_site
     valid = valid_options_for_site
-    valid.shift # makes valid invalid
+    valid[:url] = nil
     valid # now invalid
   end
 
