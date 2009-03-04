@@ -70,7 +70,7 @@ class SitesControllerTest < ActionController::TestCase
       account = commenters(:aaron)
       put :update, :id => sites(:linkedin).id, :site => { :account_id => account.id }
       site = Site.find(sites(:linkedin).id) 
-      assert account.object_id != id
+      assert account.id != site.account.id
       assert_redirected_to new_session_path
     end
   

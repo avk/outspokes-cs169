@@ -87,6 +87,12 @@ class PageTest < ActiveSupport::TestCase
     end
   end
   
+  test "can't add a page to a site with the wrong domain" do
+    site = sites(:facebook)
+    page = Page.new(:url => "http://google.com", :site => site)
+    assert ! page.valid?
+  end
+  
   # test 'should delete all feedback instances associate when deleted' do
   #     assert_difference "Page.count" do
   #       page = Page.create(valid_options_for_page_site)

@@ -68,7 +68,7 @@ class Test::Unit::TestCase
   
   def valid_options_for_page_site
     valid_site = sites(:linkedin)
-    { :url => 'http://runthisbyus.com', :site => valid_site }
+    { :url => valid_site.url + "/index.html", :site => valid_site }
   end
   
   # :url must be nil, PageController supplies account from session state

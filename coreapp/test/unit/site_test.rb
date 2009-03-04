@@ -65,7 +65,7 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   test 'should always return pages they order they were created' do
-    site = create_site("http://google.com")
+    site = create_site("http://google.com/")
     %w(about contact_us FAQ).each do |page|
       site.pages << Page.new(:url => site.home_page.url + page)
     end
@@ -122,4 +122,23 @@ class SiteTest < ActiveSupport::TestCase
     assert site.url == url
   end
   
+  test "shouldn't be able to add a page to a site from a different url" do
+    root_url = "http://google.com"
+    new_url = "http://www.yahoo.com/r/i1"
+    site = create_site(root_url)
+    assert_no_difference "site.pages.count" do
+      page = Page.new(:url => new_url, :site => site)
+      site.pages << page
+    end
+  end
+  
+  test "should be able to add valid pages to a site" do
+    root_url = "http://google.com"
+    new_url = "http://google.com/ig"
+    site = create_site(root_url)
+    assert_difference "site.pages.count" do
+      page = Page.new(:url => new_url, :site => site)
+      site.pages << page
+    end
+  end
 end
