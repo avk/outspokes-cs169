@@ -69,7 +69,7 @@ class Test::Unit::TestCase
   
   def invalid_options_for_page
     valid = valid_options_for_page_account
-    valid.shift
+    valid[:url] = nil
     valid
   end
   

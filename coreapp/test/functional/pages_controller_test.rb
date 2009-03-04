@@ -30,8 +30,8 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   test "should go back to new when trying to create an invalid page" do
-	login_as :quentin    
-	unless valid_options_for_page_account.empty?
+	  login_as :quentin    
+	  unless valid_options_for_page_account.empty?
       assert_no_difference('Site.count') do
         post :create, :page => invalid_options_for_page
       end 
