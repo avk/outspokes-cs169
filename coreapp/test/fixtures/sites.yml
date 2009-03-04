@@ -2,10 +2,10 @@
 
 linkedin:
   id: 1
-  url: http://www.linkedin.com/
+#  url: http://www.linkedin.com/
   account_id: 1
 
 facebook:
   id: 2
-  url: http://www.facebook.com/
+#  url: http://www.facebook.com/
   account_id: 2

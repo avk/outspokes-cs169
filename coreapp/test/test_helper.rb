@@ -42,7 +42,7 @@ class Test::Unit::TestCase
 
   def valid_options_for_site
     valid_acct = commenters(:quentin)
-    { :url => "http://www.runthisby.us/", :account => valid_acct }
+    { :account => valid_acct, :url => "http://google.com" }
   end
 
   def invalid_options_for_site
@@ -51,22 +51,27 @@ class Test::Unit::TestCase
     valid # now invalid
   end
 
-  def create_site(options = {})
-    Site.create(valid_options_for_site.merge(options))
+  def create_site(url, options = {})
+    options[:url] = url
+    s = Site.new(valid_options_for_site.merge(options))
+#    s.home_page = Page.new(:url => url, :site => s)
+    s.save
+    s
   end
   
   # Pages
   
   def valid_options_for_page_account
     valid_acct = commenters(:quentin)
-    { :account => valid_acct, :url => 'http://runthisby.us' }
+    { :url => 'http://runthisby.us', :account => valid_acct }
   end
   
   def valid_options_for_page_site
     valid_site = sites(:linkedin)
-    { :site => valid_site, :url => 'http://runthisbyus.com' }
+    { :url => 'http://runthisbyus.com', :site => valid_site }
   end
   
+  # :url must be nil, PageController supplies account from session state
   def invalid_options_for_page
     valid = valid_options_for_page_account
     valid[:url] = nil
