@@ -47,7 +47,7 @@ class Test::Unit::TestCase
 
   def invalid_options_for_site
     valid = valid_options_for_site
-    valid.shift # makes valid invalid
+    valid[:url] = nil
     valid # now invalid
   end
 
@@ -75,7 +75,11 @@ class Test::Unit::TestCase
   def invalid_options_for_page
     valid = valid_options_for_page_account
     valid[:url] = nil
+<<<<<<< HEAD:coreapp/test/test_helper.rb
     return valid
+=======
+    valid
+>>>>>>> 4366dea6dc73166a9ec2da9e2032098921ffd577:coreapp/test/test_helper.rb
   end
   
   def create_page(options = {})

@@ -23,13 +23,13 @@
 
 <%- if @page.site_id != nil -%>
 	<table>
-	<% for page in @page.site.pages %>
-		<th>Feedback for: <%=h page.url %></th>
+	<%- for page in @page.site.pages -%>
+		<tr><th>Feedback for: <%=h page.url %></th></tr>
 		<% for comment in page.feedbacks %>
 			<tr><td> <%= comment.content %> </td></tr>
 	   	<tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
-		<% end %>
-	<% end %>
+		<%- end -%>
+	<%- end -%>
 	</table>
 
 <% else %>
@@ -42,9 +42,9 @@
 <%- end -%>
 
 <h4>Leave feedback</h4>
-<% form_for :feedback, @feedback, :url => { :controller => "feedbacks", :action => "create" } do |f| %>
+<% form_for([@page, @feedback]) do |f| %>
 	<p><%= f.text_area :content %></p>
-	<p><%= f.hidden_field :page_id, :value => @page.id %></p>
+	<p><%= f.hidden_field :page_id%></p>
 	<p><%= f.hidden_field :commenter_id %></p>
 	<p><%= f.submit "Create" %></p>
 <% end %>

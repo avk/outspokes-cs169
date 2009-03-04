@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SitesControllerTest < ActionController::TestCase
   test "should get new" do
-	login_as :quentin
+    login_as :quentin
     get :new
     assert_response :success
   end
@@ -18,7 +18,7 @@ class SitesControllerTest < ActionController::TestCase
       post :create, :site => valid_options_for_site
     end
 
-    assert_redirected_to site_path(assigns(:site))
+    assert_redirected_to page_path(assigns(:site).home_page)
   end
 
   test "not logged in should not create site" do
@@ -44,7 +44,7 @@ class SitesControllerTest < ActionController::TestCase
   # end
 
   test "should get edit" do
-	login_as :quentin
+    login_as :quentin
     get :edit, :id => sites(:linkedin).id
     assert_response :success
   end
@@ -54,6 +54,7 @@ class SitesControllerTest < ActionController::TestCase
 
     assert_redirected_to new_session_path
   end
+
 
   # TODO: Not sure about these tests, as a site's home_page shouldn't be updated, right??
   
@@ -81,15 +82,14 @@ class SitesControllerTest < ActionController::TestCase
         put :update, :id => sites(:linkedin).id, :site => { :account => nil }
         assert_template "edit"
       end
-    end
 
   test "should destroy site" do
-	login_as :quentin
+    login_as :quentin
     assert_difference('Site.count', -1) do
       delete :destroy, :id => sites(:linkedin).id
     end
 
-    assert_redirected_to sites_path
+    assert_redirected_to root_url
   end
 
   test "should not destroy site if not logged in" do
@@ -99,5 +99,5 @@ class SitesControllerTest < ActionController::TestCase
 
     assert_redirected_to new_session_path
   end
-  
+
 end

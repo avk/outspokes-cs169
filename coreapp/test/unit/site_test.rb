@@ -104,4 +104,9 @@ class SiteTest < ActiveSupport::TestCase
     site = create_site(nil)
     assert(! site.valid?)
   end
+  
+  test 'should update home page when site.url is changed' do
+    # Test code here
+  end
+  
 end
