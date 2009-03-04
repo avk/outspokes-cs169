@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
   belongs_to :site
   belongs_to :account
 
-  has_many :feedbacks
+  has_many :feedbacks, :dependent => :destroy
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
