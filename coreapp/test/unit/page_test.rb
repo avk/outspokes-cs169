@@ -93,15 +93,27 @@ class PageTest < ActiveSupport::TestCase
     assert ! page.valid?
   end
   
-  # test 'should delete all feedback instances associate when deleted' do
-  #     assert_difference "Page.count" do
-  #       page = Page.create(valid_options_for_page_site)
-  #       comments = Comments
-  #       page.comments = comments
-  #       delete page
-  #       assert Comment.find_by_page_id(page.id) = nil
-  #     end
-  #     
-  #   end
+  test 'should delete all associated feedback instances when deleted' do
+      page = nil
+      
+      assert_difference "Page.count", 1 do
+        page = create_page
+      end
+  
+      comments = %w(sucks boo yuck)
+      assert_difference "Feedback.count", comments.size do
+        comments.each do |comment|
+          page.feedbacks << create_feedback(:content => comment)
+        end
+        page.save
+      end
+      
+      assert_difference "Page.count", -1 do
+        assert_difference "Feedback.count", -(comments.size) do
+          page.destroy
+        end
+      end
+       
+    end
   
 end
