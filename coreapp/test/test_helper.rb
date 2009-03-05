@@ -53,10 +53,7 @@ class Test::Unit::TestCase
 
   def create_site(url, options = {})
     options[:url] = url
-    s = Site.new(valid_options_for_site.merge(options))
-#    s.home_page = Page.new(:url => url, :site => s)
-    s.save
-    s
+    Site.create(valid_options_for_site.merge(options))
   end
   
   # Pages

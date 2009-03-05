@@ -79,6 +79,28 @@ class SiteTest < ActiveSupport::TestCase
     assert site.pages.size >= 1, "Site has at least one page"
     assert site.pages[0].url == url, "Site's home_page's url is not its first page's url"
   end
+  
+  test 'should delete all pages when deleted' do
+    base_url = "http://google.com/"
+    site = nil
+    assert_difference "Site.count", 1 do
+      site = create_site(base_url)
+    end
+    
+    page_urls = %w(maps movies alerts)
+    assert_difference "Page.count", page_urls.size do
+      page_urls.each do |page_url|
+        site.pages << Page.new(:url => "#{base_url + page_url}")
+      end
+      site.save
+    end
+    
+    assert_difference "Site.count", -1 do
+      assert_difference "Page.count", -(page_urls.size + 1) do # + 1 for the site's home page
+        site.destroy
+      end
+    end
+  end
 
   test 'should respond to home page' do
     url = "http://yahoo.com/"
