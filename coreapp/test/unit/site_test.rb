@@ -45,7 +45,7 @@ class SiteTest < ActiveSupport::TestCase
 
   test 'should require an account' do
     assert_no_difference "Site.count" do
-      site = create_site({ :url => "http://google.com", :account => nil })
+      site = create_site(:url => "http://google.com", :account => nil)
       assert site.errors.on(:account_id)
     end
   end
