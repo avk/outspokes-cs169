@@ -51,8 +51,7 @@ class Test::Unit::TestCase
     valid # now invalid
   end
 
-  def create_site(url, options = {})
-    options[:url] = url
+  def create_site(options = {})
     s = Site.new(valid_options_for_site.merge(options))
 #    s.home_page = Page.new(:url => url, :site => s)
     s.save
