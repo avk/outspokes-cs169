@@ -114,7 +114,7 @@ class AccountTest < ActiveSupport::TestCase
     end
     
     assert_difference "Account.count", -1 do
-      assert_difference "Page.count", -(urls.size) do
+      assert_difference "Page.count", -(urls.size + 3) do
         assert_difference "Site.count", -3 do
           account.destroy
         end
