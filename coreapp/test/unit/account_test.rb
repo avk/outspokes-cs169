@@ -91,4 +91,36 @@ class AccountTest < ActiveSupport::TestCase
     assert commenters(:quentin).remember_token_expires_at.between?(before, after)
   end
 
+  test "should delete all pages and sites associated with it when destroyed" do
+    account = nil
+    
+    assert_difference "Account.count" do
+      account = create_account
+    end
+    
+    urls = %w(http://www.google.com http://www.yahoo.com http://www.msn.com)
+    assert_difference "Page.count", urls.size do
+      urls.each do |url|
+        account.pages << create_page(:url => url, :account => account)
+      end
+      account.save
+    end
+    
+    assert_difference "Site.count", 3 do
+      3.times do |url|
+        account.sites << create_site(:account => account)
+      end
+      account.save
+    end
+    
+    assert_difference "Account.count", -1 do
+      assert_difference "Page.count", -(urls.size) do
+        assert_difference "Site.count", -3 do
+          account.destroy
+        end
+      end
+    end
+    
+  end
+
 end
