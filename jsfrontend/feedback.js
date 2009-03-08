@@ -86,6 +86,7 @@ var fb = {
 };
 
 // Runs fb.init()
-// Note, this must be the last call on this page.
+// Note, this must be the last call on this page to ensure that fb has completely loaded.
 fb.init();
+
 
