@@ -8,10 +8,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :session
 
-  map.resources :commenters
   map.resources :sites
   map.resources :pages do |page|
     page.resources :feedbacks
+    page.resources :commenters
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -54,5 +54,5 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
    map.connect ':controller/:action/:id'
- map.connect ':controller/:action/:id.:format'
+   map.connect ':controller/:action/:id.:format'
 end
