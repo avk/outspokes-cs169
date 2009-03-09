@@ -9,6 +9,12 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
+  test "should belong to a commenter" do
+    assert_no_differenct "Account.count" do
+      account = create_account(:commenter_id => nil)
+      assert account.errors.on(:commenter_id), "allowing account creation without a commenter"
+    end
+  end
 
   def test_should_require_login
     assert_no_difference 'Account.count' do
