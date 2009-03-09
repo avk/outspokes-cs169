@@ -31,13 +31,25 @@ class CommenterTest < ActiveSupport::TestCase
   end
 
   test "cannot give non-unique email" do
-	assert_difference 'Commenter.count' do
+	  assert_difference 'Commenter.count' do
       commenter = create_commenter(:email => 'abc@abc.com')
     end  
   	assert_no_difference 'Commenter.count' do
        commenter2 = create_commenter(:email => 'abc@abc.com')
        assert commenter2.errors.on(:email)
     end
+  end
+
+  test "should parse email addresses" do
+    legal = ["avk@berkeley.edu", "hlhu@berkeley.edu", "mkocher@berkeley.edu"]
+    illegal = ['bullshit', '@.com', '2394872039487323423432']
+    results = Commenter.parse_email_addresses( (legal + illegal).join(', ') )
+    assert legal == results[:legal]
+    assert illegal == results[:illegal]
+  end
+
+  test "should respond to pages" do
+    assert create_commenter.respond_to? :pages
   end
 
   test "should, when destroying a commenter, delete all feedback associated with it" do
@@ -61,27 +73,19 @@ class CommenterTest < ActiveSupport::TestCase
       end
     end
   end
-  
-  test "should, when destroying a commenter, delete all invites associated with it" do
-    # commenter = nil
-    # 
-    # assert_difference "Commenter.count" do
-    #   commenter = create_commenter
-    # end
-    # 
-    # invites = [a bunch of invites]
-    # assert_difference "Invite.count", invites.size do
-    #   invites.each do |invite|
-    #     commenter.invites << create_invite(:commenter_id => commenter.id)
-    #   end
-    #   commenter.save
-    # end
-    # 
-    # assert_difference "Commenter.count", -1 do
-    #   assert_difference "Invite.count", -(invites.size) do
-    #     commenter.destroy
-    #   end
-    # end
+
+  test 'should delete all associated invites when deleted' do
+    commenter = create_commenter
+    pages = %w(from_fb fb_profile)
+    
+    assert_difference "Invite.count", pages.size do
+      pages.each do |page|
+        Invite.create(:page => pages(page.to_sym), :commenter => commenter)
+      end
+    end
+    
+    assert_difference "Invite.count", -(pages.size) do
+      commenter.destroy
+    end
   end
-  
 end

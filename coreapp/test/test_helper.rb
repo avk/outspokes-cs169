@@ -122,4 +122,16 @@ class Test::Unit::TestCase
   def create_feedback(options={})
     Feedback.create(valid_options_for_feedback.merge(options))
   end
+  
+  # Invites
+  
+  def valid_options_for_invite
+    { :commenter => commenters(:one), :page => pages(:one) }
+  end
+  
+  def create_invite(options={})
+    Invite.create(valid_options_for_invite.merge(options))
+  end
+  
+  
 end
