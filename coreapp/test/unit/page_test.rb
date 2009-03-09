@@ -8,42 +8,42 @@ class PageTest < ActiveSupport::TestCase
       assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
     end
   end
-  
+
   test 'should also create page with site' do
     assert_difference 'Page.count' do
       page = Page.create(valid_options_for_page_site)
       assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
     end
   end
-  
+
   test 'should also create page with an account' do
     assert_difference 'Page.count' do
       page = Page.create(valid_options_for_page_account)
       assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
     end
   end
-  
+
   test 'cannot create a page with both sites and accounts' do
     assert_no_difference 'Page.count' do
       page = create_page(valid_options_for_page_site)
       assert page.errors.on_base, "allowing pages to be created with an account and a site"
     end
   end
-  
+
   test 'cannot create a page without a site or an account' do
     assert_no_difference 'Page.count' do
       page = Page.create(valid_options_for_page_account.merge({ :account => nil }))
       assert page.errors.on_base, "allowing pages to be created with no account or site"
     end
   end
-  
+
   test 'should require a URL' do
     assert_no_difference "Page.count" do
       page = create_page(:url => nil)
       assert page.errors.on(:url), "allowing pages to be created without a url"
     end
   end
-  
+
   test 'should not accept invalid URLs' do
     assert_no_difference "Page.count" do
       page = create_page(:url => 'abc@#$@#saf432s')
@@ -68,7 +68,7 @@ class PageTest < ActiveSupport::TestCase
       end
     end
   end
-  
+
   test 'should have a unique URL for a given account' do
     assert_difference "Page.count", 1 do
       page = create_page(valid_options_for_page_account)
@@ -77,7 +77,7 @@ class PageTest < ActiveSupport::TestCase
       assert page.errors.on(:url), "allowing one account to have multiple pages with the same URL"
     end
   end
-  
+
   test 'should have a unique URL for a given site' do
     assert_difference "Page.count", 1 do
       page = Page.create(valid_options_for_page_site)
@@ -86,22 +86,55 @@ class PageTest < ActiveSupport::TestCase
       assert page.errors.on(:url), "allowing one site to have multiple pages with the same URL"
     end
   end
-  
+
   test "can't add a page to a site with the wrong domain" do
     site = sites(:facebook)
     page = Page.new(:url => "http://google.com", :site => site)
     assert ! page.valid?
   end
+
+  test 'should respond to commenters' do
+    assert create_page.respond_to? :commenters
+  end
+
+  test 'should delete all associated feedback instances when deleted' do
+    page = nil
+
+    assert_difference "Page.count", 1 do
+      page = create_page
+    end
+
+    comments = %w(sucks boo yuck)
+    assert_difference "Feedback.count", comments.size do
+      comments.each do |comment|
+        page.feedbacks << create_feedback(:content => comment)
+      end
+      page.save
+    end
+
+    assert_difference "Page.count", -1 do
+      assert_difference "Feedback.count", -(comments.size) do
+        page.destroy
+      end
+    end
+  end
   
-  # test 'should delete all feedback instances associate when deleted' do
-  #     assert_difference "Page.count" do
-  #       page = Page.create(valid_options_for_page_site)
-  #       comments = Comments
-  #       page.comments = comments
-  #       delete page
-  #       assert Comment.find_by_page_id(page.id) = nil
-  #     end
-  #     
-  #   end
-  
+  test 'should delete all associated invites when deleted' do
+    page = create_page
+    commenters = %w(quentin aaron)
+    
+    assert_difference "Invite.count", commenters.size do
+      commenters.each do |name|
+        page.invites << Invite.new(:commenter => commenters(name))
+      end
+      page.save
+    end
+    
+    assert_difference "Page.count", -1 do
+      assert_difference "Invite.count", -(commenters.size) do
+        page.destroy
+      end
+    end
+  end
+
 end

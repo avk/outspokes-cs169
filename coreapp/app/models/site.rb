@@ -1,6 +1,6 @@
 class Site < ActiveRecord::Base
   
-  has_many :pages, :order => "created_at ASC"
+  has_many :pages, :order => "created_at ASC", :dependent => :destroy
   belongs_to :account
 
 #  validates_presence_of :url

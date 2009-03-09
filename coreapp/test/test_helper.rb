@@ -52,10 +52,7 @@ class Test::Unit::TestCase
   end
 
   def create_site(options = {})
-    s = Site.new(valid_options_for_site.merge(options))
-#    s.home_page = Page.new(:url => url, :site => s)
-    s.save
-    s
+    Site.create(valid_options_for_site.merge(options))
   end
   
   # Pages
@@ -124,4 +121,16 @@ class Test::Unit::TestCase
   def create_feedback(options={})
     Feedback.create(valid_options_for_feedback.merge(options))
   end
+  
+  # Invites
+  
+  def valid_options_for_invite
+    { :commenter => commenters(:one), :page => pages(:one) }
+  end
+  
+  def create_invite(options={})
+    Invite.create(valid_options_for_invite.merge(options))
+  end
+  
+  
 end

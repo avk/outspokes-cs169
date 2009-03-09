@@ -21,7 +21,7 @@ class SitesControllerTest < ActionController::TestCase
       post :create, :site => valid_options_for_site
     end
 
-    assert_redirected_to page_path(assigns(:site).home_page)
+    assert_redirected_to new_page_commenter_path(assigns(:site).home_page)
   end
 
   test "not logged in should not create site" do
