@@ -73,4 +73,19 @@ class CommenterTest < ActiveSupport::TestCase
   test "should respond to pages" do
     assert create_commenter.respond_to? :pages
   end
+  
+  test 'should delete all associated invites when deleted' do
+    commenter = create_commenter
+    pages = %w(from_fb fb_profile)
+    
+    assert_difference "Invite.count", pages.size do
+      pages.each do |page|
+        Invite.create(:page => pages(page.to_sym), :commenter => commenter)
+      end
+    end
+    
+    assert_difference "Invite.count", -(pages.size) do
+      commenter.destroy
+    end
+  end
 end

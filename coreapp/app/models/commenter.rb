@@ -1,6 +1,6 @@
 class Commenter < ActiveRecord::Base
 
-  has_many :invites
+  has_many :invites, :dependent => :destroy
   has_many :pages, :through => :invites
   has_many :feedbacks, :dependent => :destroy
 
