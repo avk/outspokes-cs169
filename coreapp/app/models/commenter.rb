@@ -1,10 +1,8 @@
 class Commenter < ActiveRecord::Base
-  has_many :feedbacks, :dependent => :destroy
-  # has_many :invites
-  has_one :account
 
   has_many :invites
   has_many :pages, :through => :invites
+  has_many :feedbacks, :dependent => :destroy
 
   #stolen from the restful_authentication plugin
   @@email_name_regex  = '[\w\.%\+\-]+'.freeze
