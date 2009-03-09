@@ -117,7 +117,24 @@ class PageTest < ActiveSupport::TestCase
         page.destroy
       end
     end
-
+  end
+  
+  test 'should delete all associated invites when deleted' do
+    page = create_page
+    commenters = %w(quentin aaron)
+    
+    assert_difference "Invite.count", commenters.size do
+      commenters.each do |name|
+        page.invites << Invite.new(:commenter => commenters(name))
+      end
+      page.save
+    end
+    
+    assert_difference "Page.count", -1 do
+      assert_difference "Invite.count", -(commenters.size) do
+        page.destroy
+      end
+    end
   end
 
 end

@@ -1,11 +1,10 @@
 class Page < ActiveRecord::Base
 
-  has_many :invites
-  has_many :commenters, :through => :invites
-
   belongs_to :site
   belongs_to :account
 
+  has_many :invites, :dependent => :destroy
+  has_many :commenters, :through => :invites
   has_many :feedbacks, :dependent => :destroy
   
   validates_presence_of :url
