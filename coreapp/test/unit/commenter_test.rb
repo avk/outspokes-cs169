@@ -40,6 +40,18 @@ class CommenterTest < ActiveSupport::TestCase
     end
   end
 
+  test "should parse email addresses" do
+    legal = ["avk@berkeley.edu", "hlhu@berkeley.edu", "mkocher@berkeley.edu"]
+    illegal = ['bullshit', '@.com', '2394872039487323423432']
+    results = Commenter.parse_email_addresses( (legal + illegal).join(', ') )
+    assert legal == results[:legal]
+    assert illegal == results[:illegal]
+  end
+
+  test "should respond to pages" do
+    assert create_commenter.respond_to? :pages
+  end
+
   test "should, when destroying a commenter, delete all feedback associated with it" do
     commenter = nil
     
@@ -62,18 +74,6 @@ class CommenterTest < ActiveSupport::TestCase
     end
   end
 
-  test "should parse email addresses" do
-    legal = ["avk@berkeley.edu", "hlhu@berkeley.edu", "mkocher@berkeley.edu"]
-    illegal = ['bullshit', '@.com', '2394872039487323423432']
-    results = Commenter.parse_email_addresses( (legal + illegal).join(', ') )
-    assert legal == results[:legal]
-    assert illegal == results[:illegal]
-  end
-
-  test "should respond to pages" do
-    assert create_commenter.respond_to? :pages
-  end
-  
   test 'should delete all associated invites when deleted' do
     commenter = create_commenter
     pages = %w(from_fb fb_profile)
