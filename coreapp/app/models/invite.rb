@@ -14,7 +14,7 @@ class Invite < ActiveRecord::Base
 private
 
   def generate_url_token
-    self.url_token = self.commenter.email.crypt('a9')
+    self.url_token = self.commenter.email.crypt('a9') + self.page.url.crypt('37')
   end
 
 end

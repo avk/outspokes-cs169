@@ -42,6 +42,18 @@ class InviteTest < ActiveSupport::TestCase
     assert !i.new_record?, "#{i.errors.full_messages.to_sentence}"
     assert !i.url_token.nil?
   end
+  
+  test 'should generate unique URL tokens when inviting the same commenter to different pages' do
+    commenter = create_commenter
+    i1, i2 = nil, nil
+    
+    assert_difference "Invite.count", 2 do
+      i1 = create_invite(:page => pages(:fb_profile), :commenter => commenter)
+      i2 = create_invite(:page => pages(:rails_spikes), :commenter => commenter)
+    end
+    
+    assert i1.url_token != i2.url_token
+  end
 
 end
 
