@@ -60,6 +60,7 @@ class CommenterTest < ActiveSupport::TestCase
         commenter.destroy
       end
     end
+  end
 
   test "should parse email addresses" do
     legal = ["avk@berkeley.edu", "hlhu@berkeley.edu", "mkocher@berkeley.edu"]
