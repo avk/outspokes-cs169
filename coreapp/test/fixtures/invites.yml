@@ -1,7 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  url_token: MyString
+  url_token: quentin
+  page_id: 1
+  commenter_id: 1
 
 two:
-  url_token: MyString
+  url_token: aaron
+  page_id: 1
+  commenter_id: 2
