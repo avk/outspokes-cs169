@@ -86,6 +86,13 @@ class PageTest < ActiveSupport::TestCase
       assert page.errors.on(:url), "allowing one site to have multiple pages with the same URL"
     end
   end
+  
+  test "throw an exception when setting URL for a page has a site" do
+    page = Page.create(valid_options_for_page_site)
+    assert_raise Exception do
+      page.url = "http://neopets.com"
+    end
+  end
 
   test "can't add a page to a site with the wrong domain" do
     site = sites(:facebook)
