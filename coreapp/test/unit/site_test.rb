@@ -137,10 +137,12 @@ class SiteTest < ActiveSupport::TestCase
     assert site.url == url
   end
   
-  test 'for now cannot change site.url' do
+  test 'changeing site.url raises exception' do
     url = "http://google.com"
     site = create_site(:url => url)
-    site.url = "http://yahoo.com"
+    assert_raise Exception do
+      site.url = "http://yahoo.com"
+    end
     assert site.url == url
   end
   
