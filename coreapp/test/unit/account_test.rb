@@ -9,7 +9,6 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
-
   def test_should_require_login
     assert_no_difference 'Account.count' do
       u = create_account(:email => nil)

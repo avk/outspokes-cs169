@@ -7,6 +7,8 @@ class Account < Commenter
 
   has_many :pages, :dependent => :destroy
   has_many :sites, :dependent => :destroy
+  
+  belongs_to :commenter
 
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
   validates_length_of       :name,     :maximum => 100
