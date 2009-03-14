@@ -1,7 +1,10 @@
+<div id="login_bar">
+
 <% if logged_in? -%>
-  <div id="account-bar-action"  >(<%= link_to "Log out", logout_path, { :title => "Log out" }    %>)</div>
+  (<%= link_to "Log out", logout_path, { :title => "Log out" }    %>)
 <% else -%>
-  <div id="account-bar-greeting"><%= link_to_login_with_IP 'Not logged in', :style => 'border: none;' %></div>
-  <div id="account-bar-action"  ><%= link_to "Log in",  login_path,  { :title => "Log in" } %> /
-                               <%= link_to "Sign up", signup_path, { :title => "Create an account" } %></div>
+	<span>You're not logged in.</span>
+  <%= link_to "Log in",  login_path,  { :title => "Log in" } %> |
+	<%= link_to "Sign up", signup_path, { :title => "Create an account" } %>
 <% end -%>
+</div>
