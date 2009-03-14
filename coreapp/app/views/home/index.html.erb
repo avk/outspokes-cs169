@@ -22,6 +22,7 @@
 
   		<% if !logged_in?%><td><%= site.account.email %></td><% end %>
   		<% if site.account ==  current_account %>
+  		<td><%= link_to 'Commenters', page_commenters_path(site.home_page) %></td>
   		<td><%= link_to 'Edit', edit_site_path(site) %></td>
       <td><%= link_to 'Delete', site, :confirm => 'Are you sure?', :method => :delete %></td>
   		<% end %>
