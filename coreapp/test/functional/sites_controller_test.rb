@@ -43,46 +43,6 @@ class SitesControllerTest < ActionController::TestCase
      end
    end
 
-  test "should get edit" do
-    login_as :quentin
-    get :edit, :id => sites(:linkedin).id
-    assert_response :success
-  end
-
-  test "not logged in should not edit site" do
-    get :edit, :id => sites(:linkedin).id
-
-    assert_redirected_to new_session_path
-  end
-
-
-  # TODO: Not sure about these tests, as a site's home_page shouldn't be updated, right?
-  #   test "should update site" do
-  # login_as :quentin
-  # url = "http://www.facebook.com"
-  #     put :update, :id => sites(:linkedin).id, :site => { :url => url }
-  # assert assigns(:site).url == url
-  #     assert_redirected_to site_path(assigns(:site))
-  #   end
-
-    test "should not update site if not logged in" do
-#      url = "http://www.facebook.com"
-      account = commenters(:aaron)
-      put :update, :id => sites(:linkedin).id, :site => { :account_id => account.id }
-      site = Site.find(sites(:linkedin).id) 
-      assert account.id != site.account.id
-      assert_redirected_to new_session_path
-    end
-  
-  
-    test "should go back to edit if updating an site with invalid parameters" do
-      login_as :quentin
-      unless valid_options_for_site.keys.empty?
-        put :update, :id => sites(:linkedin).id, :site => { :account => nil }
-        assert_template "edit"
-      end
-    end
-
   test "should destroy site" do
     login_as :quentin
     assert_difference('Site.count', -1) do
