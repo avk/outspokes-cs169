@@ -37,12 +37,4 @@
 	</table>
 <%- end -%>
 
-<h4>Leave feedback</h4>
-<% form_for([@page, @feedback]) do |f| %>
-	<p><%= f.text_area :content %></p>
-	<p><%= f.hidden_field :page_id%></p>
-	<p><%= f.hidden_field :commenter_id %></p>
-	<p><%= f.submit "Create" %></p>
-<% end %>
-
 <%= link_to "Back to my homepage", root_path %>
