@@ -57,10 +57,9 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   test "should update page" do
-    # SUBTLETY: Don't know if page has a site or account, so can't set the site or account
-    # to test without checking ... so just update url
+    # Have to update a page with an account, because can't update URL of page in site
     login_as :quentin    
-    put :update, :id => pages(:one).id, :page => { :url => "http://google.com" }
+    put :update, :id => pages(:two).id, :page => { :url => "http://google.com" }
     assert_redirected_to page_path(assigns(:page))
   end
 

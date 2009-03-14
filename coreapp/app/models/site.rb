@@ -42,7 +42,7 @@ class Site < ActiveRecord::Base
   
   def url=(url)
     if (home_page)
-      return false
+      raise Exception.new("Cannot set a URL for a site that already has a home_page: #{self}")
     end
     self.home_page = Page.new(:url => url, :site => self)
   end

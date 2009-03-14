@@ -14,6 +14,15 @@ class Page < ActiveRecord::Base
   
   validate :has_account_xor_site
   validate :is_child_of_site
+  
+
+  def url=(url)
+    if url and !self.site_id.blank?
+      raise Exception.new("Cannot set url for a page attached to a site")
+    else
+      super url
+    end
+  end
 
 protected
   # A page can (and must!) have a site or an account, but not both

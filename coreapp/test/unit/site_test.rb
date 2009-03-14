@@ -45,7 +45,7 @@ class SiteTest < ActiveSupport::TestCase
 
   test 'should require an account' do
     assert_no_difference "Site.count" do
-      site = create_site({ :url => "http://google.com", :account => nil })
+      site = create_site(:url => "http://google.com", :account => nil)
       assert site.errors.on(:account_id)
     end
   end
@@ -137,10 +137,12 @@ class SiteTest < ActiveSupport::TestCase
     assert site.url == url
   end
   
-  test 'for now cannot change site.url' do
+  test 'changeing site.url raises exception' do
     url = "http://google.com"
     site = create_site(:url => url)
-    site.url = "http://yahoo.com"
+    assert_raise Exception do
+      site.url = "http://yahoo.com"
+    end
     assert site.url == url
   end
   
