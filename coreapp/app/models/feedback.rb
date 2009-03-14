@@ -9,4 +9,13 @@ class Feedback < ActiveRecord::Base
   validates_associated :page
   
   validates_presence_of :content, :allow_blank => false
+  
+  def self.public_attribute_names
+    %w(created_at updated_at content)
+  end
+  
+  def public_attributes
+    attributes.delete_if { |attribute, value| !Feedback.public_attribute_names.include?(attribute) }
+  end
+  
 end
