@@ -24,8 +24,10 @@
 <%- if @page.site_id != nil -%>
 	<table style="width: 45em">
 	<%- for page in @page.site.pages -%>
-		<tr><th>Feedback for: <%= link_to(page.url, page.url) %></th></tr>
-		<%= render :partial => "feedback", :locals => { :page => page } %>
+		<% unless page.feedbacks.empty? %>
+			<tr><th>Feedback for: <%=h link_to(page.url, page.url) %></th></tr>
+			<%= render :partial => "feedback", :locals => { :page => page } %>
+		<% end %>
 	<%- end -%>
 	</table>
 
@@ -43,3 +45,4 @@
 	<p><%= f.submit "Create" %></p>
 <% end %>
 
+<%= link_to "Back to my homepage", root_path %>
