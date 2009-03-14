@@ -1,0 +1,6 @@
+	<% for comment in page.feedbacks %>
+		<tr><td> <%= comment.content %> </td></tr>
+   	<tr><td style="font-size: .9em"> Left by <%= comment.commenter.email %> at <%= comment.created_at %> 
+	<%= link_to 'Delete', page_feedback_path(page, comment), :confirm => "Are you sure you want to delete the comment from #{comment.commenter.email}?", :method => :delete %> </td></tr>
+	<%- end -%>
+
