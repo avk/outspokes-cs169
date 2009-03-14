@@ -1,24 +1,33 @@
 class FeedbacksController < ApplicationController
 
-  # POST /feedbacks
-  # POST /feedbacks.xml
-  def create
-    @feedback = Feedback.new(params[:feedback])
-    @feedback.page = Page.find(params[:feedback][:page_id])
-    @feedback.commenter = Commenter.find(params[:feedback][:commenter_id])
+  before_filter :validate_callback, :only => [:feedback_for_page]
 
-    respond_to do |format|
-      if @feedback.save
-        flash[:notice] = 'Feedback was successfully created.'
-        format.html { redirect_to(@feedback.page) }
-        # format.xml  { render :xml => @feedback, :status => :created, :location => @feedback }
-      else
-        format.html { redirect_to(@feedback.page) }
-        format.xml  { render :xml => @feedback.errors, :status => :unprocessable_entity }
+  # GET /feedback_for_page.js
+  # params[:url_token] => 'abcdef'
+  # params[:current_page] => 'http://hi.com/faq'
+  # params[:callback] => 'some_function'
+  def feedback_for_page
+    @url_token = params[:url_token]
+    @current_page = params[:current_page]
+    
+    @authorized = false
+    @comments = []
+    
+    invite = Invite.find_by_url_token(@url_token)
+    if invite and same_domain?(invite.page.url, @current_page)
+      @authorized = true
+      if page = Page.find_by_url(@current_page)
+        @comments = page.feedbacks.map { |f| f.public_attributes }
+      end
+    end
+    
+    respond_to do |wants|
+      wants.js do
+        @comments.map!{ |c| c.to_json }
       end
     end
   end
-
+  
   # DELETE /feedbacks/1
   # DELETE /feedbacks/1.xml
   def destroy
@@ -30,4 +39,25 @@ class FeedbacksController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+protected
+
+  def same_domain?(url1, url2)
+    URI.parse(url1).host == URI.parse(url2).host
+  end
+
+  def validate_callback
+    # According to http://www.functionx.com/javascript/Lesson05.htm, JS functions:
+    # - Must start with a letter or an underscore
+    # - Can contain letters, digits, and underscores in any combination
+    # - Cannot contain spaces
+    # - Cannot contain special characters
+    
+    # Also:
+    # - Cannot be a JavaScript keyword
+    
+    @callback = params[:callback]
+    render :text => '{}' unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
+  end
+  
 end

@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
     page.resources :feedbacks
     page.resources :commenters
   end
+  
+  map.feedback_for_page '/feedback_for_page.js', :controller => 'feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
 
   # The priority is based upon order of creation: first created -> highest priority.
 
