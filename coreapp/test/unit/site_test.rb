@@ -84,14 +84,14 @@ class SiteTest < ActiveSupport::TestCase
     assert site.home_page != new_page
   end
   
-  test "can't create a site without a home page" do 
+  test "can't create a site with a nil url" do 
     assert_no_difference "Site.count" do
       site = create_site(:url => nil)
     end
   end
   
   # :url => nil and no url specified hit different validations
-  test "can't create a site with no url" do
+  test "can't create a site with no url specified" do
     assert_no_difference "Site.count" do
       site = Site.create(:account => commenters(:aaron))
     end
