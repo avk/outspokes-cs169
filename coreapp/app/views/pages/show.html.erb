@@ -18,16 +18,16 @@
   <%=h @page.url %>
 </p>
 
-<iframe  SRC="<%= @page.url %>" >
+<iframe width="600" height="300" SRC="<%= @page.url %>" >
 </iframe>
 
 <%- if @page.site_id != nil -%>
 	<table style="width: 45em">
 	<%- for page in @page.site.pages -%>
 		<% unless page.feedbacks.empty? %>
-			<tr><th>Feedback for: <%=h page.url %></th></tr>
+			<tr><th style="padding-top: 1em">Feedback for: <%= link_to(page.url, page.url) %></th></tr>
 			<%= render :partial => "feedback", :locals => { :page => page } %>
-		<% end%>
+		<% end %>
 	<%- end -%>
 	</table>
 

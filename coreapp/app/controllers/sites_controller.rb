@@ -12,11 +12,6 @@ class SitesController < ApplicationController
     end
   end
 
-  # GET /sites/1/edit
-  def edit
-    @site = Site.find(params[:id])
-  end
-
   # POST /sites
   # POST /sites.xml
   def create
@@ -30,23 +25,6 @@ class SitesController < ApplicationController
         format.xml  { render :xml => @site, :status => :created, :location => @site }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /sites/1
-  # PUT /sites/1.xml
-  def update
-    @site = Site.find(params[:id])
-
-    respond_to do |format|
-      if @site.update_attributes(params[:site])
-        flash[:notice] = 'Site was successfully updated.'
-        format.html { redirect_to(page_url(@site.home_page)) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
       end
     end

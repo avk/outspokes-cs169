@@ -3,38 +3,12 @@ class Site < ActiveRecord::Base
   has_many :pages, :order => "created_at ASC", :dependent => :destroy
   belongs_to :account
 
-#  validates_presence_of :url
-#  validates_format_of :url, :with => URI.regexp(['http', 'https'])
-
   validates_presence_of :account_id
   validates_associated :account
   
   validate :has_valid_home_page
   
   before_validation :commit_home_page
-
-#  after_save :create_home_page
-#  after_update :update_home_page
-
-#   def self.create_new_site(home_url, options = {})
-#     s = Site.new(options)
-#     p = Page.new({ :url => home_url })
-#     begin
-#       Site.transaction do
-#         s.save_with_validation(false)
-#         p.site = s
-#         s.home_page = p
-# #        if (not p.save) or (not s.save)
-# #          raise ActiveRecord::Rollback, "Invalid site parameters" 
-#         s.save!
-#         p.save!
-# #        end
-#       end
-#     rescue
-#       return s
-#     end
-#     s
-#   end
 
   def home_page
     self.pages.first
@@ -55,10 +29,7 @@ class Site < ActiveRecord::Base
     end
   end
   
-  # TODO: Ideally we should be able to change the home page -- but do we create a new page
-  # and make it the first in the list (breaking our "created_at ASC" ordering scheme)
-  # or do we directly change the URL of the existing home_page object and all associated
-  # pages?  Do we delete associated pages?
+  # Can't change home_page once site is created.  Just delete it and make a new site
   def home_page=(page)
     if (home_page)
       errors.add_to_base("Cannot set the homepage of a site once created")
@@ -68,15 +39,15 @@ class Site < ActiveRecord::Base
   end
   
 
- protected
+
  def has_valid_home_page
-   if not self.pages.first or not self.pages.first.valid?
+   if !self.pages.first or !self.pages.first.valid?
      errors.add_to_base("Site must have a valid home_page to be valid")
    end
  end
  
  def commit_home_page
-   if (not home_page or not home_page.valid?)
+   if home_page and !home_page.valid?
      begin
        Site.transaction do
          save_with_validation(false)
@@ -89,11 +60,5 @@ class Site < ActiveRecord::Base
    end
    true
  end
-#   def create_home_page(page)
-#     self.pages << page
-#   end
-#  def update_home_page
-#    #self.pages.first = Page.new(:url => url)
-#  end
 
 end
