@@ -5,7 +5,7 @@ class CommentersController < ApplicationController
   # GET /pages/1/commenters
   # GET /pages/1/commenters.xml
   def index
-    @commenters = @page.commenters
+    @commenters = @page.commenters(:include => [:invites])
 
     respond_to do |format|
       format.html # index.html.erb
