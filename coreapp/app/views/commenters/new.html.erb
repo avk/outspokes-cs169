@@ -6,3 +6,8 @@
   <%= submit_tag 'Invite!' %>
 <% end %>
 
+<% unless @page.commenters.empty? %>
+	<%= link_to 'Cancel and go back to the list of commenters', page_commenters_path(@page) %>
+<% else %>
+	<%= link_to 'Messed up? Go back and edit your page', edit_page_path(@page) %>
+<% end %>

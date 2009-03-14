@@ -61,6 +61,7 @@
   			</td>
   		<% end %>
   		<% if page.account ==  current_account %>
+			<td><%= link_to 'Commenters', page_commenters_path(page) %></td>
   		<td><%= link_to 'Edit', edit_page_path(page) %></td>
       <td><%= link_to 'Delete', page, :confirm => 'Are you sure?', :method => :delete %></td>
   		<% end %>
