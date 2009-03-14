@@ -1,0 +1,5 @@
+	<% for comment in page.feedbacks %>
+		<tr><td> <%= comment.content %> </td></tr>
+   	<tr><td> Left by <%= comment.commenter.email %> at <%= comment.created_at %> </td></tr>
+	<%- end -%>
+

@@ -25,19 +25,13 @@
 	<table>
 	<%- for page in @page.site.pages -%>
 		<tr><th>Feedback for: <%=h page.url %></th></tr>
-		<% for comment in page.feedbacks %>
-			<tr><td> <%= comment.content %> </td></tr>
-	   	<tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
-		<%- end -%>
+		<%= render :partial => "feedback", :locals => { :page => page }%>
 	<%- end -%>
 	</table>
 
 <% else %>
 	<table>
-	<% for comment in @page.feedbacks %>
-	   <tr><td> <%= comment.content %> </td></tr>
-	   <tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
-	<% end %>
+	<%= render :partial => "feedback", :locals => {:page => @page } %>
 	</table>
 <%- end -%>
 
