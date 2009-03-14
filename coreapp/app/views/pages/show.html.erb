@@ -22,12 +22,14 @@
 </iframe>
 
 <%- if @page.site_id != nil -%>
-	<table>
+	<table style="width: 45em">
 	<%- for page in @page.site.pages -%>
 		<tr><th>Feedback for: <%=h page.url %></th></tr>
 		<% for comment in page.feedbacks %>
 			<tr><td> <%= comment.content %> </td></tr>
-	   	<tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
+	   		<tr><td style="font-size: .8em"> Left by <%= comment.commenter.email %> at <%= comment.created_at %>. 
+			<%= link_to 'Delete', page_feedback_path(page, comment), :confirm => "Are you sure you want to delete the comment from #{comment.commenter.email}?", :method => :delete %> 				
+			</td></tr>
 		<%- end -%>
 	<%- end -%>
 	</table>
@@ -36,7 +38,8 @@
 	<table>
 	<% for comment in @page.feedbacks %>
 	   <tr><td> <%= comment.content %> </td></tr>
-	   <tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> </td></tr>
+	   <tr><td> Left by <%= comment.commenter %> at <%= comment.created_at %> 
+		<%= link_to 'Delete', page_feedback_path(page, comment), :confirm => 'Are you sure?', :method => :delete %></td></tr>
 	<% end %>
 	</table>
 <%- end -%>
