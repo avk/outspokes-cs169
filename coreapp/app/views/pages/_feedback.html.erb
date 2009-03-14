@@ -1,6 +1,6 @@
 	<% for comment in page.feedbacks %>
-		<tr style="background-color: <%= color = cycle("#AFC5FF", "#EFFFAF") -%>;"><td> <%= comment.content %> 
-   	<blockquote style="float:right; margin: 0; font-style:oblique;"> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
+		<tr class="<%= rowclass = cycle("even", "odd") -%>"><td> <%= comment.content %> 
+   	<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
 </td> 
 <td>	<%= link_to 'Delete', page_feedback_path(page, comment), :confirm => "Are you sure you want to delete the comment by #{comment.commenter.email}?", :method => :delete %> </td></tr>
 	<%- end -%>
