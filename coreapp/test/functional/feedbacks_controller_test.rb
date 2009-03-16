@@ -9,15 +9,6 @@ class FeedbacksControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
   end
   
-  def gimme_json(callback)
-    # make sure the response is wrapped in the callback
-    assert @response.body.match "^#{callback}\\(\\{"
-    
-    # get at just the JSON data (i.e. strip the JS callback wrapping it)
-    json = @response.body.sub("#{callback}(", '').sub(/\);/, '')
-    json = JSON.parse(json)
-  end
-  
   def fix_date_fields(comments)
     # fix the date fields because the JSON gem doesn't convert them back into the native Ruby format
     date_columns = []
@@ -26,6 +17,22 @@ class FeedbacksControllerTest < ActionController::TestCase
       comments.each {|c| c[date_field] = c[date_field].to_json.gsub("\"", '') }
     end
     comments
+  end
+  
+  def validate_json(args)
+    callback = args.delete(:callback)
+    
+    # make sure the response is wrapped in the callback
+    assert @response.body.match "^#{callback}\\(\\{"
+    
+    # get at just the JSON data (i.e. strip the JS callback wrapping it)
+    json = @response.body.sub("#{callback}(", '').sub(/\);/, '')
+    json = JSON.parse(json)
+    
+    # e.g. assert json['authorized'] == true
+    args.each do |field_name, field_value|
+      assert json[field_name.to_s] == field_value
+    end
   end
   
   
@@ -37,9 +44,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => 'bullshit', :current_page => invite.page.url, :callback => callback
     
-    json = gimme_json(callback)
-    assert json['authorized'] == false
-    assert json['comments'] == comments
+    validate_json :callback => callback, :authorized => false, :comments => comments
   end
   
   test "should not list feedback for an invalid page" do
@@ -49,9 +54,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => 'bullshit', :callback => callback
     
-    json = gimme_json(callback)
-    assert json['authorized'] == false
-    assert json['comments'] == comments
+    validate_json :callback => callback, :authorized => false, :comments => comments
   end
 
   test "should not list feedback for a page a commenter hasn't been invited to" do
@@ -62,9 +65,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => uninvited_page_url, :callback => callback
     
-    json = gimme_json(callback)
-    assert json['authorized'] == false
-    assert json['comments'] == comments
+    validate_json :callback => callback, :authorized => false, :comments => comments
   end
   
   test "should render an empty list of feedback for a valid page that doesn't exist" do
@@ -75,9 +76,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => page_url, :callback => callback
     
-    json = gimme_json(callback)
-    assert json['authorized'] == true
-    assert json['comments'] == comments
+    validate_json :callback => callback, :authorized => true, :comments => comments
   end
   
   test "should not list feedback for a page given a callback that's not a valid JavaScript function name" do
@@ -110,10 +109,8 @@ class FeedbacksControllerTest < ActionController::TestCase
     assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
     get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback
     
-    json = gimme_json(callback)
-    assert json['authorized'] == true
     comments = fix_date_fields(comments)
-    assert json['comments'] == comments
+    validate_json :callback => callback, :authorized => true, :comments => comments
   end
   
   test "should destroy feedback" do
