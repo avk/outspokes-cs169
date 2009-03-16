@@ -19,7 +19,7 @@ class FeedbacksController < ApplicationController
       @authorized = true
       @site_url = invite.page.url
       if page = Page.find_by_url(@current_page)
-        @feedback = page.feedbacks.map { |f| f.public_attributes }
+        @feedback = page.feedbacks.map { |f| f.json_attributes }
       end
     end
     

@@ -9,18 +9,6 @@ class FeedbacksControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
   end
   
-  def fix_date_fields(feedback)
-    # fix the date fields because the JSON gem doesn't convert them back into the native Ruby format
-    date_columns = []
-    Feedback.columns.each {|c| date_columns << c.name if c.type.to_s.match /date|time|datetime|timestamp/ }
-    date_columns.each do |date_field|
-      if Feedback.public_attribute_names.include?(date_field)
-        feedback.each {|c| c[date_field] = c[date_field].to_json.gsub("\"", '') }
-      end
-    end
-    feedback
-  end
-  
   def validate_json(args)
     callback = args.delete(:callback)
     
@@ -33,7 +21,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     # e.g. assert json['authorized'] == true
     args.each do |field_name, field_value|
-      assert json[field_name.to_s] == field_value, "#{field_name} is set to #{json[field_name.to_s]} instead of #{field_value}"
+      assert json[field_name.to_s] == field_value, "#{field_name} is set to #{json[field_name.to_s].inspect} instead of #{field_value.inspect}"
     end
   end
   
@@ -106,12 +94,11 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should list feedback for page" do
     invite = invites(:one)
     callback = 'jsfeed'
-    feedback = invite.page.feedbacks.map { |f| f.public_attributes }
+    feedback = invite.page.feedbacks.map { |f| f.json_attributes }
     
     assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
     get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback
     
-    feedback = fix_date_fields(feedback)
     validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => invite.page.url
   end
   
