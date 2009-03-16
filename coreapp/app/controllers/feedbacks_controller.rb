@@ -23,7 +23,8 @@ class FeedbacksController < ApplicationController
     
     respond_to do |wants|
       wants.js do
-        @comments.map!{ |c| c.to_json }
+#        @comments.map!{ |c| c.to_json }
+        render :json => {:authorized => @authorized, :comments => @comments}, :callback => params[:callback]
       end
     end
   end

@@ -14,7 +14,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     assert @response.body.match "^#{callback}\\(\\{"
     
     # get at just the JSON data (i.e. strip the JS callback wrapping it)
-    json = @response.body.sub("#{callback}(", '').sub(/\);/, '')
+    json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
     json = JSON.parse(json)
   end
   
