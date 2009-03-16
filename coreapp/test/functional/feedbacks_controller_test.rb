@@ -9,14 +9,14 @@ class FeedbacksControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
   end
   
-  def fix_date_fields(comments)
+  def fix_date_fields(feedback)
     # fix the date fields because the JSON gem doesn't convert them back into the native Ruby format
     date_columns = []
     Feedback.columns.each {|c| date_columns << c.name if c.type.to_s.match /date|time|datetime|timestamp/ }
     date_columns.each do |date_field|
-      comments.each {|c| c[date_field] = c[date_field].to_json.gsub("\"", '') }
+      feedback.each {|c| c[date_field] = c[date_field].to_json.gsub("\"", '') }
     end
-    comments
+    feedback
   end
   
   def validate_json(args)
@@ -40,43 +40,43 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should not list feedback for an invalid URL token" do
     invite = invites(:one)
     callback = 'doesntmatter'
-    comments = []
+    feedback = []
     
     get :feedback_for_page, :url_token => 'bullshit', :current_page => invite.page.url, :callback => callback
     
-    validate_json :callback => callback, :authorized => false, :comments => comments
+    validate_json :callback => callback, :authorized => false, :feedback => feedback
   end
   
   test "should not list feedback for an invalid page" do
     invite = invites(:one)
     callback = 'doesntmatter'
-    comments = []
+    feedback = []
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => 'bullshit', :callback => callback
     
-    validate_json :callback => callback, :authorized => false, :comments => comments
+    validate_json :callback => callback, :authorized => false, :feedback => feedback
   end
 
   test "should not list feedback for a page a commenter hasn't been invited to" do
     invite = invites(:one)
     callback = 'notinvited'
-    comments = []
+    feedback = []
     uninvited_page_url = Page.find(:first, :conditions => [ "id != ?", invite.page.id ]).url
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => uninvited_page_url, :callback => callback
     
-    validate_json :callback => callback, :authorized => false, :comments => comments
+    validate_json :callback => callback, :authorized => false, :feedback => feedback
   end
   
   test "should render an empty list of feedback for a valid page that doesn't exist" do
     invite = invites(:one)
     callback = 'rover'
-    comments = []
+    feedback = []
     page_url = "http://" + URI.parse(invites(:one).page.url).host + "/nowayinhellshouldthisbeinourfixtures.xhtml"
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => page_url, :callback => callback
     
-    validate_json :callback => callback, :authorized => true, :comments => comments
+    validate_json :callback => callback, :authorized => true, :feedback => feedback
   end
   
   test "should not list feedback for a page given a callback that's not a valid JavaScript function name" do
@@ -104,13 +104,13 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should list feedback for page" do
     invite = invites(:one)
     callback = 'jsfeed'
-    comments = invite.page.feedbacks.map { |f| f.public_attributes }
+    feedback = invite.page.feedbacks.map { |f| f.public_attributes }
     
     assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
     get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback
     
-    comments = fix_date_fields(comments)
-    validate_json :callback => callback, :authorized => true, :comments => comments
+    feedback = fix_date_fields(feedback)
+    validate_json :callback => callback, :authorized => true, :feedback => feedback
   end
   
   test "should destroy feedback" do

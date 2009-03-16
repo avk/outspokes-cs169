@@ -11,19 +11,19 @@ class FeedbacksController < ApplicationController
     @current_page = params[:current_page]
     
     @authorized = false
-    @comments = []
+    @feedback = []
     
     invite = Invite.find_by_url_token(@url_token)
     if invite and same_domain?(invite.page.url, @current_page)
       @authorized = true
       if page = Page.find_by_url(@current_page)
-        @comments = page.feedbacks.map { |f| f.public_attributes }
+        @feedback = page.feedbacks.map { |f| f.public_attributes }
       end
     end
     
     respond_to do |wants|
       wants.js do
-        @comments.map!{ |c| c.to_json }
+        @feedback.map!{ |c| c.to_json }
       end
     end
   end
