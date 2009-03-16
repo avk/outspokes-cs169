@@ -11,20 +11,58 @@ class FeedbacksController < ApplicationController
     @current_page = params[:current_page]
     
     @authorized = false
-    @comments = []
+    @site_url = 'default'
+    @feedback = []
     
     invite = Invite.find_by_url_token(@url_token)
     if invite and same_domain?(invite.page.url, @current_page)
       @authorized = true
+      @site_url = invite.page.url
       if page = Page.find_by_url(@current_page)
-        @comments = page.feedbacks.map { |f| f.public_attributes }
+        @feedback = page.feedbacks.map { |f| f.json_attributes }
       end
     end
     
     respond_to do |wants|
       wants.js do
-#        @comments.map!{ |c| c.to_json }
-        render :json => {:authorized => @authorized, :comments => @comments}, :callback => params[:callback]
+        render :json => {:authorized => @authorized, :url => @site_url, :feedback => @feedback},
+               :callback => params[:callback]
+#        @feedback.map!{ |c| c.to_json }
+      end
+    end
+  end
+  
+  # PUT /feedback_for_page.js
+  # params[:url_token] => 'abcdef'
+  # params[:current_page] => 'http://hi.com/faq'
+  # params[:callback] => 'some_function'
+  # params[:target] => 'html'
+  # params[:content] => 'blah blah blah blah'
+  def new_feedback_for_page
+    feedback = []
+    current_page = params[:current_page]
+    token = params[:url_token]
+    target = params[:target]
+    authorized = false
+    site_url = 'none'
+    
+    invite = Invite.find_by_url_token token
+    if invite and same_domain?(invite.page.url, current_page)
+      authorized = true
+      # If this url is part of a site but a Page doesn't exist for it yet, create one
+      if (page = Page.find_by_url current_page) == nil && !invite.page.site.blank?
+        page = Page.new(:url => current_page)
+        invite.page.site.pages << page
+      end
+      site_url = invite.page.url
+      page.feedbacks << Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
+      feedback = page.feedbacks
+    end
+    
+    respond_to do |wants|
+      wants.js do
+        render :json => {:authorized => authorized, :url => site_url, :feedback => feedback},
+               :callback => params[:callback]
       end
     end
   end

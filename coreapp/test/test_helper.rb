@@ -116,7 +116,7 @@ class Test::Unit::TestCase
   def valid_options_for_feedback
     page = pages(:one)
     commenter = commenters(:one)
-    { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id }
+    { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html' }
   end
   
   def create_feedback(options={})

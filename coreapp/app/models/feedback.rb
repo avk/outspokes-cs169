@@ -1,4 +1,5 @@
 class Feedback < ActiveRecord::Base
+  
   belongs_to :commenter
   belongs_to :page
   
@@ -10,12 +11,30 @@ class Feedback < ActiveRecord::Base
   
   validates_presence_of :content, :allow_blank => false
   
-  def self.public_attribute_names
-    %w(created_at updated_at content)
+  validates_presence_of :target, :allow_blank => false
+  
+  def self.json_attribute_names
+    %w(feedback_id name timestamp content target)
   end
   
-  def public_attributes
-    attributes.delete_if { |attribute, value| !Feedback.public_attribute_names.include?(attribute) }
+  def json_attributes
+    json_atts = {}
+    
+    Feedback.json_attribute_names.each do |attr|
+      case attr
+      when 'feedback_id'
+        json_atts['feedback_id'] = id
+      when 'name'
+        json_atts['name'] = commenter.email
+      when 'timestamp'
+        json_atts['timestamp'] = created_at.to_i
+      else
+        json_atts[attr] = self[attr.to_sym]
+      end
+    end
+    
+    json_atts
   end
+  
   
 end

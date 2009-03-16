@@ -1,6 +1,7 @@
 <%= @callback %>({
   "authorized":<%= @authorized %>,
-  "comments":[
-    <%= @comments.join(", \n\t") %>
+  "url":"<%= @site_url %>",
+  "feedback":[
+    <%= @feedback.join(", \n\t") %>
   ]
 });

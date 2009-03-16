@@ -29,11 +29,25 @@ class FeedbackTest < ActiveSupport::TestCase
     assert !feedback.valid?
   end
   
-  test "should expose certain attributes as public" do
-    public_atts = %w(created_at updated_at content)
-    assert Feedback.public_attribute_names.sort == public_atts.sort
-    
-    feedback = create_feedback
-    assert feedback.public_attributes.keys.sort == public_atts.sort
+  test "should have a target" do
+    feedback = create_feedback(:target => '')
+    assert !feedback.valid?
   end
+  
+  test "should expose certain attributes for json" do
+    feedback = create_feedback
+    json_atts = {
+      "feedback_id" => feedback.id,
+      "name" => feedback.commenter.email,
+      "timestamp" => feedback.created_at.to_i,
+      "content" => feedback.content,
+      "target" => feedback.target
+    }
+    
+    assert Feedback.json_attribute_names.sort == json_atts.keys.sort
+    feedback.json_attributes.each do |key, value|
+      assert json_atts[key] == value
+    end
+  end
+  
 end
