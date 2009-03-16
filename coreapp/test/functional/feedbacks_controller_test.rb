@@ -109,7 +109,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_difference "page.feedbacks.count" do
-      put :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
   end
@@ -122,7 +122,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     new_url = page.url + "/ASDFWUTLOL.asp.html"
     
     assert_difference "Page.count" do
-      put :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, 
           :current_page => new_url, :callback => callback, :content => content, :target => "html"
     end
     new_page = Page.find_by_url new_url
@@ -137,7 +137,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_no_difference "page.feedbacks.count" do
-      put :new_feedback_for_page, :url_token => "LOL!!!!!", 
+      post :new_feedback_for_page, :url_token => "LOL!!!!!", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
   end
