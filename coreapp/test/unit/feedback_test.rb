@@ -29,6 +29,11 @@ class FeedbackTest < ActiveSupport::TestCase
     assert !feedback.valid?
   end
   
+  test "should have a target" do
+    feedback = create_feedback(:target => '')
+    assert !feedback.valid?
+  end
+  
   test "should expose certain attributes as public" do
     public_atts = %w(created_at updated_at content)
     assert Feedback.public_attribute_names.sort == public_atts.sort

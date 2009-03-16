@@ -10,6 +10,8 @@ class Feedback < ActiveRecord::Base
   
   validates_presence_of :content, :allow_blank => false
   
+  validates_presence_of :target, :allow_blank => false
+  
   def self.public_attribute_names
     %w(created_at updated_at content)
   end
