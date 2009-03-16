@@ -13,7 +13,7 @@ class Feedback < ActiveRecord::Base
   validates_presence_of :target, :allow_blank => false
   
   def self.public_attribute_names
-    %w(created_at updated_at content)
+    %w(id created_at content target)
   end
   
   def public_attributes

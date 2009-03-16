@@ -35,7 +35,7 @@ class FeedbackTest < ActiveSupport::TestCase
   end
   
   test "should expose certain attributes as public" do
-    public_atts = %w(created_at updated_at content)
+    public_atts = %w(id created_at content target)
     assert Feedback.public_attribute_names.sort == public_atts.sort
     
     feedback = create_feedback
