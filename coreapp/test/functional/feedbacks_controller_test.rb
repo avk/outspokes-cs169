@@ -31,7 +31,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     # e.g. assert json['authorized'] == true
     args.each do |field_name, field_value|
-      assert json[field_name.to_s] == field_value
+      assert json[field_name.to_s] == field_value, "#{field_name} is set to #{json[field_name.to_s]} instead of #{field_value}"
     end
   end
   
@@ -44,7 +44,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => 'bullshit', :current_page => invite.page.url, :callback => callback
     
-    validate_json :callback => callback, :authorized => false, :feedback => feedback
+    validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'default'
   end
   
   test "should not list feedback for an invalid page" do
@@ -54,7 +54,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => 'bullshit', :callback => callback
     
-    validate_json :callback => callback, :authorized => false, :feedback => feedback
+    validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'default'
   end
 
   test "should not list feedback for a page a commenter hasn't been invited to" do
@@ -65,7 +65,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => uninvited_page_url, :callback => callback
     
-    validate_json :callback => callback, :authorized => false, :feedback => feedback
+    validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'default'
   end
   
   test "should render an empty list of feedback for a valid page that doesn't exist" do
@@ -76,7 +76,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => page_url, :callback => callback
     
-    validate_json :callback => callback, :authorized => true, :feedback => feedback
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => invite.page.url
   end
   
   test "should not list feedback for a page given a callback that's not a valid JavaScript function name" do
@@ -110,7 +110,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback
     
     feedback = fix_date_fields(feedback)
-    validate_json :callback => callback, :authorized => true, :feedback => feedback
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => invite.page.url
   end
   
   test "should destroy feedback" do

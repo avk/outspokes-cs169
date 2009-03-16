@@ -11,11 +11,13 @@ class FeedbacksController < ApplicationController
     @current_page = params[:current_page]
     
     @authorized = false
+    @site_url = 'default'
     @feedback = []
     
     invite = Invite.find_by_url_token(@url_token)
     if invite and same_domain?(invite.page.url, @current_page)
       @authorized = true
+      @site_url = invite.page.url
       if page = Page.find_by_url(@current_page)
         @feedback = page.feedbacks.map { |f| f.public_attributes }
       end
