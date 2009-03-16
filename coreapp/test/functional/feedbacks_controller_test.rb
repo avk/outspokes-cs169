@@ -14,7 +14,9 @@ class FeedbacksControllerTest < ActionController::TestCase
     date_columns = []
     Feedback.columns.each {|c| date_columns << c.name if c.type.to_s.match /date|time|datetime|timestamp/ }
     date_columns.each do |date_field|
-      feedback.each {|c| c[date_field] = c[date_field].to_json.gsub("\"", '') }
+      if Feedback.public_attribute_names.include?(date_field)
+        feedback.each {|c| c[date_field] = c[date_field].to_json.gsub("\"", '') }
+      end
     end
     feedback
   end
