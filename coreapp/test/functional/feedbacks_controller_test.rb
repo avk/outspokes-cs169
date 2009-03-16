@@ -142,6 +142,54 @@ class FeedbacksControllerTest < ActionController::TestCase
     end
   end
   
+  test "should add feedback to correct standalone page" do
+    invite = invites(:page)
+    callback = 'jsfeed'
+    page = invite.page
+    assert page.site.blank?, "We're testing a standalone page here"
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, 
+          :current_page => page.url, :callback => callback, :content => content, :target => "html"
+    end
+  end
+  
+  test "do not add feedback to a Page like a Site" do
+    invite = invites(:page)
+    callback = 'jsfeed'
+    page = invite.page
+    assert page.site.blank?, "We're testing a standalone page here"
+    content = "derrrrrr"
+    
+    assert_no_difference "page.feedbacks.count", "Page.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, 
+          :current_page => page.url + "/lolololol", :callback => callback, :content => content, :target => "html"
+    end
+  end
+  
+  test "add feedback to correct standalone Page" do
+    invite = invites(:page)
+    callback = 'jsfeed'
+    assert invite.page.site.blank?, "test against another standalone page"
+    # duplicate page from invite w/ new invite
+    new_page = Page.create(:account => commenters(:aaron), :url => invite.page.url)
+    new_invite = Invite.create(:page => new_page, :commenter => commenters(:two))
+    content = "derrrrrr"
+    wrong_page_feedback_count = invite.page.feedbacks.count
+    assert_difference "new_page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => new_invite.url_token, 
+          :current_page => new_page.url, :callback => callback, :content => content, :target => "html"
+    end
+    assert wrong_page_feedback_count == invite.page.feedbacks.count
+    # now go other direction
+    assert_no_difference "new_page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, 
+          :current_page => invite.page.url, :callback => callback, :content => content, :target => "html"
+    end
+    assert invite.page.feedbacks.count == wrong_page_feedback_count + 1
+  end
+  
   test "should destroy feedback" do
     feedback = feedbacks(:one)
     page = feedback.page

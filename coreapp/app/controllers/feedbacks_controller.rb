@@ -48,18 +48,23 @@ class FeedbacksController < ApplicationController
     target = params[:target]
     authorized = false
     site_url = 'none'
+    page = nil
     
     invite = Invite.find_by_url_token token
     if invite and same_domain?(invite.page.url, current_page)
-      authorized = true
+      if invite.page.site.blank?
+        page = invite.page if invite.page.url == current_page
       # If this url is part of a site but a Page doesn't exist for it yet, create one
-      if (page = Page.find_by_url current_page) == nil && !invite.page.site.blank?
+      elsif (page = invite.page.site.pages.find_by_url current_page) == nil
         page = Page.new(:url => current_page)
         invite.page.site.pages << page
       end
-      site_url = invite.page.url
-      page.feedbacks << Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
-      feedback = page.feedbacks
+      if !page.nil?
+        authorized = true
+        site_url = invite.page.url
+        page.feedbacks << Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
+        feedback = page.feedbacks.map { |f| f.json_attributes }
+      end
     end
     
     respond_to do |wants|
