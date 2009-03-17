@@ -115,7 +115,7 @@ var fb = {
     fb.el.main_fb_window.comments.body = fb.div();
     fb.el.main_fb_window.comments.foot = fb.div();
     fb.el.main_fb_window.comments.foot.html(
-     '<form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="_blank">\
+     '<form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
         Comment: <input type="text" name="content">\
         <input type="submit" value="Submit">\
         <input type="hidden" name="current_page" value="'+fb.env.current_page+'">\
@@ -134,9 +134,11 @@ var fb = {
     fb.el.iframe = document.createElement("iframe");
     fb.el.iframe.setAttribute("name", "fb_iframe");
     fb.el.iframe.setAttribute("id", "fb_iframe");
-    fb.el.iframe.setAttribute("src", "");
-    fb.el.iframe.style.width.value = "1";
-    fb.el.iframe.style.height.value = "1";
+    fb.el.iframe.setAttribute("height", "10");
+    fb.el.iframe.setAttribute("width", "10");
+    fb.el.iframe.setAttribute("display", "none");
+    fb.el.iframe.setAttribute("visibility", "hidden");
+
     document.body.appendChild(fb.el.iframe);
   },
   
