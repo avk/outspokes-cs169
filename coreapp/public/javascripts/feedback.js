@@ -31,7 +31,8 @@ var fb = {
     "init":false,
     // A reference to the main <body> tag
     "body":$(document.body),
-    "current_page":window.location.href,
+	// Current URL with parameters removed
+    "current_page":window.location.href.split("?")[0],
     // To be set after the first get
     "url":null,
     "comments":{}
