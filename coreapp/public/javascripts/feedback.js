@@ -31,8 +31,7 @@ var fb = {
     "init":false,
     // A reference to the main <body> tag
     "body":$(document.body),
-	// Current URL with parameters removed
-    "current_page":window.location.href.split("?")[0],
+    "current_page":null,
     // To be set after the first get
     "url":null,
     "comments":{}
@@ -40,12 +39,20 @@ var fb = {
 
   // Initializes the environment, performing the inital GET of comments
   // and validation.
-  init: function(testing){
+  init: function(testing, options){
     // Do not re-initialize
     if (fb.env.init) {
       return;
     }
+    // Current URL with parameters removed.
+    fb.env.current_page = window.location.href.split("?")[0];
     fb.env.testing = (testing) ? true : false;
+    if (fb.env.testing) {
+      if (options.current_page) {
+        fb.env.current_page = options.current_page;
+        fb.env.testing = false;
+      }
+    }
     fb.env.url_token = $.cookie('fb_url_token') || fb.$.getParams('url_token');
     // If url_token is non-existent, we're done.
     if (!fb.env.url_token) {
@@ -70,18 +77,20 @@ var fb = {
   getComments: function() {
     var params = {
       'url_token': fb.env.url_token,
-      'current_page': fb.env.current_page };
+      'current_page': fb.env.current_page};
     var str = $.param(params);
-	// jQuery.getJSON requires the "?" on callback to be unescaped
-	str += "&callback=?"
+    // jQuery.getJSON requires the "?" on callback to be unescaped
+    str += "&callback=?"
     if (fb.env.testing) {
       fb.getComments_callback(fb.env.testingData);
       return;
     }
+    console.log(str);
     $.getJSON("http://localhost:3000/feedback_for_page.js?"+str, fb.getComments_callback);
   },
 
   getComments_callback: function(data) {
+    console.log(data);
     if (!fb.env.init) {
       fb.env.logged_in = data.authorized;
       if (!fb.env.logged_in) {
@@ -89,7 +98,7 @@ var fb = {
         return;
       }
       fb.env.url = data.url;
-      $.cookie("fb_"+fb.env.url,fb.env.url_token);
+      $.cookie("fb_url_token");
       fb.draw_main_fb_window_and_icon();
     }
     if (fb.env.logged_in) {
@@ -444,6 +453,12 @@ var fb = {
 // Note, this must be the last call on this page.
 fb.$(function() {
   // Argument true for testing
-  fb.init(false);
+  // fb.init(true);
+
+  // Second argument to set the current page's url (in js's eyes)
+//  fb.init(true , {current_page:"http://google.com"});
+
+  // No test, standard init
+   fb.init(false);
 });
 
