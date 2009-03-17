@@ -69,9 +69,10 @@ var fb = {
   getComments: function() {
     var params = {
       'url_token': fb.env.url_token,
-      'current_page': fb.env.current_page,
-      'callback': "?"};
+      'current_page': fb.env.current_page };
     var str = $.param(params);
+	// jQuery.getJSON requires the "?" on callback to be unescaped
+	str += "&callback=?"
     if (fb.env.testing) {
       fb.getComments_callback(fb.env.testingData);
       return;
