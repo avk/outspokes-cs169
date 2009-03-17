@@ -104,6 +104,7 @@ protected
     # - Cannot be a JavaScript keyword
     
     @callback = params[:callback]
+    return if @callback.nil? # no callback should be OK -- return plain JSON
     render :text => '{}' unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
   end
   
