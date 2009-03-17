@@ -1,6 +1,6 @@
 class FeedbacksController < ApplicationController
 
-  before_filter :validate_callback, :only => [:feedback_for_page]
+  before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page]
   
   # Authenticity Token doesn't work with random JS calls unless we want to somehow hack that in to js?
   skip_before_filter :verify_authenticity_token, :only => :new_feedback_for_page
@@ -29,8 +29,7 @@ class FeedbacksController < ApplicationController
     respond_to do |wants|
       wants.js do
         render :json => {:authorized => @authorized, :url => @site_url, :feedback => @feedback},
-               :callback => params[:callback]
-#        @feedback.map!{ |c| c.to_json }
+               :callback => @callback
       end
     end
   end
@@ -70,7 +69,7 @@ class FeedbacksController < ApplicationController
     respond_to do |wants|
       wants.js do
         render :json => {:authorized => authorized, :url => site_url, :feedback => feedback},
-               :callback => params[:callback]
+               :callback => @callback
       end
     end
   end
