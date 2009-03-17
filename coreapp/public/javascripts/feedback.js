@@ -154,7 +154,7 @@ var fb = {
     var rtn = fb.div().attr('style','width:100%');
     rtn.append(c.name + "<br />");
     rtn.append(c.content + "<br />");
-    rtn.append(c.timestamp + "<br />");
+    rtn.append(Date(c.timestamp) + "<br />");
     rtn.append("<hr style='width:80%'/><br />");
     if (c.target != "html" && c.target != "html > body") {
       var tmp = $(c.target)[0];
@@ -444,6 +444,6 @@ var fb = {
 // Note, this must be the last call on this page.
 fb.$(function() {
   // Argument true for testing
-  fb.init(true);
+  fb.init(false);
 });
 
