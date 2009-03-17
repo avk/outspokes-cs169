@@ -115,9 +115,13 @@ var fb = {
     fb.el.main_fb_window.comments.body = fb.div();
     fb.el.main_fb_window.comments.foot = fb.div();
     fb.el.main_fb_window.comments.foot.html(
-     '<form name="newcomment" action="form_action" method="post" onSubmit="return fb.post_comment(this)">\
-        Comment: <input type="text" name="comment"\
-        <input type="submit" value="Submit" ">\
+     '<form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="_blank">\
+        Comment: <input type="text" name="content">\
+        <input type="submit" value="Submit">\
+        <input type="hidden" name="current_page" value="'+fb.env.current_page+'">\
+        <input type="hidden" name="url_token" value="'+fb.env.url_token+'">\
+        <input type="hidden" name="callback" value="callback">\
+        <input type="hidden" name="target" value="html">\
       </form>');
     $.each(fb.el.main_fb_window.comments,function(){
       fb.el.main_fb_window.append(this);
@@ -125,6 +129,20 @@ var fb = {
     $(document.body).prepend(fb.el.comment_icon);
     fb.el.comment_icon.click(fb.toggle_main_fb_window_and_icon);
     fb.el.main_fb_window.build({onClose:fb.toggle_main_fb_window_and_icon}, false);
+    
+    //build iframe to direct form response to
+    fb.el.iframe = document.createElement("iframe");
+    fb.el.iframe.setAttribute("name", "fb_iframe");
+    fb.el.iframe.setAttribute("id", "fb_iframe");
+    fb.el.iframe.setAttribute("src", "");
+    fb.el.iframe.style.width.value = "1";
+    fb.el.iframe.style.height.value = "1";
+    document.body.appendChild(fb.el.iframe);
+  },
+  
+  post_comment: function(form){
+      //this function will end up posting the form. for now it's just a dummy function.
+      return true;
   },
 
   toggle_main_fb_window_and_icon: function(){
@@ -444,6 +462,6 @@ var fb = {
 // Note, this must be the last call on this page.
 fb.$(function() {
   // Argument true for testing
-  fb.init(true);
+  fb.init(false);
 });
 
