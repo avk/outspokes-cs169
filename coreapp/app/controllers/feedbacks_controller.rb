@@ -67,6 +67,13 @@ class FeedbacksController < ApplicationController
     end
     
     respond_to do |wants|
+      wants.html do
+        if params[:windowname]
+          @json_data =  {:authorized => authorized, :url => site_url, :feedback => feedback}.to_json
+        else
+          render :text => "no output information"
+        end
+      end
       wants.js do
         render :json => {:authorized => authorized, :url => site_url, :feedback => feedback},
                :callback => @callback

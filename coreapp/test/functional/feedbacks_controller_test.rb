@@ -109,7 +109,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
     
@@ -125,7 +125,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     new_url = page.url + "/ASDFWUTLOL.asp.html"
     
     assert_difference "Page.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => new_url, :callback => callback, :content => content, :target => "html"
     end
     new_page = Page.find_by_url new_url
@@ -145,7 +145,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = []#page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => "LOL!!!!!", 
+      post :new_feedback_for_page, :url_token => "LOL!!!!!", :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
     
@@ -161,7 +161,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = []#invite.page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => "bullshit", :callback => callback, :content => content, :target => "html"
     end
     
@@ -186,7 +186,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     illegal_callbacks = illegal_chars + keywords + spaces
     illegal_callbacks.each do |callback|
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
            :current_page => invite.page.url, :callback => callback, :content => 'doesn\'t matter', :target => "html"
       assert @response.body == '{}'
     end
@@ -200,7 +200,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => '', :target => "html"
     end
     
@@ -217,7 +217,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => 'anything at all', :target => ''
     end
     
@@ -235,7 +235,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     assert_difference "page.feedbacks.count" do
       assert_no_difference "Page.count" do
-        post :new_feedback_for_page, :url_token => invite.url_token, 
+        post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
              :current_page => page.url, :callback => callback, :content => content, :target => "html"
       end
     end
@@ -254,12 +254,40 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = []#page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "page.feedbacks.count", "Page.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js",
           :current_page => page.url + "/lolololol", :callback => callback, :content => content, :target => "html"
     end
     
     # TODO: not clear what feedback should be at this point
     validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'none'
+  end
+  
+  test "should render an html template when posting with windowname=true" do
+    invite = invites(:one)
+    callback = 'jsfeed'
+    page = invite.page
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, :current_page => page.url,
+           :callback => callback, :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    
+    assert_template "new_feedback_for_page"
+  end
+  
+  test "should respond with sane error if html requested but no windowname mode" do
+    invite = invites(:one)
+    callback = 'jsfeed'
+    page = invite.page
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, :current_page => page.url,
+           :callback => callback, :content => content, :target => "html", :format => "html" 
+    end
+    
+    assert_response :success
   end
   
   test "should destroy feedback" do
