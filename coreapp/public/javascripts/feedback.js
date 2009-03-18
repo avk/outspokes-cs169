@@ -130,7 +130,7 @@ var fb = {
       <form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
         Comment:<br />\
         <textarea name="content" cols="40" rows="10" /><br />\
-        <input type="submit" value="Submit" />\
+        <input type="submit" value="Submit" />&nbsp;&nbsp;<span onmouseup="fb.select_target()">Select target</span>\
         <input type="hidden" name="current_page" value="'+fb.env.current_page+'" />\
         <input type="hidden" name="url_token" value="'+fb.env.url_token+'" />\
         <input type="hidden" name="callback" value="callback" />\
@@ -222,16 +222,22 @@ var fb = {
     el = $(el);
     var par = el.wrap("<div></div>").parent();
     over = function() {
-      par.css({
-        'border':'3px solid green',
-        'margin':'-3px'});
+      par.css('outline','green solid 3px');
     }
     out = function() {
-      par.css({
-        'border-style':'none',
-        'margin':'0px'});
+      par.css('outline-style','none');
     }
     return [over, out];
+  },
+
+  select_target: function() {
+    fb.el.main_fb_window.iconize();
+    fb.el.main_fb_window.comments.foot.find("span").html("Change target");
+    var func = function(e) {
+      fb.el.main_fb_window.comments.foot.find("input[name='target']").attr("value",$(e.target).getPath());
+      fb.el.main_fb_window.uniconize();
+    }
+    $('#content').one('click', func);
   },
 
   // Constructor for an empty div element
@@ -388,6 +394,10 @@ var fb = {
   fb.Container.prototype.iconize = function() {
     this.container.iconize(this.opts);
   }
+
+  fb.Container.prototype.uniconize = function() {
+    this.container.find(".restoreContainer:first").click();
+  }
 })(fb.$);
 
 // To deal with the conflict issue regarding including jQuery, we will,
@@ -413,11 +423,9 @@ var fb = {
       }
       var path = "";
       var num;
-      var numStr;
       do {
         num = el.prevAll(el[0].tagName).length;
-        numStr = (num == 0) ? "" : ":eq(" + num + ")";
-        path = " > " + el[0].tagName.toLowerCase() + numStr + path;
+        path = " > " + el[0].tagName.toLowerCase() + ":eq(" + el.prevAll(el[0].tagName).length + ")" + path;
         el = $(el[0].parentNode);
       } while (el[0] != document.documentElement);
       path = "html" + path;
