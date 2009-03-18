@@ -89,7 +89,9 @@ class FeedbacksController < ApplicationController
 protected
 
   def same_domain?(url1, url2)
-    URI.parse(url1).host == URI.parse(url2).host
+    puts URI.parse(url1).host_and_port() 
+    puts URI.parse(url2).host_and_port()
+    URI.parse(url1).host_and_port() == URI.parse(url2).host_and_port()
   end
 
   def validate_callback
