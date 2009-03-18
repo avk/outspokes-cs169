@@ -98,7 +98,9 @@ var fb = {
         return;
       }
       fb.env.url = data.url;
-      $.cookie("fb_url_token");
+      if (!$.cookie("fb_url_token")) {
+        $.cookie("fb_url_token", fb.env.url_token);
+      }
       fb.draw_main_fb_window_and_icon();
     }
     if (fb.env.logged_in) {
@@ -402,12 +404,12 @@ var fb = {
     },
 
     // Fetches parameters from the URL.
-    // $.getParameter() will return an object containing all parameters in
+    // $.getParams() will return an object containing all parameters in
     //   the URL.  The keys will be the names of the parameters, and the
     //   values will be the values of the respective parameters.
-    // $.getParameter(name) will return the value of the parameter with name
+    // $.getParams(name) will return the value of the parameter with name
     //   name, or false if it DNE.
-    // $.getParameter(name1,name2,name3,...) will return an object whose keys
+    // $.getParams(name1,name2,name3,...) will return an object whose keys
     //   are name1, name2, name3, ... and whose values are the respective values
     //   or false if a parameter of the given name DNE.
     getParams: function(param) {
