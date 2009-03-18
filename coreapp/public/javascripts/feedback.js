@@ -54,7 +54,7 @@ var fb = {
         fb.env.testing = false;
       }
     }
-    fb.env.url_token = $.cookie('fb_url_token') || fb.$.getParams('url_token');
+    fb.env.url_token = fb.$.getParams('url_token') || $.cookie('fb_url_token');
     // If url_token is non-existent, we're done.
     if (!fb.env.url_token) {
       fb.init_part2();
