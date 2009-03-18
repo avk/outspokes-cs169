@@ -232,14 +232,14 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     assert page.site.blank?, "We're testing a standalone page here"
     content = "HUH THIS SITE IS LAME YO"
-    
+
     assert_difference "page.feedbacks.count" do
       assert_no_difference "Page.count" do
         post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
              :current_page => page.url, :callback => callback, :content => content, :target => "html"
       end
     end
-    
+
     feedback = page.feedbacks.map { |f| f.json_attributes }
     validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => page.url
   end
