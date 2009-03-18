@@ -34,7 +34,8 @@ var fb = {
     "current_page":null,
     // To be set after the first get
     "url":null,
-    "comments":{}
+    "comments":{},
+    "comments_posted":new Array(),
   },
 
   // Initializes the environment, performing the inital GET of comments
@@ -53,13 +54,14 @@ var fb = {
         fb.env.testing = false;
       }
     }
-    fb.env.url_token = $.cookie('fb_url_token') || fb.$.getParams('url_token');
+    fb.env.url_token = fb.$.getParams('url_token') || $.cookie('fb_url_token');
     // If url_token is non-existent, we're done.
     if (!fb.env.url_token) {
       fb.init_part2();
     }
     fb.getComments();
-    // We are not actually done.  After getting the comments, 
+    // We are not actually done.  After getting the comments, we still need
+    // to perform the validation, render the comments, and then set fb.env.init
     return;
   },
 
@@ -85,12 +87,10 @@ var fb = {
       fb.getComments_callback(fb.env.testingData);
       return;
     }
-    console.log(str);
     $.getJSON("http://localhost:3000/feedback_for_page.js?"+str, fb.getComments_callback);
   },
 
   getComments_callback: function(data) {
-    console.log(data);
     if (!fb.env.init) {
       fb.env.logged_in = data.authorized;
       if (!fb.env.logged_in) {
@@ -107,7 +107,7 @@ var fb = {
       fb.render_comments(data.feedback);
     }
     if (!fb.env.init) {
-      fb.init_part2;
+      fb.init_part2();
       return;
     }
     return;
@@ -126,13 +126,15 @@ var fb = {
     fb.el.main_fb_window.comments.body = fb.div();
     fb.el.main_fb_window.comments.foot = fb.div();
     fb.el.main_fb_window.comments.foot.html(
-     '<form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
-        Comment: <input type="text" name="content">\
-        <input type="submit" value="Submit">\
-        <input type="hidden" name="current_page" value="'+fb.env.current_page+'">\
-        <input type="hidden" name="url_token" value="'+fb.env.url_token+'">\
-        <input type="hidden" name="callback" value="callback">\
-        <input type="hidden" name="target" value="html">\
+     '<a href="#" onclick="fb.getComments()">Refresh comments</a>\
+      <form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
+        Comment:<br />\
+        <textarea name="content" cols="40" rows="10" /><br />\
+        <input type="submit" value="Submit" />&nbsp;&nbsp;<span onmouseup="fb.select_target()">Select target</span>\
+        <input type="hidden" name="current_page" value="'+fb.env.current_page+'" />\
+        <input type="hidden" name="url_token" value="'+fb.env.url_token+'" />\
+        <input type="hidden" name="callback" value="callback" />\
+        <input type="hidden" name="target" value="html" />\
       </form>');
     $.each(fb.el.main_fb_window.comments,function(){
       fb.el.main_fb_window.append(this);
@@ -154,8 +156,15 @@ var fb = {
   },
   
   post_comment: function(form){
-      //this function will end up posting the form. for now it's just a dummy function.
-      return true;
+    var x = new Object();
+    x.content = form.content.value;
+    x.target = form.target.value;
+    x.timestamp = (new Date()).getTime();
+    x.name = "";
+    x.obj = fb.build_comment(x);
+    fb.env.comments_posted.push(x);
+    fb.el.main_fb_window.comments.body.append(x.obj);
+    return true;
   },
 
   toggle_main_fb_window_and_icon: function(){
@@ -166,24 +175,38 @@ var fb = {
 
 	render_comments: function(comments){
     var c, x;
-    fb.el.main_fb_window.hide();
+    var b;
     for (i in comments) {
+      b = false;
       c = comments[i];
-      if (fb.env.comments[c.feedback_id]) {
-        fb.env.comments[c.feedback_id].posted = true;
-        continue;
+      // If we are already displaying this comment, continue
+      if (fb.env.comments[c.feedback_id]) {continue;}
+      // Check all comments whose status is not yet verified
+      for (i in fb.env.comments_posted) {
+        x = fb.env.comments_posted[i];
+        // If posted comment x was persisted to the database
+        if (x.content == c.content) {
+          // Update the name
+          x.obj.find("div:eq(0)").html(c.name);
+          // Copy the DOM element to the comments array
+          fb.env.comments[c.feedback_id] = x.obj;
+          // And remove the element from comments_posted
+          fb.env.comments_posted.splice(i,1);
+          // We don't want to do anything else for this comment
+          b = true;
+          break;
+        }
       }
+      if (b) {continue;}
       x = fb.build_comment(c);
-      fb.env.comments[c.feedback_id] = new Object();
-      fb.env.comments[c.feedback_id].obj = x;
-      fb.env.comments[c.feedback_id].posted = true;
+      fb.env.comments[c.feedback_id] = x;
       fb.el.main_fb_window.comments.body.append(x);
     }
   },
 
   build_comment: function(c) {
     var rtn = fb.div().attr('style','width:100%');
-    rtn.append(c.name + "<br />");
+    rtn.append("<div>" + c.name + "</div><br />");
     rtn.append(c.content + "<br />");
     rtn.append(Date(c.timestamp) + "<br />");
     rtn.append("<hr style='width:80%'/><br />");
@@ -199,16 +222,22 @@ var fb = {
     el = $(el);
     var par = el.wrap("<div></div>").parent();
     over = function() {
-      par.css({
-        'border':'3px solid green',
-        'margin':'-3px'});
+      par.css('outline','green solid 3px');
     }
     out = function() {
-      par.css({
-        'border-style':'none',
-        'margin':'0px'});
+      par.css('outline-style','none');
     }
     return [over, out];
+  },
+
+  select_target: function() {
+    fb.el.main_fb_window.iconize();
+    fb.el.main_fb_window.comments.foot.find("span").html("Change target");
+    var func = function(e) {
+      fb.el.main_fb_window.comments.foot.find("input[name='target']").attr("value",$(e.target).getPath());
+      fb.el.main_fb_window.uniconize();
+    }
+    $(document.body).one('click', func);
   },
 
   // Constructor for an empty div element
@@ -285,8 +314,6 @@ var fb = {
     cstr2 = (cstr2 == " {") ? "" : cstr2.slice(0,cstr2.length - 2) + "}";
     cstr += cstr2;
     var styleStr = (o['style']) ? o['style'] : "";
-    console.log(cstr);
-    console.log(styleStr);
     properties["className"] = cstr;
     if (!(styleStr == "")) {
       properties["style"] = styleStr;
@@ -367,6 +394,10 @@ var fb = {
   fb.Container.prototype.iconize = function() {
     this.container.iconize(this.opts);
   }
+
+  fb.Container.prototype.uniconize = function() {
+    this.container.find(".restoreContainer:first").click();
+  }
 })(fb.$);
 
 // To deal with the conflict issue regarding including jQuery, we will,
@@ -392,11 +423,9 @@ var fb = {
       }
       var path = "";
       var num;
-      var numStr;
       do {
         num = el.prevAll(el[0].tagName).length;
-        numStr = (num == 0) ? "" : ":eq(" + num + ")";
-        path = " > " + el[0].tagName.toLowerCase() + numStr + path;
+        path = " > " + el[0].tagName.toLowerCase() + ":eq(" + el.prevAll(el[0].tagName).length + ")" + path;
         el = $(el[0].parentNode);
       } while (el[0] != document.documentElement);
       path = "html" + path;
@@ -475,14 +504,12 @@ var fb = {
 // Note, this must be the last call on this page.
 fb.$(function() {
   // Argument true for testing
-
   // fb.init(true);
 
   // Second argument to set the current page's url (in js's eyes)
-//  fb.init(false , {current_page:"http://google.com"});
-
+  fb.init(true , {current_page:"http://google.com"});
 
   // No test, standard init
-   fb.init(false);
+  // fb.init();
 });
 
