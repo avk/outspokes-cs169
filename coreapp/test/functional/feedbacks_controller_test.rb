@@ -23,12 +23,11 @@ class FeedbacksControllerTest < ActionController::TestCase
     def validate_post_fail
       json_string = @response.body.match(/.*window.name='(.+)'/)[1]
       obj = JSON.parse(json_string)
-      assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Intead got: #{obj.to_json}"
+      assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Instead got: #{obj.inspect}"
     end
   
   # no callback when using windowname
   def validate_windowname(args)
-#      debugger
      json_string = @response.body.match(/.*window.name='(.+)'/)[1]
      validate_json_vals(json_string, args)
   end
@@ -100,7 +99,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     illegal_callbacks = illegal_chars + keywords + spaces
     illegal_callbacks.each do |callback|
-      get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback
+      get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback, :format => "js"
       assert @response.body == '{}'
     end
   end

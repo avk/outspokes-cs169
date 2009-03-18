@@ -113,6 +113,9 @@ protected
     
     keywords = %w(window open location string document with case hi what)
     @callback = params[:callback]
+    
+    return if @callback.nil? # no callback should be OK -- return plain JSON or HTML window.name
+    
     okay = true
     keywords.each do |word|
       if @callback.match(word)
@@ -121,7 +124,6 @@ protected
       end
     end
     okay = false unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
-    return if @callback.nil? # no callback should be OK -- return plain JSON
     render :text => '{}' unless okay
   end
   

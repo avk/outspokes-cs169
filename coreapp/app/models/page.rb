@@ -17,8 +17,8 @@ class Page < ActiveRecord::Base
   
 
   def url=(url)
-    if url and !self.site_id.blank?
-      raise Exception.new("Cannot set url for a page attached to a site")
+    if self.url and !self.site_id.blank?
+      raise "Cannot set url for a page attached to a site"
     else
       super url
     end

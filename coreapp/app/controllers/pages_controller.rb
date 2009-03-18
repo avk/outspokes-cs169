@@ -54,7 +54,12 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
 
     respond_to do |format|
-      if @page.update_attributes(params[:page])
+      begin
+        success = @page.update_attributes(params[:page])
+      rescue
+        success = false
+      end
+      if success
         flash[:notice] = 'Page was successfully updated.'
         format.html { redirect_to(@page) }
         format.xml  { head :ok }

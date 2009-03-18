@@ -43,6 +43,17 @@ class PageTest < ActiveSupport::TestCase
       assert page.errors.on(:url), "allowing pages to be created without a url"
     end
   end
+  
+  test "should be able to add a URL after adding to site's pages" do
+    site = sites(:linkedin)
+    new_page = site.pages.create
+    assert new_page.new_record?
+    assert !new_page.valid?
+    new_page.url = site.url + "/this/doesnt/exist"
+    assert new_page.valid?
+    assert new_page.save
+    assert !new_page.new_record?
+  end
 
   test 'should not accept invalid URLs' do
     assert_no_difference "Page.count" do
@@ -89,7 +100,7 @@ class PageTest < ActiveSupport::TestCase
   
   test "throw an exception when setting URL for a page has a site" do
     page = Page.create(valid_options_for_page_site)
-    assert_raise Exception do
+    assert_raise RuntimeError do
       page.url = "http://neopets.com"
     end
   end
