@@ -125,13 +125,15 @@ var fb = {
     fb.el.main_fb_window.comments.body = fb.div();
     fb.el.main_fb_window.comments.foot = fb.div();
     fb.el.main_fb_window.comments.foot.html(
-     '<form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
-        Comment: <input type="text" name="content">\
-        <input type="submit" value="Submit">\
-        <input type="hidden" name="current_page" value="'+fb.env.current_page+'">\
-        <input type="hidden" name="url_token" value="'+fb.env.url_token+'">\
-        <input type="hidden" name="callback" value="callback">\
-        <input type="hidden" name="target" value="html">\
+     '<a href="#" onclick="fb.getComments()">Refresh comments</a>\
+      <form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
+        Comment:<br />\
+        <textarea name="content" cols="40" rows="10" /><br />\
+        <input type="submit" value="Submit" />\
+        <input type="hidden" name="current_page" value="'+fb.env.current_page+'" />\
+        <input type="hidden" name="url_token" value="'+fb.env.url_token+'" />\
+        <input type="hidden" name="callback" value="callback" />\
+        <input type="hidden" name="target" value="html" />\
       </form>');
     $.each(fb.el.main_fb_window.comments,function(){
       fb.el.main_fb_window.append(this);
