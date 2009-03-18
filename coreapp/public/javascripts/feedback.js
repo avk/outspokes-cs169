@@ -98,7 +98,9 @@ var fb = {
         return;
       }
       fb.env.url = data.url;
-      $.cookie("fb_url_token");
+      if (!$.cookie("fb_url_token")) {
+        $.cookie("fb_url_token", fb.env.url_token);
+      }
       fb.draw_main_fb_window_and_icon();
     }
     if (fb.env.logged_in) {
@@ -124,9 +126,13 @@ var fb = {
     fb.el.main_fb_window.comments.body = fb.div();
     fb.el.main_fb_window.comments.foot = fb.div();
     fb.el.main_fb_window.comments.foot.html(
-     '<form name="newcomment" action="form_action" method="post" onSubmit="return fb.post_comment(this)">\
-        Comment: <input type="text" name="comment"\
-        <input type="submit" value="Submit" ">\
+     '<form name="newcomment" action="http://localhost:3000/feedback_for_page.js" method="post" onSubmit="return fb.post_comment(this)" target="fb_iframe">\
+        Comment: <input type="text" name="content">\
+        <input type="submit" value="Submit">\
+        <input type="hidden" name="current_page" value="'+fb.env.current_page+'">\
+        <input type="hidden" name="url_token" value="'+fb.env.url_token+'">\
+        <input type="hidden" name="callback" value="callback">\
+        <input type="hidden" name="target" value="html">\
       </form>');
     $.each(fb.el.main_fb_window.comments,function(){
       fb.el.main_fb_window.append(this);
@@ -134,6 +140,22 @@ var fb = {
     $(document.body).prepend(fb.el.comment_icon);
     fb.el.comment_icon.click(fb.toggle_main_fb_window_and_icon);
     fb.el.main_fb_window.build({onClose:fb.toggle_main_fb_window_and_icon}, false);
+    
+    //build iframe to direct form response to
+    fb.el.iframe = document.createElement("iframe");
+    fb.el.iframe.setAttribute("name", "fb_iframe");
+    fb.el.iframe.setAttribute("id", "fb_iframe");
+    fb.el.iframe.setAttribute("height", "10");
+    fb.el.iframe.setAttribute("width", "10");
+    fb.el.iframe.setAttribute("display", "none");
+    fb.el.iframe.setAttribute("visibility", "hidden");
+
+    document.body.appendChild(fb.el.iframe);
+  },
+  
+  post_comment: function(form){
+      //this function will end up posting the form. for now it's just a dummy function.
+      return true;
   },
 
   toggle_main_fb_window_and_icon: function(){
@@ -382,12 +404,12 @@ var fb = {
     },
 
     // Fetches parameters from the URL.
-    // $.getParameter() will return an object containing all parameters in
+    // $.getParams() will return an object containing all parameters in
     //   the URL.  The keys will be the names of the parameters, and the
     //   values will be the values of the respective parameters.
-    // $.getParameter(name) will return the value of the parameter with name
+    // $.getParams(name) will return the value of the parameter with name
     //   name, or false if it DNE.
-    // $.getParameter(name1,name2,name3,...) will return an object whose keys
+    // $.getParams(name1,name2,name3,...) will return an object whose keys
     //   are name1, name2, name3, ... and whose values are the respective values
     //   or false if a parameter of the given name DNE.
     getParams: function(param) {
@@ -453,10 +475,11 @@ var fb = {
 // Note, this must be the last call on this page.
 fb.$(function() {
   // Argument true for testing
+
   // fb.init(true);
 
   // Second argument to set the current page's url (in js's eyes)
-//  fb.init(true , {current_page:"http://google.com"});
+  fb.init(false , {current_page:"http://google.com"});
 
   // No test, standard init
    fb.init(false);
