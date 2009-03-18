@@ -13,19 +13,33 @@ class FeedbacksControllerTest < ActionController::TestCase
     callback = args.delete(:callback)
     
     # make sure the response is wrapped in the callback
-    assert @response.body.match "^#{callback}\\(\\{"
+    assert @response.body.match("^#{callback}\\(\\{")
     
     # get at just the JSON data (i.e. strip the JS callback wrapping it)
     json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
-    json = JSON.parse(json)
+    validate_json_vals(json, args)
+  end
     
+    def validate_post_fail
+      json_string = @response.body.match(/.*window.name='(.+)'/)[1]
+      obj = JSON.parse(json_string)
+      assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Intead got: #{obj.to_json}"
+    end
+  
+  # no callback when using windowname
+  def validate_windowname(args)
+#      debugger
+     json_string = @response.body.match(/.*window.name='(.+)'/)[1]
+     validate_json_vals(json_string, args)
+  end
+  
+  def validate_json_vals(json_string, intended)
     # e.g. assert json['authorized'] == true
-    args.each do |field_name, field_value|
+    json = JSON.parse(json_string)
+    intended.each do |field_name, field_value|
       assert json[field_name.to_s] == field_value, "#{field_name} is set to #{json[field_name.to_s].inspect} instead of #{field_value.inspect}"
     end
   end
-  
-  
   
   test "should not list feedback for an invalid URL token" do
     invite = invites(:one)
@@ -80,8 +94,8 @@ class FeedbacksControllerTest < ActionController::TestCase
     # - Cannot be a JavaScript keyword
     
     invite = invites(:one)
-    illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition)
-    keywords = []#%w(window open location string document with case hi what)
+    illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition fake<html>)
+    keywords = %w(window open location string document with case hi what)
     spaces = ['no spaces']
     
     illegal_callbacks = illegal_chars + keywords + spaces
@@ -109,7 +123,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
     
@@ -125,7 +139,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     new_url = page.url + "/ASDFWUTLOL.asp.html"
     
     assert_difference "Page.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
           :current_page => new_url, :callback => callback, :content => content, :target => "html"
     end
     new_page = Page.find_by_url new_url
@@ -141,32 +155,26 @@ class FeedbacksControllerTest < ActionController::TestCase
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
-    # TODO: not clear what feedback should be at this point
-    feedback = []#page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => "LOL!!!!!", 
+      post :new_feedback_for_page, :url_token => "LOL!!!!!", :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
     
-    # TODO: not clear what feedback should be at this point
-    validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'none'
+    validate_json :callback => callback, :authorized => false
   end
   
   test "should not add new feedback to an invalid page" do
     invite = invites(:one)
     callback = 'jsfeed'
     content = "HUH THIS SITE IS LAME YO"
-    # TODO: not clear what feedback should be at this point
-    feedback = []#invite.page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
           :current_page => "bullshit", :callback => callback, :content => content, :target => "html"
     end
-    
-    # TODO: not clear what feedback should be at this point
-    validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'none'
+
+    validate_post_fail
   end
   
   test "should not add new feedback for a page given a callback that's not a valid JavaScript function name" do
@@ -186,7 +194,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     illegal_callbacks = illegal_chars + keywords + spaces
     illegal_callbacks.each do |callback|
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
            :current_page => invite.page.url, :callback => callback, :content => 'doesn\'t matter', :target => "html"
       assert @response.body == '{}'
     end
@@ -196,34 +204,26 @@ class FeedbacksControllerTest < ActionController::TestCase
     invite = invites(:one)
     page = invite.page
     callback = 'jsfeed'
-    # TODO: not clear what feedback should be at this point
-    feedback = page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
           :current_page => page.url, :callback => callback, :content => '', :target => "html"
     end
     
-    # BROKEN: list of feedbacks (see above) containts 2 of every feedback
-    # TODO: not clear what feedback should be at this point
-    # validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'none'
+    validate_post_fail
   end
 
   test "should not add new feedback that has no target" do
     invite = invites(:one)
     page = invite.page
     callback = 'jsfeed'
-    # TODO: not clear what feedback should be at this point
-    feedback = page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "Feedback.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html",
           :current_page => page.url, :callback => callback, :content => 'anything at all', :target => ''
     end
     
-    # BROKEN: list of feedbacks (see above) containts 2 of every feedback
-    # TODO: not clear what feedback should be at this point
-    # validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'none'    
+    validate_post_fail 
   end
   
   test "should add feedback to correct standalone page" do
@@ -235,7 +235,7 @@ class FeedbacksControllerTest < ActionController::TestCase
 
     assert_difference "page.feedbacks.count" do
       assert_no_difference "Page.count" do
-        post :new_feedback_for_page, :url_token => invite.url_token, 
+        post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
              :current_page => page.url, :callback => callback, :content => content, :target => "html"
       end
     end
@@ -250,16 +250,29 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     assert page.site.blank?, "We're testing a standalone page here"
     content = "derrrrrr"
-    # TODO: not clear what feedback should be at this point
-    feedback = []#page.feedbacks.map { |f| f.json_attributes }
     
     assert_no_difference "page.feedbacks.count", "Page.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, 
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html",
           :current_page => page.url + "/lolololol", :callback => callback, :content => content, :target => "html"
     end
     
-    # TODO: not clear what feedback should be at this point
-    validate_json :callback => callback, :authorized => false, :feedback => feedback, :url => 'none'
+    validate_post_fail
+  end
+  
+  test "should render an html template when posting and format=html" do
+    invite = invites(:one)
+    callback = 'jsfeed'
+    page = invite.page
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, :current_page => page.url,
+           :callback => callback, :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    
+    assert_template "new_feedback_for_page"
+    feedback = page.feedbacks.map { |f| f.json_attributes }
+    validate_windowname :authorized => true, :feedback => feedback, :url => invite.page.url
   end
   
   test "should destroy feedback" do

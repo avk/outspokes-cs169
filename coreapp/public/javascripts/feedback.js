@@ -511,5 +511,6 @@ fb.$(function() {
 
   // No test, standard init
   // fb.init();
+
 });
 
