@@ -34,7 +34,8 @@ var fb = {
     "current_page":null,
     // To be set after the first get
     "url":null,
-    "comments":{}
+    "comments":{},
+    "comments_posted":new Array(),
   },
 
   // Initializes the environment, performing the inital GET of comments
@@ -155,8 +156,15 @@ var fb = {
   },
   
   post_comment: function(form){
-      //this function will end up posting the form. for now it's just a dummy function.
-      return true;
+    var x = new Object();
+    x.content = form.content.value;
+    x.target = form.target.value;
+    x.timestamp = (new Date()).getTime();
+    x.name = "";
+    x.obj = fb.build_comment(x);
+    fb.env.comments_posted.push(x);
+    fb.el.main_fb_window.comments.body.append(x.obj);
+    return true;
   },
 
   toggle_main_fb_window_and_icon: function(){
@@ -167,23 +175,38 @@ var fb = {
 
 	render_comments: function(comments){
     var c, x;
+    var b;
     for (i in comments) {
+      b = false;
       c = comments[i];
-      if (fb.env.comments[c.feedback_id]) {
-        fb.env.comments[c.feedback_id].posted = true;
-        continue;
+      // If we are already displaying this comment, continue
+      if (fb.env.comments[c.feedback_id]) {continue;}
+      // Check all comments whose status is not yet verified
+      for (i in fb.env.comments_posted) {
+        x = fb.env.comments_posted[i];
+        // If posted comment x was persisted to the database
+        if (x.content == c.content) {
+          // Update the name
+          x.obj.find("div:eq(0)").html(c.name);
+          // Copy the DOM element to the comments array
+          fb.env.comments[c.feedback_id] = x.obj;
+          // And remove the element from comments_posted
+          fb.env.comments_posted.splice(i,1);
+          // We don't want to do anything else for this comment
+          b = true;
+          break;
+        }
       }
+      if (b) {continue;}
       x = fb.build_comment(c);
-      fb.env.comments[c.feedback_id] = new Object();
-      fb.env.comments[c.feedback_id].obj = x;
-      fb.env.comments[c.feedback_id].posted = true;
+      fb.env.comments[c.feedback_id] = x;
       fb.el.main_fb_window.comments.body.append(x);
     }
   },
 
   build_comment: function(c) {
     var rtn = fb.div().attr('style','width:100%');
-    rtn.append(c.name + "<br />");
+    rtn.append("<div>" + c.name + "</div><br />");
     rtn.append(c.content + "<br />");
     rtn.append(c.timestamp + "<br />");
     rtn.append("<hr style='width:80%'/><br />");
