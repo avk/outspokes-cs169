@@ -61,18 +61,20 @@ class FeedbacksController < ApplicationController
       if !page.nil?
         authorized = true
         site_url = invite.page.url
-        page.feedbacks << Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
-        feedback = page.feedbacks.map { |f| f.json_attributes }
+        feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
+        page.feedbacks << feedback
+        if !feedback.valid?
+          authorized = false
+          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+        else
+          feedback = page.feedbacks.map { |f| f.json_attributes }
+        end
       end
     end
     
     respond_to do |wants|
       wants.html do
-        if params[:windowname]
           @json_data =  {:authorized => authorized, :url => site_url, :feedback => feedback}.to_json
-        else
-          render :text => "no output information"
-        end
       end
       wants.js do
         render :json => {:authorized => authorized, :url => site_url, :feedback => feedback},
@@ -109,9 +111,18 @@ protected
     # Also:
     # - Cannot be a JavaScript keyword
     
+    keywords = %w(window open location string document with case hi what)
     @callback = params[:callback]
+    okay = true
+    keywords.each do |word|
+      if @callback.match(word)
+        okay = false
+        break
+      end
+    end
+    okay = false unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
     return if @callback.nil? # no callback should be OK -- return plain JSON
-    render :text => '{}' unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
+    render :text => '{}' unless okay
   end
   
 end
