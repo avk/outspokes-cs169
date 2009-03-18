@@ -53,12 +53,10 @@ class FeedbacksController < ApplicationController
     if invite and same_domain?(invite.page.url, current_page)
       if invite.page.site.blank?
         page = invite.page if invite.page.url == current_page
-      # If this url is part of a site but a Page doesn't exist for it yet, create one
-      elsif (page = invite.page.site.pages.find_by_url current_page) == nil
-        page = Page.new(:url => current_page)
-        invite.page.site.pages << page
+      else
+        page = invite.page.site.pages.find_or_create_by_url current_page
       end
-      if !page.nil?
+      if !page.nil? && page.valid?
         authorized = true
         site_url = invite.page.url
         feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
