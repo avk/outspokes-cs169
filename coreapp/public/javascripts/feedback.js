@@ -59,7 +59,8 @@ var fb = {
       fb.init_part2();
     }
     fb.getComments();
-    // We are not actually done.  After getting the comments, 
+    // We are not actually done.  After getting the comments, we still need
+    // to perform the validation, render the comments, and then set fb.env.init
     return;
   },
 
@@ -85,12 +86,10 @@ var fb = {
       fb.getComments_callback(fb.env.testingData);
       return;
     }
-    console.log(str);
     $.getJSON("http://localhost:3000/feedback_for_page.js?"+str, fb.getComments_callback);
   },
 
   getComments_callback: function(data) {
-    console.log(data);
     if (!fb.env.init) {
       fb.env.logged_in = data.authorized;
       if (!fb.env.logged_in) {
@@ -107,7 +106,7 @@ var fb = {
       fb.render_comments(data.feedback);
     }
     if (!fb.env.init) {
-      fb.init_part2;
+      fb.init_part2();
       return;
     }
     return;
@@ -166,7 +165,6 @@ var fb = {
 
 	render_comments: function(comments){
     var c, x;
-    fb.el.main_fb_window.hide();
     for (i in comments) {
       c = comments[i];
       if (fb.env.comments[c.feedback_id]) {
@@ -285,8 +283,6 @@ var fb = {
     cstr2 = (cstr2 == " {") ? "" : cstr2.slice(0,cstr2.length - 2) + "}";
     cstr += cstr2;
     var styleStr = (o['style']) ? o['style'] : "";
-    console.log(cstr);
-    console.log(styleStr);
     properties["className"] = cstr;
     if (!(styleStr == "")) {
       properties["style"] = styleStr;
@@ -475,13 +471,12 @@ var fb = {
 // Note, this must be the last call on this page.
 fb.$(function() {
   // Argument true for testing
-
   // fb.init(true);
 
   // Second argument to set the current page's url (in js's eyes)
-  fb.init(false , {current_page:"http://google.com"});
+  fb.init(true , {current_page:"http://google.com"});
 
   // No test, standard init
-  // fb.init(true);
+  // fb.init();
 });
 
