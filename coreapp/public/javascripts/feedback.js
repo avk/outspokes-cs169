@@ -237,7 +237,7 @@ var fb = {
       fb.el.main_fb_window.comments.foot.find("input[name='target']").attr("value",$(e.target).getPath());
       fb.el.main_fb_window.uniconize();
     }
-    $('#content').one('click', func);
+    $(document.body).one('click', func);
   },
 
   // Constructor for an empty div element
