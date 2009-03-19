@@ -7,24 +7,69 @@ class FeedbacksControllerTest < ActionController::TestCase
     @controller = FeedbacksController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    
+    # from: http://www.quackit.com/javascript/javascript_reserved_words.cfm
+    @js_keywords = %w(
+    break continue do for import new this void
+    case default else function in return typeof while
+    comment delete export if label switch var with
+    abstract implements protected
+    boolean instanceOf public
+    byte int short
+    char interface static
+    double long synchronized
+    false native throws
+    final null transient
+    float package true
+    goto private
+    catch enum throw
+    class extends try
+    const finally
+    debugger super
+    alert eval Link outerHeight scrollTo
+    Anchor FileUpload location outerWidth Select
+    Area find Location Packages self
+    arguments focus locationbar pageXoffset setInterval
+    Array Form Math pageYoffset setTimeout
+    assign Frame menubar parent status
+    blur frames MimeType parseFloat statusbar
+    Boolean Function moveBy parseInt stop
+    Button getClass moveTo Password String
+    callee Hidden name personalbar Submit
+    caller history NaN Plugin sun
+    captureEvents History navigate print taint
+    Checkbox home navigator prompt Text
+    clearInterval Image Navigator prototype Textarea
+    clearTimeout Infinity netscape Radio toolbar
+    close innerHeight Number ref top
+    closed innerWidth Object RegExp toString
+    confirm isFinite onBlur releaseEvents unescape
+    constructor isNan  onError Reset untaint
+    Date java onFocus resizeBy unwatch
+    defaultStatus JavaArray onLoad resizeTo valueOf
+    document JavaClass onUnload routeEvent watch
+    Document JavaObject open scroll window
+    Element JavaPackage opener scrollbars Window
+    escape length Option scrollBy
+    )
   end
   
   def validate_json(args)
     callback = args.delete(:callback)
     
     # make sure the response is wrapped in the callback
-    assert @response.body.match("^#{callback}\\(\\{")
+    assert @response.body.match("^#{callback}\\(\\{"), "Expecting callback #{callback} but it wasn't found!"
     
     # get at just the JSON data (i.e. strip the JS callback wrapping it)
     json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
     validate_json_vals(json, args)
   end
-    
-    def validate_post_fail
-      json_string = @response.body.match(/.*window.name='(.+)'/)[1]
-      obj = JSON.parse(json_string)
-      assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Instead got: #{obj.inspect}"
-    end
+  
+  def validate_post_fail
+    json_string = @response.body.match(/.*window.name='(.+)'/)[1]
+    obj = JSON.parse(json_string)
+    assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Instead got: #{obj.inspect}"
+  end
   
   # no callback when using windowname
   def validate_windowname(args)
@@ -42,7 +87,7 @@ class FeedbacksControllerTest < ActionController::TestCase
   
   test "should not list feedback for an invalid URL token" do
     invite = invites(:one)
-    callback = 'doesntmatter'
+    callback = "rofflecopter"
     feedback = []
     
     get :feedback_for_page, :url_token => 'bullshit', :current_page => invite.page.url, :callback => callback
@@ -52,7 +97,7 @@ class FeedbacksControllerTest < ActionController::TestCase
   
   test "should not list feedback for an invalid page" do
     invite = invites(:one)
-    callback = 'doesntmatter'
+    callback = "rofflecopter"
     feedback = []
     
     get :feedback_for_page, :url_token => invite.url_token, :current_page => 'bullshit', :callback => callback
@@ -62,7 +107,7 @@ class FeedbacksControllerTest < ActionController::TestCase
 
   test "should not list feedback for a page a commenter hasn't been invited to" do
     invite = invites(:one)
-    callback = 'notinvited'
+    callback = "rofflecopter"
     feedback = []
     uninvited_page_url = Page.find(:first, :conditions => [ "id != ?", invite.page.id ]).url
     
@@ -94,10 +139,10 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     invite = invites(:one)
     illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition fake<html>)
-    keywords = %w(window open location string document with case hi what)
+    # keywords = %w(window open location string document with case alert)
     spaces = ['no spaces']
     
-    illegal_callbacks = illegal_chars + keywords + spaces
+    illegal_callbacks = illegal_chars + @js_keywords + spaces
     illegal_callbacks.each do |callback|
       get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback, :format => "js"
       assert @response.body == '{}'
@@ -187,11 +232,11 @@ class FeedbacksControllerTest < ActionController::TestCase
     # - Cannot be a JavaScript keyword
     
     invite = invites(:one)
-    illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition)
-    keywords = []#%w(window open location string document with case hi what)
+    illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition fake<html>)
+    # keywords = %w(window open location string document with case)
     spaces = ['no spaces']
     
-    illegal_callbacks = illegal_chars + keywords + spaces
+    illegal_callbacks = illegal_chars + @js_keywords + spaces
     illegal_callbacks.each do |callback|
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
            :current_page => invite.page.url, :callback => callback, :content => 'doesn\'t matter', :target => "html"
