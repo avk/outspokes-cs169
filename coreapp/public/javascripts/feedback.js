@@ -507,10 +507,10 @@ fb.$(function() {
   // fb.init(true);
 
   // Second argument to set the current page's url (in js's eyes)
-  fb.init(true , {current_page:"http://google.com"});
+  //fb.init(true , {current_page:"http://google.com"});
 
   // No test, standard init
-  // fb.init();
+  fb.init();
 
 });
 
