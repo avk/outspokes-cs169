@@ -4,18 +4,22 @@ one:
   page_id: 1
   commenter_id: 1
   content: MyText1
+  target: html
 
 two:
   page_id: 2
   commenter_id: 2
   content: MyText2
+  target: html
   
 three:
   page_id: 1
   commenter_id: 2
   content: MyText3
+  target: html
   
 four:
   page_id: 1
   commenter_id: 2
   content: MyText4
+  target: html
