@@ -14,7 +14,9 @@ class Invite < ActiveRecord::Base
 private
 
   def generate_url_token
-    self.url_token = self.commenter.email.crypt('a9') + self.page.url.crypt('37')
+    # a long random string is a good salt: some random text's md5
+    salt = '99fedcdf9e17b193a2eecb9e26a5e2fa'
+    self.url_token = Digest::MD5::hexdigest(self.commenter.email + salt + self.page.url)
   end
 
 end

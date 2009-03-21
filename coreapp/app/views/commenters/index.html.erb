@@ -10,7 +10,7 @@
 <% for commenter in @commenters %>
   <tr>
     <td><%=h commenter.email %></td>
-	<% final_url = @page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites[0].url_token %>
+	<% final_url = @page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@page.id).url_token %>
     <td style="width: 200px;"><a href="<%= final_url %>"><%= final_url %></a></td>
     <td><%= link_to 'Show', page_commenter_path(@page, commenter) %></td>
     <td><%= link_to 'Edit', edit_page_commenter_path(@page, commenter) %></td>
