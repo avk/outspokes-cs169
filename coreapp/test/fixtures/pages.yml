@@ -12,8 +12,8 @@ two:
 #  site_id: nil
   url: http://www.myspace.com/
 
-from_li:
-  url: http://www.linkedin.com/
+from_msn:
+  url: http://www.msn.com/home/
   site_id: 1
   
 from_fb:
