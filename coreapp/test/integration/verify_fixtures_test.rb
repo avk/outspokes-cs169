@@ -11,5 +11,5 @@ class VerifyFixturesTest < ActionController::IntegrationTest
       end
     end
   end
-  
+    
 end
