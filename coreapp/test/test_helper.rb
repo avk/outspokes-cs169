@@ -123,6 +123,10 @@ class Test::Unit::TestCase
     Feedback.create(valid_options_for_feedback.merge(options))
   end
   
+  def feedbacks(args)
+    abstract_feedbacks(args)
+  end
+  
   # Invites
   
   def valid_options_for_invite
