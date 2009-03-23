@@ -16,4 +16,22 @@ class PublicFeedbackTest < ActiveSupport::TestCase
     end
   end
   
+  test "generates proper json for public feedback" do
+    f = PublicFeedback.create(:page => Page.find(:first), :name => "Paul", :content => "lulz", :target => "html")
+    assert_valid f
+    json_atts = {
+      "feedback_id" => f.id,
+      "name" => f.name,
+      "timestamp" => f.created_at.to_i,
+      "content" => f.content,
+      "target" => f.target
+    }
+    js = f.json_attributes.to_json
+    json_obj = ActiveSupport::JSON::decode(js)
+    json_atts.each do |key, val|
+      assert json_obj[key] == val, "Feedback.#{key} should be #{val}. Instead: #{json_obj[key]}"
+    end
+      
+  end
+  
 end
