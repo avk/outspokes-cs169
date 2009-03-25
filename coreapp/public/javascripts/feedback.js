@@ -57,6 +57,7 @@ var fb = {
     fb.env.url_token = fb.$.getParams('url_token') || $.cookie('fb_url_token');
     // If url_token is non-existent, we're done.
     if (!fb.env.url_token) {
+      alert('here?');
       fb.init_part2();
     }
     fb.getComments();
@@ -114,7 +115,7 @@ var fb = {
   },
 
   draw_main_fb_window_and_icon: function(){
-    fb.el.comment_icon = fb.div().css({
+    fb.el.comment_icon = fb.div('feedback_wrapper').css({
       'border':'thin solid #000000',
       'position':'fixed',
       'top':'0px',
@@ -241,8 +242,12 @@ var fb = {
   },
 
   // Constructor for an empty div element
-	div: function(){
-		return $('<div></div>');
+	div: function(id){
+	  html = '<div';
+	  if (id)
+	    html += ' id=\"' + id + '\"';
+	  html += '></div>';
+		return $(html);
 	}
 };
 
