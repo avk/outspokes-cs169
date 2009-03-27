@@ -4,9 +4,9 @@ require 'firewatir'
 # ENV["RAILS_ENV"] = "test"
 # require File.expand_path(RAILS_ROOT + "/config/environment")
 # require 'test_help'
-# require File.expand_path(RAILS_ROOT + "/test/test_helper.rb")
+require File.expand_path(RAILS_ROOT + "/test/test_helper.rb")
 
-# include Test::Unit::Assertions
+include Test::Unit::Assertions
 
 namespace :crossdomain do
   
@@ -51,58 +51,66 @@ namespace :crossdomain do
     user, site = nil, nil
     commenter, invite = nil, nil
     
-    # add a new user to coreapp
-    puts "creating an account"
-    # assert_difference "Account.count" do
-      user = Account.create(:email => 'zack@nefarious.com', :password => 'password', :password_confirmation => 'password')
-    # end
-    
-    # add demoapp as a new site to coreapp
-    url = "http://localhost:#{ports[:demoapp_port]}/octave/octave.html"
-    puts "creating site with url: #{url}"
-    # assert_difference "Site.count" do
-      site = Site.create(:account => user, :url => url)
-    # end
-    
-    # add a commenter for demoapp
-    puts "inviting a commenter"
-    # assert_difference "Commenter.count" do
-      # assert_difference "Invite.count" do
-        Commenter.transaction do
-          commenter = Commenter.new(:email => "clyvedjames@twitter.com")
-          commenter.save!
-          invite = Invite.new(:commenter => commenter, :page => site.home_page)
-          invite.save!
+    begin
+      ActiveRecord::Base.transaction do
+      
+        # add a new user to coreapp
+        puts "creating an account"
+        assert_difference "Account.count" do
+          user = Account.create(:email => 'zack@nefarious.com', :password => 'password', :password_confirmation => 'password')
         end
-      # end
-    # end
-    
-    # validate that the commenter can see the JS interface on demoapp while others can't
-    invite_url = url + "?url_token=#{invite.url_token}"
-    puts "fetching #{invite_url}"
-    
-    # debugger
-    browser = Watir::Browser.start(invite_url)
-    
-    print "a div with id feedback_wrapper " 
-    if browser.div(:id, "feedback_wrapper").nil?
-      print "does NOT exist"
-    else
-      print "exists"
+  
+        # add demoapp as a new site to coreapp
+        url = "http://localhost:#{ports[:demoapp_port]}/octave/octave.html"
+        puts "creating site with url: #{url}"
+        assert_difference "Site.count" do
+          site = Site.create(:account => user, :url => url)
+        end
+  
+        # add a commenter for demoapp
+        puts "inviting a commenter"
+        assert_difference "Commenter.count" do
+          assert_difference "Invite.count" do
+            Commenter.transaction do
+              commenter = Commenter.new(:email => "clyvedjames@twitter.com")
+              commenter.save!
+              invite = Invite.new(:commenter => nil, :page => site.home_page)
+              invite.save!
+            end
+          end
+        end
+  
+        # validate that the commenter can see the JS interface on demoapp while others can't
+        invite_url = url + "?url_token=#{invite.url_token}"
+        puts "fetching #{invite_url}"
+  
+        begin
+          browser = Watir::Browser.start(invite_url)
+          
+          print "a div with id feedback_wrapper " 
+          if browser.div(:id, "feedback_wrapper").nil?
+            print "does NOT exist"
+          else
+            print "exists"
+          end
+          puts " on this page: #{invite_url}"
+          
+          # post a comment to demoapp
+          # view the comment on coreapp
+        rescue Exception => e
+          raise e # so that it will roll back the transaction
+        ensure
+          # Dear God in Heaven, I wish I didn't have to do this but browser.close doesn't kill Firefox :/
+          system("kill -15 `ps aux | grep firefox | grep -v grep | awk '{print $2}'`")
+        end
+        
+        raise ActiveRecord::Rollback, "Cleaning up the database."
+      end
+    rescue
+      puts "Something went wrong at the database level..."
+      puts "you may have to manually run \n\t rake crossdomain:stop_servers"
+    ensure
+      Rake::Task["crossdomain:stop_servers"].invoke
     end
-    puts " on this page: #{invite_url}"
-    
-    # post a comment to demoapp
-    # view the comment on coreapp
-    
-    # Dear God in Heaven, I wish I didn't have to do this but browser.close doesn't kill Firefox for me :/
-    system("kill -15 `ps aux | grep firefox | grep -v grep | awk '{print $2}'`")
-    
-    user.destroy
-    site.destroy
-    commenter.destroy
-    invite.destroy
-    
-    Rake::Task["crossdomain:stop_servers"].invoke
   end
 end
