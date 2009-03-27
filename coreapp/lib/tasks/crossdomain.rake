@@ -74,16 +74,13 @@ namespace :crossdomain do
             Commenter.transaction do
               commenter = Commenter.new(:email => "clyvedjames@twitter.com")
               commenter.save!
-              invite = Invite.new(:commenter => nil, :page => site.home_page)
+              invite = Invite.new(:commenter => commenter, :page => site.home_page)
               invite.save!
             end
           end
         end
   
         # TODO: validate that the commenter can see the JS interface on demoapp while others can't
-        invite_url = url + "?url_token=#{invite.url_token}"
-        puts "fetching #{invite_url}"
-  
         begin
           browser = Watir::Browser.start(invite_url)
           
