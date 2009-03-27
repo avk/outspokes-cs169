@@ -1,12 +1,31 @@
 require 'ruby-debug'
 require 'firewatir'
-
-# ENV["RAILS_ENV"] = "test"
-# require File.expand_path(RAILS_ROOT + "/config/environment")
-# require 'test_help'
 require File.expand_path(RAILS_ROOT + "/test/test_helper.rb")
 
 include Test::Unit::Assertions
+
+# Before Running Any of These Rake Tasks:
+#   install mongrel gem
+#   check that mongrel_rails in your path
+#   (*nix) install firewatir gem
+#   (*nix) install JSSh Firefox add-on: http://wtr.rubyforge.org/install.html
+#   (*nix) disable all session management and crash recovery features in Firefox:
+#         Firefox > Preferences > Main > When Firefox starts: > Show a blank page
+#         (if installed) Session Manager > SessionStore > uncheck "Enable Crash Recovery"
+#         (if installed) Tab Mix Plus > Session > uncheck the following: 
+#           "Use Firefox's built-in Session Restore feature"
+#           "Enable Session Manager"
+#           "Enable Crash Recovery"
+#   (*nix) Firefox should not be running
+#   close anything on ports 3000, 3001, or whatever is listed in ports = { ... } below
+#   run these tasks from feedback/coreapp
+
+# These Rake Tasks Also Assume:
+#   feedback/coreapp and feedback/demoapp are existing Rails apps
+#   the $HOME environment variable points to a writeable directory
+#   a coreapp database that supports transactions
+#   a shell with kill, ps, grep, awk
+
 
 namespace :crossdomain do
   
@@ -25,13 +44,12 @@ namespace :crossdomain do
   desc "start and run #{apps.join(', ')}"
   task :start_servers do
     puts "starting Mongrels"
-    # ports.values.each do |port|
-    #   system "mongrel_rails start --port #{port} -a 0.0.0.0 --pid $HOME/#{port}.pid -d"
-    # end
     system "cd #{coreapp_path}; mongrel_rails start --port #{ports[:coreapp_port]} -a 0.0.0.0 --pid $HOME/#{ports[:coreapp_port]}.pid -d"
     system "cd #{demoapp_path}; mongrel_rails start --port #{ports[:demoapp_port]} -a 0.0.0.0 --pid $HOME/#{ports[:demoapp_port]}.pid -d"
     
-    # sleep(10) # give the servers time to start
+    wait_for = 5
+    puts "waiting #{wait_for} seconds to give the servers time to start"
+    sleep wait_for
   end
   
   
@@ -53,20 +71,20 @@ namespace :crossdomain do
     
     begin
       ActiveRecord::Base.transaction do
-      
+        
         # add a new user to coreapp
         puts "creating an account"
         assert_difference "Account.count" do
           user = Account.create(:email => 'zack@nefarious.com', :password => 'password', :password_confirmation => 'password')
         end
-  
+        
         # add demoapp as a new site to coreapp
         url = "http://localhost:#{ports[:demoapp_port]}/octave/octave.html"
         puts "creating site with url: #{url}"
         assert_difference "Site.count" do
           site = Site.create(:account => user, :url => url)
         end
-  
+        
         # add a commenter for demoapp
         puts "inviting a commenter"
         assert_difference "Commenter.count" do
@@ -79,34 +97,49 @@ namespace :crossdomain do
             end
           end
         end
-  
-        # TODO: validate that the commenter can see the JS interface on demoapp while others can't
-        begin
-          browser = Watir::Browser.start(invite_url)
-          
-          print "a div with id feedback_wrapper " 
-          if browser.div(:id, "feedback_wrapper").nil?
-            print "does NOT exist"
-          else
-            print "exists"
-          end
-          puts " on this page: #{invite_url}"
-          
-          # TODO: post a comment to demoapp
-          # TODO: view the comment on coreapp
-        rescue Exception => e
-          raise e # so that it will roll back the transaction
-        ensure
-          # Dear God in Heaven, I wish I didn't have to do this but browser.close doesn't kill Firefox :/
-          system("kill -15 `ps aux | grep firefox | grep -v grep | awk '{print $2}'`")
-        end
         
-        raise ActiveRecord::Rollback, "Cleaning up the database."
       end
-    rescue
-      puts "Something went wrong at the database level..."
-      puts "you may have to manually run \n\t rake crossdomain:stop_servers"
+      
+      puts "Test data created in coreapp db, launching demoapp..."
+      
+      # validate that the commenter can see the JS interface on demoapp while others can't
+      begin
+        browser = Watir::Browser.new
+        noninvite_url = site.home_page.url
+        invite_url = noninvite_url + "?url_token=#{invite.url_token}"
+        
+        # uninvited visitors shouldn't see our JS interface
+        puts "fetching #{noninvite_url}"
+        browser.goto(noninvite_url)
+        assert !browser.div(:id, "feedback_wrapper").exists?, "div#feedback_wrapper exists at the non invite URL: #{noninvite_url}"
+        
+        # invited visitors should see our JS interface
+        puts "fetching #{invite_url}"
+        browser.goto(invite_url)        
+        assert browser.div(:id, "feedback_wrapper").exists?, "div#feedback_wrapper does NOT exist at the invite URL: #{invite_url}"
+        
+        # TODO: post a comment to demoapp
+        
+        
+        
+        # TODO: view the comment on coreapp
+        
+        
+        
+      rescue Exception => e
+        puts e
+      ensure
+        # Dear God in Heaven, I wish I didn't have to do this but browser.close doesn't kill Firefox :/
+        system("kill -15 `ps aux | grep firefox | grep -v grep | awk '{print $2}'`")
+      end
+      
+    rescue Exception => e
+      puts e
     ensure
+      user.destroy
+      site.destroy
+      commenter.destroy
+      invite.destroy
       Rake::Task["crossdomain:stop_servers"].invoke
     end
   end
