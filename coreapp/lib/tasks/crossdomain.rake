@@ -133,6 +133,7 @@ namespace :crossdomain do
         assert browser.contains_text(my_feedback), "browser does not display the feedback the commenter has left"
         
         # verify the comment is on coreapp
+        # TODO: the following assertion is nondeterministic
         assert Feedback.find_by_content(my_feedback), "the feedback the commenter has left is not in the coreapp database: #{Feedback.find(:all).map(&:content)}"
         
       rescue Exception => e
