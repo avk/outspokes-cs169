@@ -13,9 +13,7 @@ class FeedbackjsController < ApplicationController
     end
     out += "fb_hash();\n"
 
-    render :update do |page|
-      page << out
-    end
+    render :js => out
   end
 
 end
