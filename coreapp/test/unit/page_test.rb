@@ -125,7 +125,7 @@ class PageTest < ActiveSupport::TestCase
     comments = %w(sucks boo yuck)
     assert_difference "Feedback.count", comments.size do
       comments.each do |comment|
-        page.feedbacks << create_feedback(:content => comment)
+        page.feedbacks << create_private_feedback(:content => comment)
       end
       page.save
     end
