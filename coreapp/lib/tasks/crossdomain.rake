@@ -80,7 +80,7 @@ namespace :crossdomain do
           end
         end
   
-        # validate that the commenter can see the JS interface on demoapp while others can't
+        # TODO: validate that the commenter can see the JS interface on demoapp while others can't
         invite_url = url + "?url_token=#{invite.url_token}"
         puts "fetching #{invite_url}"
   
@@ -95,8 +95,8 @@ namespace :crossdomain do
           end
           puts " on this page: #{invite_url}"
           
-          # post a comment to demoapp
-          # view the comment on coreapp
+          # TODO: post a comment to demoapp
+          # TODO: view the comment on coreapp
         rescue Exception => e
           raise e # so that it will roll back the transaction
         ensure
