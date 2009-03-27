@@ -57,7 +57,6 @@ var fb = {
     fb.env.url_token = fb.$.getParams('url_token') || $.cookie('fb_url_token');
     // If url_token is non-existent, we're done.
     if (!fb.env.url_token) {
-      alert('here?');
       fb.init_part2();
     }
     fb.getComments();
