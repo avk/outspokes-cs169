@@ -1,5 +1,5 @@
 require 'ruby-debug'
-require 'mechanize'
+require 'firewatir'
 
 # ENV["RAILS_ENV"] = "test"
 # require File.expand_path(RAILS_ROOT + "/config/environment")
@@ -77,19 +77,30 @@ namespace :crossdomain do
       # end
     # end
     
-    # debugger
-    
-    agent = WWW::Mechanize.new
+    # agent = WWW::Mechanize.new
     
     # validate that the commenter can see the JS interface on demoapp while others can't
     invite_url = url + "?url_token=#{invite.url_token}"
     puts "fetching #{invite_url}"
-    page = agent.get(invite_url)
     
-    puts page.search("div").first
+    # debugger
+    # page = agent.get(invite_url)
+    # puts page.search("div").first
+    
+    browser = Watir::Browser.start(invite_url)
+    
+    # print "a div with id feedback_wrapper " 
+    # if browser.div(:id, "feedback_wrapper").nil?
+    #   print "exists"
+    # else
+    #   print "does NOT exist"
+    # end
+    # puts " on this page: #{invite_url}"
     
     # post a comment to demoapp
     # view the comment on coreapp
+    
+    browser.close
     
     user.destroy
     site.destroy
