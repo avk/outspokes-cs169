@@ -105,6 +105,8 @@ namespace :crossdomain do
       # validate that the commenter can see the JS interface on demoapp while others can't
       begin
         browser = Watir::Browser.new
+        puts "waiting 3 seconds for Firefox to start up completely"
+        sleep 3
         noninvite_url = site.home_page.url
         invite_url = noninvite_url + "?url_token=#{invite.url_token}"
         
