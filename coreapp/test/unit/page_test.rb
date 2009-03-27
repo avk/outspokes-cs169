@@ -155,4 +155,13 @@ class PageTest < ActiveSupport::TestCase
     end
   end
 
+  test "should find the right public page from fixtures" do
+    page = Page.find_public_page_by_url "http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html"
+    assert_equal pages(:transactions), page
+  end
+  
+  test "should not find non-public pages" do
+    page = Page.find_public_page_by_url "http://www.myspace.com/"
+    assert_nil page
+  end
 end
