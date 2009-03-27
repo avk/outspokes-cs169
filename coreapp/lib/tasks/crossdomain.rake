@@ -89,18 +89,19 @@ namespace :crossdomain do
     
     browser = Watir::Browser.start(invite_url)
     
-    # print "a div with id feedback_wrapper " 
-    # if browser.div(:id, "feedback_wrapper").nil?
-    #   print "exists"
-    # else
-    #   print "does NOT exist"
-    # end
-    # puts " on this page: #{invite_url}"
+    print "a div with id feedback_wrapper " 
+    if browser.div(:id, "feedback_wrapper").nil?
+      print "does NOT exist"
+    else
+      print "exists"
+    end
+    puts " on this page: #{invite_url}"
     
     # post a comment to demoapp
     # view the comment on coreapp
     
-    browser.close
+    # Dear God in Heaven, I wish I didn't have to do this but browser.close doesn't kill Firefox for me :/
+    system("kill -15 `ps aux | grep firefox | grep -v grep | awk '{print $2}'`")
     
     user.destroy
     site.destroy
