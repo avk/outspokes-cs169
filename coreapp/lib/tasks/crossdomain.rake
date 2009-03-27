@@ -118,13 +118,20 @@ namespace :crossdomain do
         browser.goto(invite_url)        
         assert browser.div(:id, "feedback_wrapper").exists?, "div#feedback_wrapper does NOT exist at the invite URL: #{invite_url}"
         
-        # TODO: post a comment to demoapp
+        # post a comment to demoapp
+        my_feedback = "my most awesomest of sauciest feedback"
+        browser.div(:id, "feedback_wrapper").click
+        puts "waiting for the comment form to be rendered..."
+        sleep 3
+        browser.text_field(:name, 'content').set(my_feedback)
+        f = browser.form(:name, "newcomment")
+        f.submit
+        f.onsubmit
+        # TODO: refactor to find the posted feedback specifically in the list of comments
+        assert browser.contains_text(my_feedback), "browser does not display the feedback the commenter has left"
         
-        
-        
-        # TODO: view the comment on coreapp
-        
-        
+        # verify the comment is on coreapp
+        assert Feedback.find_by_content(my_feedback), "the feedback the commenter has left is not in the coreapp database: #{Feedback.find(:all).map(&:content)}"
         
       rescue Exception => e
         puts e
@@ -140,6 +147,7 @@ namespace :crossdomain do
       site.destroy
       commenter.destroy
       invite.destroy
+      Feedback.destroy_all
       Rake::Task["crossdomain:stop_servers"].invoke
     end
   end
