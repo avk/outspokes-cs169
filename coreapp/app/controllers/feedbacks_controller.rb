@@ -41,41 +41,27 @@ class FeedbacksController < ApplicationController
   # params[:target] => 'html'
   # params[:content] => 'blah blah blah blah'
   def new_feedback_for_page
-    feedback = []
-    current_page = params[:current_page]
-    token = params[:url_token]
-    target = params[:target]
-    authorized = false
-    site_url = 'none'
-    page = nil
+    @callback = params[:callback]
+    @current_page = params[:current_page]
+    @token = params[:url_token]
+    @target = params[:target]
+    @name = params[:name]
+    @content = params[:content]
+    @authorized = false
+    result = {:authorized => @authorized, :url => @current_page, :feedback => []}
     
-    invite = Invite.find_by_url_token token
-    if invite and same_domain?(invite.page.url, current_page)
-      if invite.page.site.blank?
-        page = invite.page if invite.page.url == current_page
-      else
-        page = invite.page.site.pages.find_or_create_by_url current_page
-      end
-      if !page.nil? && page.valid?
-        authorized = true
-        site_url = invite.page.url
-        feedback = PrivateFeedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
-        page.feedbacks << feedback
-        if !feedback.valid?
-          authorized = false
-          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
-        else
-          feedback = page.feedbacks.map { |f| f.json_attributes }
-        end
-      end
+    if @name && (!@token)
+      result = create_public_feedback
+    elsif @token
+      result = create_private_feedback
     end
     
     respond_to do |wants|
       wants.html do
-          @json_data =  {:authorized => authorized, :url => site_url, :feedback => feedback}.to_json
+          @json_data = result.to_json
       end
       wants.js do
-        render :json => {:authorized => authorized, :url => site_url, :feedback => feedback},
+        render :json => result,
                :callback => @callback
       end
     end
@@ -94,6 +80,53 @@ class FeedbacksController < ApplicationController
   end
 
 protected
+  def create_private_feedback
+    site_url = 'none'
+    page = nil
+    
+    invite = Invite.find_by_url_token @token
+    if invite and same_domain?(invite.page.url, @current_page)
+      if invite.page.site.blank?
+        page = invite.page if invite.page.url == @current_page
+      else
+        page = invite.page.site.pages.find_or_create_by_url @current_page
+      end
+      if !page.nil? && page.valid?
+        @authorized = true
+        site_url = invite.page.url
+        feedback = PrivateFeedback.new(:commenter => invite.commenter, :content => @content, :target => @target)
+        page.feedbacks << feedback
+        if !feedback.valid?
+          @authorized = false
+          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+        else
+          feedback = page.feedbacks.map { |f| f.json_attributes }
+        end
+      end
+    end
+    {:authorized => @authorized, :url => site_url, :feedback => feedback}
+  end
+  
+  def create_public_feedback
+    page = Page.find_public_page_by_url @current_page
+    if !page.nil? && page.valid?
+      if page.site.blank?
+        @authorized = true
+        site_url = page.url
+        feedback = PublicFeedback.new :name => @name, :content => @content, :target => @target
+        page.feedbacks << feedback
+        if !feedback.valid?
+          @authorized = false
+          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+        else
+          feedback = page.feedbacks.map { |f| f.json_attributes }
+        end
+      else
+        # TODO: Handle public sites
+      end
+    end
+    {:authorized => @authorized, :url => site_url, :feedback => feedback}
+  end
 
   def same_domain?(url1, url2)
     URI.parse(url1).host() == URI.parse(url2).host() && URI.parse(url1).port() == URI.parse(url2).port()
@@ -123,7 +156,7 @@ protected
         break
       end
     end
-    okay = false unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
+    okay = false unless @callback.match(/\A[a-zA-Z_]+[\w_]*\Z/)
     
     render :text => '{}' unless okay
   end

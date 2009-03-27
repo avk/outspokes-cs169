@@ -15,6 +15,12 @@ class Page < ActiveRecord::Base
   validate :has_account_xor_site
   validate :is_child_of_site
   
+  def self.find_public_page_by_url(url)
+    pages = Page.find_all_by_url url
+    pages.reject! { |p| !p.allow_public_comments }
+    return pages.empty? ? nil : pages[0]
+  end
+  
 
   def url=(url)
     if self.url and !self.site_id.blank?

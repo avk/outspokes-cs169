@@ -325,7 +325,33 @@ class FeedbacksControllerTest < ActionController::TestCase
     assert_difference('Feedback.count', -1) do
       delete :destroy, :id => feedback.id
     end
-
     assert_redirected_to page_path(page)
   end
+    
+  test "should be able to post public comments" do
+    page = pages(:transactions)
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    
+    assert_template "new_feedback_for_page"
+    feedback = page.feedbacks.map { |f| f.json_attributes }
+    validate_windowname :authorized => true, :feedback => feedback, :url => page.url
+  end
+
+  test "should not post public comments to pages with public comments disabled" do
+    page = pages(:one)
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_no_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    
+    validate_post_fail
+  end
+
 end
