@@ -77,16 +77,11 @@ namespace :crossdomain do
       # end
     # end
     
-    # agent = WWW::Mechanize.new
-    
     # validate that the commenter can see the JS interface on demoapp while others can't
     invite_url = url + "?url_token=#{invite.url_token}"
     puts "fetching #{invite_url}"
     
     # debugger
-    # page = agent.get(invite_url)
-    # puts page.search("div").first
-    
     browser = Watir::Browser.start(invite_url)
     
     print "a div with id feedback_wrapper " 
