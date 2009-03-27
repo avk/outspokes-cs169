@@ -1,4 +1,4 @@
-class PublicFeedback < AbstractFeedback
+class PublicFeedback < Feedback
   
   validates_presence_of :name
   
@@ -17,6 +17,10 @@ class PublicFeedback < AbstractFeedback
     end
     
     json_atts
+  end
+  
+  def abstract?
+    return false
   end
   
 end

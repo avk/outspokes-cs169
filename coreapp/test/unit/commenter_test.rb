@@ -62,7 +62,7 @@ class CommenterTest < ActiveSupport::TestCase
     comments = %w(cool nifty awesome!)
     assert_difference "Feedback.count", comments.size do
       comments.each do |comment|
-        commenter.feedbacks << create_feedback(:content => comment, :commenter_id => commenter.id)
+        commenter.feedbacks << create_private_feedback(:content => comment, :commenter_id => commenter.id)
       end
       commenter.save
     end

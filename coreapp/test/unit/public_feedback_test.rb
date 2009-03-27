@@ -11,7 +11,7 @@ class PublicFeedbackTest < ActiveSupport::TestCase
   
   test "can't create a public comment without a name" do
     assert_no_difference "PublicFeedback.count" do
-      f = PublicFeedback.create(:page => Page.find(:first), :content => "lulz", :target => "html")
+      f = PublicFeedback.create(valid_options_for_private_feedback)
       assert !f.valid?
     end
   end

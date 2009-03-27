@@ -113,18 +113,22 @@ class Test::Unit::TestCase
   
   # Feedback
   
-  def valid_options_for_feedback
+  def valid_options_for_private_feedback
     page = pages(:one)
     commenter = commenters(:one)
     { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html' }
   end
   
-  def create_feedback(options={})
-    Feedback.create(valid_options_for_feedback.merge(options))
+  def create_private_feedback(options={})
+    PrivateFeedback.create(valid_options_for_private_feedback.merge(options))
   end
   
-  def feedbacks(args)
-    abstract_feedbacks(args)
+  def private_feedbacks(args)
+    feedbacks(args).select { |f| f[:type] == "PrivateFeedback" }
+  end
+  
+  def public_feedbacks(args)
+    feedbacks(args).select { |f| f[:type] == "PublicFeedback" }
   end
   
   # Invites
