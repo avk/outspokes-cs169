@@ -1,4 +1,7 @@
 class FeedbackjsController < ApplicationController
+  
+  caches_page :index
+  
   def index
     files = [
       "fb_hash.js",
