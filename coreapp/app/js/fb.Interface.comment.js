@@ -3,10 +3,10 @@
   
   fb.Interface.comment = function (t) {
     this.build = function (c) {
-      var rtn = $.div().css('width','100%');
+      var rtn = fb.div().css('width','100%');
       rtn.append("<div>" + c.name + "</div><br />");
       rtn.append(c.content + "<br />");
-      rtn.append(Date(c.timestamp) + "<br />");
+      rtn.append(new Date(c.timestamp) + "<br />");
       rtn.append("<hr style='width:80%' /><br />");
       if (c.target != "html" && c.target != "html > body") {
         var tmp = $(c.target)[0];

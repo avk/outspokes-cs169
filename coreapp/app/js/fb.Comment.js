@@ -15,7 +15,8 @@
     this.name = obj["name"];
     this.content = decodeURI(obj["content"]);
     this.target = decodeURI(obj["target"]);
-    this.timestamp = obj["timestamp"];
+    // Javascript UTC is in terms of milliseconds
+    this.timestamp = obj["timestamp"] * 1000;
     this.feedback_id = obj["feedback_id"];
 
     this.build = fb.i.comment.build(this);
