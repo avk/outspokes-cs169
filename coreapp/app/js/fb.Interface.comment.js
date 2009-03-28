@@ -5,11 +5,11 @@
     this.comments = $('<div></div>');
     this.form = $('<div></div>').append(
      '<a href="#">Refresh comments</a>\
-      <form name="newcomment">\
+      <form name="newcomment" onsubmit="return false;">\
         Comment:<br />\
         <textarea name="content" cols="40" rows="5" /><br />\
         <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
-        <input type="hidden" value="" name="target" />\
+        <input type="hidden" value="html" name="target" />\
       </form>');
     this.form.find("a").click(function(){fb.Comment.get("render")});
     this.form.find("form").submit(fb.Comment.post);
@@ -37,7 +37,9 @@
     
     this.post_failed = function(c){}
     
-    this.remove = function(c){}
+    this.remove = function(c){
+      c.build.remove();
+	}
   }
   
   function select_target() {
