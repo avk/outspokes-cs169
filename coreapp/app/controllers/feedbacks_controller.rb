@@ -48,13 +48,7 @@ class FeedbacksController < ApplicationController
     @name = params[:name]
     @content = params[:content]
     @authorized = false
-    result = {:authorized => @authorized, :url => @current_page, :feedback => []}
-    
-    if @name && (!@token)
-      result = create_public_feedback
-    elsif @token
-      result = create_private_feedback
-    end
+    result = create_feedback
     
     respond_to do |wants|
       wants.html do
@@ -80,52 +74,50 @@ class FeedbacksController < ApplicationController
   end
 
 protected
-  def create_private_feedback
+
+  def create_feedback
+    page, invite = get_page_and_invite_for_feedback
     site_url = 'none'
-    page = nil
+    feedback = []
     
-    invite = Invite.find_by_url_token @token
-    if invite and same_domain?(invite.page.url, @current_page)
-      if invite.page.site.blank?
-        page = invite.page if invite.page.url == @current_page
+    if !page.nil? && page.valid?
+      @authorized = true
+      site_url = invite ? invite.page.url : page.url
+      if invite
+        feedback = PrivateFeedback.new :commenter => invite.commenter, :content => @content, :target => @target
       else
-        page = invite.page.site.pages.find_or_create_by_url @current_page
+        feedback = PublicFeedback.new :name => @name, :content => @content, :target => @target
       end
-      if !page.nil? && page.valid?
-        @authorized = true
-        site_url = invite.page.url
-        feedback = PrivateFeedback.new(:commenter => invite.commenter, :content => @content, :target => @target)
-        page.feedbacks << feedback
-        if !feedback.valid?
-          @authorized = false
-          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
-        else
-          feedback = page.feedbacks.map { |f| f.json_attributes }
-        end
+      page.feedbacks << feedback
+      if !feedback.valid?
+        @authorized = false
+        feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+      else
+        feedback = page.feedbacks.map { |f| f.json_attributes }
       end
     end
     {:authorized => @authorized, :url => site_url, :feedback => feedback}
   end
   
-  def create_public_feedback
-    page = Page.find_public_page_by_url @current_page
-    if !page.nil? && page.valid?
-      if page.site.blank?
-        @authorized = true
-        site_url = page.url
-        feedback = PublicFeedback.new :name => @name, :content => @content, :target => @target
-        page.feedbacks << feedback
-        if !feedback.valid?
-          @authorized = false
-          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+  def get_page_and_invite_for_feedback
+    page = nil
+    invite = nil
+    if @name && (!@token) # Public feedback
+      page = Page.find_public_page_by_url @current_page
+      if page.nil? 
+        # TODO: Public feedback on site?
+      end
+    elsif @token # private
+      invite = Invite.find_by_url_token @token
+      if invite and same_domain?(invite.page.url, @current_page)
+        if invite.page.site.blank?
+          page = invite.page if invite.page.url == @current_page
         else
-          feedback = page.feedbacks.map { |f| f.json_attributes }
+          page = invite.page.site.pages.find_or_create_by_url @current_page
         end
-      else
-        # TODO: Handle public sites
       end
     end
-    {:authorized => @authorized, :url => site_url, :feedback => feedback}
+    [page, invite]
   end
 
   def same_domain?(url1, url2)
