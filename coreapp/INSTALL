@@ -1,11 +1,11 @@
 After fetching a copy of this app:
 
-1. Install the necessary gems listed in config/environment.rb:
-    [sudo] rake gems:install
-2. Create a config/database.yml file, you can base it on config/database.yml.example
-3. Unless using SQLite, create the databases you specified in config/database.yml
-4. Bring your new databases up to date:
+1. Create a config/database.yml file, you can base it on config/database.yml.example
+2. Unless using SQLite, create the databases you specified in config/database.yml
+3. Bring your new databases up to date:
     rake db:migrate
+4. Install the necessary gems listed in config/environment.rb:
+    [sudo] rake gems:install
 5. Verify that all the tests pass:
     rake [test]
         or
