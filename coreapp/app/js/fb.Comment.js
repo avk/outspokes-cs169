@@ -89,13 +89,18 @@
       return null;
     }
     var i, j;
+	
+	// An array of the feedback_id's we currently have
     var oldC = [];
     for (i in fb.Comment.all) {
       oldC.push(i);
     }
     oldC.sort(function(a,b) {return a-b;});
 
-    var newC = [];
+    // An array of the feedback_id's we just recevied
+	var newC = [];
+	// An associative array between the feedback_id's we just
+	// just received and their associated comment object.
     var newCAss = {};
     for (i in data.feedback) {
       newC.push(data.feedback[i].feedback_id);
@@ -124,6 +129,9 @@
     for (j; j < newC.length; j++) {
       rtn.push(new fb.Comment(newCAss[newC[j]]));
     }
+	for (i; i < oldC.length; i++) {
+      fb.Comment.all[oldC[i]].remove();
+	}
     if (render) {
       fb.Comment.render();
     }
