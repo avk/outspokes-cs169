@@ -13,6 +13,9 @@ class Feedback < ActiveRecord::Base
   
   validates_presence_of :target, :allow_blank => false
   
+  @@popular_threshold = 2.0
+  @@unpopular_threshold = 1.0 / @@popular_threshold
+  
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)
   end
@@ -36,5 +39,25 @@ class Feedback < ActiveRecord::Base
     json_atts
   end
   
+  
+  def agree_disagree_ratio
+    (disagreed > 0) ? (agreed.to_f / disagreed) : 0.0
+  end
+  
+  def popular?
+    agree_disagree_ratio >= @@popular_threshold
+  end
+  
+  def unpopular?
+    agree_disagree_ratio > 0.0 and agree_disagree_ratio <= @@unpopular_threshold
+  end
+  
+  def self.popular(page_id)
+    self.find_all_by_page_id(page_id).select {|fb| fb.popular? }
+  end
+  
+  def self.unpopular(page_id)
+    self.find_all_by_page_id(page_id).select {|fb| fb.unpopular? }
+  end
   
 end

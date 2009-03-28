@@ -23,3 +23,51 @@ four:
   commenter_id: 2
   content: MyText4
   target: html
+
+popular1:
+  page_id: 2
+  commenter_id: 2
+  content: like Paris Hilton baby
+  target: html
+  agreed: 9
+  disagreed: 4
+
+popular2:
+  page_id: 2
+  commenter_id: 1
+  content: higher ratings than Lost
+  target: html
+  agreed: 2
+  disagreed: 1
+
+popular3:
+  page_id: 2
+  commenter_id: 2
+  content: this is hotness
+  target: html
+  agreed: 197
+  disagreed: 9
+
+unpopular1:
+  page_id: 2
+  commenter_id: 2
+  content: this is notness
+  target: html
+  agreed: 5
+  disagreed: 499
+
+unpopular2:
+  page_id: 2
+  commenter_id: 2
+  content: Ben Affleck
+  target: html
+  agreed: 1
+  disagreed: 2
+
+unpopular3:
+  page_id: 2
+  commenter_id: 1
+  content: calculators without off buttons
+  target: html
+  agreed: 7
+  disagreed: 37
