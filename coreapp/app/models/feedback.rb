@@ -15,6 +15,7 @@ class Feedback < ActiveRecord::Base
   
   @@popular_threshold = 2.0
   @@unpopular_threshold = 1.0 / @@popular_threshold
+  @@high_vote_factor = 1.5
   
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)
@@ -59,5 +60,24 @@ class Feedback < ActiveRecord::Base
   def self.unpopular(page_id)
     self.find_all_by_page_id(page_id).select {|fb| fb.unpopular? }
   end
+  
+  
+  def num_votes
+    agreed + disagreed
+  end
+  
+  def self.avg_num_votes(page_id)
+    feedbacks = self.find_all_by_page_id(page_id)
+    feedbacks.map(&:num_votes).sum / feedbacks.size
+  end
+  
+  def many_votes?
+    num_votes > Feedback.avg_num_votes(page_id) * @@high_vote_factor
+  end
+  
+  def few_votes?
+    num_votes <= Feedback.avg_num_votes(page_id)
+  end
+  
   
 end

@@ -99,4 +99,41 @@ class FeedbackTest < ActiveSupport::TestCase
       "got #{fetched.inspect} instead of #{unpopular.inspect}"
   end
   
+  test "should respond to num_votes" do
+    feedback = create_feedback(:agreed => 97, :disagreed => 3)
+    assert feedback.num_votes == 100
+  end
+  
+  test "should know the average number of votes per page" do
+    page = pages(:lone)
+    10.times do
+      create_feedback(:page => page, :agreed => 2)
+      create_feedback(:page => page, :disagreed => 8)
+    end
+    
+    assert Feedback.avg_num_votes(page.id) == 5
+  end
+  
+  test "should be able to tell if a feedback has many votes" do
+    page = pages(:lone)
+    10.times do
+      create_feedback(:page => page, :agreed => 2)
+      create_feedback(:page => page, :disagreed => 8)
+    end
+    
+    f = create_feedback(:page => page, :agreed => 27)
+    assert f.many_votes?
+  end
+  
+  test "should be able to tell if a feedback has few votes" do
+    page = pages(:lone)
+    10.times do
+      create_feedback(:page => page, :agreed => 2)
+      create_feedback(:page => page, :disagreed => 8)
+    end
+    
+    f = create_feedback(:page => page, :agreed => 2)
+    assert f.few_votes?
+  end
+  
 end

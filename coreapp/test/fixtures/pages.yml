@@ -31,3 +31,8 @@ rails_spikes:
 transactions:
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
   account_id: 2
+  
+lone:
+  id: 666
+  account_id: 1
+  url: http://www.duskdesigns.com/
