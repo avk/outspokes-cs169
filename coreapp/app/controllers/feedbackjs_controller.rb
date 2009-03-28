@@ -1,6 +1,7 @@
 class FeedbackjsController < ApplicationController
-  
-  #caches_page :index
+
+  FeedbackjsController.page_cache_extension = '.js'  
+  caches_page :index
   
   def index
     files = [
@@ -15,7 +16,7 @@ class FeedbackjsController < ApplicationController
       out += IO.read("app/js/" + f) + "\n"
     end
     out += "fb_hash();"
-
+    
     render :js => out
   end
 
