@@ -1,0 +1,7 @@
+After fetching a copy of this app:
+
+0. Make sure you've followed coreapp's INSTALL instructions.
+1. Make a log directory for demoapp:
+    mkdir ./log
+2. Copy coreapp's database configuration:
+    cp ../coreapp/config/database.yml ./config/
