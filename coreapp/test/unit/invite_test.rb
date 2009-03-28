@@ -54,6 +54,16 @@ class InviteTest < ActiveSupport::TestCase
     
     assert i1.url_token != i2.url_token
   end
+  
+  test 'should be able to invite an account holder as a commmenter to a page' do
+    inviter = commenters(:quentin)
+    account_holder = commenters(:aaron)
+    
+    assert_difference "Invite.count", 1 do
+      i = create_invite(:commenter => account_holder)
+      assert !i.new_record?
+    end
+  end
 
 end
 
