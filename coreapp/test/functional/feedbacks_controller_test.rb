@@ -341,6 +341,18 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = page.feedbacks.map { |f| f.json_attributes }
     validate_windowname :authorized => true, :feedback => feedback, :url => page.url
   end
+  
+  test "can't post public comments without a name" do
+    page = pages(:transactions)
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_no_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :current_page => page.url,
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    
+    validate_post_fail
+  end
 
   test "should not post public comments to pages with public comments disabled" do
     page = pages(:one)
