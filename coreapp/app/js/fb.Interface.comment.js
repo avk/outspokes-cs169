@@ -2,8 +2,8 @@
   var $ = fb.$;
   
   fb.Interface.comment = function (self) {
-    this.comments = fb.div();
-    this.form = fb.div().append(
+    this.comments = $('<div></div>');
+    this.form = $('<div></div>').append(
      '<a href="#">Refresh comments</a>\
       <form name="newcomment">\
         Comment:<br />\
@@ -18,7 +18,7 @@
     self.main_window.append(this.form);
     
     this.build = function (c) {
-      var rtn = fb.div().css('width','100%');
+      var rtn = $('<div></div>').css('width','100%');
       rtn.append(c.name + "<br />");
       rtn.append(c.content + "<br />");
       rtn.append(new Date(c.timestamp) + "<br />");

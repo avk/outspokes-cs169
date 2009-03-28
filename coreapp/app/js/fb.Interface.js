@@ -9,7 +9,7 @@
   fb.Interface = function() {
     fb.assert_false(fb.Interface.instantiated, "Can not create more than one instance of the interface.")
     
-    this.main_window = fb.div().css({
+    this.main_window = $('<div></div>').css({
       'width':'300px',
       'position':'absolute',
       'top':'15px',
@@ -25,6 +25,10 @@
     this.comment = new fb.Interface.comment(this);
     
     fb.Interface.instantiated = true;
+  }
+  
+  fb.Interface.prototype.div = function() {
+  	return $('<div></div>');
   }
 
   fb.Interface.instantiated = false;

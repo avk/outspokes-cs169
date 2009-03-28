@@ -90,10 +90,6 @@
     }
   }
   
-  fb.div = function() {
-    return $('<div></div>');
-  }
-  
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
       if (propObj[i] === "") {
