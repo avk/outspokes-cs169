@@ -130,7 +130,9 @@
     return rtn;
   }
 
-  fb.Comment.post = function (content, target) {
+  fb.Comment.post = function () {
+    var content = this.content.value;
+    var target = this.target.value;
     if (!fb.env.authorized) {
       return null;
     }

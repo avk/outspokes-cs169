@@ -11,10 +11,13 @@
     
     this.main_window = fb.div().css({
       'width':'300px',
-      'height':'400px',
-      'border':'1px solid black'
+      'position':'absolute',
+      'top':'15px',
+      'right':'15px',
+      'border':'1px solid black',
+      'padding':'5px'
     })
-    $('body').append(this.main_window);
+    this.main_window.appendTo($('body'));
     
     if (typeof fb.Interface._initialized === "undefined") {}
     fb.Interface._initialized = true;

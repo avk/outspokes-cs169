@@ -1,13 +1,28 @@
 (function(fb){
   var $ = fb.$;
   
-  fb.Interface.comment = function (t) {
+  fb.Interface.comment = function (self) {
+    this.comments = fb.div();
+    this.form = fb.div().append(
+     '<a href="#">Refresh comments</a>\
+      <form name="newcomment">\
+        Comment:<br />\
+        <textarea name="content" cols="40" rows="5" /><br />\
+        <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
+        <input type="hidden" value="" name="target" />\
+      </form>');
+    this.form.find("a").click(function(){fb.Comment.get("render")});
+    this.form.find("form").submit(fb.Comment.post);
+    this.form.find("span").mouseup(select_target);
+    self.main_window.append(this.comments);
+    self.main_window.append(this.form);
+    
     this.build = function (c) {
       var rtn = fb.div().css('width','100%');
-      rtn.append("<div>" + c.name + "</div><br />");
+      rtn.append(c.name + "<br />");
       rtn.append(c.content + "<br />");
       rtn.append(new Date(c.timestamp) + "<br />");
-      rtn.append("<hr style='width:80%' /><br />");
+      rtn.append("<hr style='width:80%' />");
       if (c.target != "html" && c.target != "html > body") {
         var tmp = $(c.target)[0];
         tmp = highlight_target(tmp);
@@ -17,12 +32,19 @@
     }
     
     this.render = function(c) {
-      t.main_window.append(c.build);
+      this.comments.append(c.build);
     }
     
     this.post_failed = function(c){}
     
     this.remove = function(c){}
+  }
+  
+  function select_target() {
+    $(this).html("Change target");
+    $(document.body).one('click', function (e) {
+      fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+    });
   }
   
   function highlight_target(el) {
