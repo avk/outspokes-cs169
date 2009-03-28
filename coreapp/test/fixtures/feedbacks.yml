@@ -71,3 +71,35 @@ unpopular3:
   target: html
   agreed: 7
   disagreed: 37
+
+controversial1:
+  page_id: 2
+  commenter_id: 2
+  content: sex
+  target: html
+  agreed: 500
+  disagreed: 499
+
+controversial2:
+  page_id: 2
+  commenter_id: 2
+  content: religion
+  target: html
+  agreed: 120
+  disagreed: 144
+
+controversial3:
+  page_id: 2
+  commenter_id: 1
+  content: scandal
+  target: html
+  agreed: 208
+  disagreed: 180
+
+neutral:
+  page_id: 2
+  commenter_id: 1
+  content: meh
+  target: html
+  agreed: 0
+  disagreed: 1

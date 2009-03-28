@@ -67,6 +67,11 @@ class FeedbackTest < ActiveSupport::TestCase
     assert feedback.agree_disagree_ratio == 0.0
   end
   
+  test "should detect an inconclusive (i.e. close) agree_disagree_ratio" do
+    feedback = create_feedback(:agreed => 99, :disagreed => 100)
+    assert feedback.close_agree_disagree_ratio?
+  end
+  
   test "should respond to popular?" do
     popular = feedbacks(:popular1)
     assert popular.popular?
@@ -134,6 +139,34 @@ class FeedbackTest < ActiveSupport::TestCase
     
     f = create_feedback(:page => page, :agreed => 2)
     assert f.few_votes?
+  end
+  
+  test "should respond to controversial?" do
+    feedback = create_feedback(:agreed => 99, :disagreed => 100)
+    assert feedback.controversial?
+  end
+  
+  test "should fetch a list of controversial feedbacks" do
+    controversial = []
+    (1..3).each { |i| controversial << feedbacks("controversial#{i}".to_sym) }
+    
+    fetched = Feedback.controversial(controversial.first.page_id)
+    assert fetched.map(&:id).sort == controversial.map(&:id).sort, 
+      "got #{fetched.inspect} instead of #{controversial.inspect}"
+  end
+  
+  test "should respond to neutral?" do
+    feedback = create_feedback
+    assert feedback.neutral?
+  end
+  
+  test "should fetch a list of neutral feedbacks" do
+    Feedback.neutral(feedbacks(:neutral).page_id).each do |fb|
+      assert !fb.popular?
+      assert !fb.unpopular?
+      assert !fb.controversial?
+      assert fb.neutral?
+    end
   end
   
 end

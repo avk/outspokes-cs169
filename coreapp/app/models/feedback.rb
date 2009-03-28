@@ -15,7 +15,7 @@ class Feedback < ActiveRecord::Base
   
   @@popular_threshold = 2.0
   @@unpopular_threshold = 1.0 / @@popular_threshold
-  @@high_vote_factor = 1.5
+  @@high_vote_factor = 0.5
   
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)
@@ -44,6 +44,12 @@ class Feedback < ActiveRecord::Base
   def agree_disagree_ratio
     (disagreed > 0) ? (agreed.to_f / disagreed) : 0.0
   end
+  
+  def close_agree_disagree_ratio?
+    (agree_disagree_ratio == 0.0) or
+    (agree_disagree_ratio > @@unpopular_threshold and agree_disagree_ratio < @@popular_threshold)
+  end
+  
   
   def popular?
     agree_disagree_ratio >= @@popular_threshold
@@ -79,5 +85,21 @@ class Feedback < ActiveRecord::Base
     num_votes <= Feedback.avg_num_votes(page_id)
   end
   
+  
+  def controversial?
+    many_votes? and close_agree_disagree_ratio?
+  end
+  
+  def neutral?
+    few_votes? and close_agree_disagree_ratio?
+  end
+  
+  def self.controversial(page_id)
+    self.find_all_by_page_id(page_id).select {|fb| fb.controversial? }
+  end
+  
+  def self.neutral(page_id)
+    self.find_all_by_page_id(page_id).select {|fb| fb.neutral? }
+  end
   
 end
