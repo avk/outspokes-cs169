@@ -8,5 +8,3 @@ After fetching a copy of this app:
     rake db:migrate
 5. Verify that all the tests pass:
     rake [test]
-        or
-    rake spec
