@@ -1,0 +1,2 @@
+module FeedbackjsHelper
+end
