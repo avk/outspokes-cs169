@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'json'
+require 'ruby-debug'
 
 class FeedbacksControllerTest < ActionController::TestCase
 
@@ -343,7 +344,7 @@ class FeedbacksControllerTest < ActionController::TestCase
 
     parent.reload
     assert parent.children.first.content == content
-    
+   
     feedback = page.feedbacks.map { |f| f.json_attributes }
     validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => invite.page.url
   end

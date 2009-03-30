@@ -60,8 +60,11 @@ class FeedbacksController < ApplicationController
       if !page.nil? && page.valid?
         authorized = true
         site_url = invite.page.url
-        feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target, :parent_id => parent_id)
+        feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
         page.feedbacks << feedback
+		if parent_id
+		  feedback.move_to_child_of parent_id
+        end
         if !feedback.valid?
           authorized = false
           feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
