@@ -52,6 +52,10 @@
       fb.Comment.prototype.render = function() {
         fb.i.comment.render(this);
       }
+      
+      fb.Comment.prototype.isReply = function() {
+        return fb.i.comment.dom.comment_id_format.test(this.target);
+      }
     }
 
     fb.Comment._initialized = true;
@@ -138,9 +142,7 @@
     return rtn;
   }
 
-  fb.Comment.post = function () {
-    var content = this.content.value;
-    var target = this.target.value;
+  fb.Comment.post = function (content, target) {
     if (!fb.env.authorized) {
       return null;
     }
@@ -152,6 +154,9 @@
       content: content,
       target: target,
       callback: 'callback'
+    }
+    if (fb.i.comment.dom.comment_id_format.test(target)) {
+      data.parent_id = target;
     }
     var callback = function(data) {
       var x = fb.Comment.get_callback(data, "render");

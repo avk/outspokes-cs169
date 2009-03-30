@@ -62,9 +62,11 @@ class FeedbacksController < ApplicationController
         site_url = invite.page.url
         feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
         page.feedbacks << feedback
-		if parent_id
-		  feedback.move_to_child_of parent_id
+        if parent_id
+          # since parent_id is based on /comment_\d+/i, we extract the \d+
+          feedback.move_to_child_of parent_id.sub(/\D+/, '').to_i
         end
+        
         if !feedback.valid?
           authorized = false
           feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
