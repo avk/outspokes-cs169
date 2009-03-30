@@ -13,7 +13,7 @@ class Feedback < ActiveRecord::Base
   
   validates_presence_of :target, :allow_blank => false
 
-  acts_as_tree :order => "created_at"
+  acts_as_nested_set
   
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)
