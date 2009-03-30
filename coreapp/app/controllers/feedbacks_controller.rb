@@ -48,6 +48,7 @@ class FeedbacksController < ApplicationController
     authorized = false
     site_url = 'none'
     page = nil
+    parent_id = params[:parent_id]
     
     invite = Invite.find_by_url_token token
     if invite and same_domain?(invite.page.url, current_page)
@@ -59,7 +60,7 @@ class FeedbacksController < ApplicationController
       if !page.nil? && page.valid?
         authorized = true
         site_url = invite.page.url
-        feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
+        feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target, :parent_id => parent_id)
         page.feedbacks << feedback
         if !feedback.valid?
           authorized = false
@@ -92,6 +93,7 @@ class FeedbacksController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 
 protected
 
