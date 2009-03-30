@@ -18,7 +18,7 @@
     self.main_window.append(this.form);
     
     this.build = function (c) {
-      var rtn = $('<div></div>').css('width','100%');
+      var rtn = $('<div id="' + 'comment_' + c.feedback_id + '"></div>').css('width','100%');
       rtn.append(c.name + "<br />");
       rtn.append(c.content + "<br />");
       rtn.append(new Date(c.timestamp) + "<br />");
