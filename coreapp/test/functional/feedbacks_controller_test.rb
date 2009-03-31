@@ -200,7 +200,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => "LOL!!!!!", :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
@@ -213,7 +213,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     callback = 'jsfeed'
     content = "HUH THIS SITE IS LAME YO"
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
           :current_page => "bullshit", :callback => callback, :content => content, :target => "html"
     end
@@ -249,7 +249,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     callback = 'jsfeed'
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
           :current_page => page.url, :callback => callback, :content => '', :target => "html"
     end
@@ -262,7 +262,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     callback = 'jsfeed'
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "html",
           :current_page => page.url, :callback => callback, :content => 'anything at all', :target => ''
     end
@@ -322,7 +322,7 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should destroy feedback" do
     feedback = feedbacks(:one)
     page = feedback.page
-    assert_difference('Feedback.count', -1) do
+    assert_difference('Comment.count', -1) do
       delete :destroy, :id => feedback.id
     end
     assert_redirected_to page_path(page)

@@ -2,40 +2,40 @@ require 'test_helper'
 
 class CommentTest < ActiveSupport::TestCase
   test "should create feedback" do
-    assert_difference 'Feedback.count' do
-      feedback = create_private_feedback
+    assert_difference 'Comment.count' do
+      feedback = create_private_comment
       assert !feedback.new_record?, "#{feedback.errors.full_messages.to_sentence}"
     end
   end
   
   test "should be associated with a commenter" do
-    feedback = create_private_feedback(:commenter => nil)
+    feedback = create_private_comment(:commenter => nil)
     assert !feedback.valid?
     # assert feedback.errors.on(:commenter_id), "allowing feedback to be saved without a commenter"
   end
       
   test "should be associated with a page" do
-    feedback = create_private_feedback(:page => nil)
+    feedback = create_private_comment(:page => nil)
     assert !feedback.valid?
   end
   
   test "should have content" do
-    feedback = create_private_feedback(:content => nil)
+    feedback = create_private_comment(:content => nil)
     assert !feedback.valid?
   end
   
   test "should not have blank content" do
-    feedback = create_private_feedback(:content => '')
+    feedback = create_private_comment(:content => '')
     assert !feedback.valid?
   end
   
   test "should have a target" do
-    feedback = create_private_feedback(:target => '')
+    feedback = create_private_comment(:target => '')
     assert !feedback.valid?
   end
   
   test "should expose certain attributes for json" do
-    feedback = create_private_feedback
+    feedback = create_private_comment
     json_atts = {
       "feedback_id" => feedback.id,
       "name" => feedback.commenter.email,
@@ -52,20 +52,20 @@ class CommentTest < ActiveSupport::TestCase
   
   test "can create public feedbacks without an account" do
     assert_difference "Comment.count" do
-      f = Comment.create(valid_options_for_public_feedback)
+      f = Comment.create(valid_options_for_public_comment)
       assert_valid f
     end
   end
   
   test "can't create a public comment without a name" do
     assert_no_difference "Comment.count" do
-      f = Comment.create(valid_options_for_public_feedback.merge(:name => nil))
+      f = Comment.create(valid_options_for_public_comment.merge(:name => nil))
       assert !f.valid?
     end
   end
   
   test "generates proper json for public feedback" do
-    f = Comment.create(valid_options_for_public_feedback)
+    f = Comment.create(valid_options_for_public_comment)
     assert_valid f
     json_atts = {
       "feedback_id" => f.id,
