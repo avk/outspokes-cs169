@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FeedbackTest < ActiveSupport::TestCase
+class CommentTest < ActiveSupport::TestCase
   test "should create feedback" do
     assert_difference 'Feedback.count' do
       feedback = create_private_feedback
@@ -44,10 +44,42 @@ class FeedbackTest < ActiveSupport::TestCase
       "target" => feedback.target
     }
     
-    assert PrivateFeedback.json_attribute_names.sort == json_atts.keys.sort
+    assert Comment.json_attribute_names.sort == json_atts.keys.sort
     feedback.json_attributes.each do |key, value|
       assert json_atts[key] == value
     end
+  end
+  
+  test "can create public feedbacks without an account" do
+    assert_difference "Comment.count" do
+      f = Comment.create(valid_options_for_public_feedback)
+      assert_valid f
+    end
+  end
+  
+  test "can't create a public comment without a name" do
+    assert_no_difference "Comment.count" do
+      f = Comment.create(valid_options_for_public_feedback.merge(:name => nil))
+      assert !f.valid?
+    end
+  end
+  
+  test "generates proper json for public feedback" do
+    f = Comment.create(valid_options_for_public_feedback)
+    assert_valid f
+    json_atts = {
+      "feedback_id" => f.id,
+      "name" => f.name,
+      "timestamp" => f.created_at.to_i,
+      "content" => f.content,
+      "target" => f.target
+    }
+    js = f.json_attributes.to_json
+    json_obj = ActiveSupport::JSON::decode(js)
+    json_atts.each do |key, val|
+      assert json_obj[key] == val, "Feedback.#{key} should be #{val}. Instead: #{json_obj[key]}"
+    end
+      
   end
   
 end

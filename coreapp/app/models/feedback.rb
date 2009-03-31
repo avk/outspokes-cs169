@@ -1,13 +1,16 @@
 class Feedback < ActiveRecord::Base
   
   belongs_to :page
+  belongs_to :commenter
   
   validates_presence_of :page_id
   validates_associated :page
   
-  validates_presence_of :content, :allow_blank => false
+  validates_inclusion_of :public, :in => [true, false] # must be either public or private  
+  validates_presence_of :name, :if => :public
+  validates_presence_of :commenter_id, :unless => :public
+  validates_associated :commenter, :unless => :public
   
-  validates_presence_of :target, :allow_blank => false
   
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)
@@ -32,7 +35,7 @@ class Feedback < ActiveRecord::Base
       when 'feedback_id'
         json_atts['feedback_id'] = id
       when 'name'
-        json_atts['name'] = commenter.email
+        json_atts['name'] = public ? name : commenter.email
       when 'timestamp'
         json_atts['timestamp'] = created_at.to_i
       else
@@ -42,6 +45,5 @@ class Feedback < ActiveRecord::Base
     
     json_atts
   end
-  
   
 end

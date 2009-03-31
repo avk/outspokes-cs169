@@ -64,7 +64,7 @@ class FeedbacksController < ApplicationController
   # DELETE /feedbacks/1
   # DELETE /feedbacks/1.xml
   def destroy
-    @feedback = PrivateFeedback.find(params[:id])
+    @feedback = Feedback.find(params[:id])
     @feedback.destroy
 
     respond_to do |format|
@@ -84,9 +84,9 @@ protected
       @authorized = true
       site_url = invite ? invite.page.url : page.url
       if invite
-        feedback = PrivateFeedback.new :commenter => invite.commenter, :content => @content, :target => @target
+        feedback = Comment.new :commenter => invite.commenter, :content => @content, :target => @target, :public => false
       else
-        feedback = PublicFeedback.new :name => @name, :content => @content, :target => @target
+        feedback = Comment.new :name => @name, :content => @content, :target => @target, :public => true
       end
       page.feedbacks << feedback
       if !feedback.valid?

@@ -5,25 +5,29 @@ one:
   commenter_id: 1
   content: MyText1
   target: html
-  type: PrivateFeedback
+  type: Comment
+  public: false
 
 two:
   page_id: 2
   commenter_id: 2
   content: MyText2
   target: html
-  type: PrivateFeedback
+  type: Comment
+  public: false
   
 three:
   page_id: 1
   commenter_id: 2
   content: MyText3
   target: html
-  type: PrivateFeedback
+  type: Comment
+  public: false
   
 four:
   page_id: 1
   commenter_id: 2
   content: MyText4
   target: html
-  type: PrivateFeedback
+  type: Comment
+  public: false
