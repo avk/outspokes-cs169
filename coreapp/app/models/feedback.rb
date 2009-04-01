@@ -2,6 +2,7 @@ class Feedback < ActiveRecord::Base
   
   belongs_to :commenter
   belongs_to :page
+  has_many :opinions, :dependent => :destroy
   
   validates_presence_of :commenter_id
   validates_associated :commenter
@@ -15,7 +16,7 @@ class Feedback < ActiveRecord::Base
   
   @@popular_threshold = 2.0
   @@unpopular_threshold = 1.0 / @@popular_threshold
-  @@high_vote_factor = 0.5
+  @@high_vote_factor = 1.5
   
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)
@@ -38,6 +39,14 @@ class Feedback < ActiveRecord::Base
     end
     
     json_atts
+  end
+  
+  def agreed
+    opinions.find_all_by_agreed(true).size
+  end
+  
+  def disagreed
+    opinions.find_all_by_agreed(false).size
   end
   
   

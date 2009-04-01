@@ -52,6 +52,22 @@ class FeedbackTest < ActiveSupport::TestCase
     end
   end
   
+  test 'should delete all opinions when deleted' do
+    feedback = create_feedback
+    commenters = Commenter.find(:all, :order => "created_at DESC", :limit => 5)
+    num_opinions = commenters.size
+    
+    assert_difference "Opinion.count", num_opinions do
+      commenters.each do |c|
+        c.opinions.create(:feedback => feedback, :agreed => true)
+      end
+    end
+    
+    assert_difference "Opinion.count", -(num_opinions) do
+      feedback.destroy
+    end
+  end
+  
   test "should start with an agreed count of 0" do
     feedback = create_feedback
     assert feedback.agreed == 0
@@ -68,7 +84,7 @@ class FeedbackTest < ActiveSupport::TestCase
   end
   
   test "should detect an inconclusive (i.e. close) agree_disagree_ratio" do
-    feedback = create_feedback(:agreed => 99, :disagreed => 100)
+    feedback = feedbacks(:controversial1)
     assert feedback.close_agree_disagree_ratio?
   end
   
@@ -105,44 +121,34 @@ class FeedbackTest < ActiveSupport::TestCase
   end
   
   test "should respond to num_votes" do
-    feedback = create_feedback(:agreed => 97, :disagreed => 3)
-    assert feedback.num_votes == 100
+    feedback = feedbacks(:popular1)
+    assert feedback.agreed == 9
+    assert feedback.disagreed == 4
+    assert feedback.num_votes == 13
   end
   
   test "should know the average number of votes per page" do
     page = pages(:lone)
-    10.times do
-      create_feedback(:page => page, :agreed => 2)
-      create_feedback(:page => page, :disagreed => 8)
-    end
-    
-    assert Feedback.avg_num_votes(page.id) == 5
+    actual = Feedback.avg_num_votes(page.id)
+    expected = 10
+    assert actual == expected, "got #{actual}, expected #{expected}"
   end
   
   test "should be able to tell if a feedback has many votes" do
-    page = pages(:lone)
-    10.times do
-      create_feedback(:page => page, :agreed => 2)
-      create_feedback(:page => page, :disagreed => 8)
-    end
-    
-    f = create_feedback(:page => page, :agreed => 27)
+    f = feedbacks(:avg3)
     assert f.many_votes?
   end
   
   test "should be able to tell if a feedback has few votes" do
-    page = pages(:lone)
-    10.times do
-      create_feedback(:page => page, :agreed => 2)
-      create_feedback(:page => page, :disagreed => 8)
-    end
-    
-    f = create_feedback(:page => page, :agreed => 2)
+    f = feedbacks(:avg1)
     assert f.few_votes?
   end
   
   test "should respond to controversial?" do
-    feedback = create_feedback(:agreed => 99, :disagreed => 100)
+    feedback = feedbacks(:controversial1)
+    assert !feedback.popular?
+    assert !feedback.unpopular?
+    assert !feedback.neutral?
     assert feedback.controversial?
   end
   

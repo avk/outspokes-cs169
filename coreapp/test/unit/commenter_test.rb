@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class CommenterTest < ActiveSupport::TestCase
 
@@ -85,6 +85,76 @@ class CommenterTest < ActiveSupport::TestCase
     end
     
     assert_difference "Invite.count", -(pages.size) do
+      commenter.destroy
+    end
+  end
+  
+  test 'should be able to make an opinion on a feedback' do
+    commenter = create_commenter
+    feedback = create_feedback
+    assert feedback.commenter != commenter
+    
+    assert_difference "Opinion.count", 1 do
+      assert_difference "commenter.opinions.count", 1 do
+        commenter.opinions.create(:feedback => feedback, :agreed => true)
+      end
+    end
+  end
+  
+  test 'should know if (s)he has no opinion of a feedback' do
+    commenter = create_commenter
+    feedback = create_feedback
+    
+    assert commenter.opinion_of(feedback.id).nil?
+  end
+  
+  test 'should know if (s)he has agreed with a feedback' do
+    commenter = create_commenter
+    feedback = create_feedback
+    
+    commenter.opinions.create(:feedback => feedback, :agreed => true)
+    assert commenter.opinion_of(feedback.id) == 'agreed'
+  end
+  
+  test 'should know if (s)he has disagreed with a feedback' do
+    commenter = create_commenter
+    feedback = create_feedback
+    
+    commenter.opinions.create(:feedback => feedback, :agreed => false)
+    assert commenter.opinion_of(feedback.id) == 'disagreed'
+  end
+  
+  test 'should be able to see a list of feedbacks (s)he agreed with' do
+    commenter = commenters(:opinionated)
+    agreed_with = [feedbacks(:one), feedbacks(:two), feedbacks(:three)]
+    agreed_with.each do |fb|
+      commenter.opinions.create(:feedback => fb, :agreed => true)
+    end
+    
+    assert agreed_with.map(&:id).sort, commenter.agreed_with.map(&:id).sort
+  end
+  
+  test 'should be able to see a list of feedbacks (s)he disagreed with' do
+    commenter = commenters(:opinionated)
+    disagreed_with = [feedbacks(:one), feedbacks(:two), feedbacks(:three)]
+    disagreed_with.each do |fb|
+      commenter.opinions.create(:feedback => fb, :agreed => false)
+    end
+    
+    assert disagreed_with.map(&:id).sort, commenter.disagreed_with.map(&:id).sort
+  end
+  
+  test 'should delete all of a commenter\'s opinions when that commenter is deleted' do
+    commenter = create_commenter
+    feedbacks = [:one, :two]
+    
+    assert_difference "commenter.opinions.count", feedbacks.size do
+      feedbacks.each do |which|
+        commenter.opinions.create(:feedback => feedbacks(which), :agreed => false)
+      end      
+    end
+    
+    assert_difference "Opinion.count", -(feedbacks.size) do
       commenter.destroy
     end
   end

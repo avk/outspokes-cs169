@@ -1,0 +1,39 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# Generates A TON of data used to compute consensus in feedback unit tests
+
+<% 
+  commenter_id = 1000 # see the massive generator in commenters.yml
+  opinions = {
+    :popular1 => {:id => 101, :agreed => 9, :disagreed => 4},
+    :popular2 => {:id => 102, :agreed => 2, :disagreed => 1},
+    :popular3 => {:id => 103, :agreed => 30, :disagreed => 9},
+    :unpopular1 => {:id => 104, :agreed => 5, :disagreed => 11},
+    :unpopular2 => {:id => 105, :agreed => 1, :disagreed => 2},
+    :unpopular3 => {:id => 106, :agreed => 7, :disagreed => 37},
+    :controversial1 => {:id => 107, :agreed => 50, :disagreed => 49},
+    :controversial2 => {:id => 108, :agreed => 79, :disagreed => 97},
+    :controversial3 => {:id => 109, :agreed => 42, :disagreed => 30},
+    :neutral => {:id => 110, :agreed => 0, :disagreed => 1},
+    :avg1 => {:id => 666, :agreed => 1, :disagreed => 3},
+    :avg2 => {:id => 667, :agreed => 8, :disagreed => 2},
+    :avg3 => {:id => 668, :agreed => 6, :disagreed => 10},
+  }
+ %>
+
+<% opinions.each do |feedback, atts| %>
+
+<% for i in 1..atts[:agreed] %>
+<%= feedback %>_agreed_<%= i %>:
+  feedback_id: <%= atts[:id] %>
+  commenter_id: <%= commenter_id += 1 %>
+  agreed: true
+<% end %>
+
+<% for i in 1..atts[:disagreed] %>
+<%= feedback %>_disagreed_<%= i %>:
+  feedback_id: <%= atts[:id] %>
+  commenter_id: <%= commenter_id += 1 %>
+  agreed: false
+<% end %>
+
+<% end %>

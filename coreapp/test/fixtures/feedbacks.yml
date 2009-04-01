@@ -25,81 +25,80 @@ four:
   target: html
 
 popular1:
+  id: 101
   page_id: 2
   commenter_id: 2
   content: like Paris Hilton baby
   target: html
-  agreed: 9
-  disagreed: 4
 
 popular2:
+  id: 102
   page_id: 2
   commenter_id: 1
   content: higher ratings than Lost
   target: html
-  agreed: 2
-  disagreed: 1
 
 popular3:
+  id: 103
   page_id: 2
   commenter_id: 2
   content: this is hotness
   target: html
-  agreed: 197
-  disagreed: 9
 
 unpopular1:
+  id: 104
   page_id: 2
   commenter_id: 2
   content: this is notness
   target: html
-  agreed: 5
-  disagreed: 499
 
 unpopular2:
+  id: 105
   page_id: 2
   commenter_id: 2
   content: Ben Affleck
   target: html
-  agreed: 1
-  disagreed: 2
 
 unpopular3:
+  id: 106
   page_id: 2
   commenter_id: 1
   content: calculators without off buttons
   target: html
-  agreed: 7
-  disagreed: 37
 
 controversial1:
+  id: 107
   page_id: 2
   commenter_id: 2
   content: sex
   target: html
-  agreed: 500
-  disagreed: 499
 
 controversial2:
+  id: 108
   page_id: 2
   commenter_id: 2
   content: religion
   target: html
-  agreed: 120
-  disagreed: 144
 
 controversial3:
+  id: 109
   page_id: 2
   commenter_id: 1
   content: scandal
   target: html
-  agreed: 208
-  disagreed: 180
 
 neutral:
+  id: 110
   page_id: 2
   commenter_id: 1
   content: meh
   target: html
-  agreed: 0
-  disagreed: 1
+
+<% for i in 1..3 %>
+avg<%= i %>:
+  id: <%= 665 + i %>
+  page_id: 666
+  commenter_id: <%= 1000 + i %>
+  content: leave me alone
+  target: html
+<% end %>

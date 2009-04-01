@@ -119,6 +119,12 @@ class Test::Unit::TestCase
     { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html' }
   end
   
+  def invalid_options_for_feedback
+    valid = valid_options_for_feedback
+    valid.shift # makes valid invalid
+    valid # now valid
+  end
+  
   def create_feedback(options={})
     Feedback.create(valid_options_for_feedback.merge(options))
   end
@@ -131,6 +137,16 @@ class Test::Unit::TestCase
   
   def create_invite(options={})
     Invite.create(valid_options_for_invite.merge(options))
+  end
+  
+  # Opinions
+  
+  def valid_options_for_opinion
+    { :feedback => feedbacks(:one), :commenter => commenters(:one), :agreed => true }
+  end
+  
+  def create_opinion(options={})
+    Opinion.create(valid_options_for_opinion.merge(options))
   end
   
   

@@ -34,3 +34,14 @@ old_password_holder:
   created_at:                <%= 1.days.ago.to_s :db %>
   type:                      Account
 
+opinionated:
+  id:                        8
+  email:                     opinionated@example.com
+
+# opinions.yml uses the crowd below
+<% for i in 1..500 %>
+commenter_<%= i %>:
+  id: <%= 1000 + i %>
+  email: sample_<%= i %>@example.com
+<% end %>
+

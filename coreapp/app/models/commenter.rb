@@ -3,6 +3,7 @@ class Commenter < ActiveRecord::Base
   has_many :invites, :dependent => :destroy
   has_many :pages, :through => :invites
   has_many :feedbacks, :dependent => :destroy
+  has_many :opinions, :dependent => :destroy
 
   #stolen from the restful_authentication plugin
   @@email_name_regex  = '[\w\.%\+\-]+'.freeze
@@ -30,5 +31,23 @@ class Commenter < ActiveRecord::Base
     
     {:legal => legal, :illegal => illegal}
   end
+
+  def agreed_with
+    opinions.find_all_by_agreed(true)
+  end
+  
+  def disagreed_with
+    opinions.find_all_by_agreed(false)
+  end
+
+  def opinion_of(feedback_id)
+    opinions.each do |op|
+      if op.feedback_id == feedback_id
+        return (op.agreed?) ? 'agreed' : 'disagreed' 
+      end
+    end
+    return nil
+  end
+  
 
 end
