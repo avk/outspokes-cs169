@@ -38,3 +38,13 @@ transactions:
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
   account_id: 2
   allow_public_comments: true
+  
+public_site:
+    url: http://localhost:3001/asite/
+    site_id: 3
+    allow_public_comments: true
+    
+alt_public_site:
+    url: http://localhost:3001/anothersite/
+    site_id: 4
+    allow_public_comments: true

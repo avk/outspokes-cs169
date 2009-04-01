@@ -26,6 +26,11 @@ class FeedbacksController < ApplicationController
       end
     end
     
+      # if !@authroized && (page = Site.find_public_by_url(@current_page))
+      #   @authorized = true
+      # 
+      # end
+    
     respond_to do |wants|
       wants.js do
         render :json => {:authorized => @authorized, :url => @site_url, :feedback => @feedback},
