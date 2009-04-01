@@ -35,6 +35,7 @@ rails_spikes:
   allow_public_comments: false
   
 transactions:
+  id: 3
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
   account_id: 2
   allow_public_comments: true

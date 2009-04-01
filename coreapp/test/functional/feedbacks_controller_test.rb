@@ -336,7 +336,6 @@ class FeedbacksControllerTest < ActionController::TestCase
       post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
            :content => content, :target => "html", :windowname => "true", :format => "html" 
     end
-    
     assert_template "new_feedback_for_page"
     feedback = page.feedbacks.map { |f| f.json_attributes }
     validate_windowname :authorized => true, :feedback => feedback, :url => page.url
@@ -350,7 +349,6 @@ class FeedbacksControllerTest < ActionController::TestCase
       post :new_feedback_for_page, :current_page => page.url,
            :content => content, :target => "html", :windowname => "true", :format => "html" 
     end
-    
     validate_post_fail
   end
 
@@ -362,8 +360,35 @@ class FeedbacksControllerTest < ActionController::TestCase
       post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
            :content => content, :target => "html", :windowname => "true", :format => "html" 
     end
-    
     validate_post_fail
+  end
+  
+  test "can post to a new page in a public site" do 
+    page_url = "http://localhost:3001/asite/puppies.html"
+    content = "I like puppies"
+    assert_difference "Page.count" do
+      post :new_feedback_for_page, :current_page => page_url, :name => "Joe Schmoe",
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    assert_template "new_feedback_for_page"
+  end
+
+  test "can get feedback for public page without url_token" do 
+    page = pages(:transactions)
+    callback = "calljs"
+    assert page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
+    get :feedback_for_page, :current_page => page.url, :callback => callback
+    feedback = page.feedbacks.map { |f| f.json_attributes }
+
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => page.url
+  end
+  
+  test "authorized for feedback from page in public site even if no feedback on page" do 
+    page = pages(:public_site)
+    callback = "calljs"
+    get :feedback_for_page, :current_page => page.url + "lolcats.html", :callback => callback
+    feedback = []
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => page.url
   end
 
 end

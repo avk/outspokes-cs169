@@ -31,3 +31,19 @@ four:
   target: html
   type: Comment
   public: false
+
+five:
+    page_id: 3
+    name: Joe Fake
+    content: I hate this page
+    target: html
+    type: Comment
+    public: true
+    
+six:
+    page_id: 3
+    commenter_id: 1
+    content: I also  hate this page
+    target: html
+    type: Comment
+    public: false

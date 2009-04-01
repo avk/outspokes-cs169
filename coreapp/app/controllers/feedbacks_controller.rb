@@ -26,10 +26,16 @@ class FeedbacksController < ApplicationController
       end
     end
     
-      # if !@authroized && (page = Site.find_public_by_url(@current_page))
-      #   @authorized = true
-      # 
-      # end
+    # We are this is a public page, we're okay
+    if !@authorized && (page = Page.find_public_page_by_url(@current_page))
+      @authorized = true
+      @feedback = page.feedbacks.map { |f| f.json_attributes }
+      @site_url = page.url
+    elsif !@authorized && (site = Site.find_public_site_by_url(@current_page))
+      # no feedback for this page, but it is public!
+      @authorized = true
+      @site_url = site.url
+    end
     
     respond_to do |wants|
       wants.js do
@@ -89,10 +95,14 @@ protected
       @authorized = true
       site_url = invite ? invite.page.url : page.url
       if invite
-        feedback = Comment.new :commenter => invite.commenter, :content => @content, :target => @target, :public => false
+        commenter = invite.commenter
+        pub = false
       else
-        feedback = Comment.new :name => @name, :content => @content, :target => @target, :public => true
+        commenter = nil
+        pub = true
       end
+      feedback = Comment.new :commenter => commenter, :name => @name, :content => @content,
+                             :target => @target, :public => pub
       page.feedbacks << feedback
       if !feedback.valid?
         @authorized = false
@@ -110,7 +120,11 @@ protected
     if @name && (!@token) # Public feedback
       page = Page.find_public_page_by_url @current_page
       if page.nil? 
-        # TODO: Public feedback on site?
+        if (site = Site.find_public_site_by_url @current_page)
+          page = Page.new(:url => @current_page, :allow_public_comments => true)
+          site.pages << page
+          page = nil if !page.valid?
+        end
       end
     elsif @token # private
       invite = Invite.find_by_url_token @token
