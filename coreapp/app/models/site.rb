@@ -10,8 +10,12 @@ class Site < ActiveRecord::Base
   
   before_validation :commit_home_page
   
-  # If self.public is set before home_page is created, must remember to make home_page public
-  @is_public = false
+  
+  def initialize(*args, &block)
+    super
+    # If self.public is set before home_page is created, must remember to make home_page public
+    @is_public = false
+  end
   
   def self.find_public_site_by_url(url)
     pub_pages = Page.find_all_by_allow_public_comments true
