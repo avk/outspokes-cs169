@@ -10,7 +10,7 @@ function fb_hash() {
 
     fb.env.get_address = "http://localhost:3000/feedback_for_page.js";
     fb.env.post_address = "http://localhost:3000/post_feedback_for_page";
-    return fb.Comment.get(function (data) {
+    return fb.Feedback.get(function (data) {
       if (!data) {
         fb.env.init = true;
         return false;
@@ -26,7 +26,7 @@ function fb_hash() {
       }
 
       fb.i = new fb.Interface();
-      fb.Comment.get_callback(data, "render");
+      fb.Feedback.get_callback(data, "render");
       return true;
     });
   })(fb_hash);
