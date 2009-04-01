@@ -11,9 +11,11 @@ class Page < ActiveRecord::Base
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
   validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
   validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
+  validates_inclusion_of :allow_public_comments, :in => [true, false] # must be either public or private  
   
   validate :has_account_xor_site
   validate :is_child_of_site
+  validate :publicness_matches_site, :if => :site
   
   def self.find_public_page_by_url(url)
     pages = Page.find_all_by_url url
@@ -33,7 +35,7 @@ class Page < ActiveRecord::Base
 protected
   # A page can (and must!) have a site or an account, but not both
   def has_account_xor_site
-    if not (account_id.blank? ^ site_id.blank?)
+    unless (account_id.blank? ^ site_id.blank?)
       errors.add_to_base 'Either an account or a site is required, but not both'
     end
   end
@@ -47,6 +49,13 @@ protected
     root_host = URI.parse(site.url).host
     if this_host != root_host
       errors.add(:url, "This page's url has a different domain (#{this_host}) than the site's (#{root_host})")
+    end
+  end
+  
+  def publicness_matches_site
+    return if (!site) || site.home_page.blank?
+    unless allow_public_comments == site.public
+      errors.add :allow_public_comments, "Page's privacy must match site"
     end
   end
 end

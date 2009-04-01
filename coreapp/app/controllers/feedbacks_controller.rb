@@ -26,13 +26,13 @@ class FeedbacksController < ApplicationController
       end
     end
     
-    # We are this is a public page, we're okay
+    # If this is a public page, we're okay
     if !@authorized && (page = Page.find_public_page_by_url(@current_page))
       @authorized = true
       @feedback = page.feedbacks.map { |f| f.json_attributes }
       @site_url = page.url
     elsif !@authorized && (site = Site.find_public_site_by_url(@current_page))
-      # no feedback for this page, but it is public!
+      # no feedback for this page, but it is public, so we're still authorized
       @authorized = true
       @site_url = site.url
     end

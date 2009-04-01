@@ -164,4 +164,15 @@ class PageTest < ActiveSupport::TestCase
     page = Page.find_public_page_by_url "http://www.myspace.com/"
     assert_nil page
   end
+  
+  test "cannot add private pages to public sites and vice-versa" do
+    site = sites(:public)
+    page = Page.new(:url => site.home_page.url + "puppies.html", :allow_public_comments => false)
+    site.pages << page
+    assert page.errors.on(:allow_public_comments)
+    site = sites(:facebook)
+    page = Page.new(:url => site.home_page.url + "puppies.html", :allow_public_comments => true)
+    site.pages << page
+    assert page.errors.on(:allow_public_comments)
+  end
 end

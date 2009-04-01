@@ -10,6 +10,13 @@ class Site < ActiveRecord::Base
   
   before_validation :commit_home_page
   
+  
+  def initialize(*args, &block)
+    super
+    # If self.public is set before home_page is created, must remember to make home_page public
+    @is_public = false
+  end
+  
   def self.find_public_site_by_url(url)
     pub_pages = Page.find_all_by_allow_public_comments true
     current_site = nil
@@ -29,11 +36,22 @@ class Site < ActiveRecord::Base
     self.pages.first
   end
   
+  def public
+    # Rails keeps setting @is_public to nil. WTF?
+    return home_page ? home_page.allow_public_comments : false | @is_public
+  end
+  
+  def public=(pub)
+    return if pub.nil?
+    @is_public = pub
+    pages.each { |page| page.allow_public_comments = pub }
+  end
+  
   def url=(url)
     if (home_page)
       raise Exception.new("Cannot set a URL for a site that already has a home_page: #{self}")
     end
-    self.home_page = Page.new(:url => url, :site => self)
+    self.home_page = Page.new(:url => url, :site => self, :allow_public_comments => public)
   end
   
   def url
