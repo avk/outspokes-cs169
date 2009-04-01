@@ -1,6 +1,4 @@
-require 'rubygems'
-require 'ruby-debug'
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class FeedbackTest < ActiveSupport::TestCase
   test "should create feedback" do
