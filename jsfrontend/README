@@ -1,3 +1,0 @@
-The Octave homepage is used as index.html.  If you view index.html, you should see a
-link "Bookmarklet."  It will run a function to include the file ./feedback.js.  Note
-that feedback.js currently has console.log() calls to the Firebug console.
