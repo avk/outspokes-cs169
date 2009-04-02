@@ -27,7 +27,7 @@ class FeedbacksController < ApplicationController
     end
     
     # If this is a public page, we're okay
-    if @url_token.nil?
+    if @url_token.blank?
       if !@authorized && (page = Page.find_public_page_by_url(@current_page))
         @authorized = true
         @feedback = page.feedbacks.map { |f| f.json_attributes }
