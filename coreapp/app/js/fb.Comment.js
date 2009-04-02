@@ -54,6 +54,13 @@
       target: target,
       callback: 'callback'
     }
+	if (fb.env.pub_page) {
+		console.log(this)
+		console.log(this.name)
+		console.log(this.name.value)
+		data["name"] = this.name.value
+		delete data["url_token"]
+	}
     var callback = function(data) {
       var x = fb.Feedback.get_callback(data, "render");
       for (var i in x) {

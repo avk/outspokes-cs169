@@ -3,14 +3,17 @@
   
   fb.Interface.comment = function (self) {
     this.comments = $('<div></div>');
-    this.form = $('<div></div>').append(
-     '<a href="#">Refresh comments</a>\
-      <form name="newcomment" onsubmit="return false;">\
-        Comment:<br />\
-        <textarea name="content" cols="40" rows="5" /><br />\
-        <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
-        <input type="hidden" value="html" name="target" />\
-      </form>');
+	var formHTML = '<a href="#">Refresh comments</a>\
+      <form name="newcomment" onsubmit="return false;">';
+	if (fb.env.pub_page) {
+		formHTML += '<label for="fb.name.input">Name:</label><input id="fb.name.input" type="text" name="name" size="20" /><br />'
+	}
+	formHTML += 'Comment:<br />\
+    <textarea name="content" cols="40" rows="5" /><br />\
+    <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
+    <input type="hidden" value="html" name="target" />\
+  </form>'
+    this.form = $('<div></div>').append(formHTML);
     this.form.find("a").click(function(){fb.Feedback.get("render")});
     this.form.find("form").submit(fb.Comment.post);
     this.form.find("span").mouseup(select_target);
