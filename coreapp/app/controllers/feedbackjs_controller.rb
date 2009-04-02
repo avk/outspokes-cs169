@@ -10,6 +10,7 @@ class FeedbackjsController < ApplicationController
       "fb.Common.js",
       "fb.Interface.js",
       "fb.Interface.comment.js",
+      "fb.Feedback.js",
       "fb.Comment.js"]
     out = ""
     for f in files do 

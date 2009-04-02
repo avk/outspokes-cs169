@@ -11,7 +11,7 @@
         <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
         <input type="hidden" value="html" name="target" />\
       </form>');
-    this.form.find("a").click(function(){fb.Comment.get("render")});
+    this.form.find("a").click(function(){fb.Feedback.get("render")});
     this.form.find("form").submit(fb.Comment.post);
     this.form.find("span").mouseup(select_target);
     self.main_window.append(this.comments);
