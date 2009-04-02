@@ -32,6 +32,14 @@ class Commenter < ActiveRecord::Base
     {:legal => legal, :illegal => illegal}
   end
 
+  def agree(feedback_id)
+    opinions.create(:feedback_id => feedback_id, :agreed => true)
+  end
+  
+  def disagree(feedback_id)
+    opinions.create(:feedback_id => feedback_id, :agreed => false)
+  end
+  
   def agreed_with
     opinions.find_all_by_agreed(true)
   end
@@ -41,6 +49,8 @@ class Commenter < ActiveRecord::Base
   end
 
   def opinion_of(feedback_id)
+    return 'mine' if feedbacks.map(&:id).include?(feedback_id)
+    
     opinions.each do |op|
       if op.feedback_id == feedback_id
         return (op.agreed?) ? 'agreed' : 'disagreed' 

@@ -89,14 +89,24 @@ class CommenterTest < ActiveSupport::TestCase
     end
   end
   
-  test 'should be able to make an opinion on a feedback' do
+  test 'should be able to agree with a feedback' do
     commenter = create_commenter
     feedback = create_feedback
-    assert feedback.commenter != commenter
     
     assert_difference "Opinion.count", 1 do
       assert_difference "commenter.opinions.count", 1 do
-        commenter.opinions.create(:feedback => feedback, :agreed => true)
+        commenter.agree(feedback.id)
+      end
+    end
+  end
+
+  test 'should be able to disagree with a feedback' do
+    commenter = create_commenter
+    feedback = create_feedback
+    
+    assert_difference "Opinion.count", 1 do
+      assert_difference "commenter.opinions.count", 1 do
+        commenter.disagree(feedback.id)
       end
     end
   end
@@ -106,6 +116,13 @@ class CommenterTest < ActiveSupport::TestCase
     feedback = create_feedback
     
     assert commenter.opinion_of(feedback.id).nil?
+  end
+  
+  test 'should have a special opinion on one of his/her own feedbacks' do
+    commenter = create_commenter
+    feedbacks = create_feedback(:commenter => commenter)
+    
+    assert commenter.opinion_of(feedbacks.id) == 'mine'
   end
   
   test 'should know if (s)he has agreed with a feedback' do
