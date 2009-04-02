@@ -10,6 +10,7 @@ function fb_hash() {
 
     fb.env.get_address = "http://localhost:3000/feedback_for_page.js";
     fb.env.post_address = "http://localhost:3000/post_feedback_for_page";
+    fb.env.opinion_address = "http://localhost:3000/opinion_on_feedback";
     return fb.Comment.get(function (data) {
       if (!data) {
         fb.env.init = true;

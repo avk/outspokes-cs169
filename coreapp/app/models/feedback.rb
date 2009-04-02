@@ -19,10 +19,10 @@ class Feedback < ActiveRecord::Base
   @@high_vote_factor = 1.5
   
   def self.json_attribute_names
-    %w(feedback_id name timestamp content target)
+    %w(feedback_id name timestamp content target opinion)
   end
   
-  def json_attributes
+  def json_attributes(opinionated_commenter)
     json_atts = {}
     
     Feedback.json_attribute_names.each do |attr|
@@ -33,6 +33,8 @@ class Feedback < ActiveRecord::Base
         json_atts['name'] = commenter.email
       when 'timestamp'
         json_atts['timestamp'] = created_at.to_i
+      when 'opinion'
+        json_atts['opinion'] = opinionated_commenter.opinion_of(id).to_s # 'to_s' for nil => ''
       else
         json_atts[attr] = self[attr.to_sym]
       end

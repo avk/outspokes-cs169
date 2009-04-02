@@ -1,9 +1,9 @@
 class FeedbacksController < ApplicationController
 
-  before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page]
+  before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page, :opinion]
   
   # Authenticity Token doesn't work with random JS calls unless we want to somehow hack that in to js?
-  skip_before_filter :verify_authenticity_token, :only => :new_feedback_for_page
+  skip_before_filter :verify_authenticity_token, :only => [:new_feedback_for_page, :opinion]
 
   # GET /feedback_for_page.js
   # params[:url_token] => 'abcdef'
@@ -22,7 +22,7 @@ class FeedbacksController < ApplicationController
       @authorized = true
       @site_url = invite.page.url
       if page = Page.find_by_url(@current_page)
-        @feedback = page.feedbacks.map { |f| f.json_attributes }
+        @feedback = page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
       end
     end
     
@@ -65,7 +65,7 @@ class FeedbacksController < ApplicationController
           authorized = false
           feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
         else
-          feedback = page.feedbacks.map { |f| f.json_attributes }
+          feedback = page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
         end
       end
     end
@@ -80,6 +80,44 @@ class FeedbacksController < ApplicationController
       end
     end
   end
+  
+  # POST /opinion_on_feedback
+  # params[:url_token] => 'abcdef'
+  # params[:current_page] => 'http://hi.com/faq'
+  # params[:feedback_id] => 5
+  # params[:opinion] => "agree" or "disagree"
+  # params[:callback] => "someFunc"
+  def opinion
+    @url_token = params[:url_token]
+    @current_page = params[:current_page]
+    @feedback_id = params[:feedback_id]
+    @opinion = params[:opinion]
+    
+    @authorized = false
+    invite = Invite.find_by_url_token(@url_token)
+    if invite and same_domain?(invite.page.url, @current_page)
+      @authorized = (@feedback_id.to_i <= 0) ? false : true
+      if @authorized
+        @commenter = invite.commenter
+        case @opinion
+        when /^agreed?$/
+          @commenter.agree(@feedback_id)
+        when /^disagreed?$/
+          @commenter.disagree(@feedback_id)
+        else
+          @opinion = ''
+          @authorized = false
+        end
+      end
+    end
+    respond_to do |wants|
+      wants.html do
+        @json_data = {:authorized => @authorized, :feedback_id => @feedback_id, :opinion => @opinion}.to_json
+        render :action => 'new_feedback_for_page'
+      end
+    end
+  end
+  
   
   # DELETE /feedbacks/1
   # DELETE /feedbacks/1.xml

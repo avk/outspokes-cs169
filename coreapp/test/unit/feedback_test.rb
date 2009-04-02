@@ -36,17 +36,22 @@ class FeedbackTest < ActiveSupport::TestCase
   
   test "should expose certain attributes for json" do
     feedback = create_feedback
+    commenter = create_commenter
+    invite = create_invite(:commenter => commenter, :page => feedback.page)
+    opinion = commenter.opinions.create(:feedback => feedback, :agreed => true)
+    
     json_atts = {
       "feedback_id" => feedback.id,
       "name" => feedback.commenter.email,
       "timestamp" => feedback.created_at.to_i,
       "content" => feedback.content,
-      "target" => feedback.target
+      "target" => feedback.target,
+      "opinion" => commenter.opinion_of(feedback.id),
     }
     
     assert Feedback.json_attribute_names.sort == json_atts.keys.sort
-    feedback.json_attributes.each do |key, value|
-      assert json_atts[key] == value
+    feedback.json_attributes(commenter).each do |key, value|
+      assert json_atts[key] === value, "expected #{json_atts[key].inspect} got #{value.inspect}"
     end
   end
   

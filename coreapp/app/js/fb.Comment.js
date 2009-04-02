@@ -9,8 +9,15 @@
   fb.Comment = function () {
     fb.assert(arguments.length === 1, "Incorrect number of arguments given");
     var obj = arguments[0];
-    fb.assert(fb.hasProp(obj,{"name":"","content":"","target":"","timestamp":"number","feedback_id":"number"}),
-          "Object argument to fb.Comment constructor of wrong form");
+    fb.assert(fb.hasProp(obj,
+      { "name":"",
+        "content":"",
+        "target":"",
+        "timestamp":"number",
+        "feedback_id":"number",
+        "opinion":"",
+      }),
+      "Object argument to fb.Comment constructor of wrong form");
 
     this.name = obj["name"];
     this.content = decodeURI(obj["content"]);
@@ -18,6 +25,7 @@
     // Javascript UTC is in terms of milliseconds
     this.timestamp = obj["timestamp"] * 1000;
     this.feedback_id = obj["feedback_id"];
+    this.opinion = obj["opinion"];
 
     this.build = fb.i.comment.build(this);
     this.rendered = false;
@@ -30,11 +38,11 @@
       fb.Comment.prototype.toString = function() {
         return "Name: "+this.name+"\nContent: "+this.content+"\nTarget: "+this.target+"\nTimestamp: "+this.timestamp;
       }
-
+      
       fb.Comment.prototype.display = function() {
         alert(this.toString());
       }
-
+      
       fb.Comment.prototype.remove = function() {
         fb.i.comment.remove(this);
         delete fb.Comment.all[this.feedback_id];
@@ -48,9 +56,39 @@
         this.rendered = null;
         return true;
       }
-
+      
       fb.Comment.prototype.render = function() {
         fb.i.comment.render(this);
+      }
+      
+      fb.Comment.prototype.giveOpinion = function(opinion) {
+        if (!fb.env.authorized) {
+          return;
+        }
+        var data = {
+          url_token: fb.env.url_token,
+          current_page: fb.env.current_page,
+          feedback_id: this.feedback_id,
+          opinion: opinion,
+          callback: 'callback',
+        }
+        var callback = function(response) {
+          if (response.authorized && response.opinion != '') {
+            eval("fb.i.comment.consensus." + opinion + "(response.feedback_id)");
+            $('#' + fb.i.comment.dom.consensus_wrapper(response.feedback_id)).remove();
+          } else {
+            alert("Could not get your opinion on this comment.");
+          }
+        }
+        $.post(fb.env.opinion_address, data, callback, "json");
+      }
+      
+      fb.Comment.prototype.agree = function() {
+        this.giveOpinion('agree');
+      }
+      
+      fb.Comment.prototype.disagree = function() {
+        this.giveOpinion('disagree');
       }
     }
 
@@ -89,25 +127,25 @@
       return null;
     }
     var i, j;
-	
-	// An array of the feedback_id's we currently have
+    
+    // An array of the feedback_id's we currently have
     var oldC = [];
     for (i in fb.Comment.all) {
       oldC.push(i);
     }
     oldC.sort(function(a,b) {return a-b;});
-
+    
     // An array of the feedback_id's we just recevied
-	var newC = [];
-	// An associative array between the feedback_id's we just
-	// just received and their associated comment object.
+    var newC = [];
+    // An associative array between the feedback_id's we just
+    // just received and their associated comment object.
     var newCAss = {};
     for (i in data.feedback) {
       newC.push(data.feedback[i].feedback_id);
       newCAss[data.feedback[i].feedback_id] = data.feedback[i];
     }
     newC.sort(function(a,b) {return a-b;});
-
+    
     var rtn = [];
     i = j = 0;
     while (i < oldC.length && j < newC.length) {
@@ -129,9 +167,9 @@
     for (j; j < newC.length; j++) {
       rtn.push(new fb.Comment(newCAss[newC[j]]));
     }
-	for (i; i < oldC.length; i++) {
+    for (i; i < oldC.length; i++) {
       fb.Comment.all[oldC[i]].remove();
-	}
+    }
     if (render) {
       fb.Comment.render();
     }
@@ -165,7 +203,7 @@
     $.post(fb.env.post_address, data, callback, "json");
     return true;
   }
-
+  
   fb.Comment.post_failed = function (content, target) {
     fb.i.comment.post_failed(content, target);
   }
