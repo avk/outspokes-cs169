@@ -390,5 +390,14 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = []
     validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => page.url
   end
+  
+  test "not authorized for public site with bad url token" do 
+    page = pages(:public_site)
+    callback = "calljs"
+    get :feedback_for_page, :current_page => page.url + "lolcats.html", 
+        :callback => callback, :url_token => "lolcats"
+    feedback = []
+    validate_json :callback => callback, :authorized => false
+  end
 
 end
