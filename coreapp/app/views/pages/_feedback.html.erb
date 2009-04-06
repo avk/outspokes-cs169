@@ -1,4 +1,4 @@
-	<% for comment in page.feedbacks %>
+	<% for comment in page.feedbacks.find(:all, :order => "lft ASC") %>
 		<tr class="<%= rowclass = cycle("even", "odd") -%>"><td> <%= comment.content %> 
    	<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
 </td> 
