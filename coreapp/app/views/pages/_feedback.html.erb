@@ -1,7 +1,8 @@
-	<% for comment in page.feedbacks.find(:all, :order => "lft ASC") %>
-		<tr class="<%= rowclass = cycle("even", "odd") -%>"><td> <%= comment.content %> 
-   	<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
-</td> 
-<td>	<%= link_to 'Delete', page_feedback_path(page, comment), :confirm => "Are you sure you want to delete the comment by #{comment.commenter.email}?", :method => :delete %> </td></tr>
-	<%- end -%>
+<% for comment in page.feedbacks.find(:all, :order => "lft ASC") %>
+  <div id="comment_<%= comment.id %>" style="padding-left: <%= comment.level * 10 %>px">
+  <%= comment.content %> <br />
+  <blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote> <br />
+  <%= link_to 'Delete', page_feedback_path(page, comment), :confirm => "Are you sure you want to delete the comment by #{comment.commenter.email}?", :method => :delete %> <br />
+  </div>
+<% end %>
 
