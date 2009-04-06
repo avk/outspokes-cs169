@@ -49,5 +49,15 @@ class FeedbackTest < ActiveSupport::TestCase
       assert json_atts[key] == value
     end
   end
+
+  test "feedback should have lft" do
+    feedback = create_feedback
+    assert !feedback.lft.nil?
+  end
+
+  test "feedback should have rgt" do
+    feedback = create_feedback
+    assert !feedback.rgt.nil?
+  end
   
 end
