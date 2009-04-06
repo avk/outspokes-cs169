@@ -22,7 +22,7 @@
 </iframe>
 
 <%- if @page.site_id != nil -%>
-	<table style="width: 45em">
+	<table style="width: 45em" id="feedback_table">
 	<%- for page in @page.site.pages -%>
 		<% unless page.feedbacks.empty? %>
 			<tr><th style="padding-top: 1em">Feedback for: <%= link_to(page.url, page.url) %></th></tr>
@@ -32,8 +32,14 @@
 	</table>
 
 <% else %>
-	<table>
-	<%= render :partial => "feedback", :locals => {:page => @page } %>
+  <%= text_field('page', 'id', :value => "")  %>
+    <%= observe_field('page_id',  :frequency => 1,
+         :update => 'feedback_table', :url =>
+         { :controller => 'pages', :action=> 'ajax_search', :id=>@page.id },
+         :with => "'search=' + escape(value)") %>
+  
+	<table id="feedback_table">
+	<%= render :partial => "feedback", :locals => {:feedbacks => @feedbacks, :page => @page } %>
 	</table>
 <%- end -%>
 
