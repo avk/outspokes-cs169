@@ -1,7 +1,32 @@
 	<% for comment in page.feedbacks %>
-		<tr class="<%= rowclass = cycle("even", "odd") -%>"><td> <%= comment.content %> 
-   	<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
-</td> 
-<td>	<%= link_to 'Delete', page_feedback_path(page, comment), :confirm => "Are you sure you want to delete the comment by #{comment.commenter.email}?", :method => :delete %> </td></tr>
+		<tr class="<%= rowclass = cycle("even", "odd") -%>">
+			<td> <%= comment.content %> 
+   				<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
+			</td> 
+			<td>	
+				<%= link_to 'Delete', 
+				page_feedback_path(page, comment), 
+				:confirm => "Are you sure you want to delete the comment by #{comment.commenter.email}?", 
+				:method => :delete %> 
+			</td>
+			<td>
+				<% form_tag add_tag_page_feedback_path(page, comment) do %>
+					<%= text_field_tag :tag_list, '', :size => 10, :style => "float:left; width: 70px" %>
+					<%= submit_tag "Tag" , :class => "submit", :style => "float: right" %>
+				<%- end -%>
+				<br />
+				<ul style="list-style-type: none; margin: 0; padding:0">
+				<% for tag in comment.tag_list %>
+					<li style="margin-left: -15px; padding: 5px 30px;">
+						<%= tag%> 
+						<%= link_to '[x]', 
+						delete_tag_page_feedback_path(page, comment, :tag => tag),
+						:confirm => "Are you sure you want to delete tag?", 
+						:method => :delete %>
+					</li>
+				<%- end -%>
+				</ul>
+			</td>
+		</tr>
 	<%- end -%>
 

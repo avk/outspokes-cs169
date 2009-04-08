@@ -10,7 +10,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :sites
   map.resources :pages do |page|
-    page.resources :feedbacks
+    # member /pages/1/feedbacks/1/something -- i.e. a specific feedback
+    # collection /pages/1/feedbacks/something -- i.e. all the feedbacks
+    page.resources :feedbacks, :member => { :add_tag => :post, :delete_tag => :delete }
     page.resources :commenters
   end
   
