@@ -49,5 +49,25 @@ class FeedbackTest < ActiveSupport::TestCase
       assert json_atts[key] == value
     end
   end
+
+  test "should return score of length of matching search term if it matches" do
+    feedback = create_feedback(:content => 'Bob is my friend')
+    assert feedback.search_score("my") == 2
+  end
   
+  test "should return score of 0 if search term doesn't match" do
+    feedback = create_feedback(:content => 'Bob is my friend')
+    assert feedback.search_score("whale") == 0
+  end
+  
+  test "should not be case sensitive when searching" do
+    feedback = create_feedback(:content => 'Bob is my friend')
+    assert feedback.search_score("MY") == 2
+  end
+  
+  test "should return score of 50 if author contains search term" do
+    feedback = create_feedback(:content => 'Bob is my friend', :commenter => 1)
+    assert feedback.search_score("MY") == 2
+  end
 end
+

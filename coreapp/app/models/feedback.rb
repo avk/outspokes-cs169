@@ -38,5 +38,10 @@ class Feedback < ActiveRecord::Base
     json_atts
   end
   
+  def search_score(terms) 
+    score = 0
+    terms.map{|term| if(self.content.downcase.include? term.downcase) then score += term.length; end}
+    score
+  end
   
 end
