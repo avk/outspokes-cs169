@@ -66,7 +66,7 @@ class FeedbackTest < ActiveSupport::TestCase
   end
   
   test "should return score of 50 if author contains search term" do
-    feedback = create_feedback(:content => 'Bob is my friend', :commenter => 1)
+    feedback = create_feedback(:content => 'Bob is my friend', :commenter_id => 1)
     assert feedback.search_score("MY") == 2
   end
 end
