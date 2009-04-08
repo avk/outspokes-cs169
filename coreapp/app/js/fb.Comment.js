@@ -57,7 +57,7 @@
     var callback = function(data) {
       var x = fb.Feedback.get_callback(data, "render");
       for (var i in x) {
-        if (i.content == content && i.target == target) {
+        if (x[i].content == content && x[i].target == target) {
           return true;
         }
       }
