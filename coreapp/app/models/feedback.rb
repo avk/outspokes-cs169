@@ -1,5 +1,7 @@
 class Feedback < ActiveRecord::Base
   
+  acts_as_taggable
+  
   belongs_to :commenter
   belongs_to :page
   
