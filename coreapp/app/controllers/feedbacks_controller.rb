@@ -48,6 +48,7 @@ class FeedbacksController < ApplicationController
     authorized = false
     site_url = 'none'
     page = nil
+    parent_id = params[:parent_id]
     
     invite = Invite.find_by_url_token token
     if invite and same_domain?(invite.page.url, current_page)
@@ -61,6 +62,11 @@ class FeedbacksController < ApplicationController
         site_url = invite.page.url
         feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
         page.feedbacks << feedback
+        if parent_id
+          # since parent_id is based on /comment_\d+/i, we extract the \d+
+          feedback.move_to_child_of parent_id.sub(/\D+/, '').to_i
+        end
+        
         if !feedback.valid?
           authorized = false
           feedback = [] # OR, to return valid feedback, page.feedbacks.find :all

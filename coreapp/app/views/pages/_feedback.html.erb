@@ -1,6 +1,10 @@
-	<% for comment in feedbacks %>
+	<% for comment in feedbacks.find(:all, :order => "lft ASC") %>
 		<tr class="<%= rowclass = cycle("even", "odd") -%>">
-			<td> <%= comment.content %> 
+			<% comment.level.times do %>
+			<td style="width: 10px">
+			</td>
+			<% end %>
+			<td id="comment_<%= comment.id %>"> <%= comment.content %> 
    				<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
 			</td> 
 			<td>	

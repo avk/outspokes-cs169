@@ -14,6 +14,8 @@ class Feedback < ActiveRecord::Base
   validates_presence_of :content, :allow_blank => false
   
   validates_presence_of :target, :allow_blank => false
+
+  acts_as_nested_set
   
   def self.json_attribute_names
     %w(feedback_id name timestamp content target)

@@ -59,6 +59,17 @@ class FeedbackTest < ActiveSupport::TestCase
     feedback = create_feedback(:content => 'Bob is my friend')
     assert feedback.search_score("whale") == 0
   end
+
+  test "feedback should have lft" do
+    feedback = create_feedback
+    assert !feedback.lft.nil?
+  end
+
+  test "feedback should have rgt" do
+    feedback = create_feedback
+    assert !feedback.rgt.nil?
+
+  end
   
   test "should not be case sensitive when searching" do
     feedback = create_feedback(:content => 'Bob is my friend')
