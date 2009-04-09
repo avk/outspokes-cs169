@@ -25,6 +25,7 @@ fb_profile:
   account_id: 2
 
 rails_spikes:
+  id: 3
   url: http://railspikes.com/2007/3/28/testing-transactions
   account_id: 1
   

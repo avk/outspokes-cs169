@@ -23,3 +23,21 @@ four:
   commenter_id: 2
   content: MyText4
   target: html
+
+five:
+  page_id: 3
+  commenter_id: 2
+  content: MyText2
+  target: html
+
+six:
+  page_id: 3
+  commenter_id: 2
+  content: MyText3
+  target: html
+
+seven:
+  page_id: 3
+  commenter_id: 1
+  content: MyText4
+  target: html
