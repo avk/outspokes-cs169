@@ -6,12 +6,11 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
     @feedbacks = Feedback.find(:all, :conditions => [ "page_id = ?", @page.id])
     if params[:search].length > 0
-      then
-        terms = params[:search].split( / *"(.*?)" *| / ) 
-        @feedbacks.sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
-        @feedbacks=@feedbacks.find_all{|item| item.search_score(terms) > 0 }
-        #render :layout => false
-      end
+      terms = params[:search].split( / *"(.*?)" *| / ) 
+      @feedbacks.sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
+      @feedbacks = @feedbacks.find_all{|item| item.search_score(terms) > 0 }
+      #render :layout => false
+    end
     render :partial => "feedback", :locals => { :feedbacks => @feedbacks, :page => @page  }
   end
 

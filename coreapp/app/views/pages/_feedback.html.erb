@@ -1,4 +1,4 @@
-	<% for comment in page.feedbacks %>
+	<% for comment in feedbacks %>
 		<tr class="<%= rowclass = cycle("even", "odd") -%>">
 			<td> <%= comment.content %> 
    				<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
