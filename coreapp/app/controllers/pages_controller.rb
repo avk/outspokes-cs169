@@ -2,11 +2,25 @@ class PagesController < ApplicationController
 
   before_filter :login_required, :only => [ :new, :edit, :create, :destroy, :update ]
 
+  def ajax_search
+    @page = Page.find(params[:id])
+    @feedbacks = Feedback.find(:all, :conditions => [ "page_id = ?", @page.id])
+    if params[:search].length > 0
+      terms = params[:search].split( / *"(.*?)" *| / ) 
+      @feedbacks.sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
+      @feedbacks = @feedbacks.find_all{|item| item.search_score(terms) > 0 }
+      #render :layout => false
+    end
+    render :partial => "feedback", :locals => { :feedbacks => @feedbacks, :page => @page  }
+  end
+
   # GET /pages/1
   # GET /pages/1.xml
   def show
     @page = Page.find(params[:id])
-    @feedback = Feedback.new
+    #@feedbacks = Feedback.find(:all, :conditions => [ "page_id = ? AND content LIKE  ?", @page.id, "%Test%"])
+    @feedbacks = @page.feedbacks.find(:all, :order => "lft ASC")
+    @new_feedback = Feedback.new
 
     respond_to do |format|
       format.html # show.html.erb

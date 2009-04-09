@@ -329,7 +329,7 @@ class FeedbacksControllerTest < ActionController::TestCase
 
     assert_redirected_to page_path(page)
   end
-  
+
   test "should be able to tag a feedback" do
     feedback = feedbacks(:one)
     old_tags = feedback.tag_list
@@ -361,4 +361,23 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     assert_redirected_to page_path(feedback.page)
   end
+
+  test "should add new threaded feedback for page" do
+    invite = invites(:one)
+    callback = 'jsfeed'
+    page = invite.page
+	  parent = page.feedbacks.first
+    content = "replying to first feedback a;lkjsdflkasdjfla"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+          :current_page => page.url, :callback => callback, :content => content, :target => "html", :parent_id => parent.id
+    end
+    parent.reload
+    assert parent.children.first.content == content
+   
+    feedback = page.feedbacks.map { |f| f.json_attributes }
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => invite.page.url
+  end
+  
 end

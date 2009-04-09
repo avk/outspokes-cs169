@@ -1,6 +1,7 @@
-	<% for comment in page.feedbacks %>
+	<% for comment in feedbacks %>
 		<tr class="<%= rowclass = cycle("even", "odd") -%>">
-			<td> <%= comment.content %> 
+			<td id="comment_<%= comment.id %>" style="border-left: white solid <%= comment.level %>em; padding-left: .3em">
+			<%= comment.content %>
    				<blockquote> Left by <%= comment.commenter.email %> at <%= comment.created_at %></blockquote>
 			</td> 
 			<td>	
