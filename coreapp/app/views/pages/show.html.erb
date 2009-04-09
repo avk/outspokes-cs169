@@ -26,7 +26,7 @@
 	<%- for page in @page.site.pages -%>
 		<% unless page.feedbacks.empty? %>
 			<tr><th style="padding-top: 1em">Feedback for: <%= link_to(page.url, page.url) %></th></tr>
-			<%= render :partial => "feedback", :locals => {:feedbacks => page.feedbacks, :page => page } %>
+			<%= render :partial => "feedback", :locals => {:feedbacks => @feedbacks, :page => page } %>
 		<% end %>
 	<%- end -%>
 	</table>

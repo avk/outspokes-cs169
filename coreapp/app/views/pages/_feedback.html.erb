@@ -1,4 +1,4 @@
-	<% for comment in feedbacks.find(:all, :order => "lft ASC") %>
+	<% for comment in feedbacks %>
 		<tr class="<%= rowclass = cycle("even", "odd") -%>">
 			<% comment.level.times do %>
 			<td style="width: 10px">

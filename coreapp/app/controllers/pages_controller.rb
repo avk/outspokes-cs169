@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   def show
     @page = Page.find(params[:id])
     #@feedbacks = Feedback.find(:all, :conditions => [ "page_id = ? AND content LIKE  ?", @page.id, "%Test%"])
-    @feedbacks = Feedback.find(:all, :conditions => [ "page_id = ?", @page.id])
+    @feedbacks = Feedback.find(:all, :conditions => [ "page_id = ?", @page.id], :order => "lft ASC")
     @new_feedback = Feedback.new
 
     respond_to do |format|
