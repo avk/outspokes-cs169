@@ -3,7 +3,6 @@ require 'test_helper'
 class VerifyFixturesTest < ActionController::IntegrationTest
   fixtures :all
 
-  # Replace this with your real tests.
   test "all fixtures are valid" do
     classes = [Commenter, Feedback, Invite, Page, Site]
     classes.each do |cls|
@@ -12,4 +11,5 @@ class VerifyFixturesTest < ActionController::IntegrationTest
       end
     end
   end
+    
 end

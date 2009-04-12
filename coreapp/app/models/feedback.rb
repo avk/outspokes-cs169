@@ -1,5 +1,7 @@
 class Feedback < ActiveRecord::Base
   
+  acts_as_taggable
+  
   belongs_to :commenter
   belongs_to :page
   has_many :opinions, :dependent => :destroy
@@ -13,6 +15,8 @@ class Feedback < ActiveRecord::Base
   validates_presence_of :content, :allow_blank => false
   
   validates_presence_of :target, :allow_blank => false
+
+  acts_as_nested_set
   
   @@popular_threshold = 2.0
   @@unpopular_threshold = 1.0 / @@popular_threshold
@@ -111,6 +115,13 @@ class Feedback < ActiveRecord::Base
   
   def self.neutral(page_id)
     self.find_all_by_page_id(page_id).select {|fb| fb.neutral? }
+
+  end
+  
+  def search_score(terms) 
+    score = 0
+    terms.map{|term| if(self.content.downcase.include? term.downcase) then score += term.length; end}
+    score
   end
   
 end

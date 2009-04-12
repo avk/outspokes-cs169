@@ -1,0 +1,165 @@
+% Required packages:
+% - syntonly
+% - geometry
+% - listings
+% - hyperref
+\documentclass[letterpaper,12pt]{article}
+\usepackage{syntonly}
+%\syntaxonly
+\usepackage[margin=1in]{geometry}
+\usepackage{listings}
+\usepackage[pdftex,bookmarks=true,bookmarksnumbered=true,colorlinks=true]{hyperref}
+
+\lstset{basicstyle=\ttfamily,tabsize=2}
+
+\newcommand{\fb}[1]{\texttt{fb#1}}
+\newcommand{\fbhash}[1]{\texttt{fb\_hash#1}}
+\newcommand{\code}[1]{{\tt #1}}
+
+\newcommand{\printtitle}{\begin{flushright}{\LARGE \scshape The Javascript Specification}\\\today\end{flushright}}
+
+
+\begin{document}
+\pagestyle{headings}
+\thispagestyle{plain}
+\printtitle
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+The Javascript frontend has been redesigned to be more modular, and, hopefully, somewhat simpler.  Instead of consisting of a single large object definition in a single (and huge) file, it is now split up into smaller method definitions in separate files.  It is highly suggested that you read through at least this section and the next, \hyperref[sec:init]{Initialization}.
+
+At the highest level, the program is composed of three ``things.''  These three ``things'' are the \fbhash{} function/object, the \fb{.Interface} instance/class, and the feedback classes.
+
+\subsection{\texorpdfstring{\fbhash{}}{fb\_hash}}
+\label{sec:intro:fb_hash}
+The most prominent of these is the \fbhash{} function/object.  To reduce the chance of namespace collisions, the old \fb{} object has been renamed to \fbhash{}, where the ``hash'' part will eventually be an actual random string (i.e., \fb{\_234lkh6ui}).  Everything is written inside of anonymous functional closures, which effectively give this object its original name of \fb, so from now own, unless necessary, \fbhash{} will be referred to as \fb.  Also, to maintain some sort of parallelism in the code, the \fb{} object itself is the old \fb{.init()} function (everything else is a class, where the variable is actually the constructor, so that has been mimicked here).  As such, in order to invoke the program, all that is needed is to call \fbhash{()}.  Finally, everything else is a property or a method of \fb{} (i.e., \fb{} is the namespace in which the entire program resides).
+
+\subsection{\texorpdfstring{\fb{.Interface}}{fb.Interface}}
+\label{sec:intro:fb.Interface}
+The second main ``thing'' is the \fb{.Interface} instance/class.  The \fb{.Interface} class encapsulates and creates the user interface aspect of the program.  Its internals will be discussed later, but the important thing to know is that there is only one instance of this class, instantiated as the program is initialized (given that the user is authorized) and stored at \fb{.i}.  Also, everything with regards to layout, display, formatting, etc., is dealt with by the \fb{.Interface} class.  Everything else is dealt with by the feedback classes.
+
+\subsection{Feedback classes}
+\label{sec:intro:feedback classes}
+The last main ``thing'' in the program is actually many ``things'': the feedback classes.  For each type of feedback allowed (e.g., page-comments, changing text, changing colors, changing images, etc.) there is a class (stored as a method of the \fb{} object).  For example, the \fb{.Comment} class encapsulates page-comments.  It stores all of the state relating to them, does all of the page-comment processing that is necessary, and has all of the page-comment CRUD methods (with the exception that some of the CRUD work is done in the respective feedback interface classes, see \hyperref[sec:fb.Interface]{\fb{.Interface}} below).
+
+\subsection{Miscellaneous}
+\label{sec:intro:misc}
+Finally, a few other side notes.  jQuery is still located at \fb{.\$}, and \fb{.env} still exists to hold that state which is not contained in some feedback class (like the \code{init} boolean, the \code{current\_page} string, the \code{url\_token}, etc.).  However, \fb{.env.logged\_in} has been renamed to \fb{.env.authorized} to match the backend and to help generalize the program (when giving feedback on a page accepting public feedback, you are still authorized even though you are not logged in).  Also, two new variables have been introduced, \fb{.env.get\_address} and \fb{.env.post\_address}.  These are the URLs to which we submit the HTTP GET and POST requests, respectively.  Finally, everything is URI encoded (by \code{encodeURI()}) before being submitted.  This changes nothing in the backend, but in the frontend, upon instantiation, the feedback classes need to decode the necessary fields (by \code{decodeURI()}).
+
+\newpage
+
+\section{Initialization}
+\label{sec:init}
+\subsection{File Structure}
+\label{sec:init:file structure}
+As mentioned at the beginning, the original program has been rewritten to be more modular.  One part of that is the use of classes defined in the \fb{} namespace, and the other part is the use of multiple files.  At this point, the program consists of the following files:
+\begin{enumerate}
+ \item \code{fb\_hash.js}
+ \item \code{fb.jQuery.js}
+ \item \code{fb.Common.js}
+ \item \code{fb.Interface.js}
+ \item \code{fb.Interface.comment.js}
+ \item \code{fb.Comment.js}
+\end{enumerate}
+\noindent The first of these files defines \fbhash{()}, and does nothing else.  The second loads the jQuery library and the jQuery windowName Transporter plugin under the \fb{.\$} namespace.  The third defines miscellaneous helper functions (see \hyperref[sec:fb.Common.js]{\fb{.Common.js}} below).  The fourth defines the \fb{.Interface} class (see \hyperref[sec:fb.Interface]{\fb{.Interface}} below).  The fifth is a sample feedback interface class, and the sixth is a sample feedback class.  In general, the order of the files should be as follows:
+\begin{enumerate}
+ \item \code{fb\_hash.js}
+ \item \code{fb.jQuery.js}
+ \item \code{fb.Common.js}
+ \item \code{fb.Interface.js}
+ \item All feedback interface class definition files (one per class)
+ \item All feedback class definition files (one per class)
+\end{enumerate}
+\noindent To generate the single Javascript include file a new Rails controller has been introduced: \code{FeedbackjsController}.  This controller currently has one action, \code{index}, that concatenates these files in order (appending the \fbhash{()} call at the end) and then renders the result as a Javascript file.  In addition, it caches the result so that the file need not be re-generated on every call.  To expire the cache, run \code{rake jscache:clear} in the \code{coreapp} directory.  Note that the cache needs to be expired manually after every edit of anything in \code{coreapp/app/js}.  Finally, because of this new controller, the Javascript frontend should now be loaded from \begin{center}\code{http://localhost:3000/feedbackjs}.\end{center}
+
+\subsection{Initialization}
+\label{sec:init:initialization}
+(Largely from Arthur's e-mail)  Initialization begins with loading Javascript file rendered by \code{FeedbackjsController:index}.  The first part of this file (\code{fb\_hash.js}) defines the function \fbhash{()}, which is the namespace within which the rest of the program resides.  This gives us a reference to something, and we extend this reference with numerous attributes in the files in \code{coreapp/app/js} via the 
+\begin{lstlisting}
+                        (function(fb) {
+                        	// var $ = fb.$;
+                        	...
+                        })(fb_hash);
+\end{lstlisting}
+\noindent pattern.  This pattern defines an anonymous function with one argument (\fb), and then immediately calls it with \fbhash{} as the argument.  Inside of this function, any variables can be used, given they are declared first (using the Javascript keyword \code{var}).  For example, the first line can be uncommented to reassign the jQuery variable as \code{\$}, allowing the use of \code{\$} as usual.  Furthermore, within this function, we have access to the \fbhash{} object by the name \fb, and can extend \fbhash{} via \fb.  These extensions are available globally because \fbhash{} was defined (globally) at the very beginning.  Thus, when \fbhash{()} is called and executed at the very end (as a function), all of its attributes (e.g., \fb{.env}, \fb{.Comment}, etc.) are already there.
+
+After the \fbhash{} object is ready (i.e., all of its attributes are defined), we call \fbhash{()} to begin initializing the program.  \fbhash{()} sets up the environment, pulls out \code{current\_\-page} and \code{url\_token} (which is the empty string if it is not found neither in the URL nor in a cookie), sets \code{get\_address} and \code{post\_address}, and executes the first request for comments.  The callback for the request (defined anonymously inline) checks authorization and, conditioned on authorization, builds the program interface and displays the received comments.  Checking authorization includes setting the \fb{.env.authorized} boolean and stopping when necessary.  Building the program interface is accomplished by instantiating the only instance of \fb{.Interface}, \fb{.i}, and displaying the received comments is accomplished by calling \fb{.Comment.get\_callback} with the received data and the boolean \code{true} to signal the rendering of all new comments).
+
+Note that, first, as mentioned before, \fb{.i} is the one and only instance of \fb{.Interface}.  Trying to create another instance will result in an exception being thrown.  Also note that the interface must be initialized before we try to build any comments.  Building comments requires that the respective inner class of \fb{.Interface} already be defined (more on this later), so building a comment before the interface has been set up will result in errors.
+
+\section{\texorpdfstring{\fb{.Interface}}{fb.Interface}}
+\label{sec:fb.Interface}
+As mentioned before, the \fb{.Interface} class encapsulates everything that has to do with the user interface aspect of the program.  As such, the only state it stores has to do with the interface; all other state is stored elsewhere.  Also, since an instance of \fb{.Interface} is an instance of the user interface, having multiple instances does not make sense.  Trying to instantiate more than one instance of \fb{.Interface} will cause an exception to be thrown.
+
+\subsection{\texorpdfstring{\fb{.Interface()}}{fb.Interface()}}
+\label{sec:fb.Interface:fb.Interface()}
+Upon instantiation, the \fb{.Interface} class does three things.  First, it should pull in any stylesheets that the interface needs.  As this may take some time to complete, this should be the very first thing the constructor does.  (The mock-up does not use stylesheets, but their inclusion would present no difficulty.)  Second, it generates the interface of the program.  In the mock-up, this means creating a main ``window'' (\code{div}) in which the comment interface can reside.  Third, it instantiates all of the feedback interfaces classes with itself as argument.  This allows the feedback interface classes to access the properties and methods of \fb{.Interface}.  The new instances are then stored as instance variables of \fb{.Interface}.  This pattern is used because it guarantees four important things:
+\begin{enumerate}
+ \item The interface, along with the individual feedback interfaces, is not initialized if the user is not authorized
+ \item The individual feedback interfaces are initialized after the main interface is initialized
+ \item The individual feedback interfaces are initialized before any instance of their respective feedback class
+ \item There is only one instance of every feedback interface.
+\end{enumerate}
+\noindent The first point is taken care of in \fbhash{()}, as the program exits before initializing the interface if the user is not authorized.  The second point is taken care of as the feedback interfaces are initialized at the end of the \fb{.Interface} constructor, meaning that the rest of the interface has already been completely initialized.  The third point is taken care of as we know that by the time the \fb{.Interface} constructor completes, all of the individual feedback interfaces have been completely initialized.  Since the first instances of the feedback classes are instantiated after the \fb{.Interface} constructor is called, we are guaranteed that by the time these instances are built, the individual feedback interfaces are already initialized.  Also, note that the third point is a requirement as the constructors of the feedback classes attempt to build their instance of feedback (see \hyperref[sec:fb.Interface:interface classes]{below (\ref{sec:fb.Interface:interface classes})}).  Finally, the fourth point is taken care of as we know that the constructor of the \fb{.Interface} class is only called once, and that is the only place where instances of the feedback interface classes are made.
+
+\subsection{Feedback interface classes}
+\label{sec:fb.Interface:interface classes}
+As mentioned before, there is a class for every type of feedback.  These classes will be discussed later, but for now we need to know that they are expected to have at least the instance methods \code{render} and \code{remove}, and call a method \code{build} in the constructor.  Returning to the \fb{.Interface} class, \fb{.Interface} has an ``inner'' class for each feedback class, where the ``inner'' classes are now called ``feedback interface classes.''  As an example, for page-comments, the \fb{.Comment} class encapsulates the actual comments and \fb{.Interface.comment} holds all of the interface methods for comments.  Within the feedback interface classes, the properties and methods of the \fb{.Interface} class can be accessed via \code{self} if the pattern given in \code{fb.Interface.comment.js} is followed.  In addition to following this pattern, there are other requirements of the feedback interface classes.
+
+\subsubsection{Constructor}
+\label{sec:fb.Interface:interface classes:constructor}
+The constructor of each feedback interface class should initialize the interface for its associated type of feedback, as well as define the appropriate methods for itself.
+
+\subsubsection{Methods}
+\label{sec:fb.Interface:interface classes:methods}
+Each feedback interface class should have at least three methods:
+\begin{description}
+ \item[\code{build}] Creates (and returns) whatever needs to be created for a new instance of that type of feedback (e.g., the DOM representation of a comment)
+ \item[\code{render}] Renders an instance of a type of feedback (e.g., inserting the DOM element returned by \code{build} into the DOM or making something visible)
+ \item[\code{remove}] Removes an instance of a type of feedback from the interface
+\end{description}
+\noindent As mentioned before, \code{build} is called in the constructor of a feedback class (e.g., the constructor for the \fb{.Comment} class calls \fb{.i.comment.build(this)}).  \code{render} and \code{remove}, however, are only called through their respective methods in their associated feedback class.  In order to have complete encapsulation by each feedback class of their respective type of feedback, each feedback class also has the instance methods \code{render} and \code{remove}.  Note that it is definitely more natural to render a comment (\code{Comment.render()}) than it is to tell the comment part of the interface to render a comment instance (\fb{.i.comment.render(Comment)}).  To implement this, the \code{render} method of the feedback class should call the respective \code{render} method in \fb{.Interface}, and the \code{remove} method of the feedback class should call the respective \code{remove} method in \fb{.Interface}.  However, it is expected that the \code{render} method of the feedback class does nothing else, while the \code{remove} method completes the rest of its destructive functionality after calling the \fb{.Interface} \code{remove} method.
+
+\section{The feedback classes}
+\label{sec:feedback classes}
+As mentioned several times before, there is a feedback class for each type of feedback.  Each feedback class encapsulates a single type of feedback.  For example, the \fb{.Comment} class encapsulates the page-comment type of feedback.  As with the feedback interface classes, there are also requirements placed on the feedback classes.
+
+\subsection{Constructor}
+\label{sec:feedback classes:constructor}
+The constructor of each feedback class should do at least the following:
+\begin{itemize}
+ \item Call the build method in the respective feedback interface class, storing the result in an instance variable \code{build}
+ \item Add each new instance to the class variable \code{all} (described below)
+ \item Add each new instance to the class variable \code{unrendered} (described below)
+\end{itemize}
+
+\subsection{Properties and Methods}
+\label{sec:feedback classes:prop and methods}
+Each feedback class should have at least two class variables:
+\begin{description}
+ \item[\code{all}]An associative array mapping \code{feedback\_id}s to instances of the feedback class.  Should hold every instance of its respective feedback class
+ \item[\code{unrendered}]An associative array of form similar to \code{all} that hold every unrendered instance of its respective feedback class
+\end{description}
+\noindent Note that building and rendering are two separate operations, and so a \code{unrendered} array is necessary.
+
+Every feedback class should also support the instance methods \code{remove} and \code{render}, and the class (or static) methods \code{get}, \code{post}, and \code{render}.  The instance method \code{render}, as discussed above in \ref{sec:fb.Interface:interface classes}, should do nothing but call the \code{render} method of the respective feedback interface class with \code{this} as argument.  As rendering is a purely interface-related task, it should be clear that the instance method \code{render} should do nothing else.  The instance method \code{remove}, on the other hand, should call the \code{remove} method of the respective feedback interface class, and then complete the rest of its destructive functionality.  As a method, it should completely remove the instance of feedback from the program (including removing the instance from the \code{all} and \code{unrendered} array, and destroying all instance variables).  The class methods \code{get} and \code{post} should perform their respective actions for their associated type of feedback, with \code{post} assuming that it is being called in the context of a form with the appropriate fields for the associated type of feedback (e.g., \fb{.Comment.post()} assumes that it is being called in the cotenxt of a form with the fields \code{content} and \code{target}, where ``in the context of a form'' means that the method's \code{this} variable is a reference to a form).  The class method \code{render} should merely call the \code{render} method of every element in the \code{unrendered} array.
+
+\section{\texorpdfstring{\code{fb.Common.js}}{fb.Common.js}}
+\label{sec:fb.Common.js}
+\code{fb.Common.js} contains all general helper methods, where are methods are defined under the \fb{} namespace (as opposed to some being defined as plugins and extensions to jQuery).  If needed/wanted, jQuery can also be extended (see the end of \code{fb.Common.js}), but to avoid confusion, all helper methods should be defined under the \fb{} namespace.  However, there is an exception.  Methods that are inherently related to the interface should be defined as instance methods, by extending the prototype method, of the \fb{.Interface} class.  For example, the old \fb{.div()} function has been moved to \fb{.i.div()} as an instance method of the \fb{.Interface} class.  On the other hand, \code{assert}, which is just a general helper function, is defined in \code{fb.Common.js} as \fb{.assert()}.
+
+\section{Testing}
+\label{sec:Testing}
+Arthur has already implemented an integration test as a \code{rake} task using (Fire)Watir.  More specific unit tests of the Javascript could also be written using QUnit.  It would be trivial to create another action of \code{FeedbackjsController} that would generate Javascript for testing (e.g., it could leave out the \fbhash{()} call at the end and replace it with the suite of unit tests).  After finalizing the design of the interface aspect of the Javascript, this should probably be the first task.
+
+\section{Next Ideas}
+\label{sec:Next Ideas}
+This is a list of possible changes to the Javascript to either make simpler or generalize better.  If implemented, they will be moved into an appropriate section of this document.
+\begin{itemize}
+ \item The structure of the feedback classes is definitely in question.  As it is now, they are separate entities with no connection, and if more are added, getting the new feedback would require one HTTP GET for each feedback class.  This is far from optimal.  One possible fix is to make each feedback class inherit (or ``inherit'') from a feedback ``superclass.'' This ``superclass'' can do the delegation of work on the response to a get, allowing one HTTP GET to suffice for updating all types of feedback.  Also, if this schema will be similar to how the Rails backend will end up, the parallelism would be nice.
+ \item Right now, when the Javascript frontend sends a request for the feedbacks to the Rails backend, the reply contains all feedbacks, including those the frontend already has.  In addition, the Javascript frontend has to do a lot of processing to determine which feedbacks are new, and whether or not any have been deleted.  The overhead of sending redundant data and doing data processing in Javascript could be avoided by changing the format of the request for feedbacks and the response.  If the Javascript frontend tells the Rails app what feedbacks it already has, then the Rails app can send only the feedbacks the frontend does not have plus a list of the \code{feedback\_id}s of the feedbacks that have been deleted.  This would significantly reduce the size of the response as well as the amount of time (and space) spent processing the response in the frontend.  The downside, however, is the possibility of the frontend having to send a huge list of \code{feedback\_id}s.  This could be solved by using HTTP POST for the request instead of HTTP GET.  This may be an abuse of POST's intended uses, but it would also solve the problem of having to send a \code{current\_page} parameter that is too long.
+\end{itemize}
+
+\end{document}

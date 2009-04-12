@@ -48,6 +48,7 @@ class FeedbacksController < ApplicationController
     authorized = false
     site_url = 'none'
     page = nil
+    parent_id = params[:parent_id]
     
     invite = Invite.find_by_url_token token
     if invite and same_domain?(invite.page.url, current_page)
@@ -61,6 +62,11 @@ class FeedbacksController < ApplicationController
         site_url = invite.page.url
         feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
         page.feedbacks << feedback
+        if parent_id
+          # since parent_id is based on /comment_\d+/i, we extract the \d+
+          feedback.move_to_child_of parent_id.sub(/\D+/, '').to_i
+        end
+        
         if !feedback.valid?
           authorized = false
           feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
@@ -129,6 +135,23 @@ class FeedbacksController < ApplicationController
       format.html { redirect_to(@feedback.page) }
       format.xml  { head :ok }
     end
+  end
+
+  # POST /pages/1/feedbacks/1/add_tag
+  def add_tag
+    @feedback = Feedback.find(params[:id])
+	  @feedback.tag_list.add(params[:tag_list].gsub(" ", "_")) 
+	  @feedback.save
+    flash[:notice] = 'Tag Added'
+    redirect_to page_path(params[:page_id])
+  end
+
+  def delete_tag
+    @feedback = Feedback.find(params[:id])
+    @feedback.tag_list.remove(params[:tag])
+    @feedback.save!
+    flash[:notice] = 'Tag Removed'
+    redirect_to page_path(params[:page_id])
   end
 
 protected

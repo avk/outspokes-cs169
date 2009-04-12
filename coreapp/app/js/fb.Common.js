@@ -119,5 +119,9 @@
   fb.assert_false = function (cond, msg) {
     return fb.assert(cond === false, msg);
   }
+  
+  fb.assertTrue = function (cond, msg) {
+    return fb.assert(cond === true, msg);
+  }
 
 })(fb_hash);
