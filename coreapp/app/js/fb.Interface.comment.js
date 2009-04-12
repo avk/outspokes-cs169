@@ -20,7 +20,6 @@
       },
       agree_bg_color      : '#6F5',
       disagree_bg_color   : 'red',
-      }
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
       reply_form          : function(id) {
