@@ -15,6 +15,8 @@ class SitesController < ApplicationController
   # POST /sites
   # POST /sites.xml
   def create
+    # Checkboxes return "0" and "1", not true/false
+    params[:site][:public] = params[:site][:public] == "1" ? true : false
     @site = Site.new(params[:site])
     @site.account = current_account
 

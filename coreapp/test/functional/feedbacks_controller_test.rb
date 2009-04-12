@@ -200,7 +200,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => "LOL!!!!!", :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
@@ -213,7 +213,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     callback = 'jsfeed'
     content = "HUH THIS SITE IS LAME YO"
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
           :current_page => "bullshit", :callback => callback, :content => content, :target => "html"
     end
@@ -249,7 +249,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     callback = 'jsfeed'
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
           :current_page => page.url, :callback => callback, :content => '', :target => "html"
     end
@@ -262,7 +262,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     page = invite.page
     callback = 'jsfeed'
     
-    assert_no_difference "Feedback.count" do
+    assert_no_difference "Comment.count" do
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "html",
           :current_page => page.url, :callback => callback, :content => 'anything at all', :target => ''
     end
@@ -440,10 +440,9 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should destroy feedback" do
     feedback = feedbacks(:one)
     page = feedback.page
-    assert_difference('Feedback.count', -1) do
+    assert_difference('Comment.count', -1) do
       delete :destroy, :id => feedback.id
     end
-
     assert_redirected_to page_path(page)
   end
 
@@ -463,7 +462,7 @@ class FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should be able to delete a feedback tag" do
-    feedback = create_feedback
+    feedback = create_private_comment
     original_tags = "Funny, Silly, Happy, Sad"
     feedback.tag_list = original_tags
     feedback.save
@@ -497,4 +496,76 @@ class FeedbacksControllerTest < ActionController::TestCase
     validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => invite.page.url
   end
   
+  test "should be able to post public comments" do
+    page = pages(:transactions)
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    assert_template "new_feedback_for_page"
+    feedback = page.feedbacks.map { |f| f.json_attributes(nil) }
+    validate_windowname :authorized => true, :feedback => feedback, :url => page.url
+  end
+  
+  test "can't post public comments without a name" do
+    page = pages(:transactions)
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_no_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :current_page => page.url,
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    validate_post_fail
+  end
+
+  test "should not post public comments to pages with public comments disabled" do
+    page = pages(:one)
+    content = "HUH THIS SITE IS LAME YO"
+    
+    assert_no_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    validate_post_fail
+  end
+  
+  test "can post to a new page in a public site" do 
+    page_url = "http://localhost:3001/asite/puppies.html"
+    content = "I like puppies"
+    assert_difference "Page.count" do
+      post :new_feedback_for_page, :current_page => page_url, :name => "Joe Schmoe",
+           :content => content, :target => "html", :windowname => "true", :format => "html" 
+    end
+    assert_template "new_feedback_for_page"
+  end
+
+  test "can get feedback for public page without url_token" do 
+    page = pages(:transactions)
+    callback = "calljs"
+    assert page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
+    get :feedback_for_page, :current_page => page.url, :callback => callback
+    feedback = page.feedbacks.map { |f| f.json_attributes(nil) }
+
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => page.url
+  end
+  
+  test "authorized for feedback from page in public site even if no feedback on page" do 
+    page = pages(:public_site)
+    callback = "calljs"
+    get :feedback_for_page, :current_page => page.url + "lolcats.html", :callback => callback
+    feedback = []
+    validate_json :callback => callback, :authorized => true, :feedback => feedback, :url => page.url
+  end
+  
+  test "not authorized for public site with bad url token" do 
+    page = pages(:public_site)
+    callback = "calljs"
+    get :feedback_for_page, :current_page => page.url + "lolcats.html", 
+        :callback => callback, :url_token => "lolcats"
+    feedback = []
+    validate_json :callback => callback, :authorized => false
+  end
+
 end

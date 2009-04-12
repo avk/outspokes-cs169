@@ -89,6 +89,10 @@
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;
     }
+	if (fb.env.pub_page) {
+		data["name"] = this.name.value
+		delete data["url_token"]
+	}
     var callback = function(data) {
       var x = fb.Feedback.get_callback(data, "render");
       for (var i in x) {

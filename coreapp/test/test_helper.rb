@@ -111,22 +111,34 @@ class Test::Unit::TestCase
     record
   end
   
-  # Feedback
+  # Feedback / Comments
   
-  def valid_options_for_feedback
+  def valid_options_for_private_comment
     page = pages(:one)
     commenter = commenters(:one)
-    { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html' }
+    { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html', :public => false }
   end
   
-  def invalid_options_for_feedback
-    valid = valid_options_for_feedback
-    valid.shift # makes valid invalid
-    valid # now valid
+  def create_private_comment(options={})
+    Comment.create(valid_options_for_private_comment.merge(options))
   end
   
-  def create_feedback(options={})
-    Feedback.create(valid_options_for_feedback.merge(options))
+  def private_comments(args)
+    feedbacks(args).select { |f| !f.public }
+  end
+  
+  def valid_options_for_public_comment
+    page = pages(:one)
+    commenter = commenters(:one)
+    { :content=>'Hello, this is a comment!', :page_id => page.id, :name => "Joe Schmoe", :target => 'html', :public => true }
+  end
+  
+  def invalid_options_for_comment
+    valid_options_for_private_comment.merge({:content => nil})
+  end
+  
+  def public_comments(args)
+    feedbacks(args).select { |f| f.public }
   end
   
   # Invites

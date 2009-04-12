@@ -6,16 +6,14 @@ class Feedback < ActiveRecord::Base
   belongs_to :page
   has_many :opinions, :dependent => :destroy
   
-  validates_presence_of :commenter_id
-  validates_associated :commenter
-  
   validates_presence_of :page_id
   validates_associated :page
+  validates_presence_of :commenter_id, :unless => :public
+  validates_associated :commenter, :unless => :public
   
-  validates_presence_of :content, :allow_blank => false
+  validates_inclusion_of :public, :in => [true, false] # must be either public or private  
+  validates_presence_of :name, :if => :public
   
-  validates_presence_of :target, :allow_blank => false
-
   acts_as_nested_set
   
   @@popular_threshold = 2.0
@@ -26,19 +24,29 @@ class Feedback < ActiveRecord::Base
     %w(feedback_id name timestamp content target opinion)
   end
   
+  def abstract?
+    return true
+  end
+  
+  def initialize(*args, &block)
+    if abstract?
+      raise "Feedback cannot be instantiated.  Instantiate a subclass."
+    end
+    super(*args, &block)
+  end
+  
   def json_attributes(opinionated_commenter)
     json_atts = {}
-    
     Feedback.json_attribute_names.each do |attr|
       case attr
       when 'feedback_id'
         json_atts['feedback_id'] = id
       when 'name'
-        json_atts['name'] = commenter.email
+        json_atts['name'] = public ? name : commenter.email
       when 'timestamp'
         json_atts['timestamp'] = created_at.to_i
       when 'opinion'
-        json_atts['opinion'] = opinionated_commenter.opinion_of(id).to_s # 'to_s' for nil => ''
+        json_atts['opinion'] = opinionated_commenter.opinion_of(id).to_s if opinionated_commenter # 'to_s' for nil => ''
       else
         json_atts[attr] = self[attr.to_sym]
       end
