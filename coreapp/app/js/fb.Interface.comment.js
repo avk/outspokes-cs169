@@ -35,18 +35,30 @@
       },
     };
     
+    this.buildCommentForm = function (id, target) {
+      var formHTML = '<a href="#">Refresh comments</a>\
+        <form name="newcomment" onsubmit="return false;">';
+    	if (fb.env.pub_page) {
+    	  formHTML += '<label for="fb.name.input">Name:</label>\
+    	    <input id="fb.name.input" type="text" name="name" size="20" /><br />'
+    	}
+    	formHTML += 'Comment:<br />\
+      <textarea name="content" cols="30" rows="5" /><br />\
+      <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
+      <input type="hidden" value="' + target + '" name="target" />\
+      </form>'
+      return $('<div id="' + id + '"></div>').append(formHTML);
+    }
+    
     this.comments = $('<div></div>');
-    this.form = $('<div id="' + this.dom.comment_form + '"></div>').append( 
-     '<a href="#">Refresh comments</a>\
-      <form name="newcomment" onsubmit="return false;">\
-        Comment:<br />\
-        <textarea name="content" cols="30" rows="5" /><br />\
-        <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
-        <input type="hidden" value="html" name="target" />\
-      </form>');
+    this.form = this.buildCommentForm(this.dom.comment_form, "html")
     this.form.find("a").click(function(){fb.Feedback.get("render")});
     this.form.find("form").submit(function() { 
-      fb.Comment.post(this.content.value, this.target.value);
+      var name = null;
+      if (fb.env.pub_page) {
+        name = this.name.value;
+      }
+      fb.Comment.post(this.content.value, this.target.value, name);
     });
     this.form.find("span").mouseup(select_target);
     self.main_window.append(this.comments);
@@ -98,6 +110,7 @@
     this.reply = {
       // for easier, scoped dom references below
       dom             : this.dom,
+      parent          : this,
       // adds a reply to another comment in the interface
       render          : function(c) {
         var rtn = c.build;
@@ -128,17 +141,14 @@
         
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
-        var form = $('<div id="' + reply_form + '"></div>').append(
-         '<form name="new-reply-comment" onsubmit="return false;">\
-            Reply:<br />\
-            <textarea name="content" cols="30" rows="5" /><br />\
-            <input type="hidden" value="' + c_id + '" name="target" />\
-            <input type="submit" value="Reply" />\
-            <input type="reset" value="Cancel" />\
-          </form>');
-        
+        var form = this.parent.buildCommentForm(reply_form, c_id)
+        form.find("form").append('<input type="reset" value="Cancel" />')
         form.find("form").submit(function() { 
-          fb.Comment.post(this.content.value, this.target.value);
+          var name = null;
+          if (fb.env.pub_page) {
+            name = this.name.value;
+          }
+          fb.Comment.post(this.content.value, this.target.value, name);
           fb.i.comment.reply.finish(reply_form);
         });
         

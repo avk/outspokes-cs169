@@ -18,7 +18,7 @@ class OpinionTest < ActiveSupport::TestCase
   
   test 'should have a valid feedback' do
     assert_no_difference "Opinion.count" do
-      opinion = create_opinion(:feedback => Feedback.create(invalid_options_for_feedback))
+      opinion = create_opinion(:feedback => Comment.create(invalid_options_for_comment))
       assert opinion.errors.on(:feedback)
     end
   end
@@ -69,7 +69,7 @@ class OpinionTest < ActiveSupport::TestCase
   
   test 'should not allow opinions on your own feedback' do
     commenter = create_commenter
-    feedback = create_feedback(:commenter => commenter)
+    feedback = create_private_comment(:commenter => commenter)
     assert_no_difference "Opinion.count" do
       opinion = create_opinion(:commenter => commenter, :feedback => feedback)
       assert opinion.errors.on_base == "You cannot agree or disagree with your own feedback."

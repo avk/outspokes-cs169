@@ -5,35 +5,53 @@ one:
 #  account_id: nil
   site_id: 1
   url: http://www.msn.com/
+  allow_public_comments: false
 
 two:
   id: 2
   account_id: 1
 #  site_id: nil
   url: http://www.myspace.com/
+  allow_public_comments: false
 
 from_msn:
   url: http://www.msn.com/home/
   site_id: 1
+  allow_public_comments: false
   
 from_fb:
   url: http://www.facebook.com/
   site_id: 2
+  allow_public_comments: false
 
 fb_profile:
   url: http://www.facebook.com/asfdasdfsad
   account_id: 2
+  allow_public_comments: false
 
 rails_spikes:
-  id: 3
+  id: 8
   url: http://railspikes.com/2007/3/28/testing-transactions
   account_id: 1
+  allow_public_comments: false
   
 transactions:
+  id: 3
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
   account_id: 2
+  allow_public_comments: true
   
 lone:
   id: 666
   account_id: 1
   url: http://www.duskdesigns.com/
+  
+public_site:
+    url: http://localhost:3001/asite/
+    site_id: 3
+    allow_public_comments: true
+    
+alt_public_site:
+    url: http://localhost:3001/anothersite/
+    site_id: 4
+    allow_public_comments: true

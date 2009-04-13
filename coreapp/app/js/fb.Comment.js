@@ -72,7 +72,7 @@
   fb.Comment.all = {};
   fb.Comment.unrendered = {};
 
-  fb.Comment.post = function (content, target) {
+  fb.Comment.post = function (content, target, name) {
     if (!fb.env.authorized) {
       return null;
     }
@@ -83,10 +83,13 @@
       current_page: fb.env.current_page,
       content: content,
       target: target,
-      callback: 'callback'
     }
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;
+    }
+    if (name) {
+    	data["name"] = encodeURI(name);
+    	delete data["url_token"];
     }
     var callback = function(data) {
       var x = fb.Feedback.get_callback(data, "render");

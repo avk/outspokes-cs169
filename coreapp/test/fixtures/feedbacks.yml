@@ -7,6 +7,8 @@ one:
   target: html
   lft: 1
   rgt: 2
+  type: Comment
+  public: false
 
 two:
   page_id: 2
@@ -15,6 +17,8 @@ two:
   target: html
   lft: 1
   rgt: 2
+  type: Comment
+  public: false
   
 three:
   page_id: 1
@@ -23,6 +27,8 @@ three:
   target: html
   lft: 1
   rgt: 2
+  type: Comment
+  public: false
   
 four:
   page_id: 1
@@ -128,4 +134,21 @@ seven:
   commenter_id: 1
   content: MyText4
   target: html
+  type: Comment
+  public: false
 
+five:
+  page_id: 3
+  name: Joe Fake
+  content: I hate this page
+  target: html
+  type: Comment
+  public: true
+    
+six:
+  page_id: 3
+  commenter_id: 1
+  content: I also  hate this page
+  target: html
+  type: Comment
+  public: false

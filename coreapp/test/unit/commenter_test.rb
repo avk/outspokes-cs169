@@ -62,7 +62,7 @@ class CommenterTest < ActiveSupport::TestCase
     comments = %w(cool nifty awesome!)
     assert_difference "Feedback.count", comments.size do
       comments.each do |comment|
-        commenter.feedbacks << create_feedback(:content => comment, :commenter_id => commenter.id)
+        commenter.feedbacks << create_private_comment(:content => comment, :commenter_id => commenter.id)
       end
       commenter.save
     end
@@ -91,7 +91,7 @@ class CommenterTest < ActiveSupport::TestCase
   
   test 'should be able to agree with a feedback' do
     commenter = create_commenter
-    feedback = create_feedback
+    feedback = create_private_comment
     
     assert_difference "Opinion.count", 1 do
       assert_difference "commenter.opinions.count", 1 do
@@ -102,7 +102,7 @@ class CommenterTest < ActiveSupport::TestCase
 
   test 'should be able to disagree with a feedback' do
     commenter = create_commenter
-    feedback = create_feedback
+    feedback = create_private_comment
     
     assert_difference "Opinion.count", 1 do
       assert_difference "commenter.opinions.count", 1 do
@@ -113,21 +113,21 @@ class CommenterTest < ActiveSupport::TestCase
   
   test 'should know if (s)he has no opinion of a feedback' do
     commenter = create_commenter
-    feedback = create_feedback
+    feedback = create_private_comment
     
     assert commenter.opinion_of(feedback.id).nil?
   end
   
   test 'should have a special opinion on one of his/her own feedbacks' do
     commenter = create_commenter
-    feedbacks = create_feedback(:commenter => commenter)
+    feedbacks = create_private_comment(:commenter => commenter)
     
     assert commenter.opinion_of(feedbacks.id) == 'mine'
   end
   
   test 'should know if (s)he has agreed with a feedback' do
     commenter = create_commenter
-    feedback = create_feedback
+    feedback = create_private_comment
     
     commenter.opinions.create(:feedback => feedback, :agreed => true)
     assert commenter.opinion_of(feedback.id) == 'agreed'
@@ -135,7 +135,7 @@ class CommenterTest < ActiveSupport::TestCase
   
   test 'should know if (s)he has disagreed with a feedback' do
     commenter = create_commenter
-    feedback = create_feedback
+    feedback = create_private_comment
     
     commenter.opinions.create(:feedback => feedback, :agreed => false)
     assert commenter.opinion_of(feedback.id) == 'disagreed'
