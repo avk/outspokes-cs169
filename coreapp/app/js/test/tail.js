@@ -42,21 +42,11 @@
     news.push(i);
   }
 
-  if (news.length > 0) {
-    console.error("Extra global variables were created:", news);
-  } else {
-    console.info("No extra global variables were created.");
-  }
-
-  if (deleted.length > 0) {
-    console.error("Ummmm...  Somehow we deleted some global variables:", deleted);
-  } else {
-    console.info("No global variables were deleted.");
-  }
+  fb.globals_info = {
+    "news": news,
+    "deleted": deleted
+  };
 })();
-
-var $ = fb.$;
-var jQuery = fb.$;
 
 /*********************************************************/
 
