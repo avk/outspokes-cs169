@@ -1,4 +1,3 @@
-(function (fb) {
   var $ = fb.$;
   /**
    * fb.Comment class to represent a comment.
@@ -111,4 +110,3 @@
       fb.Comment.unrendered[i].render();
     }
   }
-})(fb_hash);
