@@ -1,4 +1,3 @@
-(function(fb) {
   var $ = fb.$;
   /**
    * The Feedback superclass.
@@ -131,4 +130,3 @@
     }
     return rtn;
   }
-})(fb_hash);
