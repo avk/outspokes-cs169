@@ -46,7 +46,11 @@ class Feedback < ActiveRecord::Base
       when 'timestamp'
         json_atts['timestamp'] = created_at.to_i
       when 'opinion'
-        json_atts['opinion'] = opinionated_commenter.opinion_of(id).to_s if opinionated_commenter # 'to_s' for nil => ''
+        if opinionated_commenter
+          json_atts['opinion'] = opinionated_commenter.opinion_of(id).to_s  # 'to_s' for nil => ''
+        else
+          json_atts['opinion'] = nil.to_s
+        end
       else
         json_atts[attr] = self[attr.to_sym]
       end

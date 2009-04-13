@@ -16,7 +16,7 @@
           target:"string",
           name:"string",
           timestamp:"number",
-		  opinion:""}),
+		      opinion:""}),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
       this.content = decodeURI(obj.content);

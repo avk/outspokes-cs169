@@ -95,4 +95,10 @@ class PagesControllerTest < ActionController::TestCase
 
     assert_redirected_to new_session_path
   end
+  
+  test "should show comments for page with public comments" do
+    login_as :aaron
+    get :show, :id => pages(:transactions).id
+    assert_template "show"
+  end
 end
