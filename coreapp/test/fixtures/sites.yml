@@ -9,3 +9,13 @@ facebook:
   id: 2
 #  url: http://www.facebook.com/
   account_id: 2
+
+public:
+  id: 3
+  #  url: http://www.facebook.com/
+  account_id: 2
+  
+alt_public:
+    id: 4
+    #  url: http://www.facebook.com/
+    account_id: 1

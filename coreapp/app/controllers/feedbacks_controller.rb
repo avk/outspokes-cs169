@@ -1,9 +1,9 @@
 class FeedbacksController < ApplicationController
 
-  before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page]
+  before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page, :opinion]
   
   # Authenticity Token doesn't work with random JS calls unless we want to somehow hack that in to js?
-  skip_before_filter :verify_authenticity_token, :only => :new_feedback_for_page
+  skip_before_filter :verify_authenticity_token, :only => [:new_feedback_for_page, :opinion]
 
   # GET /feedback_for_page.js
   # params[:url_token] => 'abcdef'
@@ -22,7 +22,20 @@ class FeedbacksController < ApplicationController
       @authorized = true
       @site_url = invite.page.url
       if page = Page.find_by_url(@current_page)
-        @feedback = page.feedbacks.map { |f| f.json_attributes }
+        @feedback = page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
+      end
+    end
+    
+    # If this is a public page, we're okay
+    if @url_token.blank?
+      if !@authorized && (page = Page.find_public_page_by_url(@current_page))
+        @authorized = true
+        @feedback = page.feedbacks.map { |f| f.json_attributes(nil) }
+        @site_url = page.url
+      elsif !@authorized && (site = Site.find_public_site_by_url(@current_page))
+        # no feedback for this page, but it is public, so we're still authorized
+        @authorized = true
+        @site_url = site.url
       end
     end
     
@@ -41,51 +54,64 @@ class FeedbacksController < ApplicationController
   # params[:target] => 'html'
   # params[:content] => 'blah blah blah blah'
   def new_feedback_for_page
-    feedback = []
-    current_page = params[:current_page]
-    token = params[:url_token]
-    target = params[:target]
-    authorized = false
-    site_url = 'none'
-    page = nil
-    parent_id = params[:parent_id]
-    
-    invite = Invite.find_by_url_token token
-    if invite and same_domain?(invite.page.url, current_page)
-      if invite.page.site.blank?
-        page = invite.page if invite.page.url == current_page
-      else
-        page = invite.page.site.pages.find_or_create_by_url current_page
-      end
-      if !page.nil? && page.valid?
-        authorized = true
-        site_url = invite.page.url
-        feedback = Feedback.new(:commenter => invite.commenter, :content => params[:content], :target => target)
-        page.feedbacks << feedback
-        if parent_id
-          # since parent_id is based on /comment_\d+/i, we extract the \d+
-          feedback.move_to_child_of parent_id.sub(/\D+/, '').to_i
-        end
-        
-        if !feedback.valid?
-          authorized = false
-          feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
-        else
-          feedback = page.feedbacks.map { |f| f.json_attributes }
-        end
-      end
-    end
-    
+    @callback = params[:callback]
+    @current_page = params[:current_page]
+    @token = params[:url_token]
+    @target = params[:target]
+    @name = params[:name]
+    @content = params[:content]
+    @authorized = false
+    @parent_id = params[:parent_id]
+    result = create_feedback
+
     respond_to do |wants|
       wants.html do
-          @json_data =  {:authorized => authorized, :url => site_url, :feedback => feedback}.to_json
+          @json_data = result.to_json
       end
       wants.js do
-        render :json => {:authorized => authorized, :url => site_url, :feedback => feedback},
+        render :json => result,
                :callback => @callback
       end
     end
   end
+  
+  # POST /opinion_on_feedback
+  # params[:url_token] => 'abcdef'
+  # params[:current_page] => 'http://hi.com/faq'
+  # params[:feedback_id] => 5
+  # params[:opinion] => "agree" or "disagree"
+  # params[:callback] => "someFunc"
+  def opinion
+    @url_token = params[:url_token]
+    @current_page = params[:current_page]
+    @feedback_id = params[:feedback_id]
+    @opinion = params[:opinion]
+    
+    @authorized = false
+    invite = Invite.find_by_url_token(@url_token)
+    if invite and same_domain?(invite.page.url, @current_page)
+      @authorized = (@feedback_id.to_i <= 0) ? false : true
+      if @authorized
+        @commenter = invite.commenter
+        case @opinion
+        when /^agreed?$/
+          @commenter.agree(@feedback_id)
+        when /^disagreed?$/
+          @commenter.disagree(@feedback_id)
+        else
+          @opinion = ''
+          @authorized = false
+        end
+      end
+    end
+    respond_to do |wants|
+      wants.html do
+        @json_data = {:authorized => @authorized, :feedback_id => @feedback_id, :opinion => @opinion}.to_json
+        render :action => 'new_feedback_for_page'
+      end
+    end
+  end
+  
   
   # DELETE /feedbacks/1
   # DELETE /feedbacks/1.xml
@@ -118,6 +144,63 @@ class FeedbacksController < ApplicationController
 
 protected
 
+  def create_feedback
+    page, invite = get_page_and_invite_for_feedback
+    site_url = 'none'
+    feedback = []
+    
+    if !page.nil? && page.valid?
+      @authorized = true
+      site_url = invite ? invite.page.url : page.url
+      if invite
+        commenter = invite.commenter
+        pub = false
+      else
+        commenter = nil
+        pub = true
+      end
+      feedback = Comment.new :commenter => commenter, :name => @name, :content => @content,
+                             :target => @target, :public => pub
+      page.feedbacks << feedback
+      if @parent_id
+        # since parent_id is based on /comment_\d+/i, we extract the \d+
+        feedback.move_to_child_of @parent_id.sub(/\D+/, '').to_i
+      end
+      if !feedback.valid?
+        @authorized = false
+        feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+      else
+        feedback = page.feedbacks.map { |f| f.json_attributes(commenter) }
+      end
+    end
+    {:authorized => @authorized, :url => site_url, :feedback => feedback}
+  end
+  
+  def get_page_and_invite_for_feedback
+    page = nil
+    invite = nil
+    if @name && (!@token) # Public feedback
+      page = Page.find_public_page_by_url @current_page
+      if page.nil? 
+        if (site = Site.find_public_site_by_url @current_page)
+          page = Page.new(:url => @current_page, :allow_public_comments => true)
+          site.pages << page
+          page = nil if !page.valid?
+        end
+      end
+    elsif @token # private
+      invite = Invite.find_by_url_token @token
+      if invite and same_domain?(invite.page.url, @current_page)
+        if invite.page.site.blank?
+          page = invite.page if invite.page.url == @current_page
+        else
+          page = invite.page.site.pages.find_or_create_by_url @current_page
+        end
+      end
+    end
+    [page, invite]
+  end
+
   def same_domain?(url1, url2)
     URI.parse(url1).host() == URI.parse(url2).host() && URI.parse(url1).port() == URI.parse(url2).port()
   end
@@ -146,7 +229,7 @@ protected
         break
       end
     end
-    okay = false unless @callback.match /\A[a-zA-Z_]+[\w_]*\Z/
+    okay = false unless @callback.match(/\A[a-zA-Z_]+[\w_]*\Z/)
     
     render :text => '{}' unless okay
   end

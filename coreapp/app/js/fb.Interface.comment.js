@@ -9,6 +9,17 @@
       comment_id          : function(id) {
         return (this.comment_id_format.test(id)) ? id : 'comment_' + parseInt(id);
       },
+      consensus_wrapper         : function(id) {
+        return "consensus_on_comment_" + parseInt(id);
+      },
+      agree_with                : function(id) {
+        return "agree_with_comment_" + parseInt(id);
+      },
+      disagree_with             : function(id) {
+        return "disagree_with_comment_" + parseInt(id);
+      },
+      agree_bg_color      : '#6F5',
+      disagree_bg_color   : 'red',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
       reply_form          : function(id) {
@@ -25,26 +36,82 @@
       },
     };
     
+    this.buildCommentForm = function (id, target) {
+      var formHTML = '<a href="#">Refresh comments</a>\
+        <form name="newcomment" onsubmit="return false;">';
+    	if (fb.env.pub_page) {
+    	  formHTML += '<label for="fb.name.input">Name:</label>\
+    	    <input id="fb.name.input" type="text" name="name" size="20" /><br />'
+    	}
+    	formHTML += 'Comment:<br />\
+      <textarea name="content" cols="30" rows="5" /><br />\
+      <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
+      <input type="hidden" value="' + target + '" name="target" />\
+      </form>'
+      return $('<div id="' + id + '"></div>').append(formHTML);
+    }
+    
     this.comments = $('<div></div>');
-    this.form = $('<div id="' + this.dom.comment_form + '"></div>').append( 
-     '<a href="#">Refresh comments</a>\
-      <form name="newcomment" onsubmit="return false;">\
-        Comment:<br />\
-        <textarea name="content" cols="30" rows="5" /><br />\
-        <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
-        <input type="hidden" value="html" name="target" />\
-      </form>');
+    this.form = this.buildCommentForm(this.dom.comment_form, "html")
     this.form.find("a").click(function(){fb.Feedback.get("render")});
     this.form.find("form").submit(function() { 
-      fb.Comment.post(this.content.value, this.target.value);
+      var name = null;
+      if (fb.env.pub_page) {
+        name = this.name.value;
+      }
+      fb.Comment.post(this.content.value, this.target.value, name);
     });
     this.form.find("span").mouseup(select_target);
     self.main_window.append(this.comments);
     self.main_window.append(this.form);
     
+    this.consensus = {
+      dom   : this.dom,
+      _opinion: function(c_id, color) {
+        if (typeof c_id == "string")
+          var comment = $('#' + this.dom.comment_id(c_id));
+        else
+          var comment = c_id;
+        comment.css({ 'background-color' : color });
+      },
+      agree: function(c_id) {
+        this._opinion(c_id, this.dom.agree_bg_color);
+      },
+      disagree: function(c_id) {
+        this._opinion(c_id, this.dom.disagree_bg_color);
+      },
+      build : function(c, markup) {
+        if (c.opinion != "") { // this invitee has voted on this comment
+          if (c.opinion == 'agreed') {
+            this.agree(markup);
+          } else if (c.opinion == 'disagreed') {
+            this.disagree(markup);
+          } else if (c.opinion == 'mine') {
+          }
+        } else { // this invitee should be allowed to vote on this comment
+          var consensus_div = $('<div></div>');
+          var agree = this.button(c, 'agree');
+          var disagree = this.button(c, 'disagree');
+          
+          consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
+          consensus_div.append(agree);
+          consensus_div.append(disagree);
+          markup.append(consensus_div);
+        }
+        return markup;
+      },
+      button : function(c, action) {
+        var button = $('<button type="button">' + action + '</button>');
+        button[0].setAttribute("id", eval('this.dom.' + action + '_with(c.feedback_id)'));
+        button.click(function() { eval('c.' + action + '()') });
+        return button;
+      },
+    }
+    
     this.reply = {
       // for easier, scoped dom references below
       dom             : this.dom,
+      parent          : this,
       // adds a reply to another comment in the interface
       render          : function(c) {
         var rtn = c.build;
@@ -75,17 +142,14 @@
         
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
-        var form = $('<div id="' + reply_form + '"></div>').append(
-         '<form name="new-reply-comment" onsubmit="return false;">\
-            Reply:<br />\
-            <textarea name="content" cols="30" rows="5" /><br />\
-            <input type="hidden" value="' + c_id + '" name="target" />\
-            <input type="submit" value="Reply" />\
-            <input type="reset" value="Cancel" />\
-          </form>');
-        
+        var form = this.parent.buildCommentForm(reply_form, c_id)
+        form.find("form").append('<input type="reset" value="Cancel" />')
         form.find("form").submit(function() { 
-          fb.Comment.post(this.content.value, this.target.value);
+          var name = null;
+          if (fb.env.pub_page) {
+            name = this.name.value;
+          }
+          fb.Comment.post(this.content.value, this.target.value, name);
           fb.i.comment.reply.finish(reply_form);
         });
         
@@ -110,18 +174,19 @@
     }
     
     this.build = function (c) {
-      var c_id = this.dom.comment_id(c.feedback_id);
-      var rtn = $('<div id="' + c_id + '"></div>').css('width','100%');
+      var rtn = $('<div></div>').css('width','100%');
+	  var c_id = this.dom.comment_id(c.feedback_id);
+   	  rtn[0].setAttribute('id', c_id);
       rtn.append(c.name + "<br />");
       rtn.append(c.content + "<br />");
       rtn.append(new Date(c.timestamp) + "<br />");
-      
+      rtn = this.consensus.build(c, rtn);
       // set up reply actions
       rtn.append(this.reply.buildLink(c_id));
       rtn.append("<hr style='width:80%' />");
       rtn.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
       
-      // bind the comment to it's target
+      // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         var tmp = $(c.target)[0];
         tmp = highlight_target(tmp);

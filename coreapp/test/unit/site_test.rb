@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class SiteTest < ActiveSupport::TestCase
   
@@ -135,6 +135,15 @@ class SiteTest < ActiveSupport::TestCase
       page = Page.new(:url => new_url, :site => site)
       site.pages << page
     end
+  end
+  
+  test "should return correct public site" do 
+    site = Site.find_public_site_by_url "http://localhost:3001/asite/"
+    assert_equal sites(:public), site, "Found #{site} for http://localhost:3001/asite/"
+    site = Site.find_public_site_by_url "http://localhost:3001/asite/lol.html"
+    assert_equal sites(:public), site
+    site = Site.find_public_site_by_url "http://localhost:3001/anothersite/cats.html"
+    assert_equal sites(:alt_public), site
   end
 
 end
