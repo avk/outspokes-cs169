@@ -13,6 +13,8 @@ class FeedbackjsController < ApplicationController
     "fb.Interface.comment.js",
     "fb.Feedback.js",
     "fb.Comment.js"]
+  @@tests = [
+    "test-A.js"]
   
   def index
     @fb_hash = "fb_" + generate_hash
@@ -26,8 +28,15 @@ class FeedbackjsController < ApplicationController
     @fb_hash = "fb"
     self.makejs
     @out = IO.read(@@testdir + "head.js") + @out
-    @out += IO.read(@@testdir + "tail.js")
-    @out += IO.read(@@testdir + "QUnit.js")
+    ["tail.js", "QUnit.js"].each do |f|
+      @out += IO.read(@@testdir + f) + "\n"
+    end
+    @out += "$(function() {\n\n"
+    @@tests.each do |f|
+      @out += "/********\n * Test: " + f + "\n *******/\n"
+      @out += IO.read(@@testdir + f)
+    end
+    @out += "});"
     
     render :js => @out
   end
