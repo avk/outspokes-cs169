@@ -27,7 +27,8 @@ role :db,  "outspokes.com", :primary => true
 namespace :deploy do
   desc "Restarting mod_rails with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "touch #{current_path}/tmp/restart.txt"
+    run "mkdir -p #{current_path}/coreapp/tmp" 
+    run "touch #{current_path}/coreapp/tmp/restart.txt"
   end
  
   [:start, :stop].each do |t|
@@ -35,3 +36,42 @@ namespace :deploy do
     task t, :roles => :app do ; end
   end
 end
+
+
+### from http://archive.jvoorhis.com/articles/2006/07/07/managing-database-yml-with-capistrano
+### but modified, because it was from capistrano v1
+desc "Create database.yml in shared/config" 
+task :after_setup do
+  database_configuration = <<-EOF
+
+development:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  timeout: 5000
+
+test:
+  database: #{application}_testing
+  adapter: mysql
+  username: outspokes
+  password: inktomi2009
+  host: localhost
+  socket: /var/run/mysqld/mysqld.sock
+  
+production:
+  database: #{application}_production
+  adapter: mysql
+  username: outspokes
+  password: inktomi2009
+  host: localhost
+  socket: /var/run/mysqld/mysqld.sock
+EOF
+
+  run "mkdir -p #{deploy_to}/#{shared_dir}/config" 
+  put database_configuration, "#{deploy_to}/#{shared_dir}/config/database.yml" 
+end
+
+desc "Link in the production database.yml" 
+task :after_update_code do
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/coreapp/config/database.yml" 
+end
+
