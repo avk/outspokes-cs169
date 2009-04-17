@@ -4,14 +4,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-        <%= javascript_include_tag :defaults %>
   <title>Feedback!: <%= controller.action_name %></title>
-	<%#= stylesheet_link_tag 'reset-min'%>
+	<%#= stylesheet_link_tag 'reset-min' %>
 	<%= stylesheet_link_tag 'acts-as-taggable' %>
-  	<%= stylesheet_link_tag 'scaffold' %>
-	<%= stylesheet_link_tag 'main'%>
+	<%= stylesheet_link_tag 'scaffold' %>
+	<%= stylesheet_link_tag 'main' %>
+  <style type="text/css" media="screen">
+    #branding {
+      background-color: #920F0F;
+      border-bottom: 4px dotted #fff;
+      margin: 0;
+      min-width: 200px;
+      padding: 10px 10px 0px 10px;
+      width: 25%;
+    }
+    #company_name {
+      color: #fff;
+      font-size: 3em;
+      font-family: Courier;
+      margin-bottom: -15px;
+    }
+    #tagline {
+      color: #888;
+      font-family: Courier;
+      font-style: italic;
+      font-size: 1.5em;
+      font-weight: normal;
+      margin-bottom: 5px;
+    }
+  </style>
+  <%= javascript_include_tag :defaults %>
 </head>
 <body>
+
+<div id="branding">
+  <h1 id="company_name">Outspokes</h1>
+  <h2 id="tagline">feedback evolved</h2>
+</div>
+<hr style="clear: both;" />
 
 <p style="color: green"><%= flash[:notice] %></p>
 <p style="color: red"><%= flash[:error] %></p>
