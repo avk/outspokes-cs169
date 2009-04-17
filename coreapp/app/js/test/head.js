@@ -1,11 +1,10 @@
 if (window.location.href.search(/noglobals/) === -1) {
   var url = window.location.href;
-  var last = url.charAt(url.length - 1);
   if (url.search(/\?/) != -1) {
-    if (last == "?" || last == "&") {
-      window.location.href = url + "noglobals";
-    } else {
+    if (url.charAt(url.length -1) != "&") {
       window.location.href = url + "&noglobals";
+    } else {
+      window.location.href = url + "noglobals";
     }
   } else {
     window.location.href = url + "?noglobals";
