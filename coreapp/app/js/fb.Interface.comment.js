@@ -1,3 +1,4 @@
+(function(fb){
   var $ = fb.$;
 
   fb.Interface.comment = function (self) {
@@ -227,3 +228,4 @@
     }
     return [over, out];
   }
+})(fb_hash);

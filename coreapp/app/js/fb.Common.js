@@ -1,3 +1,4 @@
+(function (fb) {
   var $ = fb.$;
   
   // Returns the CSS selector string uniquely identifying the element
@@ -122,3 +123,5 @@
   fb.assertTrue = function (cond, msg) {
     return fb.assert(cond === true, msg);
   }
+
+})(fb_hash);

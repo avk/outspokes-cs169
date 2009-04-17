@@ -1,4 +1,4 @@
-function() {
+function fb_hash() {
   return (function(fb){
     if (fb.env && fb.env.init) {
       return true;
@@ -34,3 +34,5 @@ function() {
       fb.Feedback.get_callback(data, "render");
       return true;
     });
+  })(fb_hash);
+}

@@ -1,3 +1,4 @@
+(function (fb) {
   var $ = fb.$;
   /**
    * fb.Interface class to create an instance of the ui.
@@ -31,3 +32,4 @@
   }
 
   fb.Interface.instantiated = false;
+})(fb_hash);
