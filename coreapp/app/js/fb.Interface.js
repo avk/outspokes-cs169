@@ -8,7 +8,7 @@
   fb.Interface = function() {
     fb.assert_false(fb.Interface.instantiated, "Can not create more than one instance of the interface.")
     
-    this.main_window = $('<div></div>').css({
+    this.main_window = $('<div id="outspokes"></div>').css({
       'width':'300px',
       'position':'absolute',
       'top':'15px',
