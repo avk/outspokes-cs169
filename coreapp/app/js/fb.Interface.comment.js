@@ -36,7 +36,7 @@
     };
     
     this.buildCommentForm = function (id, target) {
-      var formHTML = '<a href="#">Refresh comments</a>\
+      var formHTML = '<a id="refresh" href="#">Refresh</a>\
         <form name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
     	  formHTML += '<label for="fb.name.input">Name:</label>\

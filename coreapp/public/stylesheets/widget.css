@@ -13,14 +13,19 @@ version: 3.0.0pr2
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
-	border-top: 20px solid #111;
-	padding: 5px;
-	margin: 0px;
-	opacity: 0.90;
+	border-top: 2px dotted #111;
 	height: 200px;
 }
 
 /* all other styles must be faux-scoped with our widget wrapper */
+
+#outspokes #new_comment, #outspokes #comment_list {
+	height: 175px;
+}
+
+#outspokes #topbar {
+	height: 25px;
+}
 
 #outspokes #new-comment {
 	position: fixed;
@@ -34,8 +39,22 @@ version: 3.0.0pr2
 	float: left;
 	width: 60%;
 	margin-left: 3%;
-	height: 180px;
 	overflow-y: scroll;
+}
+
+#outspokes #topbar {
+	background-color: #111;
+	color: beige;
+	font-weight: bold;
+	font-size: 1.6em;
+	border-bottom: 2px dotted beige;
+}
+
+#outspokes #refresh {
+	position:absolute;
+	right:125%;
+	top:-45px;
+	color: beige;
 }
 
 #outspokes .comment-reply {
