@@ -79,7 +79,7 @@ Rails::Initializer.run do |config|
   # Email config settings for Matthew's dreamhost email account
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address          => 'mail.reallycooldomainname.com',
+    :address          => 'spunky.mail.dreamhost.com',
     :port             => 587,
     :domain           => 'reallycooldomainname.com',
     :authentication   => :login,
