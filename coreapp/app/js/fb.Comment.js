@@ -76,8 +76,6 @@
     if (!fb.env.authorized) {
       return null;
     }
-    content = encodeURI(content);
-    target = encodeURI(target);
     var data = {
       url_token: fb.env.url_token,
       current_page: fb.env.current_page,
@@ -88,7 +86,7 @@
       data.parent_id = target;
     }
     if (name) {
-      data["name"] = encodeURI(name);
+      data["name"] = name;
       delete data["url_token"];
     }
     var callback = function(data) {

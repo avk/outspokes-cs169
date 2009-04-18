@@ -151,6 +151,8 @@ protected
     
     if !page.nil? && page.valid?
       @authorized = true
+      @name = sanitize(@name, false)
+      @content = sanitize(@content, true)
       site_url = invite ? invite.page.url : page.url
       if invite
         commenter = invite.commenter
@@ -232,6 +234,18 @@ protected
     okay = false unless @callback.match(/\A[a-zA-Z_]+[\w_]*\Z/)
     
     render :text => '{}' unless okay
+  end
+
+  def sanitize(value, newlines)
+    value = ERB::Util.html_escape(value)
+    if newlines
+      replace_val = "<br />"
+    else
+      replace_val = " "
+    end
+    value.gsub!(/\r\n/, replace_val)
+    value.gsub!(/[\r\n]/, replace_val)
+    return value
   end
   
 end
