@@ -9,25 +9,25 @@
   fb.Feedback = function(obj) {
     if (obj) {
       fb.assert(arguments.length === 1, "Incorrect number of arguments");
-      fb.assert(fb.hasProp(obj,
-         {feedback_id:"number",
-          content:"string",
-          target:"string",
-          name:"string",
-          timestamp:"number",
-		      opinion:""}),
+      fb.assert(fb.hasProp(obj, {
+        feedback_id:"number",
+        content:"string",
+        target:"string",
+        name:"string",
+        timestamp:"number",
+		    opinion:""}),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
-      this.content = decodeURI(obj.content);
-      this.target = decodeURI(obj.target);
+      this.content = obj.content;
+      this.target = obj.target;
       this.name = obj.name;
-	  this.opinion = obj["opinion"];
+      this.opinion = obj.opinion;
       this.timestamp = obj.timestamp;
       this.build = null;
 
       fb.Feedback.all[this.feedback_id] = this;
     }
-  }
+  };
   
   fb.Feedback.all = {};
   
@@ -39,8 +39,8 @@
     this.name = null;
     this.timestamp = null;
     this.build = null;
-  }
-  fb.Feedback.prototype.render = function() {}
+  };
+  fb.Feedback.prototype.render = function() {};
   
   /* The feedback class should also have the class variables:
    * - all: Associative array, feedback_id -> instance
@@ -55,11 +55,11 @@
     if (callback === "render") {
       callback = function (data) {
         fb.Feedback.get_callback(data, true);
-      }
+      };
     } else if (typeof callback === "undefined") {
       callback = fb.Feedback.get_callback;
     } else {
-      fb.assertTrue(typeof callback === "function", "Callback argument to fb.Feedback.get() must be a function.");
+      fb.assert(typeof callback === "function", "Callback argument to fb.Feedback.get() must be a function.");
     }
     var params = {
       'url_token': fb.env.url_token,
@@ -68,7 +68,7 @@
     // jQuery.getJSON requires the "?" on callback to be unescaped
     params = "?" + $.param(params) + "&callback=?";
     $.getJSON(fb.env.get_address + params, callback);
-  }
+  };
   
   /**
    * Process the data received in response to fb.Feedback.get()
@@ -129,4 +129,4 @@
       fb.Comment.render();
     }
     return rtn;
-  }
+  };

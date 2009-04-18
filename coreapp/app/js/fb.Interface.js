@@ -7,9 +7,17 @@
    */
   fb.Interface = function() {
     fb.assert_false(fb.Interface.instantiated, "Can not create more than one instance of the interface.");
-    
+    if (!fb.env.authorized) {
+      return false;
+    }
+
+    $('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
+
     this.dom = {
-      widget  : 'outspokes',
+      widget  : { 
+        wrapper : 'outspokes',
+        header  : 'topbar',
+      },
       admin   : {
         panel   : 'outspokes_admin_panel',
         open    : 'open_admin_panel',
@@ -47,27 +55,18 @@
       },
     }
     
-    this.main_window = $('<div></div>').attr('id',this.dom.widget).css({
-      'width':'300px',
-      'position':'absolute',
-      'top':'15px',
-      'right':'15px',
-      'border':'1px solid black',
-      'padding':'5px'
-    })
+    this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+    this.main_window.append($('<h1>outspokes y&#8216;all</h1>').attr('id',this.dom.widget.header));
     this.admin_panel.build(this.main_window);
     this.main_window.appendTo($('body'));
-    
-    if (typeof fb.Interface._initialized === "undefined") {}
-    fb.Interface._initialized = true;
     
     this.comment = new fb.Interface.comment(this);
     
     fb.Interface.instantiated = true;
-  }
+  };
   
   fb.Interface.prototype.div = function() {
-    return $('<div></div>');
-  }
+  	return $('<div></div>');
+  };
 
   fb.Interface.instantiated = false;
