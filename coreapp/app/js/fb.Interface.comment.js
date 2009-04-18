@@ -32,7 +32,7 @@
       },
       _prefix             : function(id) {
         return (this.comment_id_format.test(id)) ? id : this.comment_id(id);
-      },
+      }
     };
     
     this.buildCommentForm = function (id, target) {
@@ -51,8 +51,8 @@
     }
     
     this.comments = $('<div id="comment_list"></div>');
-    this.form = this.buildCommentForm(this.dom.comment_form, "html")
-    this.form.find("a").click(function(){fb.Feedback.get("render")});
+    this.form = this.buildCommentForm(this.dom.comment_form, "html");
+    this.form.find("a").click(function(){fb.Feedback.get("render");});
     this.form.find("form").submit(function() { 
       var name = null;
       if (fb.env.pub_page) {
@@ -67,10 +67,12 @@
     this.consensus = {
       dom   : this.dom,
       _opinion: function(c_id, color) {
-        if (typeof c_id == "string")
-          var comment = $('#' + this.dom.comment_id(c_id));
-        else
-          var comment = c_id;
+        var comment = null;
+        if (typeof c_id == "string") {
+          comment = $('#' + this.dom.comment_id(c_id));
+        } else {
+          comment = c_id;
+        }
         comment.css({ 'background-color' : color });
       },
       agree: function(c_id) {
@@ -80,8 +82,8 @@
         this._opinion(c_id, this.dom.disagree_bg_color);
       },
       build : function(c, markup) {
-        if (c.opinion != "") { // this invitee has voted on this comment
-          if (c.opinion == 'agreed') {
+        if (c.opinion !== "") { // this invitee has voted on this comment
+          if (c.opinion === 'agreed') {
             this.agree(markup);
           } else if (c.opinion == 'disagreed') {
             this.disagree(markup);
@@ -102,10 +104,10 @@
       button : function(c, action) {
         var button = $('<button type="button">' + action + '</button>');
         button[0].setAttribute("id", eval('this.dom.' + action + '_with(c.feedback_id)'));
-        button.click(function() { eval('c.' + action + '()') });
+        button.click(function() { eval('c.' + action + '()'); });
         return button;
-      },
-    }
+      }
+    };
     
     this.reply = {
       // for easier, scoped dom references below
@@ -115,10 +117,11 @@
       render          : function(c) {
         var rtn = c.build;
         var parent = document.getElementById(c.target);
+        var parent_border = null;
         if (parent && parent.style && parent.style.borderLeftWidth) {
-          var parent_border = parseInt(parent.style.borderLeftWidth);
+          parent_border = parseInt(parent.style.borderLeftWidth, 10);
         } else {
-          var parent_border = 0;
+          parent_border = 0;
         }
         new_border = parent_border + 5 + "px";
         rtn.css({ 'border-left': new_border + ' solid black' });
@@ -127,7 +130,7 @@
       // constructs a "reply" link
       buildLink       : function(c_id) {
         var replyLink = $('<a href="#" class="' + this.dom.reply_links + '">&raquo; reply</a>');
-        replyLink.click(function(){ fb.i.comment.reply.start(c_id) })
+        replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
       // toggles the non-replying interface
@@ -141,8 +144,8 @@
         
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
-        var form = this.parent.buildCommentForm(reply_form, c_id)
-        form.find("form").append('<input type="reset" value="Cancel" />')
+        var form = this.parent.buildCommentForm(reply_form, c_id);
+        form.find("form").append('<input type="reset" value="Cancel" />');
         form.find("form").submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
@@ -170,7 +173,7 @@
       finish          : function(reply_form) {
         this.cancel(reply_form);
       }
-    }
+    };
     
     this.build = function (c) {
       var rtn = $('<div></div>').css('width','100%');
@@ -192,7 +195,7 @@
         rtn.hover(tmp[0], tmp[1]);
       }
       return rtn;
-    }
+    };
     
     this.render = function(c) {
       if (c.isReply()) {
@@ -200,13 +203,13 @@
       } else {
         this.comments.append(c.build);
       }
-    }
+    };
     
-    this.post_failed = function(c){}
+    this.post_failed = function(c){};
     
     this.remove = function(c){
       c.build.remove();
-    }
+    };
   }
   
   function select_target() {

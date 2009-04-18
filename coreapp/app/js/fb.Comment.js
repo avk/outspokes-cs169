@@ -46,7 +46,7 @@
       callback: 'callback'
     };
     var callback = function(response) {
-      if (response.authorized && response.opinion != '') {
+      if (response.authorized && response.opinion !== '') {
         eval("fb.i.comment.consensus." + opinion + "(response.feedback_id)");
         $('#' + fb.i.comment.dom.consensus_wrapper(response.feedback_id)).remove();
       } else {

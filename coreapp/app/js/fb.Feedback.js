@@ -21,7 +21,7 @@
       this.content = obj.content;
       this.target = obj.target;
       this.name = obj.name;
-      this.opinion = obj["opinion"];
+      this.opinion = obj.opinion;
       this.timestamp = obj.timestamp;
       this.build = null;
 
@@ -55,7 +55,7 @@
     if (callback === "render") {
       callback = function (data) {
         fb.Feedback.get_callback(data, true);
-      }
+      };
     } else if (typeof callback === "undefined") {
       callback = fb.Feedback.get_callback;
     } else {
