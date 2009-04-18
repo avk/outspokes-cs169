@@ -16,3 +16,49 @@ version: 3.0.0pr2
 #outspokes .comment-reply {
     color: red;
 }
+
+/* admin panel */
+
+#outspokes_overlay {
+    background-color: black;
+    color: transparent;
+    display: none;
+    height: 100%;
+    left: 0%;
+    margin: 0;
+    opacity: 0.80;
+    padding: 0;
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    z-index: 1001;
+}
+#outspokes_admin_panel {
+    background-color: white;
+    border: 16px solid #eee;
+    color: black;
+    display: none;
+    height: 50%;
+    left: 25%;
+    margin: 0;
+    overflow: hidden;
+    padding: 5px;
+    position: absolute;
+    top: 25%;
+    width: 50%;
+    z-index:1002;
+}
+    #outspokes_admin_panel a#close_admin_panel,
+    #outspokes_admin_panel a#close_admin_panel:link {
+        background-color: transparent;
+        color: #333;
+        font-family: Helvetica;
+        font-size: 2em;
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+        top: 0;
+    }
+    #outspokes_admin_panel a#close_admin_panel:visited {
+        color: #333;
+    }
