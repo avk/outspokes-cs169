@@ -50,7 +50,7 @@
       return $('<div id="' + id + '"></div>').append(formHTML);
     }
     
-    this.comments = $('<div></div>');
+    this.comments = $('<div id="comment_list"></div>');
     this.form = this.buildCommentForm(this.dom.comment_form, "html")
     this.form.find("a").click(function(){fb.Feedback.get("render")});
     this.form.find("form").submit(function() { 
