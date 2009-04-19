@@ -1,8 +1,5 @@
 class Mailer < ActionMailer::Base
 
-  #Avinash 4q survey 
-
-  # Crap demo method
   def commenter_invite(person, page)
     from         "outspokes@reallycooldomainname.com"
     recipients   person.email
