@@ -3,13 +3,14 @@ class Mailer < ActionMailer::Base
   #Avinash 4q survey 
 
   # Crap demo method
-  def mail(person)
-    from        "outspokes@reallycooldomainname.com"
-    recipients  person.email
-    subject     "You have been invited to give a feedback!"
-    sent_on     Time.now
+  def commenter_invite(person, page)
+    from         "outspokes@reallycooldomainname.com"
+    recipients   person.email
+    subject      "You have been invited to give feedback!"
+    sent_on      Time.now
+    content_type "text/html"
     
-    body        :person => person
+    body         :person => person, :page => page 
   end  
 
 end

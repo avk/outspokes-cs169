@@ -1,0 +1,12 @@
+<p>Congratulations!</p>
+
+<p>You have been invited to give feedback on a project by someone!</p>
+
+<p>Please follow the link below to give feedback!</p>
+
+<% final_url = @page.url.sub(/\/$/i, '') + '?url_token=' + @person.invites.find_by_page_id(@page.id).url_token %>
+<p><a href="<%= final_url %>"><%= final_url %></a></p>
+
+<p>Sincerely,</p>
+
+<p>The Outspokes Team</p>
