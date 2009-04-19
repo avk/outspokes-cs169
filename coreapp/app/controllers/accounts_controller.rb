@@ -22,4 +22,23 @@ class AccountsController < ApplicationController
       render :action => 'new'
     end
   end
+
+  def edit
+    @account = Account.find(params[:id])
+  end
+
+  def update
+    @account = Account.find(params[:id])
+
+    respond_to do |format|
+      if @account.update_attributes(params[:account])
+        flash[:notice] = 'Your account was successfully updated.'
+        format.html { redirect_to(@account) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
 end
