@@ -31,7 +31,15 @@ class EmailReqsController < ApplicationController
         format.html { redirect_to(@email_req) }
         format.xml  { render :xml => @email_req, :status => :created, :location => @email_req }
       else
-        format.html { render :action => "new" }
+        if EmailReq.find_by_email @email_req.email
+          flash[:warning] = "That address has already been entered"
+        elsif @email_req.email.blank?
+          flash[:warning] = "Please enter an email address"
+        else
+          flash[:warning] = "Invalid email"
+        end
+        flash[:old_email] = @email_req.email
+        format.html { redirect_to root_path }
         format.xml  { render :xml => @email_req.errors, :status => :unprocessable_entity }
       end
     end

@@ -582,3 +582,741 @@ Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:25:56) [GET]
 Rendering template within layouts/application
 Rendering home/index
 Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:33:29) [GET]
+
+
+NameError (uninitialized constant HomeController::EmailReq):
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:102:in `const_missing'
+    /app/controllers/home_controller.rb:3:in `index'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `perform_action_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:617:in `call_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/query_cache.rb:8:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/session_management.rb:134:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:392:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load_without_new_constant_marking'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_trace (33.3ms)
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_request_and_response (1.0ms)
+Rendering /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:33:30) [GET]
+
+
+NameError (uninitialized constant HomeController::EmailReq):
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:102:in `const_missing'
+    /app/controllers/home_controller.rb:3:in `index'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `perform_action_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:617:in `call_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/query_cache.rb:8:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/session_management.rb:134:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:392:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load_without_new_constant_marking'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_trace (104.8ms)
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:33:39) [GET]
+
+
+NameError (uninitialized constant HomeController::EmailReq):
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:102:in `const_missing'
+    /app/controllers/home_controller.rb:3:in `index'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `perform_action_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:617:in `call_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/query_cache.rb:8:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/session_management.rb:134:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:392:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load_without_new_constant_marking'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_trace (33.6ms)
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_request_and_response (0.7ms)
+Rendering /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:33:53) [GET]
+
+
+NameError (uninitialized constant HomeController::EmailReq):
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:102:in `const_missing'
+    /app/controllers/home_controller.rb:3:in `index'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `perform_action_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:617:in `call_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/query_cache.rb:8:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/session_management.rb:134:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:392:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load_without_new_constant_marking'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_trace (36.5ms)
+Rendered /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+  [4;36;1mSQL (0.9ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:35:12) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 11ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:35:14) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Rendering template within layouts/application
+Rendering email_reqs/new
+
+
+ActionView::MissingTemplate (Missing template email_reqs/new.erb in view path /Users/alex/School Now/169/feedback/frontpage_poll/app/views:):
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/template.rb:95:in `find_full_path'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/template.rb:16:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/base.rb:332:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/base.rb:332:in `_unmemoized__pick_template'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/memoizable.rb:70:in `_pick_template'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/base.rb:256:in `render'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/base.rb:367:in `_render_with_layout'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_view/base.rb:254:in `render'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1174:in `render_for_file'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:905:in `render_without_benchmark'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /app/controllers/email_reqs_controller.rb:34:in `create'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:135:in `call'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:135:in `custom'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:164:in `call'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:164:in `respond'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:158:in `respond'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/mime_responds.rb:107:in `respond_to'
+    /app/controllers/email_reqs_controller.rb:29:in `create'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:1253:in `perform_action_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:617:in `call_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/query_cache.rb:8:in `cache'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `send'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/session_management.rb:134:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/base.rb:392:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:183:in `handle_request'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:110:in `dispatch_unlocked'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:123:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:122:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:132:in `dispatch_cgi'
+    /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/dispatcher.rb:39:in `dispatch'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:76:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/../lib/mongrel/rails.rb:74:in `process'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:282:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `each'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/configurator.rb:281:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:128:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel/command.rb:212:in `run'
+    /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/bin/mongrel_rails:281
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load_without_new_constant_marking'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:142:in `load'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/servers/mongrel.rb:64
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/dependencies.rb:153:in `require'
+    /opt/local/lib/ruby/gems/1.8/gems/rails-2.2.2/lib/commands/server.rb:49
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /opt/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+Rendering /opt/local/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:38) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:38:39) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;35;1mEmailReq Exists (0.2ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:39) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 12ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:44) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:38:45) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 15ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:45) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 14ms (View: 6, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:38:47) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;35;1mEmailReq Exists (0.2ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:47) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:38:48) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:48) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:38:59) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"puppies"}}
+  [4;35;1mEmailReq Exists (0.1ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'puppies') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:38:59) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 11ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:39:03) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"LULZ"}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'LULZ') LIMIT 1[0m
+Redirected to /
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:39:03) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:39:08) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@test.com"}}
+  [4;35;1mEmailReq Exists (0.2ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+Redirected to /
+Completed in 85ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:39:08) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:39:13) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@what.com"}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@what.com') LIMIT 1[0m
+  [4;35;1mEmailReq Create (0.6ms)[0m   [0mINSERT INTO "email_reqs" ("created_at", "updated_at", "email") VALUES('2009-04-19 21:39:13', '2009-04-19 21:39:13', 'test@what.com')[0m
+Redirected to #<EmailReq:0x23d6740>
+Completed in 11ms (DB: 1) | 302 Found [http://localhost/email_reqs]
+
+
+Processing EmailReqsController#show (for 127.0.0.1 at 2009-04-19 14:39:13) [GET]
+  Parameters: {"id"=>"3"}
+  [4;36;1mEmailReq Load (0.2ms)[0m   [0;1mSELECT * FROM "email_reqs" WHERE ("email_reqs"."id" = 3) [0m
+Rendering template within layouts/application
+Rendering email_reqs/show
+Completed in 9ms (View: 3, DB: 0) | 200 OK [http://localhost/email_reqs/3]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:39:18) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+  [4;36;1mEmailReq Load (0.9ms)[0m   [0;1mSELECT * FROM "email_reqs" LIMIT 1[0m
+  [4;35;1mEmailReq Exists (0.3ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:41:09) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:41:12) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@test.com"}}
+  [4;35;1mEmailReq Exists (0.2ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+  [4;36;1mEmailReq Load (0.2ms)[0m   [0;1mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:41:12) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:41:35) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:41:38) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@test.com"}}
+  [4;35;1mEmailReq Exists (0.2ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+  [4;36;1mEmailReq Load (0.2ms)[0m   [0;1mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+Redirected to /
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:41:38) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:44:44) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:44:48) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@test.com"}}
+  [4;35;1mEmailReq Exists (0.2ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+  [4;36;1mEmailReq Load (0.3ms)[0m   [0;1mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+Redirected to /
+Completed in 14ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:44:48) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:44:54) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"what@test.com"}}
+  [4;35;1mEmailReq Exists (0.1ms)[0m   [0mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'what@test.com') LIMIT 1[0m
+  [4;36;1mEmailReq Create (0.5ms)[0m   [0;1mINSERT INTO "email_reqs" ("created_at", "updated_at", "email") VALUES('2009-04-19 21:44:55', '2009-04-19 21:44:55', 'what@test.com')[0m
+Redirected to #<EmailReq:0x229adb8>
+Completed in 13ms (DB: 1) | 302 Found [http://localhost/email_reqs]
+
+
+Processing EmailReqsController#show (for 127.0.0.1 at 2009-04-19 14:44:55) [GET]
+  Parameters: {"id"=>"4"}
+  [4;35;1mEmailReq Load (0.3ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."id" = 4) [0m
+Rendering template within layouts/application
+Rendering email_reqs/show
+Completed in 9ms (View: 3, DB: 0) | 200 OK [http://localhost/email_reqs/4]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:44:58) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:45:03) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@test.com"}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.2ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@test.com') LIMIT 1[0m
+Redirected to /
+Completed in 12ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:45:03) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 11ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:45:07) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"test@"}}
+  [4;36;1mEmailReq Exists (0.3ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = 'test@') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:45:07) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:45:26) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"<script></script>"}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '<script></script>') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '<script></script>') LIMIT 1[0m
+Redirected to /
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:45:27) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:45:53) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 11ms (View: 5, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:45:56) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"<script></script>"}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '<script></script>') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '<script></script>') LIMIT 1[0m
+Redirected to /
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:45:56) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:46:10) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"\"<script></script>\""}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '"<script></script>"') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '"<script></script>"') LIMIT 1[0m
+Redirected to /
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:46:10) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:46:41) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"\"<script>&quot;</script>\""}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '"<script>&quot;</script>"') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '"<script>&quot;</script>"') LIMIT 1[0m
+Redirected to /
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:46:41) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:46:50) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:46:51) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:47:32) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 85ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:47:33) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 14ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:47:33) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:47:34) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>"ddd"}}
+  [4;36;1mEmailReq Exists (0.2ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = 'ddd') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.2ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = 'ddd') LIMIT 1[0m
+Redirected to /
+Completed in 12ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:47:35) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 10ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EmailReqsController#create (for 127.0.0.1 at 2009-04-19 14:47:36) [POST]
+  Parameters: {"commit"=>"Lemme know!", "authenticity_token"=>"7b885a59f1fe3c9b942d7f191602d6011ddd2f5a", "email_req"=>{"email"=>""}}
+  [4;36;1mEmailReq Exists (0.1ms)[0m   [0;1mSELECT "email_reqs".id FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+  [4;35;1mEmailReq Load (0.1ms)[0m   [0mSELECT * FROM "email_reqs" WHERE ("email_reqs"."email" = '') LIMIT 1[0m
+Redirected to /
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/email_reqs]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-04-19 14:47:36) [GET]
+Rendering template within layouts/application
+Rendering home/index
+Completed in 9ms (View: 4, DB: 0) | 200 OK [http://localhost/]
