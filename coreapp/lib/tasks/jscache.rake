@@ -1,13 +1,13 @@
 namespace :jscache do
   
-  desc "clear the page cached JavaScript from FeedbackjsController#index"
+  desc "clear the page cached JavaScript from WidgetController#index"
   task :clear => :environment do
     cache_dir = ActionController::Base.page_cache_directory
     
     # since index is the default controller action, it can be cached in two ways:
-    %w(feedbackjs.js feedbackjs/index.js).each do |page_cache_file|
+    %w(widget.js widget/index.js).each do |page_cache_file|
       begin
-        if page_cache_file.match /(.*)\/.*\.html/ # directory/file.html
+        if page_cache_file.match /(.*)\/.*\.js/ # directory/file
           dir = cache_dir + '/' + $1
           puts "removing #{dir}"
           FileUtils.rm_rf(dir)
