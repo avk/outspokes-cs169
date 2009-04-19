@@ -9,7 +9,7 @@
       %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
   
 #account_block    
-  - form_for :account do |f| 
+  - form_for @account do |f| 
     %fieldset
       %legend Account Info
       / %label{:for => "account_name"} Name
@@ -17,4 +17,3 @@
       %label{:for => "account_email"} Email
       = f.text_field :email
       = submit_tag 'Save Changes'
-      %a Cancel

@@ -1,6 +1,15 @@
-tr blockquote {float:right; margin: 0; font-style:oblique;}
+tr blockquote {
+  float: right;
+  margin: 0;
+  font-style: oblique; }
 
-.even {background-color: #AFC5FF;}
-.odd {background-color: #EFFFAF;}
+.even {
+  background-color: #AFC5FF; }
 
-#login_bar {border: 1px solid #666; padding: .5em; width: 20em;} 
+.odd {
+  background-color: #EFFFAF; }
+
+#login_bar {
+  border: 1px solid #666;
+  padding: .5em;
+  width: 20em; }
