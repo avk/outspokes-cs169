@@ -3,11 +3,11 @@ ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
 
   # widget
-  map.widget '/widget', :controller => 'widget', :action => 'index'
+  map.widget '/widget', :controller => 'widget/source', :action => 'index'
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/feedbacks', :action => 'opinion', :conditions => { :method => :post }
+  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
 
   # coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'

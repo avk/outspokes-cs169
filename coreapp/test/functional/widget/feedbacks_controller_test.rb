@@ -5,7 +5,6 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   def setup
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    
   end
   
   test "should not list feedback for an invalid URL token" do

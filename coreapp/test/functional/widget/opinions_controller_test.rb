@@ -2,6 +2,11 @@ require 'test_helper'
 
 class Widget::OpinionsControllerTest < ActionController::TestCase
   
+  def setup
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+  end
+  
   test "should not allow opinions for an invalid URL token" do
     invite = invites(:one)
     callback = 'jsfeed'

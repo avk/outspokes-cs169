@@ -1,15 +1,11 @@
 require 'test_helper'
-require 'json'
-require 'ruby-debug'
 
-class FeedbacksControllerTest < ActionController::TestCase
+class Widget::TagsControllerTest < ActionController::TestCase
 
   def setup
-    @controller = FeedbacksController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
-  
 
   test "should be able to tag a feedback" do
     feedback = feedbacks(:one)
@@ -42,5 +38,4 @@ class FeedbacksControllerTest < ActionController::TestCase
     
     assert_redirected_to page_path(feedback.page)
   end
-
 end

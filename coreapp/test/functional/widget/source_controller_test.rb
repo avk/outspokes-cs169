@@ -1,9 +1,8 @@
 require 'test_helper'
 
-class WidgetControllerTest < ActionController::TestCase
+class Widget::SourceControllerTest < ActionController::TestCase
 
   def setup 
-    @controller = WidgetController.new 
     @request    = ActionController::TestRequest.new 
     @response   = ActionController::TestResponse.new 
   end 

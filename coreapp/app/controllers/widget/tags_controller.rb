@@ -1,5 +1,5 @@
-class FeedbacksController < ApplicationController
-
+class Widget::TagsController < ApplicationController
+  
   # POST /pages/1/feedbacks/1/add_tag
   def add_tag
     @feedback = Feedback.find(params[:id])
@@ -17,6 +17,4 @@ class FeedbacksController < ApplicationController
     redirect_to page_path(params[:page_id])
   end
 
-
-  
 end
