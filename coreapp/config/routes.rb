@@ -1,29 +1,31 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.widget '/widget', :controller => 'widget', :action => 'index'
+  # The priority is based upon order of creation: first created -> highest priority.
 
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  # widget
+  map.widget '/widget', :controller => 'widget', :action => 'index'
+  map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
+  map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
+  map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
+  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/feedbacks', :action => 'opinion', :conditions => { :method => :post }
+
+  # coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
+
   map.resources :accounts
-
   map.resource :session
-
   map.resources :sites
+
+  # admin panel
   map.resources :pages do |page|
     # member /pages/1/feedbacks/1/something -- i.e. a specific feedback
     # collection /pages/1/feedbacks/something -- i.e. all the feedbacks
     page.resources :feedbacks, :member => { :add_tag => :post, :delete_tag => :delete }
     page.resources :commenters
   end
-  
-  map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
-  map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/feedbacks', :action => 'opinion', :conditions => { :method => :post }
-
-  # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
