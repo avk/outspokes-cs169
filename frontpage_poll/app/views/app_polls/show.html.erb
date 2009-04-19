@@ -1,0 +1,18 @@
+<p>
+  <b>Can:</b>
+  <%=h @app_poll.can %>
+</p>
+
+<p>
+  <b>Has:</b>
+  <%=h @app_poll.has %>
+</p>
+
+<p>
+  <b>Will:</b>
+  <%=h @app_poll.will %>
+</p>
+
+
+<%= link_to 'Edit', edit_app_poll_path(@app_poll) %> |
+<%= link_to 'Back', app_polls_path %>

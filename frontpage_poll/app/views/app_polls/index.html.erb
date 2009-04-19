@@ -1,0 +1,24 @@
+<h1>Listing app_polls</h1>
+
+<table>
+  <tr>
+    <th>Can</th>
+    <th>Has</th>
+    <th>Will</th>
+  </tr>
+
+<% for app_poll in @app_polls %>
+  <tr>
+    <td><%=h app_poll.can %></td>
+    <td><%=h app_poll.has %></td>
+    <td><%=h app_poll.will %></td>
+    <td><%= link_to 'Show', app_poll %></td>
+    <td><%= link_to 'Edit', edit_app_poll_path(app_poll) %></td>
+    <td><%= link_to 'Destroy', app_poll, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New app_poll', new_app_poll_path %>

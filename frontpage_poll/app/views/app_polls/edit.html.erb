@@ -1,0 +1,24 @@
+<h1>Editing app_poll</h1>
+
+<% form_for(@app_poll) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :can %><br />
+    <%= f.text_area :can %>
+  </p>
+  <p>
+    <%= f.label :has %><br />
+    <%= f.text_area :has %>
+  </p>
+  <p>
+    <%= f.label :will %><br />
+    <%= f.text_area :will %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @app_poll %> |
+<%= link_to 'Back', app_polls_path %>
