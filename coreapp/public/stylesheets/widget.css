@@ -8,7 +8,7 @@ version: 3.0.0pr2
 
 /* outermost wrapper for our widget */
 #outspokes {
-	width: 99%;
+	width: 100%;
 	background-color: #EEE;
 	position: fixed;
 	bottom: 0px;
@@ -94,6 +94,7 @@ version: 3.0.0pr2
 	width: 60%;
 	margin-left: 3%;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 #outspokes #topbar {
