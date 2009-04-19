@@ -78,7 +78,7 @@
 	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
 	this.main_window.append(this.widget_content);
 	
-    // this.admin_panel.build(this.main_window);
+    this.admin_panel.build(this.topbar);
 
     this.main_window.appendTo($('body'));
     

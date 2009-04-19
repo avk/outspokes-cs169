@@ -119,6 +119,9 @@ version: 3.0.0pr2
 	margin-top: -20px;
 }
 
+#outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
+	padding: 0 10px;
+}
 
 #outspokes .comment-reply {
 }
