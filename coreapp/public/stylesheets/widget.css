@@ -1,0 +1,127 @@
+/* YUI contextual reset for all elements within our widget wrapper
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 3.0.0pr2
+*/
+#outspokes html{color:#000;background:#FFF;}#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}#outspokes table{border-collapse:collapse;border-spacing:0;}#outspokes fieldset,#outspokes img{border:0;}#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}#outspokes li{list-style:none;}#outspokes caption,#outspokes th{text-align:left;}#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}#outspokes q:before,#outspokes q:after{content:'';}#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}#outspokes sup{vertical-align:text-top;}#outspokes sub{vertical-align:text-bottom;}#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}#outspokes input,#outspokes textarea,#outspokes select{*font-size:100%;}#outspokes legend{color:#000;}
+
+/* outermost wrapper for our widget */
+#outspokes {
+	width: 100%;
+	background-color: #EEE;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	border-top: 2px dotted #111;
+	height: 200px;
+}
+
+/* admin panel, excluded from the wrapper because it overlays everything */
+
+#outspokes_overlay {
+    background-color: black;
+    color: transparent;
+    display: none;
+    height: 100%;
+    left: 0%;
+    margin: 0;
+    opacity: 0.80;
+    padding: 0;
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    z-index: 1001;
+}
+#outspokes_admin_panel {
+    background-color: white;
+    border: 16px solid #eee;
+    color: black;
+    display: none;
+    height: 50%;
+    left: 25%;
+    margin: 0;
+    overflow: hidden;
+    padding: 5px;
+    position: absolute;
+    top: 25%;
+    width: 50%;
+    z-index:1002;
+}
+    #outspokes_admin_panel a#close_admin_panel,
+    #outspokes_admin_panel a#close_admin_panel:link {
+        background-color: transparent;
+        color: #333;
+        font-family: Helvetica;
+        font-size: 2em;
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+        top: 0;
+    }
+    #outspokes_admin_panel a#close_admin_panel:visited {
+        color: #333;
+    }
+
+
+/* all other styles must be faux-scoped with our widget wrapper */
+
+#outspokes #new_comment, #outspokes #comment_list {
+	height: 175px;
+}
+
+
+#outspokes #topbar {
+	height: 25px;
+}
+
+#outspokes #topbar h1, #outspokes #topbar a{
+	color: beige;
+}
+
+#outspokes a {
+	text-decoration: none;
+}
+
+#outspokes #new-comment {
+	float: right;
+	width: 30%;
+	margin-right: 3%;
+}
+
+#outspokes #comment_list {
+	float: left;
+	width: 60%;
+	margin-left: 3%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#outspokes #topbar {
+	background-color: #111;
+	border-bottom: 2px dotted beige;
+}
+
+#outspokes #topbar h1 {
+	display: inline;
+	margin-left: 3%;
+	font-weight: bold;
+	font-size: 1.6em;
+	height: 25px;
+}
+
+#outspokes #refresh {
+	position: relative;
+	right: 40%;
+}
+
+#outspokes #comment_form {
+	margin-top: -20px;
+}
+
+#outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
+	padding: 0 10px;
+}
+
+#outspokes .comment-reply {
+}

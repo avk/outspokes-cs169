@@ -1,4 +1,3 @@
-(function (fb) {
   var $ = fb.$;
   
   // Returns the CSS selector string uniquely identifying the element
@@ -20,7 +19,7 @@
     } while (el[0] != document.documentElement);
     path = "html" + path;
     return path;
-  }
+  };
   // Add fb.getPath as an extension to jQuery
   $.fn.extend({
     getPath: function() {
@@ -38,26 +37,26 @@
   //   are name1, name2, name3, ... and whose values are the respective values
   //   or false if a parameter of the given name DNE.
   fb.getParams = function(param) {
-    var obj = new Object();
+    var obj = {};
     var val;
     window.location.search.replace(
       new RegExp("([^?=&]+)(=([^&]*))?","g"),
       function( $0, $1, $2, $3 ){
         obj[ $1 ] = $3;});
     if (arguments.length > 0) {
-      if (arguments.length = 1) {
+      if (arguments.length == 1) {
         val = obj[arguments[0]];
         return (val) ? val : false;
       }
-      var rtn = new Object();
-      for (i in arguments) {
+      var rtn = {};
+      for (var i in arguments) {
         val = obj[i];
         rtn[i] = (val) ? val : false;
       }
       return rtn;
     }
     return obj;
-  }
+  };
   
   // Cookie tool
   // cookie(key): return the value of the cookie with name 'key'
@@ -83,12 +82,13 @@
         (o.domain? '; domain=' + (o.domain) : '') +
         (o.secure? '; secure' : '');
     } else {
-      if(result = new RegExp(key+"=(.*?)(?:;|$)").exec(document.cookie)) {
+      var result = new RegExp(key+"=(.*?)(?:;|$)").exec(document.cookie);
+      if(result) {
         return decodeURIComponent(result[1]);
       }
       return false;
     }
-  }
+  };
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
@@ -100,28 +100,26 @@
       }
     }
     return true;
-  }
+  };
 
   fb.isString = function (x) {
     return typeof x === "string";
-  }
+  };
 
   fb.isObject = function (x) {
     return typeof x === "object";
-  }
+  };
 
   fb.assert = function (cond, msg) {
     if (!cond) {
       throw new Error(msg);
     }
-  }
+  };
 
   fb.assert_false = function (cond, msg) {
     return fb.assert(cond === false, msg);
-  }
+  };
   
   fb.assertTrue = function (cond, msg) {
     return fb.assert(cond === true, msg);
-  }
-
-})(fb_hash);
+  };

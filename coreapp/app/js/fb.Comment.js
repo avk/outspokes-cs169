@@ -1,4 +1,3 @@
-(function (fb) {
   var $ = fb.$;
   /**
    * fb.Comment class to represent a comment.
@@ -13,7 +12,7 @@
 
     fb.Comment.all[this.feedback_id] = this;
     fb.Comment.unrendered[this.feedback_id] = this;
-  }
+  };
   
   // call to super for methods
   fb.Comment.prototype = new fb.Feedback();
@@ -29,11 +28,11 @@
     delete fb.Comment.all[this.feedback_id];
     delete fb.Comment.unrendered[this.feedback_id];
     return true;
-  }
+  };
   
   fb.Comment.prototype.render = function() {
     fb.i.comment.render(this);
-  }
+  };
 
   fb.Comment.prototype.giveOpinion = function(opinion) {
     if (!fb.env.authorized) {
@@ -44,30 +43,30 @@
       current_page: fb.env.current_page,
       feedback_id: this.feedback_id,
       opinion: opinion,
-      callback: 'callback',
-    }
+      callback: 'callback'
+    };
     var callback = function(response) {
-      if (response.authorized && response.opinion != '') {
+      if (response.authorized && response.opinion !== '') {
         eval("fb.i.comment.consensus." + opinion + "(response.feedback_id)");
         $('#' + fb.i.comment.dom.consensus_wrapper(response.feedback_id)).remove();
       } else {
         alert("Could not get your opinion on this comment.");
       }
-    }
+    };
     $.post(fb.env.opinion_address, data, callback, "json");
-  }
+  };
    
   fb.Comment.prototype.agree = function() {
     this.giveOpinion('agree');
-  }
+  };
   
   fb.Comment.prototype.disagree = function() {
     this.giveOpinion('disagree');
-  }
+  };
 
   fb.Comment.prototype.isReply = function() {
         return fb.i.comment.dom.comment_id_format.test(this.target);
-  }
+  };
 
   // Class variables and static functions
   fb.Comment.all = {};
@@ -77,20 +76,18 @@
     if (!fb.env.authorized) {
       return null;
     }
-    content = encodeURI(content);
-    target = encodeURI(target);
     var data = {
       url_token: fb.env.url_token,
       current_page: fb.env.current_page,
       content: content,
-      target: target,
-    }
+      target: target
+    };
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;
     }
     if (name) {
-    	data["name"] = encodeURI(name);
-    	delete data["url_token"];
+      data["name"] = name;
+      delete data["url_token"];
     }
     var callback = function(data) {
       var x = fb.Feedback.get_callback(data, "render");
@@ -100,18 +97,17 @@
         }
       }
       return fb.Comment.post_failed(content, target);
-    }
+    };
     $.post(fb.env.post_address, data, callback, "json");
     return true;
-  }
+  };
   
   fb.Comment.post_failed = function (content, target) {
     fb.i.comment.post_failed(content, target);
-  }
+  };
 
   fb.Comment.render = function() {
     for (var i in fb.Comment.unrendered) {
       fb.Comment.unrendered[i].render();
     }
-  }
-})(fb_hash);
+  };
