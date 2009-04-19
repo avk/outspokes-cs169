@@ -41,4 +41,12 @@ class AccountsController < ApplicationController
       end
     end
   end
+  
+  def dashboard
+    @account = Account.find(params[:id])
+    @sites = @account.sites
+    respond_to do |format|
+      format.html
+    end
+  end
 end

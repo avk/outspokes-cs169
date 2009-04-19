@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.opinion_on_feedback '/opinion_on_feedback', :controller => 'feedbacks', :action => 'opinion', :conditions => { :method => :post }
 
+  map.dashboard 'accounts/:id/dashboard', :controller => "accounts", :action => 'dashboard'
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

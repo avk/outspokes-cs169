@@ -1,0 +1,20 @@
+%table
+  %tr
+    %th My Sites
+
+  - for site in @sites
+    %tr
+      / %td= site.name
+      %td= link_to site.home_page.url, site.home_page
+      %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
+  
+#account_block    
+  - form_for :account do |f| 
+    %fieldset
+      %legend Account Info
+      / %label{:for => "account_name"} Name
+      / = f.text_field :name
+      %label{:for => "account_email"} Email
+      = f.text_field :email
+      = submit_tag 'Save Changes'
+      %a Cancel
