@@ -6,15 +6,15 @@ class WidgetController < ApplicationController
   def index
     @fb_hash = "fb_" + generate_hash
     @ordered_files = %w(
-      fb_hash
-      fb.jQuery
-      fb.Common
-      fb.Interface
-      fb.Interface.comment
-      fb.Feedback
-      fb.Comment
+      fb_hash.js.erb
+      fb.jQuery.js
+      fb.Common.js
+      fb.Interface.js
+      fb.Interface.comment.js
+      fb.Feedback.js
+      fb.Comment.js
     )
-    @ordered_files.map! { |f| (RAILS_ROOT + '/app/js/' + f + '.js').to_s }
+    @ordered_files.map! { |f| (RAILS_ROOT + '/app/js/' + f).to_s }
     
     respond_to do |wants|
       wants.js # index.js.erb
