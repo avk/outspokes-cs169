@@ -36,8 +36,8 @@
     };
     
     this.buildCommentForm = function (id, target) {
-      var formHTML = '<a id="refresh" href="#">Refresh</a>\
-        <form name="newcomment" onsubmit="return false;">';
+      var formHTML = '<a id="refresh" href="#">refresh</a>\
+        <form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
     	  formHTML += '<label for="fb.name.input">Name:</label>\
     	    <input id="fb.name.input" type="text" name="name" size="20" /><br />'
@@ -61,8 +61,8 @@
       fb.Comment.post(this.content.value, this.target.value, name);
     });
     this.form.find("span").mouseup(select_target);
-    self.main_window.append(this.comments);
-    self.main_window.append(this.form);
+    self.widget_content.append(this.comments);
+    self.widget_content.append(this.form);
     
     this.consensus = {
       dom   : this.dom,

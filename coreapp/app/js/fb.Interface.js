@@ -17,6 +17,7 @@
       widget  : { 
         wrapper : 'outspokes',
         header  : 'topbar',
+		content : 'widget_content',
       },
       admin   : {
         panel   : 'outspokes_admin_panel',
@@ -56,8 +57,29 @@
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
-    this.main_window.append($('<h1>outspokes y&#8216;all</h1>').attr('id',this.dom.widget.header));
-    this.admin_panel.build(this.main_window);
+	this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
+	this.topbar.append('<h1>outspokes y&#8216;all</h1>');
+	
+	var toggle_link = $('<a id="toggle" href="#">toggle</a>');
+	toggle_link.click(function() {
+		var content = fb.i.widget_content;
+		var widget = fb.i.main_window;
+		if (widget.height() == '25') {
+			widget.animate( { height:"200px" }, { duration:500 } );
+			//content.show();
+		} else {
+			widget.animate( { height:"25px" }, { duration:500 } );
+			//content.hide();
+		}
+	});
+	this.topbar.append(toggle_link);
+	this.main_window.append(this.topbar);
+
+	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
+	this.main_window.append(this.widget_content);
+	
+    // this.admin_panel.build(this.main_window);
+
     this.main_window.appendTo($('body'));
     
     this.comment = new fb.Interface.comment(this);

@@ -70,10 +70,21 @@ version: 3.0.0pr2
 	height: 175px;
 }
 
+
+#outspokes #topbar {
+	height: 25px;
+}
+
+#outspokes #topbar h1, #outspokes #topbar a{
+	color: beige;
+}
+
+#outspokes a {
+	text-decoration: none;
+}
+
 #outspokes #new-comment {
-	position: fixed;
-	bottom: 0px;
-	right: 0px;
+	float: right;
 	width: 30%;
 	margin-right: 3%;
 }
@@ -87,17 +98,26 @@ version: 3.0.0pr2
 
 #outspokes #topbar {
 	background-color: #111;
-	color: beige;
+	border-bottom: 2px dotted beige;
+}
+
+#outspokes #topbar h1 {
+	display: inline;
+	margin-left: 3%;
 	font-weight: bold;
 	font-size: 1.6em;
-	border-bottom: 2px dotted beige;
 	height: 25px;
 }
 
 #outspokes #refresh {
-	position:absolute;
-	right:125%;
-	top:-45px;
-	color: beige;
+	position: relative;
+	right: 40%;
 }
 
+#outspokes #comment_form {
+	margin-top: -20px;
+}
+
+
+#outspokes .comment-reply {
+}
