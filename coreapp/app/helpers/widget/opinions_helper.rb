@@ -1,0 +1,2 @@
+module Widget::OpinionsHelper
+end

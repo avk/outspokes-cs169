@@ -18,10 +18,10 @@ ActionController::Routing::Routes.draw do |map|
     page.resources :commenters
   end
   
-  map.feedback_for_page '/feedback_for_page.js', :controller => 'feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
-  map.new_feedback_for_page '/feedback_for_page.js', :controller => 'feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.feedback_for_page_test '/post_feedback_for_page', :controller => 'feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'feedbacks', :action => 'opinion', :conditions => { :method => :post }
+  map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
+  map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
+  map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
+  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/feedbacks', :action => 'opinion', :conditions => { :method => :post }
 
   # The priority is based upon order of creation: first created -> highest priority.
 
