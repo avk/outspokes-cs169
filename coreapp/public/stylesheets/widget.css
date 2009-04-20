@@ -95,10 +95,12 @@ version: 3.0.0pr2
 	margin-left: 3%;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	padding-top: 5px;
 }
 
 #outspokes #topbar {
 	background-color: #111;
+	padding-bottom: 2px;
 }
 
 #outspokes #topbar h1 {
@@ -131,6 +133,9 @@ version: 3.0.0pr2
 #outspokes #comments_topbar {
 	height: 20px;
 	background: #222;
+	color: beige;
+	padding-bottom: 2px;
+	padding-left: 3%;
 }
 
 #outspokes .comment-reply {
