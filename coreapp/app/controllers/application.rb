@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
         break
       end
     end
-    okay = false unless @callback.match(/\A[a-zA-Z_]+[\w_]*\Z/)
+    okay = false unless @callback.match(/\A[a-zA-Z_]+[\w\.]*\Z/)
 
     render :text => '{}' unless okay
   end
