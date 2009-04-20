@@ -36,6 +36,7 @@ class AccountsController < ApplicationController
         format.html { redirect_to dashboard_url(@account.id) }
         format.xml  { head :ok }
       else
+        flash[:error] = "uh oh!"        
         format.html { redirect_to dashboard_url(@account.id) }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end

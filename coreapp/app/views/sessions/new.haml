@@ -1,11 +1,9 @@
-%h1 Log In
-
 - form_tag session_path do
   = label_tag 'email'
-  = text_field_tag 'email', @email
+  = text_field_tag 'email', 'Email', :onFocus => "this.value = ''"
 
   = label_tag 'password'
-  = password_field_tag 'password', nil
+  = text_field_tag 'password', 'Password', :onFocus => "this.value = ''; this.type = 'password'"
 
   / 
     Uncomment this if you want this functionality
@@ -13,3 +11,5 @@
     = check_box_tag 'remember_me', '1', @remember_me
 
   = submit_tag 'Log in'
+  
+= link_to 'Cancel', root_path

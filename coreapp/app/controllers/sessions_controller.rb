@@ -4,6 +4,12 @@ class SessionsController < ApplicationController
   # render new.rhtml
   def new
   end
+  
+  def cancel_login
+    respond_to do |format|
+      format.html { render :partial => '/accounts/account_bar' }
+    end
+  end
 
   def create
     logout_keeping_session!

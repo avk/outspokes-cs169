@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
-  map.resources :accounts
+  map.resources :accounts, :member => { :dashboard => :get }
 
   map.resource :session
 
