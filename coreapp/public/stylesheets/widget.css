@@ -67,12 +67,12 @@ version: 3.0.0pr2
 /* all other styles must be faux-scoped with our widget wrapper */
 
 #outspokes #new_comment, #outspokes #comment_list {
-	height: 175px;
+	height: 180px;
 }
 
 
 #outspokes #topbar {
-	height: 25px;
+	height: 20px;
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
@@ -99,15 +99,13 @@ version: 3.0.0pr2
 
 #outspokes #topbar {
 	background-color: #111;
-	border-bottom: 2px dotted beige;
 }
 
 #outspokes #topbar h1 {
 	display: inline;
 	margin-left: 3%;
 	font-weight: bold;
-	font-size: 1.6em;
-	height: 25px;
+	height: 20px;
 }
 
 #outspokes #refresh {
@@ -116,11 +114,23 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_form {
-	margin-top: -20px;
+	position: absolute;
+	right: 100px;
+	bottom: 0px;}
+
+#outspokes #comment_form.reply {
+	position: absolute;
+	right: 100px;
+	bottom: 0px;
 }
 
 #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
+}
+
+#outspokes #comments_topbar {
+	height: 20px;
+	background: #222;
 }
 
 #outspokes .comment-reply {

@@ -123,7 +123,7 @@
         } else {
           parent_border = 0;
         }
-        new_border = parent_border + 5 + "px";
+        new_border = parent_border + 3 + "px";
         rtn.css({ 'border-left': new_border + ' solid black' });
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
@@ -146,6 +146,7 @@
         var reply_form = this.dom.reply_form(c_id);
         var form = this.parent.buildCommentForm(reply_form, c_id);
         form.find("form").append('<input type="reset" value="Cancel" />');
+		form.find("form").attr('class','reply');
         form.find("form").submit(function() { 
           var name = null;
           if (fb.env.pub_page) {

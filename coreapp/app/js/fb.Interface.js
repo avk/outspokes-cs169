@@ -18,6 +18,7 @@
         wrapper : 'outspokes',
         header  : 'topbar',
 		content : 'widget_content',
+		comments_header : 'comments_topbar',
       },
       admin   : {
         panel   : 'outspokes_admin_panel',
@@ -57,25 +58,29 @@
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+
 	this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
 	this.topbar.append('<h1>outspokes y&#8216;all</h1>');
+
 	
 	var toggle_link = $('<a id="toggle" href="#">toggle</a>');
 	toggle_link.click(function() {
 		var content = fb.i.widget_content;
 		var widget = fb.i.main_window;
-		if (widget.height() == '25') {
-			widget.animate( { height:"200px" }, { duration:500 } );
-			//content.show();
+		if (widget.height() == '20') {
+			widget.animate( { height:"220px" }, { duration:500 } );
+			content.show(700);
 		} else {
-			widget.animate( { height:"25px" }, { duration:500 } );
-			//content.hide();
+			widget.animate( { height:"20px" }, { duration:500 } );
+			content.hide(200);
 		}
 	});
 	this.topbar.append(toggle_link);
 	this.main_window.append(this.topbar);
 
 	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
+	this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
+	this.widget_content.append(this.chead);
 	this.main_window.append(this.widget_content);
 	
     this.admin_panel.build(this.topbar);
