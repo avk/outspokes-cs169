@@ -67,10 +67,10 @@
 		var widget = fb.i.main_window;
 		if (widget.height() == '20') {
 			widget.animate( { height:"220px" }, { duration:500 } );
-			content.show(700);
+			content.toggle();
 		} else {
 			widget.animate( { height:"20px" }, { duration:500 } );
-			content.hide(200);
+			content.toggle();
 		}
 	});
 	this.main_window.append(this.topbar);
