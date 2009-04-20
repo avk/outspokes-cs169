@@ -81,7 +81,7 @@
 	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
 	this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
 	this.chead.append('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
-	this.chead.append('<select><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option></select>');
+	this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option></select>');
 	
 	this.widget_content.append(this.chead);
 	this.main_window.append(this.widget_content);
