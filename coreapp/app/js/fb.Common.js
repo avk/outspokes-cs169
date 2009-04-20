@@ -101,6 +101,14 @@
     }
     return true;
   };
+  
+  fb.getProperties = function(obj) {
+    var props = [];
+    for (var x in obj) {
+      props.push(x);
+    }
+    return props;
+  }
 
   fb.isString = function (x) {
     return typeof x === "string";

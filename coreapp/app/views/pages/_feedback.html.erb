@@ -13,7 +13,7 @@
 				:method => :delete %> 
 			</td>
 			<td>
-				<% form_tag add_tag_page_feedback_path(page, comment) do %>
+				<% form_tag widget_tag_for_page_path(page, comment) do %>
 					<%= text_field_tag :tag_list, '', :size => 10, :style => "float:left; width: 70px" %>
 					<%= submit_tag "Tag" , :class => "submit", :style => "float: right" %>
 				<%- end -%>
@@ -23,7 +23,7 @@
 					<li style="margin-left: -15px; padding: 5px 30px;">
 						<%= tag%> 
 						<%= link_to '[x]', 
-						delete_tag_page_feedback_path(page, comment, :tag => tag),
+						widget_tag_for_page_path(page, comment, :tag => tag),
 						:confirm => "Are you sure you want to delete tag?", 
 						:method => :delete %>
 					</li>

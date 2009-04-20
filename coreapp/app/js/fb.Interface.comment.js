@@ -36,17 +36,16 @@
     };
     
     this.buildCommentForm = function (id, target) {
-      var formHTML = '<a id="refresh" href="#">refresh</a>\
-        <form id="comment_form" name="newcomment" onsubmit="return false;">';
+      var formHTML = '<a id="refresh" href="#">refresh</a>' +
+        '<form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
-    	  formHTML += '<label for="fb.name.input">Name:</label>\
-    	    <input id="fb.name.input" type="text" name="name" size="20" /><br />'
+    	  formHTML += '<label for="fb.name.input">Name:</label>' +
+    	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += 'Comment:<br />\
-      <textarea name="content" cols="30" rows="5" /><br />\
-      <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
-      <input type="hidden" value="' + target + '" name="target" />\
-      </form>'
+    	formHTML += 'Comment:<br /><textarea name="content" cols="30" rows="5" /><br />' +
+          '<input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>' +
+          '<input type="hidden" value="' + target + '" name="target" />' +
+          '</form>'
       return $('<div id="' + id + '"></div>').append(formHTML);
     }
     

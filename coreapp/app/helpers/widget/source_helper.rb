@@ -1,0 +1,2 @@
+module Widget::SourceHelper
+end
