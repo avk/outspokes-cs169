@@ -115,6 +115,7 @@ div#comment_list div * {
 #outspokes #topbar {
 	background-color: #111;
 	padding-bottom: 2px;
+	cursor: pointer;
 }
 
 #outspokes #topbar h1 {
