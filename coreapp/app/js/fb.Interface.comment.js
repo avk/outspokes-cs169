@@ -122,8 +122,8 @@
         } else {
           parent_border = 0;
         }
-        //new_border = parent_border + 1 + "px";
-        //rtn.css({ 'border-left': new_border + ' solid black' });
+        new_border = parent_border + 1 + "px";
+        rtn.css({ 'border-left': new_border + ' solid black' });
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
@@ -223,7 +223,7 @@
     el = $(el);
     var par = el.wrap("<div></div>").parent();
     over = function() {
-      par.css('outline','green solid 3px');
+      par.css('outline','green solid 2px');
     }
     out = function() {
       par.css('outline-style','none');
