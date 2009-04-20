@@ -80,8 +80,13 @@
 
 	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
 	this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
-	this.chead.append('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
+	var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>')
+	this.chead.append(comment_span);
 	this.chead.append('<select><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option></select>');
+	
+	this.set_num_comments = function(num_comments) {
+	  comment_span.text(num_comments + ' comments');
+	}
 	
 	this.widget_content.append(this.chead);
 	this.main_window.append(this.widget_content);
