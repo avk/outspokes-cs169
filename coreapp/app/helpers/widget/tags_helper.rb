@@ -1,0 +1,2 @@
+module Widget::TagsHelper
+end

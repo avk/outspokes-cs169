@@ -110,4 +110,5 @@
     for (var i in fb.Comment.unrendered) {
       fb.Comment.unrendered[i].render();
     }
+    fb.i.set_num_comments(fb.getProperties(fb.Feedback.all).length);
   };
