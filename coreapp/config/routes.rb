@@ -9,7 +9,6 @@ ActionController::Routing::Routes.draw do |map|
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
   map.namespace :widget do |widget|
-#    widget.resources :tags
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "create", :conditions => { :method => :post }
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "delete", :conditions => { :method => :delete }
   end
@@ -31,13 +30,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.delete_site_page '/:site_id/pages/:id', :controller => 'pages', :action => 'destroy', :conditions => { :method => :delete }
   end
   
-  map.resources :pages do |page|
-    # member /pages/1/feedbacks/1/something -- i.e. a specific feedback
-    # collection /pages/1/feedbacks/something -- i.e. all the feedbacks
-    page.resources :feedbacks, :member => { :add_tag => :post, :delete_tag => :delete }
-    page.resources :commenters
-  end
-
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
