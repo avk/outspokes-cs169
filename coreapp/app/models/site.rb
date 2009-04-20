@@ -79,6 +79,10 @@ class Site < ActiveRecord::Base
     :order => "f.created_at DESC")
   end
 
+  def commenters
+    home_page.commenters
+  end
+  
 
   def has_valid_home_page
     if !self.pages.first or !self.pages.first.valid?

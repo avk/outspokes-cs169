@@ -177,4 +177,8 @@ class SiteTest < ActiveSupport::TestCase
     end
   end
 
+  test "should be able to list it's commenters" do
+    site = sites(:linkedin)
+    assert site.commenters == site.home_page.commenters
+  end
 end
