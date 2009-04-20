@@ -1,1 +1,12 @@
-<h1>These be my pages, fool</h1>
+<h2>People you've invited have commented on <%= pluralize(@pages.size, 'page') %>:</h2>
+
+<%- unless @pages.empty? -%>
+  <ol id="site_pages">
+  <%- @pages.each do |page| -%>
+    <li>
+      <%= link_to page.url, page.url %><br />
+      <%= page.latest_feedback %><br />
+    </li>
+  <% end -%>
+  </ol>
+<% end -%>

@@ -4,8 +4,13 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Site Admin Panel</title>
+    <%= stylesheet_link_tag 'reset-min', :cache => true %>
   </head>
-  <body>
+  <body id="admin_panel">
+    <%- if flash[:error] -%>
+      <p id="flash_error"><%= flash[:error] %></p>
+    <% end -%>
+    
     <h1>Admin Panel, yo</h1>
     <%= yield %>
   </body>

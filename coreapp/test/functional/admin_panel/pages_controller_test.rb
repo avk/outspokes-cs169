@@ -27,7 +27,7 @@ class AdminPanel::PagesControllerTest < ActionController::TestCase
   test "should list a site's pages" do
     site = sites(:linkedin)
     get :index, :site_id => site.id
-    assert site.pages == assigns(:pages)
+    assert site.pages_with_latest_feedback == assigns(:pages)
   end
   
   test "should not destroy anything when given an id for a page that doesn't exist" do
@@ -51,7 +51,7 @@ class AdminPanel::PagesControllerTest < ActionController::TestCase
     assert_difference "Page.count", -1 do
       delete :destroy, :site_id => site.id, :id => site.pages.first
     end
-    assert_template "index"
+    assert_redirected_to admin_panel_site_pages_path(site)
   end
 
 end
