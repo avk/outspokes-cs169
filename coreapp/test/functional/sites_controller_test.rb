@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class SitesControllerTest < ActionController::TestCase
   
@@ -16,12 +16,15 @@ class SitesControllerTest < ActionController::TestCase
   end
 
   test "should create site" do
+    admin = commenters(:quentin)
     login_as :quentin
+    
     assert_difference('Site.count') do
-      post :create, :site => valid_options_for_site
+      post :create, :site => valid_options_for_site.merge({:account => admin})
+      assert assigns(:site).home_page.invites.first.commenter_id == admin.id, "admin has not been invited to his own site"
     end
 
-    assert_redirected_to new_page_commenter_path(assigns(:site).home_page)
+    assert_redirected_to root_path
   end
 
   test "not logged in should not create site" do
