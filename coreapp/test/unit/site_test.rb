@@ -146,4 +146,34 @@ class SiteTest < ActiveSupport::TestCase
     assert_equal sites(:alt_public), site
   end
 
+  def test_should_be_able_to_retrieve_a_sites_pages_with_the_latest_feedback_for_each_page
+    site = create_site(:url => 'http://www.somethingspecial.com')
+    assert_difference "Page.count", 3 do
+      3.times do |i|
+        site.pages << Page.new(:url => site.url + "/" + i.to_s, :site => site)
+      end
+      site.save
+    end
+    
+    timestamps = {}
+    
+    num_comments = 3
+    assert_difference "Comment.count", (site.pages.size * num_comments) do
+      site.pages.each do |p|
+        num_comments.times do |i| 
+          c = create_private_comment(:page_id => p.id, :content => i.to_s)
+          sleep(1)
+          # puts "#{p.id} comment #{i} : #{c.created_at}" # DEBUG
+          timestamps[p.id] = c.created_at.to_s if i == num_comments - 1
+        end
+      end
+    end
+    
+    got = site.pages_with_latest_feedback
+    got.each do |page|
+      expected = timestamps[page.id].split(" UTC")[0]
+      assert page.latest_feedback == expected, "#{page.url}'s latest feedback #{page.latest_feedback} doesn't equal #{expected}"
+    end
+  end
+
 end
