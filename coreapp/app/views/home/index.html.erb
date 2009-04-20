@@ -18,7 +18,8 @@
   	</tr>
   <% for site in @sites %>
   	<tr>
-  		<td><%= site.home_page.url %></td>
+  	  <% final_url = site.home_page.url.sub(/\/$/i, '') + '?url_token=' + site.home_page.invites.find_by_commenter_id(current_account).url_token %>
+  		<td><%= link_to final_url, final_url %></td>
 
   		<% if !logged_in?%><td><%= site.account.email %></td><% end %>
   		<% if site.account ==  current_account %>
