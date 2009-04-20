@@ -108,7 +108,7 @@
       props.push(x);
     }
     return props;
-  }
+  };
 
   fb.isString = function (x) {
     return typeof x === "string";
