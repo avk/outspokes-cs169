@@ -15,3 +15,17 @@ page:
   page_id: 2
   commenter_id: 2
 
+aaron_admin:
+  url_token: aaron_admin
+  page_id: 4
+  commenter_id: 2
+
+public_admin:
+  url_token: public_admin
+  page_id: 6
+  commenter_id: 2
+
+alt_public_admin:
+  url_token: alt_public_admin
+  page_id: 7
+  commenter_id: 1
