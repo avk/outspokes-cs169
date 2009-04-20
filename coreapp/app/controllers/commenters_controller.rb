@@ -58,8 +58,8 @@ class CommentersController < ApplicationController
 
           Mailer.deliver_commenter_invite(c, @page)
         end
-      #rescue
-        #flash[:warning] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
+      rescue
+        flash[:warning] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
       end
     end
     
