@@ -101,7 +101,7 @@
         return markup;
       },
       button : function(c, action) {
-        var button = $('<button type="button">' + action + '</button>');
+        var button = $('<button type="button">' + action + '</button><br />');
         button[0].setAttribute("id", eval('this.dom.' + action + '_with(c.feedback_id)'));
         button.click(function() { eval('c.' + action + '()'); });
         return button;
@@ -122,7 +122,7 @@
         } else {
           parent_border = 0;
         }
-        new_border = parent_border + 3 + "px";
+        new_border = parent_border + 1 + "px";
         rtn.css({ 'border-left': new_border + ' solid black' });
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
@@ -185,7 +185,7 @@
       rtn = this.consensus.build(c, rtn);
       // set up reply actions
       rtn.append(this.reply.buildLink(c_id));
-      rtn.append("<hr style='width:80%' />");
+      //rtn.append("<hr style='width:80%' />");
       rtn.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
       
       // bind the comment to its target
@@ -223,7 +223,7 @@
     el = $(el);
     var par = el.wrap("<div></div>").parent();
     over = function() {
-      par.css('outline','green solid 3px');
+      par.css('outline','green solid 2px');
     }
     out = function() {
       par.css('outline-style','none');

@@ -98,9 +98,24 @@ version: 3.0.0pr2
 	padding-top: 5px;
 }
 
+#outspokes #comment_list button{
+	border: 1px solid;
+	position: relative;
+	left: 80%;
+}
+
+div#comment_list div {
+	padding: 5px;
+	border-left: 1px dotted #111;
+}
+
+div#comment_list div * {
+}
+
 #outspokes #topbar {
 	background-color: #111;
 	padding-bottom: 2px;
+	cursor: pointer;
 }
 
 #outspokes #topbar h1 {
@@ -113,12 +128,15 @@ version: 3.0.0pr2
 #outspokes #refresh {
 	position: relative;
 	right: 40%;
+	top: -23px;
+	color: beige;
 }
 
 #outspokes #comment_form {
 	position: absolute;
 	right: 100px;
-	bottom: 0px;}
+	bottom: 0px;
+}
 
 #outspokes #comment_form.reply {
 	position: absolute;
@@ -138,5 +156,16 @@ version: 3.0.0pr2
 	padding-left: 3%;
 }
 
+#outspokes #comments_filter {
+	height: 20px;
+	margin-left: 10px;
+}
+
 #outspokes .comment-reply {
+	position: relative;
+	left: 80%;
+	border: 1px solid;
+	color: black;
+	bottom: 10px;
+	padding: 0 10px;
 }
