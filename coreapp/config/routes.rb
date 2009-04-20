@@ -20,6 +20,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sites
 
   # admin panel
+  map.namespace :admin_panel do |admin|
+    # pages
+    admin.site_pages '/:site_id/pages', :controller => 'pages', :action => 'index', :conditions => { :method => :get }
+    admin.delete_site_page '/:site_id/pages/:id', :controller => 'pages', :action => 'destroy', :conditions => { :method => :delete }
+  end
+  
   map.resources :pages do |page|
     # member /pages/1/feedbacks/1/something -- i.e. a specific feedback
     # collection /pages/1/feedbacks/something -- i.e. all the feedbacks
