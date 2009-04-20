@@ -76,15 +76,15 @@ class Widget::FeedbacksController < ApplicationController
   
   # DELETE /feedbacks/1
   # DELETE /feedbacks/1.xml
-  def destroy
-    @feedback = Feedback.find(params[:id])
-    @feedback.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(@feedback.page) }
-      format.xml  { head :ok }
-    end
-  end
+  # def destroy
+  #   @feedback = Feedback.find(params[:id])
+  #   @feedback.destroy
+  # 
+  #   respond_to do |format|
+  #     format.html { redirect_to(@feedback.page) }
+  #     format.xml  { head :ok }
+  #   end
+  # end
   
 protected
 
