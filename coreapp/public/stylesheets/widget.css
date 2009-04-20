@@ -67,12 +67,12 @@ version: 3.0.0pr2
 /* all other styles must be faux-scoped with our widget wrapper */
 
 #outspokes #new_comment, #outspokes #comment_list {
-	height: 175px;
+	height: 180px;
 }
 
 
 #outspokes #topbar {
-	height: 25px;
+	height: 20px;
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
@@ -95,33 +95,77 @@ version: 3.0.0pr2
 	margin-left: 3%;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	padding-top: 5px;
+}
+
+#outspokes #comment_list button{
+	border: 1px solid;
+	position: relative;
+	left: 80%;
+}
+
+div#comment_list div {
+	padding: 5px;
+	border-left: 1px dotted #111;
+}
+
+div#comment_list div * {
 }
 
 #outspokes #topbar {
 	background-color: #111;
-	border-bottom: 2px dotted beige;
+	padding-bottom: 2px;
+	cursor: pointer;
 }
 
 #outspokes #topbar h1 {
 	display: inline;
 	margin-left: 3%;
 	font-weight: bold;
-	font-size: 1.6em;
-	height: 25px;
+	height: 20px;
 }
 
 #outspokes #refresh {
 	position: relative;
 	right: 40%;
+	top: -23px;
+	color: beige;
 }
 
 #outspokes #comment_form {
-	margin-top: -20px;
+	position: absolute;
+	right: 100px;
+	bottom: 0px;
+}
+
+#outspokes #comment_form.reply {
+	position: absolute;
+	right: 100px;
+	bottom: 0px;
 }
 
 #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
 }
 
+#outspokes #comments_topbar {
+	height: 20px;
+	background: #222;
+	color: beige;
+	padding-bottom: 2px;
+	padding-left: 3%;
+}
+
+#outspokes #comments_filter {
+	height: 20px;
+	margin-left: 10px;
+}
+
 #outspokes .comment-reply {
+	position: relative;
+	left: 80%;
+	border: 1px solid;
+	color: black;
+	bottom: 10px;
+	padding: 0 10px;
 }

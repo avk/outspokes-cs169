@@ -1,0 +1,15 @@
+<div id="front_poll">
+<p>With <strong>Outspokes</strong> you can get feedback on your site in three easy steps:</p>
+<ol>
+	<li>Tell us your site</li>
+	<li>Include our script</li>
+	<li>Invite commenters</li>
+</ol>
+<p>We're currently in private alpha.  Enter your email if you'd like to be notified when we launch.</p>
+<p style="color: red"><%= flash[:warning] %></p>
+<% form_for @email_req do |f| %>
+	<%= f.label :email, "Email:" %><br />
+	<%= f.text_field :email, :value => @old_email %><br />
+	<%= f.submit "Lemme know!" %>
+<% end %>
+</div>

@@ -1,89 +1,10 @@
 require 'test_helper'
-require 'json'
-require 'ruby-debug'
 
-class FeedbacksControllerTest < ActionController::TestCase
+class Widget::FeedbacksControllerTest < ActionController::TestCase
 
   def setup
-    @controller = FeedbacksController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    
-    # from: http://www.quackit.com/javascript/javascript_reserved_words.cfm
-    @js_keywords = %w(
-    break continue do for import new this void
-    case default else function in return typeof while
-    comment delete export if label switch var with
-    abstract implements protected
-    boolean instanceOf public
-    byte int short
-    char interface static
-    double long synchronized
-    false native throws
-    final null transient
-    float package true
-    goto private
-    catch enum throw
-    class extends try
-    const finally
-    debugger super
-    alert eval Link outerHeight scrollTo
-    Anchor FileUpload location outerWidth Select
-    Area find Location Packages self
-    arguments focus locationbar pageXoffset setInterval
-    Array Form Math pageYoffset setTimeout
-    assign Frame menubar parent status
-    blur frames MimeType parseFloat statusbar
-    Boolean Function moveBy parseInt stop
-    Button getClass moveTo Password String
-    callee Hidden name personalbar Submit
-    caller history NaN Plugin sun
-    captureEvents History navigate print taint
-    Checkbox home navigator prompt Text
-    clearInterval Image Navigator prototype Textarea
-    clearTimeout Infinity netscape Radio toolbar
-    close innerHeight Number ref top
-    closed innerWidth Object RegExp toString
-    confirm isFinite onBlur releaseEvents unescape
-    constructor isNan  onError Reset untaint
-    Date java onFocus resizeBy unwatch
-    defaultStatus JavaArray onLoad resizeTo valueOf
-    document JavaClass onUnload routeEvent watch
-    Document JavaObject open scroll window
-    Element JavaPackage opener scrollbars Window
-    escape length Option scrollBy
-    )
-  end
-  
-  def validate_json(args)
-    callback = args.delete(:callback)
-    
-    # make sure the response is wrapped in the callback
-    assert @response.body.match("^#{callback}\\(\\{"), "Expecting callback #{callback} but it wasn't found!"
-    
-    # get at just the JSON data (i.e. strip the JS callback wrapping it)
-    json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
-    validate_json_vals(json, args)
-  end
-  
-  def validate_post_fail
-    json_string = @response.body.match(/.*window.name='(.+)'/)[1]
-    obj = JSON.parse(json_string)
-    assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Instead got: #{obj.inspect}"
-  end
-  
-  # no callback when using windowname
-  def validate_windowname(args)
-     json_string = @response.body.match(/.*window.name='(.+)'/)[1]
-     validate_json_vals(json_string, args)
-  end
-  
-  def validate_json_vals(json_string, intended)
-    # e.g. assert json['authorized'] == true
-    json = JSON.parse(json_string)
-    intended.each do |field_name, field_value|
-      assert json[field_name.to_s] == field_value, "#{field_name} is set to #{json[field_name.to_s].inspect} instead of #{field_value.inspect}"
-    end
   end
   
   test "should not list feedback for an invalid URL token" do
@@ -142,7 +63,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition fake<html>)
     spaces = ['no spaces']
     
-    illegal_callbacks = illegal_chars + @js_keywords + spaces
+    illegal_callbacks = illegal_chars + js_keywords + spaces
     illegal_callbacks.each do |callback|
       get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback, :format => "js"
       assert @response.body == '{}'
@@ -236,7 +157,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     # keywords = %w(window open location string document with case)
     spaces = ['no spaces']
     
-    illegal_callbacks = illegal_chars + @js_keywords + spaces
+    illegal_callbacks = illegal_chars + js_keywords + spaces
     illegal_callbacks.each do |callback|
       post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
            :current_page => invite.page.url, :callback => callback, :content => 'doesn\'t matter', :target => "html"
@@ -319,123 +240,6 @@ class FeedbacksControllerTest < ActionController::TestCase
     validate_windowname :authorized => true, :feedback => feedback, :url => invite.page.url
   end
   
-  test "should not allow opinions for an invalid URL token" do
-    invite = invites(:one)
-    callback = 'jsfeed'
-    page = invite.page
-    feedback = feedbacks(:two)
-    assert invite.commenter_id != feedback.commenter_id
-    
-    assert_no_difference "Opinion.count" do
-      post :opinion, :url_token => "LOL!!!!!", :current_page => page.url, 
-           :feedback_id => feedback.id, :opinion => 'agree', :callback => callback, :format => "html"
-    end
-    
-    validate_windowname :authorized => false
-  end
-  
-  test "should not allow opinions given an invalid page" do
-    invite = invites(:one)
-    callback = 'jsfeed'
-    feedback = feedbacks(:two)
-    assert invite.commenter_id != feedback.commenter_id
-    
-    assert_no_difference "Opinion.count" do
-      post :opinion, :url_token => invite.url_token, :current_page => 'bullshit', 
-           :feedback_id => feedback.id, :opinion => 'agree', :callback => callback, :format => "html"
-    end
-    
-    validate_post_fail
-  end
-  
-  test "should not allow opinions given a callback that's not a valid JavaScript function name" do
-    # According to http://www.functionx.com/javascript/Lesson05.htm, JS functions:
-    # - Must start with a letter or an underscore
-    # - Can contain letters, digits, and underscores in any combination
-    # - Cannot contain spaces
-    # - Cannot contain special characters
-    
-    # Also:
-    # - Cannot be a JavaScript keyword
-    
-    invite = invites(:one)
-    feedback = feedbacks(:two)
-    assert invite.commenter_id != feedback.commenter_id
-    
-    illegal_chars = %w(123 no:colons hash# apo'strope per%cent mult*iply add+ition fake<html>)
-    # keywords = %w(window open location string document with case)
-    spaces = ['no spaces']
-    
-    illegal_callbacks = illegal_chars + @js_keywords + spaces
-    illegal_callbacks.each do |callback|
-      assert_no_difference "Opinion.count" do
-        post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
-             :feedback_id => feedback.id, :opinion => 'agree', :callback => callback, :format => "html"
-        assert @response.body == '{}'
-      end
-    end
-  end
-  
-  test "should not allow opinions given invalid opinion values" do
-    invite = invites(:one)
-    feedback = feedbacks(:two)
-    callback = 'jsfeed'
-    assert invite.commenter_id != feedback.commenter_id
-    
-    invalid = ['', nil, 9808, 'asdfasdfasd']
-    
-    invalid.each do |inv|
-      assert_no_difference "Opinion.count" do
-        post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
-             :feedback_id => feedback.id, :opinion => '', :callback => callback, :format => "html"
-      end
-      validate_post_fail
-    end
-  end
-  
-  test "should not allow opinions with an invalid feedback id" do
-    invite = invites(:one)
-    callback = 'jsfeed'
-    bad_feedback_ids = ['', nil, 'asfdasfdas', 0, -123423423]
-    
-    bad_feedback_ids.each do |f_id|
-      assert_no_difference "Opinion.count" do
-        post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
-             :feedback_id => f_id, :opinion => 'agreed', :callback => callback, :format => "html"
-      end
-      validate_post_fail
-    end
-  end
-  
-  test "should allow people to agree with a feedback" do
-    invite = invites(:one)
-    callback = 'jsfeed'
-    feedback = feedbacks(:two)
-    assert invite.commenter_id != feedback.commenter_id
-    opinion = 'agree'
-    
-    assert_difference "Opinion.count" do
-      post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
-           :feedback_id => feedback.id, :opinion => opinion, :callback => callback, :format => "html"
-    end
-    
-    validate_windowname :authorized => true, :feedback_id => feedback.id.to_s, :opinion => opinion
-  end
-
-  test "should allow people to disagree with a feedback" do
-    invite = invites(:one)
-    callback = 'jsfeed'
-    feedback = feedbacks(:two)
-    assert invite.commenter_id != feedback.commenter_id
-    opinion = 'disagree'
-    
-    assert_difference "Opinion.count" do
-      post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
-           :feedback_id => feedback.id, :opinion => opinion, :callback => callback, :format => "html"
-    end
-    
-    validate_windowname :authorized => true, :feedback_id => feedback.id.to_s, :opinion => opinion
-  end
   
   test "should destroy feedback" do
     feedback = feedbacks(:one)
@@ -445,39 +249,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     end
     assert_redirected_to page_path(page)
   end
-
-  test "should be able to tag a feedback" do
-    feedback = feedbacks(:one)
-    old_tags = feedback.tag_list
-    new_tag = 'RADLab'
-    
-    post :add_tag, :page_id => feedback.page_id, :id => feedback.id, :tag_list => new_tag
-    
-    feedback.reload
-    new_tags = feedback.tag_list.to_a
-    expected_tags = old_tags.to_a + [new_tag]
-    assert new_tags == expected_tags, "expected: #{expected_tags.inspect} but got: #{new_tags.inspect}"
-    
-    assert_redirected_to page_path(feedback.page)
-  end
   
-  test "should be able to delete a feedback tag" do
-    feedback = create_private_comment
-    original_tags = "Funny, Silly, Happy, Sad"
-    feedback.tag_list = original_tags
-    feedback.save
-    deleted_tag = "Sad"
-    
-    delete :delete_tag, :page_id => feedback.page_id, :id => feedback.id, :tag => "Sad"
-    
-    feedback.reload
-    new_tags = feedback.tag_list.to_a
-    expected_tags = original_tags.split(", ") - [deleted_tag]
-    assert new_tags == expected_tags, "expected: #{expected_tags.inspect} but got: #{new_tags.inspect}"
-    
-    assert_redirected_to page_path(feedback.page)
-  end
-
   test "should add new threaded feedback for page" do
     invite = invites(:one)
     callback = 'jsfeed'
@@ -540,7 +312,7 @@ class FeedbacksControllerTest < ActionController::TestCase
     end
     assert_template "new_feedback_for_page"
   end
-
+  
   test "can get feedback for public page without url_token" do 
     page = pages(:transactions)
     callback = "calljs"
@@ -567,5 +339,5 @@ class FeedbacksControllerTest < ActionController::TestCase
     feedback = []
     validate_json :callback => callback, :authorized => false
   end
-
+  
 end

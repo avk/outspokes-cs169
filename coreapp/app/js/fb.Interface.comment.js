@@ -36,17 +36,16 @@
     };
     
     this.buildCommentForm = function (id, target) {
-      var formHTML = '<a id="refresh" href="#">refresh</a>\
-        <form id="comment_form" name="newcomment" onsubmit="return false;">';
+      var formHTML = '<a id="refresh" href="#">refresh</a>' +
+        '<form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
-    	  formHTML += '<label for="fb.name.input">Name:</label>\
-    	    <input id="fb.name.input" type="text" name="name" size="20" /><br />'
+    	  formHTML += '<label for="fb.name.input">Name:</label>' +
+    	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += 'Comment:<br />\
-      <textarea name="content" cols="30" rows="5" /><br />\
-      <input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>\
-      <input type="hidden" value="' + target + '" name="target" />\
-      </form>'
+    	formHTML += 'Comment:<br /><textarea name="content" cols="30" rows="5" /><br />' +
+          '<input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>' +
+          '<input type="hidden" value="' + target + '" name="target" />' +
+          '</form>'
       return $('<div id="' + id + '"></div>').append(formHTML);
     }
     
@@ -102,7 +101,7 @@
         return markup;
       },
       button : function(c, action) {
-        var button = $('<button type="button">' + action + '</button>');
+        var button = $('<button type="button">' + action + '</button><br />');
         button[0].setAttribute("id", eval('this.dom.' + action + '_with(c.feedback_id)'));
         button.click(function() { eval('c.' + action + '()'); });
         return button;
@@ -123,7 +122,7 @@
         } else {
           parent_border = 0;
         }
-        new_border = parent_border + 5 + "px";
+        new_border = parent_border + 1 + "px";
         rtn.css({ 'border-left': new_border + ' solid black' });
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
@@ -146,6 +145,7 @@
         var reply_form = this.dom.reply_form(c_id);
         var form = this.parent.buildCommentForm(reply_form, c_id);
         form.find("form").append('<input type="reset" value="Cancel" />');
+		form.find("form").attr('class','reply');
         form.find("form").submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
@@ -185,7 +185,7 @@
       rtn = this.consensus.build(c, rtn);
       // set up reply actions
       rtn.append(this.reply.buildLink(c_id));
-      rtn.append("<hr style='width:80%' />");
+      //rtn.append("<hr style='width:80%' />");
       rtn.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
       
       // bind the comment to its target
@@ -223,7 +223,7 @@
     el = $(el);
     var par = el.wrap("<div></div>").parent();
     over = function() {
-      par.css('outline','green solid 3px');
+      par.css('outline','green solid 2px');
     }
     out = function() {
       par.css('outline-style','none');

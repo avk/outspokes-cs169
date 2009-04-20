@@ -1,14 +1,30 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  # The priority is based upon order of creation: first created -> highest priority.
+
+  # widget
+  map.widget '/widget', :controller => 'widget/source', :action => 'index'
+  map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
+  map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
+  map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
+  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
+  map.namespace :widget do |widget|
+#    widget.resources :tags
+    widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "create", :conditions => { :method => :post }
+    widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "delete", :conditions => { :method => :delete }
+  end
+
+  # coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
-  map.resources :accounts, :member => { :dashboard => :get }
 
+  map.resources :accounts
   map.resource :session
-
   map.resources :sites
+
+  # admin panel
   map.resources :pages do |page|
     # member /pages/1/feedbacks/1/something -- i.e. a specific feedback
     # collection /pages/1/feedbacks/something -- i.e. all the feedbacks

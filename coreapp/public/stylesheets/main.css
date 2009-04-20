@@ -1,3 +1,7 @@
+body {
+  width: 100%;
+  height: 100%; }
+
 tr blockquote {
   float: right;
   margin: 0;
@@ -9,7 +13,151 @@ tr blockquote {
 .odd {
   background-color: #EFFFAF; }
 
+#header {
+  background-color: #999999;
+  height: 80px; }
+
+#branding {
+  float: left; }
+
+h1#company_name {
+  font-size: 2em; }
+
 #login_bar {
-  border: 1px solid #666;
-  padding: .5em;
-  width: 20em; }
+  float: right; }
+
+#main_content, #header, #footer {
+  width: 80%;
+  min-width: 740px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1em;
+  position: relative; }
+
+#main_content {
+  background-color: #bbb; }
+
+#flash_error {
+  color: red; }
+
+#flash_warning {
+  color: yellow; }
+
+#flash_notice {
+  color: green; }
+
+#sites_table {
+  width: 73%; }
+  #sites_table th {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 1em; }
+  #sites_table td {
+    padding: .5em;
+    border: 1px solid #999; }
+
+#account_block {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 25%;
+  margin: 1em;
+  background-color: #B3C9EF; }
+  #account_block form {
+    padding: 5%;
+    width: 90%; }
+  #account_block fieldset {
+    width: 100%; }
+    #account_block fieldset legend {
+      font-size: 1.2em;
+      font-weight: bold; }
+    #account_block fieldset #account_email {
+      margin: 2px 0;
+      width: 90%; }
+
+#footer {
+  background-color: #eee; }
+
+
+/** Extra extra **/
+
+
+.accordion_toggle {
+			display: block;
+			height: 30px;
+			width: 680px;
+			background: url(images/accordion_toggle.jpg) no-repeat top right #a9d06a;
+			padding: 0 10px 0 10px;
+			line-height: 30px;
+			color: #ffffff;
+			font-weight: normal;
+			text-decoration: none;
+			outline: none;
+			font-size: 12px;
+			color: #000000;
+			border-bottom: 1px solid #cde99f;
+			cursor: pointer;
+			margin: 0 0 0 0;
+		}
+		
+		.accordion_toggle_active {
+			background: url(images/accordion_toggle_active.jpg) no-repeat top right #e0542f;
+			color: #ffffff;
+			border-bottom: 1px solid #f68263;
+		}
+		
+		.accordion_content {
+			background-color: #ffffff;
+			color: #444444;
+			overflow: hidden;
+		}
+			
+			.accordion_content h2 {
+				margin: 15px 0 5px 10px;
+				color: #0099FF;
+			}
+			
+			.accordion_content p {
+				line-height: 150%;
+				padding: 5px 10px 15px 10px;
+			}
+			
+		.vertical_accordion_toggle {
+			display: block;
+			height: 30px;
+			width: 600px;
+			background: url(images/accordion_toggle.jpg) no-repeat top right #a9d06a;
+			padding: 0 10px 0 10px;
+			line-height: 30px;
+			color: #ffffff;
+			font-weight: normal;
+			text-decoration: none;
+			outline: none;
+			font-size: 12px;
+			color: #000000;
+			border-bottom: 1px solid #cde99f;
+			cursor: pointer;
+			margin: 0 0 0 0;
+		}
+
+		.vertical_accordion_toggle_active {
+			background: url(images/accordion_toggle_active.jpg) no-repeat top right #e0542f;
+			color: #ffffff;
+			border-bottom: 1px solid #f68263;
+		}
+
+		.vertical_accordion_content {
+			background-color: #ffffff;
+			color: #444444;
+			overflow: hidden;
+		}
+
+			.vertical_accordion_content h2 {
+				margin: 15px 0 5px 10px;
+				color: #0099FF;
+			}
+
+			.vertical_accordion_content p {
+				line-height: 150%;
+				padding: 5px 10px 15px 10px;
+			}

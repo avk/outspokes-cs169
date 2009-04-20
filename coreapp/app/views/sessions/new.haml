@@ -1,6 +1,6 @@
 - form_tag session_path do
   = label_tag 'email'
-  = text_field_tag 'email', 'Email', :onFocus => "this.value = ''"
+  = text_field_tag 'email', @email, :onFocus => "this.value = ''"
 
   = label_tag 'password'
   = text_field_tag 'password', 'Password', :onFocus => "this.value = ''; this.type = 'password'"
