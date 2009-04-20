@@ -8,6 +8,7 @@ class SiteTest < ActiveSupport::TestCase
     assert_difference 'Site.count' do
       site = create_site(:url => "http://google.com")
       assert !site.new_record?, "#{site.errors.full_messages.to_sentence}"
+      assert !site.home_page.nil?, "creating a site without a home page"
     end
   end
 
