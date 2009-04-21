@@ -28,6 +28,11 @@ ActionController::Routing::Routes.draw do |map|
     # pages
     admin.site_pages '/:site_id/pages', :controller => 'pages', :action => 'index', :conditions => { :method => :get }
     admin.delete_site_page '/:site_id/pages/:id', :controller => 'pages', :action => 'destroy', :conditions => { :method => :delete }
+    
+    # commenters
+    admin.commenters '/:site_id/commenters', :controller => 'commenters', :action => 'index', :conditions => { :method => :get }
+    admin.invite '/:site_id/commenters', :controller => 'commenters', :action => 'create', :conditions => { :method => :post }
+    admin.uninvite '/:site_id/commenters/:id', :controller => 'commenters', :action => 'destroy', :conditions => { :method => :delete }
   end
   
   map.dashboard 'accounts/:id/dashboard', :controller => "accounts", :action => 'dashboard'

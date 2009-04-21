@@ -30,6 +30,11 @@ class AdminPanel::PagesControllerTest < ActionController::TestCase
     assert site.pages_with_latest_feedback == assigns(:pages)
   end
   
+  test "should not list anything for an invalid site id" do
+    get :index, :site_id => '9870809870098242342349142309874023'
+    assert_invalid
+  end
+  
   test "should not destroy anything when given an id for a page that doesn't exist" do
     site = sites(:linkedin)
     page_id = site.pages.last.id + 69

@@ -1,0 +1,33 @@
+<h1>Commenters</h1>
+
+<%- if @commenters.empty? -%>
+  <em>None</em>
+<%- else -%>
+  <ol id="site_commenters">
+  <%- @commenters.each do |commenter| -%>
+    <%- unless commenter == current_account -%>
+      <li>
+        <%= commenter.email %>
+        <%- if RAILS_ENV == "development" -%>
+          <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
+          <%= link_to final_url, final_url %>
+        <% end -%>
+        <%= link_to '[ Remove ]', 
+            admin_panel_uninvite_path(@site, commenter), 
+            :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
+            :method => :delete %>
+      </li>
+    <% end -%>
+  <% end -%>
+  </ol>
+<%- end -%>
+
+<hr />
+
+<h1>Invite more people to give feedback</h1>
+
+<% form_tag admin_panel_invite_path(@site) do %>
+  <%= label_tag 'emails', "Comma-separated email addresses:" %><br />
+  <%= text_area_tag :emails, '', :size => '50' %><br />
+  <%= submit_tag 'Invite!' %>
+<% end %>

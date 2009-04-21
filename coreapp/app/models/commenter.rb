@@ -59,5 +59,15 @@ class Commenter < ActiveRecord::Base
     return nil
   end
   
+  def feedbacks_for_site(site_id)
+    begin
+      site = Site.find(site_id)
+      page_ids = site.pages.map(&:id)
+      self.feedbacks.select {|f| page_ids.include?(f.page_id)}
+    rescue ActiveRecord::RecordNotFound => e
+      []
+    end
+  end
+  
 
 end
