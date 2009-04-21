@@ -33,11 +33,11 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update_attributes(params[:account])
         flash[:notice] = 'Your account was successfully updated.'
-        format.html { redirect_to dashboard_url(@account.id) }
+        format.html { redirect_to dashboard_account_url(@account.id) }
         format.xml  { head :ok }
       else
         flash[:error] = "uh oh!"        
-        format.html { redirect_to dashboard_url(@account.id) }
+        format.html { redirect_to dashboard_account_url(@account.id) }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
