@@ -1,0 +1,30 @@
+%table{:id=>'sites_table'}
+  %tr
+    %th My Sites
+  
+  - if @sites.empty?
+    %tr
+      %td 
+        Whoops, you don't have any sites.
+  - else
+    - for site in @sites
+      %tr
+        %td= site.name
+        %td= link_to @sites_admin_urls[site]
+        %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
+  %tr
+    %td{:colspan=>3}
+      = link_to "Add a site!", new_site_path
+
+#account_block
+  - form_for @account, :controller => "accounts", :action => "update" do |f| 
+    = f.error_messages
+    %fieldset
+      %legend Account Info
+      = label_tag 'email'
+      = f.text_field :email, :class=>'email_text'
+      / = label_tag 'password'
+      / = f.password_field :password
+      / = label_tag 'password_confirmation', 'Confirm Password'
+      / = f.password_field :password_confirmation
+      = submit_tag 'Save Changes'

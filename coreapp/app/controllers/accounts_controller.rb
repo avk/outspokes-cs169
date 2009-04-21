@@ -33,12 +33,25 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update_attributes(params[:account])
         flash[:notice] = 'Your account was successfully updated.'
-        format.html { redirect_to(@account) }
+        format.html { redirect_to dashboard_url(@account.id) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        flash[:error] = "uh oh!"        
+        format.html { redirect_to dashboard_url(@account.id) }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+  
+  def dashboard
+    @account = Account.find(params[:id])
+    @sites = @account.sites
+    @sites_admin_urls = {}
+    for site in @sites
+      @sites_admin_urls[site] = site.home_page.url.sub(/\/$/i, '') + '?url_token=' + site.home_page.invites.find_by_commenter_id(current_account).url_token
+    end
+    respond_to do |format|
+      format.html
     end
   end
 end

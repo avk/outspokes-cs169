@@ -35,6 +35,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.uninvite '/:site_id/commenters/:id', :controller => 'commenters', :action => 'destroy', :conditions => { :method => :delete }
   end
   
+  map.dashboard 'accounts/:id/dashboard', :controller => "accounts", :action => 'dashboard'
+  # The priority is based upon order of creation: first created -> highest priority.
+
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
