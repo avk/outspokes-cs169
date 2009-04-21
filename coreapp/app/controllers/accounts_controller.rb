@@ -46,6 +46,10 @@ class AccountsController < ApplicationController
   def dashboard
     @account = Account.find(params[:id])
     @sites = @account.sites
+    @sites_admin_urls = []
+    for site in @sites
+      @sites_admin_urls[site] = site.home_page.url.sub(/\/$/i, '') + '?url_token=' + site.home_page.invites.find_by_commenter_id(current_account).url_token
+    end
     respond_to do |format|
       format.html
     end
