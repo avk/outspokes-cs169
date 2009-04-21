@@ -4,8 +4,11 @@
   <ol id="site_pages">
   <%- @pages.each do |page| -%>
     <li>
-      <%= link_to page.url, page.url %><br />
-      <%= page.latest_feedback %><br />
+      <%= link_to page.url, page.url %> (<%= page.latest_feedback %>)
+      <%= link_to '[ Remove ]', 
+          admin_panel_delete_site_page_path(@site, page), 
+          :confirm => "This will remove all of the feedback on this page. Are you sure?", 
+          :method => :delete %>
     </li>
   <% end -%>
   </ol>
