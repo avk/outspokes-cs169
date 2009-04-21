@@ -96,20 +96,53 @@ version: 3.0.0pr2
 	overflow-x: hidden;
 }
 
-#outspokes #comment_list button{
-	border: 1px solid;
-	position: relative;
-	left: 80%;
-}
 
-div#comment_list div {
+
+#outspokes #comment_list div {
 	padding: 5px;
 	border: 1px solid #111;
 	border-collapse: collapse;
 }
 
-div#comment_list div * {
+#outspokes #comment_list div * {
 	border: none;
+}
+
+#outspokes #comment_list button, #outspokes #comment_list a.comment-reply{
+	border: 1px solid;
+}
+
+#outspokes #comment_list a.comment-reply {
+	color: black;
+	background-color: #EEE;
+	padding: 0 10px;
+}
+
+#outspokes #comment_list .cmt_bar {
+	background-color: #DDD;
+	border-bottom: 3px solid #CCC;
+	height: 20px;
+	padding: 0 3%;
+}
+
+#outspokes #comment_list .commenter_name {
+	font-weight: bold;
+	float: left;
+}
+
+#outspokes #comment_list .cmt_date {
+	font-size: 0.8em;
+	float: right;
+	margin-right: 1%;
+}
+
+#outspokes #comment_list .cmt_text {
+	clear: both;
+}
+
+#outspokes #comment_list .cns_buttons {
+	float: right;
+	margin-right: 3%;
 }
 
 #outspokes #topbar {
@@ -135,6 +168,7 @@ div#comment_list div * {
 
 #outspokes #comment_form {
 	float: right;
+	margin-right: 3%;
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
@@ -161,15 +195,6 @@ div#comment_list div * {
 }
 
 #outspokes #comments_filter {
-	height: 20px;
+	height: 18px;
 	margin-left: 10px;
-}
-
-#outspokes .comment-reply {
-	position: relative;
-	left: 80%;
-	border: 1px solid;
-	color: black;
-	bottom: 10px;
-	padding: 0 10px;
 }

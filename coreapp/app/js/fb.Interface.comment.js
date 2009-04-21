@@ -95,6 +95,7 @@
           var disagree = this.button(c, 'disagree');
           
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
+          consensus_div[0].setAttribute("class", 'cns_buttons');
           consensus_div.append(agree);
           consensus_div.append(disagree);
           markup.append(consensus_div);
@@ -180,10 +181,23 @@
     this.build = function (c) {
       var rtn = $('<div></div>').css('width','100%');
 	  var c_id = this.dom.comment_id(c.feedback_id);
+	var bar = $('<div class="cmt_bar"></div>');
+//	var name_span = $('<span class="commenter_name">'+ c.name +'</span>');
+//	var date_span = $('<span class="comment_date"></span>');
    	  rtn[0].setAttribute('id', c_id);
-      rtn.append(c.name + "<br />");
-      rtn.append(c.content + "<br />");
-      rtn.append(new Date(c.timestamp) + "<br />");
+
+//	name_span.append(c.name);
+	
+	bar.append('<span class="commenter_name">'+ c.name +'</span>');
+	bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
+    
+	
+	rtn.append(bar);
+	
+    rtn.append('<p class="cmt_text">' + c.content + '</p>');
+
+    //rtn.append("<p class='cmt_date'>" + new Date(c.timestamp) + "</p>");
+
       rtn = this.consensus.build(c, rtn);
       // set up reply actions
       rtn.append(this.reply.buildLink(c_id));
