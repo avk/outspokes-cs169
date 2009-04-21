@@ -73,7 +73,7 @@
 		var widget = fb.i.main_window;
 		if (widget.height() == '20') {
 			widget.animate( { height:"220px" }, { duration:500 } );
-			help.toggleClass("hide");
+			help.removeClass("hide");
 		} else {
 			content.toggle();
 			help.toggleClass("hide");
@@ -84,9 +84,11 @@
 
 	toggle_link.click(function() {
 		var content = fb.i.widget_content;
+		var help = fb.i.help_content;
 		var widget = fb.i.main_window;
 		if (widget.height() == '20') {
 			widget.animate( { height:"220px" }, { duration:500 } );
+			help.addClass("hide"); //always make sure help is hidden before showing content
 			content.show();
 		} else {
 			widget.animate( { height:"20px" }, { duration:500 } );
