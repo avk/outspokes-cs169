@@ -1,0 +1,2 @@
+module AdminPanel::CommentersHelper
+end
