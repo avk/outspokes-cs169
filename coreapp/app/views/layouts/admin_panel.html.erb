@@ -12,6 +12,13 @@
     <p style="color: yellow"><%= flash[:warning] %></p>
     
     <h1>Admin Panel, yo</h1>
+    
+    <ul id="navigation">
+      <li><%= link_to "Pages", admin_panel_site_pages_path(@site) %></li>
+      <li><%= link_to "Commenters", admin_panel_commenters_path(@site) %></li>
+    </ul>
+    
+    <hr />
     <%= yield %>
   </body>
 </html>
