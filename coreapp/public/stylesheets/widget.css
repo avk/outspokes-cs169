@@ -95,7 +95,6 @@ version: 3.0.0pr2
 	margin-left: 3%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	padding-top: 5px;
 }
 
 #outspokes #comment_list button{
@@ -116,6 +115,7 @@ div#comment_list div * {
 	background-color: #111;
 	padding-bottom: 2px;
 	cursor: pointer;
+	margin-right: 3%;
 }
 
 #outspokes #topbar h1 {
@@ -144,8 +144,17 @@ div#comment_list div * {
 	bottom: 0px;
 }
 
-#outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
+#outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
+}
+#outspokes #topbar #help {
+	position: absolute;
+	right: 0px;
+	color: red;
+	}
+
+.hide {
+	display: none;
 }
 
 #outspokes #comments_topbar {
