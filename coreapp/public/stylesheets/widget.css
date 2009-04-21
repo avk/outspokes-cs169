@@ -142,7 +142,8 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cns_buttons {
 	float: right;
-	margin-right: 3%;
+	padding: 0px;
+	margin: -2% 3%;
 }
 
 #outspokes #topbar {
