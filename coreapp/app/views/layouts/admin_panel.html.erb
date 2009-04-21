@@ -7,9 +7,9 @@
     <%= stylesheet_link_tag 'reset-min', :cache => true %>
   </head>
   <body id="admin_panel">
-    <%- if flash[:error] -%>
-      <p id="flash_error"><%= flash[:error] %></p>
-    <% end -%>
+    <p style="color: green"><%= flash[:notice] %></p>
+    <p style="color: red"><%= flash[:error] %></p>
+    <p style="color: yellow"><%= flash[:warning] %></p>
     
     <h1>Admin Panel, yo</h1>
     <%= yield %>
