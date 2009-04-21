@@ -13,10 +13,11 @@
         %td= link_to @sites_admin_urls[site], @sites_admin_urls[site]
         %td= link_to 'Admin Panel', admin_panel_site_pages_path(site)
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
+        
   %tr
     %td{:colspan=>3}
       = link_to "Add a site!", new_site_path
-
+      
 / #account_block
 /   - form_for @account, :controller => "accounts", :action => "update" do |f| 
 /     = f.error_messages
