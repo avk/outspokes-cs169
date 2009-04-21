@@ -7,23 +7,65 @@ function() {
     fb.env = {};
     fb.env.current_page = window.location.href.split("?")[0];
     fb.env.url_token = fb.getParams('url_token') || fb.cookie('fb_hash_url_token') || "";
+    var _admin_validation_token = fb.cookie('fb_hash_admin_validation_token');
+    var _wants_admin = fb.getParams('admin');
     fb.env.pub_page = false;
-    
     fb.env.get_address = "<%= WIDGET_DOMAIN %>feedback_for_page.js";
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
-    
-    return fb.Feedback.get(function (data) {
+
+    // TODO: Move outside into huge closure so can't be set
+    (function() {
+      var _val = false;
+      var _isSet = false;
+      fb.env.authorized = function (value) {
+        if (_isSet || !value) {
+          return _val;
+        } else {
+          if (typeof _val === "boolean") {
+            _val = value;
+            _isSet = true;
+          }
+          return _val;
+        }
+      };
+    })();
+
+    // TODO: Also most outside with fb.env.authorized above
+    (function() {
+      var _val = false;
+      var _isSet = false;
+      fb.env.admin = function (value) {
+        if (_isSet || !value) {
+          return _val;
+        } else {
+          _val = value;
+          _isSet = true;
+          fb.cookie('fb_hash_admin_validation_token', value);
+          return _val;
+        }
+      };
+    })();
+
+    // TODO: Don't use "a".  Very bad.  Use random letter.
+    var method = "a" + Math.floor(Math.random()*1000000000000000);
+    var login_callback = fb.find_fb() + "." + method;
+    fb[method] = function (data) {
+      fb[method] = null;
       if (!data) {
         fb.env.init = true;
         return false;
       }
 
-      fb.env.authorized = data.authorized;
-      if (!fb.env.authorized) {
+      fb.env.authorized(data.authorized);
+      if (!fb.env.authorized()) {
         fb.env.init = true;
         return false;
+      }
+
+      if (data.admin) {
+        fb.env.admin(data.admin);
       }
 
       if (fb.env.url_token === "") {
@@ -35,6 +77,63 @@ function() {
       }
 
       fb.i = new fb.Interface();
-      fb.Feedback.get_callback(data, "render");
+      fb.Feedback.get_callback(data, true);
       return true;
-    });
+    };
+
+    if (!_admin_validation_token && _wants_admin) {
+      fb.$(function() {
+        console.info("inside");
+        var login_panel = fb.$('<div></div>');
+        login_panel.append(fb.$('<div></div>').css({
+          'background-color': 'black',
+          'color': 'transparent',
+          'height': '100%',
+          'left': '0%',
+          'margin': '0',
+          'opacity': '0.80',
+          'padding': '0',
+          'position': 'absolute',
+          'top': '0%',
+          'width': '100%',
+          'z-index': '1001'
+        }));
+        login_panel.append(fb.$('<div></div>').css({
+          'background-color': 'white',
+          'border': '16px solid #eee',
+          'color': 'black',
+          'height': '25%',
+          'width': '25%',
+          'top': '37.5%',
+          'left': '37.5%',
+          'margin': '0',
+          'overflow': 'hidden',
+          'padding': '5px',
+          'position': 'absolute',
+          'opacity': '1.0',
+          'z-index': '1002'
+        }));
+
+        var form = fb.$('<form onsubmit="return false;"></form>');
+        form.append('Email:<br /><input type="text" name="email" size="20" /><br />');
+        form.append('Password:<br /><input type="password" name="password" size="20" /><br />');
+        form.append('<input type="submit" value="Submit" />');
+        form.submit(function() {
+          var _email = this.email.value;
+          var _password = this.password.value;
+          login_panel.parent().remove();
+          fb.Feedback.get({'email':_email,'password':_password}, login_callback);
+        });
+
+        login_panel.find('div:eq(1)').append(form);
+        fb.$('body').append(login_panel);
+        return;
+      });
+      return;
+    }
+
+    if (typeof _admin_validation_token === "number") {
+      return fb.Feedback.get({'validation_token':_admin_validation_token}, login_callback);
+    }
+
+    return fb.Feedback.get(login_callback);

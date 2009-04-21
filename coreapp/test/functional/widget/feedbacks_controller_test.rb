@@ -241,14 +241,14 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   
-  test "should destroy feedback" do
-    feedback = feedbacks(:one)
-    page = feedback.page
-    assert_difference('Comment.count', -1) do
-      delete :destroy, :id => feedback.id
-    end
-    assert_redirected_to page_path(page)
-  end
+  # test "should destroy feedback" do
+  #   feedback = feedbacks(:one)
+  #   page = feedback.page
+  #   assert_difference('Comment.count', -1) do
+  #     delete :destroy, :id => feedback.id
+  #   end
+  #   assert_redirected_to page_path(page)
+  # end
   
   test "should add new threaded feedback for page" do
     invite = invites(:one)

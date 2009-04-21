@@ -4,11 +4,10 @@ class HomeController < ApplicationController
     if logged_in?
       redirect_to dashboard_url(current_account.id)
     else
-       respond_to do |format|
-          format.html
-        end
+      respond_to do |format|
+        format.html
+      end
     end
-   
   end
 
 end

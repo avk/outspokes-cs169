@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
 
-    before_filter :login_required, :only => [ :new, :edit, :create, :destroy, :update ]
+  before_filter :login_required, :only => [ :new, :edit, :create, :destroy, :update ]
   # GET /sites/new
   # GET /sites/new.xml
   def new
@@ -21,13 +21,17 @@ class SitesController < ApplicationController
     @site.account = current_account
 
     respond_to do |format|
-      if @site.save
+      begin
+        Site.transaction do
+          @site.save!
+          i = Invite.new(:page => @site.home_page, :commenter => @site.account)
+          i.save!
+        end
         flash[:notice] = 'Site was successfully created.'
-        format.html { redirect_to new_page_commenter_path(@site.home_page) }
-        format.xml  { render :xml => @site, :status => :created, :location => @site }
-      else
+        format.html { redirect_to root_path }
+      rescue
+        flash[:error] = "Could not create site."
         format.html { render :action => "new" }
-        format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -15,7 +15,7 @@
         target:"string",
         name:"string",
         timestamp:"number",
-		    opinion:""}),
+        opinion:""}),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
       this.content = obj.content;
@@ -51,23 +51,40 @@
    * - render()
    */
   
-  fb.Feedback.get = function(callback) {
-    if (callback === "render") {
-      callback = function (data) {
-        fb.Feedback.get_callback(data, true);
-      };
-    } else if (typeof callback === "undefined") {
-      callback = fb.Feedback.get_callback;
-    } else {
-      fb.assert(typeof callback === "function", "Callback argument to fb.Feedback.get() must be a function.");
-    }
+  fb.Feedback.get = function(options, callback) {
     var params = {
       'url_token': fb.env.url_token,
       'current_page': fb.env.current_page
     };
-    // jQuery.getJSON requires the "?" on callback to be unescaped
-    params = "?" + $.param(params) + "&callback=?";
-    $.getJSON(fb.env.get_address + params, callback);
+    if (typeof options === "object") {
+      $.extend(params, options);
+    } else if (typeof options !== "undefined") {
+      callback = options;
+    }
+    if (fb.env.admin()) {
+      params.validation_token = fb.env.admin();
+    }
+
+    if (callback) {
+      if (typeof callback === "string") {
+        params.callback = callback;
+      } else if (typeof callback === "function") {
+        // do nothing
+      }
+    } else {
+      callback = function (data) {
+        fb.Feedback.get_callback(data, true);
+      };
+    }
+
+    params = "?" + $.param(params);
+    if (typeof callback === "string") {
+      $.getScript(fb.env.get_address + params);
+    } else {
+      // jQuery.getJSON requires the "?" on callback to be unescaped
+      params += "&callback=?";
+      $.getJSON(fb.env.get_address + params, callback);
+    }
   };
   
   /**
@@ -77,7 +94,7 @@
    * @return {Array[Feedback]} An array of the new feedbacks
    */
   fb.Feedback.get_callback = function (data, render) {
-    if (!(fb.env.authorized || data.authorized)) {
+    if (!(fb.env.authorized() || data.authorized)) {
       return null;
     }
     var i, j;

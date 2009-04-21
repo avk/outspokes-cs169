@@ -7,7 +7,7 @@
    */
   fb.Interface = function() {
     fb.assert_false(fb.Interface.instantiated, "Can not create more than one instance of the interface.");
-    if (!fb.env.authorized) {
+    if (!fb.env.authorized()) {
       return false;
     }
 

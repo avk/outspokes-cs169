@@ -43,6 +43,18 @@ class InviteTest < ActiveSupport::TestCase
     assert !i.url_token.nil?
   end
   
+  test 'should not allow duplicate invites' do
+    commenter = create_commenter
+    i1, i2 = nil, nil
+    
+    assert_difference "Invite.count", 1 do
+      i1 = create_invite(:page => pages(:fb_profile), :commenter => commenter)
+      i2 = create_invite(:page => pages(:fb_profile), :commenter => commenter)
+      assert !i1.new_record?, "#{i1.errors.full_messages.to_sentence}"
+      assert i2.errors.on(:page_id), "#{i2.errors.full_messages.to_sentence}"
+    end
+  end
+  
   test 'should generate unique URL tokens when inviting the same commenter to different pages' do
     commenter = create_commenter
     i1, i2 = nil, nil
@@ -60,7 +72,7 @@ class InviteTest < ActiveSupport::TestCase
     account_holder = commenters(:aaron)
     
     assert_difference "Invite.count", 1 do
-      i = create_invite(:commenter => account_holder)
+      i = create_invite(:commenter => account_holder, :page => account_holder.pages.first)
       assert !i.new_record?
     end
   end

@@ -9,6 +9,8 @@ class Invite < ActiveRecord::Base
   validates_presence_of :commenter_id
   validates_associated :commenter
   
+  validates_uniqueness_of :page_id, :scope => :commenter_id
+  
   before_save :generate_url_token
 
 private

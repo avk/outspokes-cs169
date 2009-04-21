@@ -89,6 +89,26 @@
       return false;
     }
   };
+
+  fb.find_fb = function() {
+    var possible = [];
+    var stuff = [];
+    for (var i in window) {
+      if (i.search("fb") === 0) {
+        possible.push(i);
+      }
+    }
+
+    var correct = [];
+    for (var i in possible) {
+      if (window[possible[i]] === fb) {
+        correct.push(possible[i]);
+      }
+    }
+
+    fb.assert(correct.length === 1, "There should be only one variable that matches fb");
+    return correct[0];
+  };
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
