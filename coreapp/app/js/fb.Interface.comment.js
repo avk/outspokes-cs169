@@ -21,6 +21,7 @@
       disagree_bg_color   : 'red',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
+		cform 				: "comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';
       },
@@ -36,8 +37,8 @@
     };
     
     this.buildCommentForm = function (id, target) {
-      var formHTML = '<a id="refresh" href="#">refresh</a>' +
-        '<form id="comment_form" name="newcomment" onsubmit="return false;">';
+	/*'<a id="refresh" href="#">refresh</a>' why is refresh in the comment form? */
+      var formHTML = '<form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
@@ -135,7 +136,7 @@
       // toggles the non-replying interface
       setupInterface  : function() {
         $('.' + this.dom.reply_links).toggle();
-        $('#' + this.dom.comment_form).toggle();
+        $('#' + this.dom.cform).toggle();
       },
       // start replying to a comment
       start           : function(c_id) {
@@ -158,7 +159,8 @@
         form.find("input[type='reset']").click(function(){ 
           fb.i.comment.reply.cancel(reply_form);
         });
-        $('#' + this.dom.reply_list(c_id)).before(form);
+        //$('#' + this.dom.reply_list(c_id)).before(form);
+		$('#' + this.dom.comment_form).append(form);
         
         form.find("textarea[name='content']").focus();
         // would be nice to also scroll to the comment form here like:

@@ -13,8 +13,7 @@ version: 3.0.0pr2
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
-	border-top: 2px dotted #111;
-	height: 200px;
+	height: 220px;
 }
 
 /* admin panel, excluded from the wrapper because it overlays everything */
@@ -105,10 +104,12 @@ version: 3.0.0pr2
 
 div#comment_list div {
 	padding: 5px;
-	border-left: 1px dotted #111;
+	border: 1px solid #111;
+	border-collapse: collapse;
 }
 
 div#comment_list div * {
+	border: none;
 }
 
 #outspokes #topbar {
@@ -133,15 +134,7 @@ div#comment_list div * {
 }
 
 #outspokes #comment_form {
-	position: absolute;
-	right: 100px;
-	bottom: 0px;
-}
-
-#outspokes #comment_form.reply {
-	position: absolute;
-	right: 100px;
-	bottom: 0px;
+	float: right;
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
@@ -150,7 +143,9 @@ div#comment_list div * {
 #outspokes #topbar #help {
 	position: absolute;
 	right: 0px;
-	color: red;
+	color: beige;
+	background-color: #111;
+	height: 22px;
 	}
 
 .hide {
