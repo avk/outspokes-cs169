@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # The priority is based upon order of creation: first created -> highest priority.
 
-  # widget
+  ### widget
   map.widget '/widget', :controller => 'widget/source', :action => 'index'
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
@@ -13,17 +13,17 @@ ActionController::Routing::Routes.draw do |map|
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "delete", :conditions => { :method => :delete }
   end
 
-  # coreapp
+  ### coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
 
-  map.resources :accounts
+  map.resources :accounts, :member => { :dashboard => :get }
   map.resource :session
   map.resources :sites
 
-  # admin panel
+  ### admin panel
   map.namespace :admin_panel do |admin|
     # pages
     admin.site_pages '/:site_id/pages', :controller => 'pages', :action => 'index', :conditions => { :method => :get }
@@ -35,9 +35,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.uninvite '/:site_id/commenters/:id', :controller => 'commenters', :action => 'destroy', :conditions => { :method => :delete }
   end
   
-  map.dashboard 'accounts/:id/dashboard', :controller => "accounts", :action => 'dashboard'
-  # The priority is based upon order of creation: first created -> highest priority.
-
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
