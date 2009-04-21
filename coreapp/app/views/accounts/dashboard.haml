@@ -1,6 +1,6 @@
 %table{:id=>'sites_table'}
   %tr
-    %th{:colspan=>3} My Sites
+    %th{:colspan=>4} My Sites
   
   - if @sites.empty?
     %tr
@@ -15,7 +15,7 @@
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
         
   %tr
-    %td{:colspan=>3}
+    %td{:colspan=>4}
       = link_to "Add a site!", new_site_path
       
 / #account_block
