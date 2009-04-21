@@ -1,13 +1,11 @@
-class AdminPanel::CommentersController < ApplicationController
+class AdminPanel::CommentersController < AdminPanel::AdminController
   
-  layout 'admin_panel'
-  
-  before_filter :get_site
-  
+  # GET /admin_panel/:site_id/commenters
   def index
     @commenters = @site.commenters
   end
 
+  # POST /admin_panel/:site_id/commenters
   def create
     emails = Commenter.parse_email_addresses(params[:emails])
     
@@ -36,6 +34,7 @@ class AdminPanel::CommentersController < ApplicationController
     redirect_to admin_panel_commenters_path(@site)
   end
 
+  # DELETE /admin_panel/:site_id/commenters/:id
   def destroy
     begin
       commenter = Commenter.find(params[:id])
@@ -48,15 +47,4 @@ class AdminPanel::CommentersController < ApplicationController
     end
   end
 
-protected
-  
-  def get_site
-    begin
-      @site = Site.find(params[:site_id])
-    rescue ActiveRecord::RecordNotFound => e
-      flash[:error] = "Site not found."
-      render :template => "admin_panel/invalid"
-    end
-  end
-  
 end
