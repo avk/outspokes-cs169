@@ -48,8 +48,7 @@ function() {
       };
     })();
 
-    // TODO: Don't use "a".  Very bad.  Use random letter.
-    var method = "a" + Math.floor(Math.random()*1000000000000000);
+    var method = fb.rand_string(50);
     var login_callback = fb.find_fb() + "." + method;
     fb[method] = function (data) {
       fb[method] = null;

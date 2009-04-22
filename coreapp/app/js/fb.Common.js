@@ -109,6 +109,19 @@
     fb.assert(correct.length === 1, "There should be only one variable that matches fb");
     return correct[0];
   };
+
+  fb.rand_string = function (len) {
+    if (!(len > 0)) {
+      return "";
+    }
+    var vals = "abcdefghijklmnopqrstuvwxyz0123456789".split("");
+    var str = vals[Math.floor(Math.random()*25)];
+    len -= 1;
+    for (len; len > 0; len--) {
+      str += vals[Math.floor(Math.random()*35)];
+    }
+    return str;
+  };
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
