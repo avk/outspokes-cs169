@@ -6,6 +6,11 @@ version: 3.0.0pr2
 */
 #outspokes html{color:#000;background:#FFF;}#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}#outspokes table{border-collapse:collapse;border-spacing:0;}#outspokes fieldset,#outspokes img{border:0;}#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}#outspokes li{list-style:none;}#outspokes caption,#outspokes th{text-align:left;}#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}#outspokes q:before,#outspokes q:after{content:'';}#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}#outspokes sup{vertical-align:text-top;}#outspokes sub{vertical-align:text-bottom;}#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}#outspokes input,#outspokes textarea,#outspokes select{*font-size:100%;}#outspokes legend{color:#000;}
 
+#outspokes {
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
 /* outermost wrapper for our widget */
 #outspokes {
 	width: 100%;
@@ -69,13 +74,9 @@ version: 3.0.0pr2
 	height: 180px;
 }
 
-
-#outspokes #topbar {
-	height: 20px;
-}
-
 #outspokes #topbar h1, #outspokes #topbar a{
 	color: beige;
+	margin: 0 10px;
 }
 
 #outspokes a {
@@ -108,14 +109,9 @@ version: 3.0.0pr2
 	border: none;
 }
 
-#outspokes #comment_list button, #outspokes #comment_list a.comment-reply{
+#outspokes #comment_list button {
 	border: 1px solid;
-}
-
-#outspokes #comment_list a.comment-reply {
-	color: black;
-	background-color: #EEE;
-	padding: 0 10px;
+	cursor: pointer;
 }
 
 #outspokes #comment_list .cmt_bar {
@@ -123,6 +119,7 @@ version: 3.0.0pr2
 	border-bottom: 3px solid #CCC;
 	height: 20px;
 	padding: 0 3%;
+	cursor: pointer;
 }
 
 #outspokes #comment_list .commenter_name {
@@ -148,23 +145,20 @@ version: 3.0.0pr2
 
 #outspokes #topbar {
 	background-color: #111;
-	padding-bottom: 2px;
 	cursor: pointer;
-	margin-right: 3%;
+	height: 23px;
 }
 
 #outspokes #topbar h1 {
 	display: inline;
-	margin-left: 3%;
+	margin-left: 10px;
 	font-weight: bold;
 	height: 20px;
 }
 
 #outspokes #refresh {
-	position: relative;
-	right: 40%;
-	top: -23px;
 	color: beige;
+	margin-left: 10px;
 }
 
 #outspokes #comment_form {
@@ -180,7 +174,7 @@ version: 3.0.0pr2
 	right: 0px;
 	color: beige;
 	background-color: #111;
-	height: 22px;
+	height: 23px;
 	}
 
 .hide {
@@ -188,10 +182,9 @@ version: 3.0.0pr2
 }
 
 #outspokes #comments_topbar {
-	height: 20px;
+	height: 22px;
 	background: #222;
 	color: beige;
-	padding-bottom: 2px;
 	padding-left: 3%;
 }
 
