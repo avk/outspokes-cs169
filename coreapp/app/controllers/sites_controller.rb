@@ -29,6 +29,11 @@ class SitesController < ApplicationController
         end
         flash[:notice] = 'Site was successfully created.'
         format.html { redirect_to root_path }
+        format.js
+        #format.js { render :update do |page|
+        #  page.call "Effect.BlindDown", "section2"
+        #end
+        #}
       rescue
         flash[:error] = "Could not create site."
         format.html { render :action => "new" }
@@ -71,4 +76,12 @@ class SitesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def checkinclude
+    @site = Site.find(params[:id])    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
 end

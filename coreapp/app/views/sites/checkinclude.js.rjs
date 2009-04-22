@@ -1,0 +1,2 @@
+page.call "Effect.BlindUp", "section2"
+page.call "Effect.BlindDown", "section3"

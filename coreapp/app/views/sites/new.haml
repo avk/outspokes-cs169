@@ -16,19 +16,20 @@
   
 %h2 Follow these three easy steps to add your site
 #vertical_container
-  %h3.accordion_toggle{:onclick => "Effect.BlindDown('section1')"} Step 1: Put in your site's URL
-  .accordion_content#section1{:style => "display: none"}
-    -# remote_form_for(@site,  :url => create_ajax_site_url(@site), :html=> {:method=>:post}) do |fo|
-    - remote_form_for(@site,  :url => create_siteajax_url) do |fo|
-      = fo.text_field :url
-      = fo.check_box :public
-      = fo.label :public, 'Make my site available for public feedback'
-      = fo.submit "Create My Site"
-  %h3.accordion_toggle{:onclick => "Effect.BlindDown('section2')"} Step 2: Copy and paste our Javascript into your site
+  %h3.accordion_toggle Step 1: Put in your site's URL
+  .accordion_content#section1{:style => "display: inline"}
+    - remote_form_for(@site,  :url => sites_url+'.js') do |f|
+      = f.text_field :url
+      = f.check_box :public
+      = f.label :public, 'Make my site available for public feedback'
+      = f.submit "Create My Site"
+  %h3.accordion_toggle Step 2: Copy and paste our Javascript into your site
   .accordion_content#section2{:style => "display: none"}
     %p dude, just copy and past this shit
     / Fill a text area with our JS code
-  %h3.accordion_toggle{:onclick => "Effect.BlindDown('section3')"} Step 3: Invite!
+    - remote_form_for(@site,  :url => checkinclude_site_url(@site)+'.js') do |f|
+      = f.submit "Ok, I've added it."
+  %h3.accordion_toggle Step 3: Invite!
   .accordion_content#section3{:style => "display: none"}
     = label_tag 'emails', "Comma-separated email addresses:"
     = text_area_tag :emails, '', :size => '50'
