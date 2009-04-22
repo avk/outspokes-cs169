@@ -179,30 +179,29 @@
     };
     
     this.build = function (c) {
-      var rtn = $('<div></div>').css('width','100%');
-	  var c_id = this.dom.comment_id(c.feedback_id);
-	var bar = $('<div class="cmt_bar"></div>');
-//	var name_span = $('<span class="commenter_name">'+ c.name +'</span>');
-//	var date_span = $('<span class="comment_date"></span>');
-   	  rtn[0].setAttribute('id', c_id);
-
-//	name_span.append(c.name);
+		var rtn = $('<div></div>').css('width','100%');
+		var c_id = this.dom.comment_id(c.feedback_id);
+		var bar = $('<div class="cmt_bar"></div>');
+		var cmt = $('<div></div>');
+		rtn[0].setAttribute('id', c_id);
 	
-	bar.append('<span class="commenter_name">'+ c.name +'</span>');
-	bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
+		bar[0].setAttribute('id', 'bar_' + c_id);
+		cmt[0].setAttribute('id', 'body_' + c_id);
+		bar.append('<span class="commenter_name">'+ c.name +'</span>');
+		bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
+		
+		bar.click(function(){ cmt.toggle(); });
     
+		rtn.append(bar);
+		rtn.append(cmt);
 	
-	rtn.append(bar);
-	
-    rtn.append('<p class="cmt_text">' + c.content + '</p>');
+    	cmt.append('<p class="cmt_text">' + c.content + '</p>');
 
-    //rtn.append("<p class='cmt_date'>" + new Date(c.timestamp) + "</p>");
+		cmt = this.consensus.build(c, cmt);
 
-      rtn = this.consensus.build(c, rtn);
       // set up reply actions
-      rtn.append(this.reply.buildLink(c_id));
-      //rtn.append("<hr style='width:80%' />");
-      rtn.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
+      cmt.append(this.reply.buildLink(c_id));
+      cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
       
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {

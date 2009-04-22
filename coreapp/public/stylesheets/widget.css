@@ -123,6 +123,7 @@ version: 3.0.0pr2
 	border-bottom: 3px solid #CCC;
 	height: 20px;
 	padding: 0 3%;
+	cursor: pointer;
 }
 
 #outspokes #comment_list .commenter_name {
