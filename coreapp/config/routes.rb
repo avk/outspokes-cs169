@@ -21,8 +21,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :accounts, :member => { :dashboard => :get }
   map.resource :session
-  map.resources :sites
-
+  map.resources :sites, :member => { :checkinclude => :put }
+  map.createsiteajax '/createsiteajax',    :controller => 'sites',           :action => 'create_ajax', :conditions => { :method => :post }
+  #map.create_site_ajax '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
+  
   ### admin panel
   map.namespace :admin_panel do |admin|
     # pages

@@ -2,44 +2,40 @@
   //
   //  In my case I want to load them onload, this is how you do it!
   // 
-  Event.observe(window, 'load', loadAccordions, false);
+  //Event.observe(window, 'load', loadAccordions, false);
 
   //
   //	Set up all accordions
   //
-  function loadAccordions() {
-    var bottomAccordion = new accordion('vertical_container');
+  //function loadAccordions() {
+  //  var bottomAccordion = new accordion('vertical_container');
     // Open first one
-    bottomAccordion.activate($$('#vertical_container .accordion_toggle')[0]);
+  //  bottomAccordion.activate($$('#vertical_container .accordion_toggle')[0]);
 
-  }
+  //}
   
 %h2 Follow these three easy steps to add your site
 #vertical_container
-  - form_for(@site) do |f|
-    %h3.accordion_toggle Step 1: Put in your site's URL
-    .accordion_content
+  %h3.accordion_toggle Step 1: Put in your site's URL
+  .accordion_content#section1{:style => "display: inline"}
+    - remote_form_for(@site,  :url => sites_url+'.js') do |f|
       = f.text_field :url
       = f.check_box :public
       = f.label :public, 'Make my site available for public feedback'
-    %h3.accordion_toggle Step 2: Copy and paste our Javascript into your site
-    .accordion_content
-      / Fill a text area with our JS code
-    %h3.accordion_toggle Step 3: Invite!
-    .accordion_content
-      = label_tag 'emails', "Comma-separated email addresses:"
-      = text_area_tag :emails, '', :size => '50'
+      = f.submit "Create My Site"
+  %h3.accordion_toggle Step 2: Copy and paste our Javascript into your site
+  .accordion_content#section2{:style => "display: none"}
+    %p dude, just copy and past this shit
+    / Fill a text area with our JS code
+    - remote_form_for(@site,  :url => checkinclude_site_url(@site)+'.js') do |f|
+      = f.submit "Ok, I've added it."
+  %h3.accordion_toggle Step 3: Invite!
+  .accordion_content#section3{:style => "display: none"}
+    = label_tag 'emails', "Comma-separated email addresses:"
+    = text_area_tag :emails, '', :size => '50'
 
 
 = link_to "Nah, I don\'t want to add a site right now", root_url
-
-:javascript
-  var verticalAccordions = $$('.accordion_toggle'); 
-  verticalAccordions.each(function(accordion) { 
-    $(accordion.next(0)).setStyle({ 
-      height: '0px' 
-      }); 
-  });
 
 
   

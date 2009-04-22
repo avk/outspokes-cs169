@@ -1,0 +1,4 @@
+page.replace_html('section2', render(:partial => 'check_include_form', :locals=> { :site => @site }))
+# page.replace_html('section2', form)
+page.call "Effect.BlindUp", "section1"
+page.call "Effect.BlindDown", "section2"

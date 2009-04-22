@@ -29,11 +29,40 @@ class SitesController < ApplicationController
         end
         flash[:notice] = 'Site was successfully created.'
         format.html { redirect_to root_path }
+        format.js
+        #format.js { render :update do |page|
+        #  page.call "Effect.BlindDown", "section2"
+        #end
+        #}
       rescue
         flash[:error] = "Could not create site."
         format.html { render :action => "new" }
       end
     end
+  end
+
+  # POST /sites/ajax?
+  # // POST /sites.xml
+  def create_ajax
+    # Checkboxes return "0" and "1", not true/false
+    params[:site][:public] = params[:site][:public] == "1" ? true : false
+    @site = Site.new(params[:site])
+    @site.account = current_account
+      begin
+        Site.transaction do
+          @site.save!
+          i = Invite.new(:page => @site.home_page, :commenter => @site.account)
+          i.save!
+        end
+        render :update do |page|
+        page.call "Effect.BlindDown", "section2"
+         #flash[:notice] = 'Site was successfully created.'
+         #format.html { redirect_to root_path }
+      end
+      rescue
+        #flash[:error] = "Could not create site."
+        #format.html { render :action => "new" }
+      end
   end
 
   # DELETE /sites/1
@@ -47,4 +76,12 @@ class SitesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def checkinclude
+    @site = Site.find(params[:id])    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
 end
