@@ -130,19 +130,23 @@
       },
       // constructs a "reply" link
       buildLink       : function(c_id) {
-        var replyLink = $('<a href="#" class="' + this.dom.reply_links + '">&raquo; reply</a>');
+        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">&raquo; reply</button>');
+		
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
       // toggles the non-replying interface
       setupInterface  : function() {
-        $('.' + this.dom.reply_links).toggle();
+	
+		var replyButton = $('.' + this.dom.reply_links);
+		if (replyButton.attr("disabled")) { replyButton.attr("disabled", "false"); } else { replyButton.attr("disabled", "true"); }
+		
         $('#' + this.dom.cform).toggle();
       },
       // start replying to a comment
       start           : function(c_id) {
         this.setupInterface();
-        
+
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
         var form = this.parent.buildCommentForm(reply_form, c_id);

@@ -112,12 +112,6 @@ version: 3.0.0pr2
 	border: 1px solid;
 }
 
-#outspokes #comment_list a.comment-reply {
-	color: black;
-	background-color: #EEE;
-	padding: 0 10px;
-}
-
 #outspokes #comment_list .cmt_bar {
 	background-color: #DDD;
 	border-bottom: 3px solid #CCC;
