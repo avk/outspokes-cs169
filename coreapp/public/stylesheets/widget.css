@@ -112,6 +112,7 @@ version: 3.0.0pr2
 #outspokes #comment_list button {
 	border: 1px solid;
 	cursor: pointer;
+	margin: 0 5px;
 }
 
 #outspokes #comment_list .cmt_bar {
@@ -141,6 +142,12 @@ version: 3.0.0pr2
 	float: right;
 	padding: 0px;
 	margin: -2% 3%;
+}
+
+#outspokes #comment_list .cns_buttons span{
+	float: left;
+	padding: 0px;
+	margin: -20% 3%;
 }
 
 #outspokes #topbar {
@@ -175,10 +182,20 @@ version: 3.0.0pr2
 	color: beige;
 	background-color: #111;
 	height: 23px;
-	}
+}
+
+#outspokes #help {
+	float: right;
+	color: beige;
+	margin-right: 3%;
+}
 
 .hide {
 	display: none;
+}
+
+#outspokes em {
+	font-style: italic;
 }
 
 #outspokes #comments_topbar {
@@ -189,6 +206,6 @@ version: 3.0.0pr2
 }
 
 #outspokes #comments_filter {
-	height: 18px;
+	height: 20px;
 	margin-left: 10px;
 }
