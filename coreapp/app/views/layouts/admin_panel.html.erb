@@ -5,13 +5,12 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Site Admin Panel</title>
     <%= stylesheet_link_tag 'reset-min', :cache => true %>
+    <%= stylesheet_link_tag 'admin-panel' %>
   </head>
   <body id="admin_panel">
-    <p style="color: green"><%= flash[:notice] %></p>
-    <p style="color: red"><%= flash[:error] %></p>
-    <p style="color: yellow"><%= flash[:warning] %></p>
-    
-    <h1>Admin Panel, yo</h1>
+    <%- if flash[:notice] -%><div class="notice"><%= flash[:notice] %></div><%- end -%>
+    <%- if flash[:error] -%><div class="error"><%= flash[:error] %></div><%- end -%>
+    <%- if flash[:warning] -%><div class="warning"><%= flash[:warning] %></div><%- end -%>
     
     <ul id="navigation">
       <li><%= link_to "Pages", admin_panel_site_pages_path(@site) %></li>
