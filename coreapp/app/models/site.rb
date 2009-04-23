@@ -83,7 +83,13 @@ class Site < ActiveRecord::Base
     home_page.commenters
   end
   
-
+  def new_validation_token
+    now = Time.now
+    new_token = Digest::MD5::hexdigest(self.url + '1nkt0m^' + rand.to_s + now.to_s)
+    update_attributes(:validation_token => new_token, :validation_timestamp => now)
+    self.validation_token
+  end
+  
   def has_valid_home_page
     if !self.pages.first or !self.pages.first.valid?
       errors.add_to_base("Site must have a valid home_page to be valid")

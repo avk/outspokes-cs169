@@ -181,4 +181,38 @@ class SiteTest < ActiveSupport::TestCase
     site = sites(:linkedin)
     assert site.commenters == site.home_page.commenters
   end
+  
+  def test_should_be_able_to_generate_a_validation_token_and_return_it
+    site = sites(:linkedin)
+    vtoken = site.new_validation_token
+    site.reload
+    assert !site.validation_token.blank?
+    assert site.validation_token == vtoken
+  end
+  
+  def test_should_not_reuse_validation_tokens
+    site = Site.first
+    tokens = []
+    expected = 5
+    expected.times { tokens << site.new_validation_token }
+    got = tokens.uniq.size
+    assert expected == got, "got #{got} instead of #{expected}"
+  end
+  
+  def test_should_generate_randomized_validation_tokens_for_sites
+    tokens = []
+    Site.all.each { |site| tokens << site.new_validation_token }
+    expected = Site.count
+    got = tokens.uniq.size
+    assert expected == got, "got #{got} instead of #{expected}"
+  end
+  
+  def test_should_update_validation_timestamp_when_generating_a_new_validation_token
+    site = sites(:linkedin)
+    site.new_validation_token
+    site.reload
+    recently = 1.minute.ago..1.minute.from_now
+    assert recently.include? site.validation_timestamp
+  end
+  
 end
