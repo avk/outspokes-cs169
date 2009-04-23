@@ -3,6 +3,8 @@ class Site < ActiveRecord::Base
   has_many :pages, :order => "pages.created_at ASC", :dependent => :destroy
   belongs_to :account
 
+  attr_protected :validation_token, :validation_timestamp
+
   validates_presence_of :account_id
   validates_associated :account
 
@@ -86,7 +88,9 @@ class Site < ActiveRecord::Base
   def new_validation_token
     now = Time.now
     new_token = Digest::MD5::hexdigest(self.url + '1nkt0m^' + rand.to_s + now.to_s)
-    update_attributes(:validation_token => new_token, :validation_timestamp => now)
+    self.validation_token = new_token
+    self.validation_timestamp = now
+    save
     self.validation_token
   end
   

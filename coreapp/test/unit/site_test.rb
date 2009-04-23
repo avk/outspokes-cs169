@@ -207,6 +207,21 @@ class SiteTest < ActiveSupport::TestCase
     assert expected == got, "got #{got} instead of #{expected}"
   end
   
+  def test_validation_token_attribute_should_not_be_accessible
+    site = create_site(:validation_token => 'abc123')
+    assert site.validation_token.nil?, "validation_token was set through Site.new"
+    site.update_attributes('validation_token' => 'acb123')
+    assert site.validation_token.nil?, "validation_token was set through update_attributes"
+  end
+  
+  def test_validation_timestamp_attribute_should_not_be_accessible
+    site = create_site(:validation_timestamp => 1.year.ago)
+    assert site.validation_timestamp.nil?, "validation_timestamp was set through Site.new"
+    site.update_attributes('validation_timestamp' => 1.year.ago)
+    assert site.validation_timestamp.nil?, "validation_timestamp was set through update_attributes"
+  end
+  
+  
   def test_should_update_validation_timestamp_when_generating_a_new_validation_token
     site = sites(:linkedin)
     site.new_validation_token
