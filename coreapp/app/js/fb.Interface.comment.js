@@ -93,11 +93,19 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree');
           var disagree = this.button(c, 'disagree');
+			
+			//admin's consensus statistics
+			var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
           
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
+
           consensus_div.append(agree);
           consensus_div.append(disagree);
+		
+		//if admin
+		//consensus_div.append(consensus_count);
+		
           markup.append(consensus_div);
         }
         return markup;
@@ -192,7 +200,9 @@
 		bar[0].setAttribute('id', 'bar_' + c_id);
 		cmt[0].setAttribute('id', 'body_' + c_id);
 		bar.append('<span class="commenter_name">'+ c.name +'</span>');
+		
 		bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
+
 		
 		bar.click(function(){ cmt.toggle(); });
     
@@ -203,6 +213,10 @@
 
 		cmt = this.consensus.build(c, cmt);
 
+		//admin only delete
+		var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
+		cmt.append(deleteCmt);
+		
       // set up reply actions
       cmt.append(this.reply.buildLink(c_id));
       cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');

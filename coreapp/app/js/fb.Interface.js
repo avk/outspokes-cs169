@@ -64,8 +64,7 @@
 
 	this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
  	var help_link = $('<a href="#">(?)</a>').attr('id',this.dom.widget.help);
-	var toggle_link = $('<a href="#">toggle</a>').attr('id',this.dom.widget.toggle);
-	this.topbar.append('<h1><a href="http://www.outspokes.com" target="_blank">outspokes y&#8216;all</a></h1>');
+	this.topbar.append('<h1><a href="http://www.outspokes.com" target="_blank">outspokes <em>alpha</em></a></h1>');
 	
 	help_link.click(function() {
 		var content = fb.i.widget_content;
@@ -80,9 +79,9 @@
 		}
 	});
 	
-	this.topbar.append(help_link);
+	this.main_window.append(help_link);
 
-	toggle_link.click(function() {
+	this.topbar.click(function() {
 		var content = fb.i.widget_content;
 		var help = fb.i.help_content;
 		var widget = fb.i.main_window;
@@ -96,8 +95,6 @@
 		}
 	});
 	
-	this.topbar.append(toggle_link);
-	
 	this.main_window.append(this.topbar);
 
 	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
@@ -108,7 +105,7 @@
 	var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
 	this.chead.append(comment_span);
 	this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');
-	this.chead.append('<a id="refresh" href="javascript:location.reload()">refresh</a>');
+	this.chead.append('<a id="refresh" href="javascript:location.reload()">refresh</a>'); /*fix*/
 	
 	this.set_num_comments = function(num_comments) {
 	  comment_span.text(num_comments + ' comments');
