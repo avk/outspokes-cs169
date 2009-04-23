@@ -7,11 +7,13 @@ class AdminPanel::CommentersControllerTest < ActionController::TestCase
     assert_template "admin_panel/invalid"
   end
 
-  test "should list commenters for a site" do
+  test "should list commenters for a site, excluding the admin" do
     site = sites(:linkedin)
     get :index, :site_id => site.id
     assert_template 'index'
-    assert assigns(:commenters) == site.commenters
+    expected = site.commenters.delete_if {|c| c.id == site.account_id }
+    got = assigns(:commenters)
+    assert got == expected, "got #{got.inspect} instead of #{expected.inspect}"
   end
   
   test "should not list anything for an invalid site" do

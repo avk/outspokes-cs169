@@ -2,7 +2,7 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
   
   # GET /admin_panel/:site_id/commenters
   def index
-    @commenters = @site.commenters
+    @commenters = @site.commenters.find(:all, :conditions => ["commenters.id != ?", @site.account_id])
   end
 
   # POST /admin_panel/:site_id/commenters
