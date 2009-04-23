@@ -94,6 +94,21 @@ class Site < ActiveRecord::Base
     self.validation_token
   end
   
+  def verify_validation_token(token)
+    if self.validation_token == token
+      # token 'age' discourages session fixation attacks
+      if self.validation_timestamp < 4.hours.ago
+        new_validation_token
+      else # not too old
+        self.validation_token
+      end
+    else
+      new_validation_token
+      nil
+    end
+  end
+  
+  
   def has_valid_home_page
     if !self.pages.first or !self.pages.first.valid?
       errors.add_to_base("Site must have a valid home_page to be valid")

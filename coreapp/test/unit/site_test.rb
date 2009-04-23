@@ -221,13 +221,55 @@ class SiteTest < ActiveSupport::TestCase
     assert site.validation_timestamp.nil?, "validation_timestamp was set through update_attributes"
   end
   
-  
   def test_should_update_validation_timestamp_when_generating_a_new_validation_token
     site = sites(:linkedin)
     site.new_validation_token
     site.reload
     recently = 1.minute.ago..1.minute.from_now
     assert recently.include? site.validation_timestamp
+  end
+  
+  def test_should_be_able_verify_validation_tokens
+    site = sites(:linkedin)
+    valid_token = site.new_validation_token
+    assert valid_token == site.verify_validation_token(valid_token)
+  end
+  
+  def test_should_be_able_to_sniff_out_bad_validation_tokens
+    site = sites(:linkedin)
+    invalid_token = 'total bullshit'
+    valid_token = site.new_validation_token
+    assert valid_token != site.verify_validation_token(invalid_token)
+    assert !site.verify_validation_token(invalid_token)
+  end
+
+  def test_should_regenerate_validation_token_if_not_verified
+    site = sites(:linkedin)
+    invalid_token = 'total bullshit'
+    valid_token = site.new_validation_token
+    old_timestamp = site.validation_timestamp
+    assert !site.verify_validation_token(invalid_token)
+    assert valid_token != site.validation_token
+    assert old_timestamp != site.validation_timestamp
+  end
+  
+  def test_should_not_regenerate_current_validation_tokens
+    site = sites(:linkedin)
+    valid_token = site.new_validation_token
+    timestamp = site.validation_timestamp
+    assert site.verify_validation_token(valid_token)
+    assert valid_token = site.validation_token
+    assert timestamp = site.validation_timestamp
+  end
+  
+  def test_should_regenerate_validation_token_if_more_than_4_hours_old
+    site = sites(:linkedin)
+    valid_token = site.new_validation_token
+    old_timestamp = 4.hours.ago - 1
+    site.validation_timestamp = old_timestamp
+    assert valid_token != site.verify_validation_token(valid_token)
+    assert valid_token != site.validation_token
+    assert old_timestamp != site.validation_timestamp
   end
   
 end
