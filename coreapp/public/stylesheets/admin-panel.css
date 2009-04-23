@@ -7,6 +7,18 @@ body {
 }
 
 /* commenters */
+#invited_message {
+    color: #666;
+    font-size: 1.2em;
+    margin: 5px 0;
+    padding: 0;
+}
+    #invited_message #invite_count {
+        color: #333;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
 #site_commenters {
     margin: 20px 0;
 }

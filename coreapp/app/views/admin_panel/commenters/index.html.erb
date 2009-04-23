@@ -1,4 +1,8 @@
-You've invited <%= pluralize(@commenters.size, 'person') %> to give feedback.
+<p id="invited_message">
+  <%- unless @commenters.empty? -%>
+    You've invited <strong id="invite_count"><%= pluralize(@commenters.size, 'person') %></strong> to give feedback.
+  <% end -%>
+</p>
 
 <%- unless @commenters.empty? -%>
   <ol id="site_commenters">

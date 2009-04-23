@@ -3,6 +3,7 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
   # GET /admin_panel/:site_id/commenters
   def index
     @commenters = @site.commenters.find(:all, :conditions => ["commenters.id != ?", @site.account_id])
+    flash[:warning] = "You haven't invited anyone to give feedback." if @commenters.empty?
   end
 
   # POST /admin_panel/:site_id/commenters
