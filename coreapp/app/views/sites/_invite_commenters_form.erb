@@ -1,0 +1,5 @@
+<% remote_form_for(site,  :url => invite_commenters_site_url(site)+'.js') do |f| %>
+  <%= label_tag 'emails', "Comma-separated email addresses:" %><br />
+  <%= text_area_tag :emails, '', :size => '50' %><br />
+  <%= f.submit 'Invite!' %>
+<% end %>

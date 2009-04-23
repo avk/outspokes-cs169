@@ -84,4 +84,13 @@ class SitesController < ApplicationController
     end
   end
   
+  def invite_commenters
+    @site = Site.find(params[:id])
+    puts "whoo hoo"
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  
 end
