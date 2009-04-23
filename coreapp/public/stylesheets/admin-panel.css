@@ -6,6 +6,38 @@ body {
     width: 600px;
 }
 
+/* commenters */
+#site_commenters {
+    margin: 20px 0;
+}
+
+.invited_commenter {
+    font-size: 1.5em;
+    padding: 5px;
+}
+.invited_commenter:hover {
+    background-color: #eee;
+}
+
+.commenter_email {
+    padding-left: 7px;
+}
+
+.remove_commenter {
+    float: right;
+    width: 50px;
+}
+    .remove_commenter a,
+    .remove_commenter a:link {
+        background-color: transparent;
+        color: #666;
+        text-decoration: none;
+    }
+    .remove_commenter a:hover {
+        color: red;
+    }
+
+/* error messages */
 .notice, .warning, .error {
     border: 1px solid;
     margin: 10px 0px;

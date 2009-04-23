@@ -1,26 +1,31 @@
+You've invited <%= pluralize(@commenters.size, 'person') %> to give feedback.
+
 <%- if @commenters.empty? -%>
   <em>None</em>
 <%- else -%>
   <ol id="site_commenters">
   <%- @commenters.each do |commenter| -%>
     <%- unless commenter == current_account -%>
-      <li>
-        <%= commenter.email %>
-        <%- if RAILS_ENV == "development" -%>
-          <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
-          <%= link_to final_url, final_url %>
-        <% end -%>
-        <%= link_to '[ Remove ]', 
-            admin_panel_uninvite_path(@site, commenter), 
-            :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
-            :method => :delete %>
+      <li class="invited_commenter">
+        <div class="remove_commenter">
+          <%= link_to 'x', 
+              admin_panel_uninvite_path(@site, commenter), 
+              :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
+              :method => :delete %>
+        </div>
+        <div class="commenter_email">
+          <%- if RAILS_ENV == "development" -%>
+            <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
+            <%= link_to commenter.email, final_url %>
+          <%- else -%>
+            <%= commenter.email %>
+          <% end -%>
+        </div>
       </li>
     <% end -%>
   <% end -%>
   </ol>
 <%- end -%>
-
-<hr />
 
 <h1>Invite more people to give feedback</h1>
 
