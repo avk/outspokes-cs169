@@ -1,5 +1,9 @@
-#admin-panel {
-    font-size: 13px;
+body {
+    border: 1px dashed red;
+    height: 400px;
+    margin: 0;
+    padding: 20px;
+    width: 600px;
 }
 
 .notice, .warning, .error {
@@ -8,7 +12,7 @@
     padding:15px 10px 15px 50px;
     background-repeat: no-repeat;
     background-position: 10px center;
-    width: 600px;
+    width: 500px;
 }
 .notice {
     color: #4F8A10;
