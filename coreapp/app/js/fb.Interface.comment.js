@@ -21,7 +21,7 @@
       disagree_bg_color   : 'red',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
-		cform 				: "comment_form",
+    	cform       				: "comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';
       },
@@ -48,7 +48,7 @@
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>'
       return $('<div id="' + id + '"></div>').append(formHTML);
-    }
+    };
     
     this.comments = $('<div id="comment_list"></div>');
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
@@ -93,19 +93,16 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree');
           var disagree = this.button(c, 'disagree');
-			
-			//admin's consensus statistics
-			var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
+    			//admin's consensus statistics
+    			var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
           
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
-
           consensus_div.append(agree);
           consensus_div.append(disagree);
 		
-		//if admin
-		//consensus_div.append(consensus_count);
-		
+      		//if admin
+      		//consensus_div.append(consensus_count);
           markup.append(consensus_div);
         }
         return markup;
@@ -145,10 +142,12 @@
       },
       // toggles the non-replying interface
       setupInterface  : function() {
-	
-		var replyButton = $('.' + this.dom.reply_links);
-		if (replyButton.attr("disabled")) { replyButton.attr("disabled", "false"); } else { replyButton.attr("disabled", "true"); }
-		
+    		var replyButton = $('.' + this.dom.reply_links);
+    		if (replyButton.attr("disabled")) { 
+    		  replyButton.attr("disabled", "false"); 
+  		  } else { 
+  		    replyButton.attr("disabled", "true"); 
+		    }
         $('#' + this.dom.cform).toggle();
       },
       // start replying to a comment
@@ -159,7 +158,7 @@
         var reply_form = this.dom.reply_form(c_id);
         var form = this.parent.buildCommentForm(reply_form, c_id);
         form.find("form").append('<input type="reset" value="Cancel" />');
-		form.find("form").attr('class','reply');
+    		form.find("form").attr('class','reply');
         form.find("form").submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
@@ -173,7 +172,7 @@
           fb.i.comment.reply.cancel(reply_form);
         });
         //$('#' + this.dom.reply_list(c_id)).before(form);
-		$('#' + this.dom.comment_form).append(form);
+        $('#' + this.dom.comment_form).append(form);
         
         form.find("textarea[name='content']").focus();
         // would be nice to also scroll to the comment form here like:
@@ -191,31 +190,30 @@
     };
     
     this.build = function (c) {
-		var rtn = $('<div></div>').css('width','100%');
-		var c_id = this.dom.comment_id(c.feedback_id);
-		var bar = $('<div class="cmt_bar"></div>');
-		var cmt = $('<div></div>');
-		rtn[0].setAttribute('id', c_id);
+  		var rtn = $('<div></div>').css('width','100%');
+  		var c_id = this.dom.comment_id(c.feedback_id);
+  		var bar = $('<div class="cmt_bar"></div>');
+  		var cmt = $('<div></div>');
+  		rtn[0].setAttribute('id', c_id);
 	
-		bar[0].setAttribute('id', 'bar_' + c_id);
-		cmt[0].setAttribute('id', 'body_' + c_id);
-		bar.append('<span class="commenter_name">'+ c.name +'</span>');
+  		bar[0].setAttribute('id', 'bar_' + c_id);
+  		cmt[0].setAttribute('id', 'body_' + c_id);
+  		bar.append('<span class="commenter_name">'+ c.name +'</span>');
 		
-		bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
+  		bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
 
 		
-		bar.click(function(){ cmt.toggle(); });
+  		bar.click(function(){ cmt.toggle(); });
     
-		rtn.append(bar);
-		rtn.append(cmt);
-	
+  		rtn.append(bar);
+  		rtn.append(cmt);
     	cmt.append('<p class="cmt_text">' + c.content + '</p>');
 
-		cmt = this.consensus.build(c, cmt);
+  		cmt = this.consensus.build(c, cmt);
 
-		//admin only delete
-		var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
-		cmt.append(deleteCmt);
+  		//admin only delete
+  		var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
+  		cmt.append(deleteCmt);
 		
       // set up reply actions
       cmt.append(this.reply.buildLink(c_id));
@@ -238,12 +236,12 @@
       }
     };
     
-    this.post_failed = function(c){};
+    this.post_failed = function(c) {};
     
     this.remove = function(c){
       c.build.remove();
     };
-  }
+  };
   
   function select_target() {
     $(this).html("Change target");
