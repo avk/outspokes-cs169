@@ -6,46 +6,61 @@ body {
     width: 600px;
 }
 
-/* commenters */
-#invited_message {
+/* pages & commenters */
+#invited_message,
+#pages_message {
     color: #666;
     font-size: 1.2em;
     margin: 5px 0;
     padding: 0;
 }
-    #invited_message #invite_count {
+    #invited_message #invite_count,
+    #pages_message #page_count {
         color: #333;
         font-size: 1.2em;
         font-weight: bold;
     }
 
-#site_commenters {
+#site_commenters,
+#site_pages {
     margin: 20px 0;
 }
 
-.invited_commenter {
+.invited_commenter,
+.site_page {
     font-size: 1.5em;
     padding: 5px;
 }
-.invited_commenter:hover {
+.invited_commenter:hover,
+.site_page:hover {
     background-color: #eee;
 }
 
-    .commenter_email {
+    .commenter_email,
+    .page_details {
         padding-left: 7px;
     }
+        .page_details .latest_feedback {
+            color: #999;
+            display: block;
+            font-size: 60%;
+        }
 
-    .remove_commenter {
+    .remove_commenter,
+    .remove_page {
         float: right;
         width: 50px;
     }
         .remove_commenter a,
-        .remove_commenter a:link {
+        .remove_commenter a:link,
+        .remove_page a,
+        .remove_page a:link {
             background-color: transparent;
             color: #666;
             text-decoration: none;
         }
-        .remove_commenter a:hover {
+        .remove_commenter a:hover,
+        .remove_page a:hover {
             color: red;
         }
 
