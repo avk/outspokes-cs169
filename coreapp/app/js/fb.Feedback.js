@@ -61,8 +61,8 @@
     } else if (typeof options !== "undefined") {
       callback = options;
     }
-    if (fb.env.admin()) {
-      params.validation_token = fb.env.admin();
+    if (!_fb.first() && _fb.admin()) {
+      params.validation_token = _fb.admin();
     }
 
     if (callback) {
@@ -94,7 +94,7 @@
    * @return {Array[Feedback]} An array of the new feedbacks
    */
   fb.Feedback.get_callback = function (data, render) {
-    if (!(fb.env.authorized() || data.authorized)) {
+    if (!(_fb.authorized() || data.authorized)) {
       return null;
     }
     var i, j;

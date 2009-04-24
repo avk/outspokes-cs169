@@ -129,5 +129,9 @@ class Site < ActiveRecord::Base
     end
     true
   end
+  
+  def admin_url
+    home_page.url.sub(/\/$/i, '') + '?url_token=' + home_page.invites.find_by_commenter_id(account).url_token
+  end
 
 end

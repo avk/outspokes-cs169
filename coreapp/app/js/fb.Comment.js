@@ -35,7 +35,7 @@
   };
 
   fb.Comment.prototype.giveOpinion = function(opinion) {
-    if (!fb.env.authorized()) {
+    if (!_fb.authorized()) {
       return;
     }
     var data = {
@@ -73,7 +73,7 @@
   fb.Comment.unrendered = {};
 
   fb.Comment.post = function (content, target, name) {
-    if (!fb.env.authorized()) {
+    if (!_fb.authorized()) {
       return null;
     }
     var data = {

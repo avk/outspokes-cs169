@@ -1,2 +1,5 @@
-page.call "Effect.BlindUp", "section2"
-page.call "Effect.BlindDown", "section3"
+page << "Element.removeClassName('sec2', 'active')"
+page << "Element.addClassName('sec2','completed')"
+page.replace_html('section3', :partial => 'invite_commenters_form', :locals=> { :site => @site })
+page << "Effect.BlindUp( 'section2', {duration: 0.5})";
+page << "Effect.BlindDown('section3', {duration: 0.5})";

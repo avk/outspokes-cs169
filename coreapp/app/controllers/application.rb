@@ -39,7 +39,9 @@ class ApplicationController < ActionController::Base
     
     unless emails[:illegal].empty?
       flash[:error] = "Could not invite #{emails[:illegal].join(', ')}"
+      return false
     end
+    return true
   end
   
   
