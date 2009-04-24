@@ -1,3 +1,4 @@
+
 page.replace_html('section3', render(:partial => 'invite_commenters_form', :locals=> { :site => @site }))
 page.call "Effect.BlindUp", "section2"
 page.call "Effect.BlindDown", "section3"

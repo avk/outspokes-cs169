@@ -1,3 +1,7 @@
+page.replace_html('flash_notice', flash[:notice]); 
+page.replace_html('flash_warning', flash[:warning]); 
+page.replace_html('flash_error', flash[:error]);
+flash.discard
 page.replace_html('section2', render(:partial => 'check_include_form', :locals=> { :site => @site }))
 # page.replace_html('section2', form)
 page.call "Effect.BlindUp", "section1"
