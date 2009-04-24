@@ -15,9 +15,8 @@
       </div>
       <div class="page_details">
         <%= link_to URI.parse(page.url).path, page.url, :class => 'page_url' %>
-        <span class="latest_feedback"> 
-          <%= relative_date page.latest_feedback %>
-          @
+        <span class="latest_feedback">
+          <%= relative_date Date.parse(page.latest_feedback) %> @ 
           <%= prettier_time Time.parse(page.latest_feedback) %>
         </span>
       </div>
