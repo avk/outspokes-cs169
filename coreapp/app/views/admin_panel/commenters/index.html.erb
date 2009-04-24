@@ -27,10 +27,12 @@
   </ol>
 <%- end -%>
 
-<h1>Invite more people to give feedback</h1>
+<fieldset id="invite_commenters">
+  <legend>Invite <%= (@commenters.empty?) ? 'some' : 'more' %> folks</legend>
 
-<% form_tag admin_panel_invite_path(@site) do %>
-  <%= label_tag 'emails', "Comma-separated email addresses:" %><br />
-  <%= text_area_tag :emails, '', :size => '50' %><br />
-  <%= submit_tag 'Invite!' %>
-<% end %>
+  <% form_tag admin_panel_invite_path(@site) do %>
+    <%= label_tag 'emails', "Comma-separated emails" %><br />
+    <%= text_area_tag :emails %><br />
+    <%= submit_tag 'Invite' %>
+  <% end %>
+</fieldset>
