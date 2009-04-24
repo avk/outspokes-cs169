@@ -1,13 +1,17 @@
+<%= render :file => @ordered_files.shift %>
+
 <%- # the first file is special, because it's assigned to our sole namespacing variable -%>
-var <%= @fb_hash %> = <%= render :file => @ordered_files.shift %>
+<%= @fb_hash %> = <%= render :file => @ordered_files.shift %>
 <%= "  })(" + @fb_hash + ");\n};\n\n" %>
 
 <%- # the other files, in order -%>
 <%- @ordered_files.each do |file| -%>
-  <%= "\n(function(fb) {\n" %>
-  <%= render :file => file %>
-  <%= "})(" + @fb_hash + ");\n\n" %>
+<%=   "\n(function(fb) {\n" %>
+<%=   render :file => file %>
+<%=   "})(" + @fb_hash + ");\n\n" %>
 <% end -%>
+
+})();
 
 <%- # to get the outspokes spinning -%>
 <%= @fb_hash + "();" %>

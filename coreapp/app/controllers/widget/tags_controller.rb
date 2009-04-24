@@ -1,4 +1,4 @@
-class Widget::TagsController < ApplicationController
+class Widget::TagsController < Widget::WidgetController
   
   # POST /pages/1/feedbacks/1/add_tag
   # def create
