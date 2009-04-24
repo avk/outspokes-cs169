@@ -36,10 +36,8 @@ class SitesController < ApplicationController
         #}
       rescue
         flash[:error] = "Could not create site."
-        respond_to do |format|
-          format.html { render :action => "new" }
-          format.js { render :action => ajax_erros }
-        end
+        format.html { render :action => "new" }
+        format.js { render :action => :ajax_errors }
       end
     end
   end
@@ -65,9 +63,7 @@ class SitesController < ApplicationController
         format.js
       end
     else
-      respond_to do |format|
-        render :action => ajax_errors
-      end
+        render :action => :ajax_errors
     end
   end
   

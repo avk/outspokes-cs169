@@ -80,11 +80,28 @@ h1#company_name {
   #vertical_container h3, #vertical_container div {
     padding: .5em; }
   #vertical_container h3 {
-    background-color: #6FFF82;
     font-size: 1.3em;
-    font-weight: bold; }
+    font-weight: bold;
+    height: 25px;
+    border-bottom: 1px solid #444; }
   #vertical_container div {
     background-color: white; }
+  #vertical_container div.checkmark {
+    width: 25px;
+    height: 25px;
+    float: left;
+    padding: 0;
+    background-color: transparent; }
+  #vertical_container h3.inactive {
+    background-color: #999;
+    color: #666; }
+  #vertical_container h3.completed {
+    background-color: #6FFF82;
+    color: #184F20; }
+    #vertical_container h3.completed div.checkmark {
+      background-image: url(/images/checkmark.gif); }
+  #vertical_container h3.active {
+    background-color: #9BBDCF; }
 
 #footer {
   background-color: #eee; }

@@ -16,20 +16,26 @@
   
 %h2 Follow these three easy steps to add your site
 #vertical_container
-  %h3 Step 1: Tell us where your site lives
+  %h3#sec1.active
+    .checkmark
+    Step 1: Tell us where your site lives
   #section1{}
-    - remote_form_for(@site,  :url => sites_url+'.js') do |f|
+    - remote_form_for(@site) do |f|
       = f.text_field :url
       = f.check_box :public
       = f.label :public, 'Make my site available for public feedback'
       = f.submit "Create My Site"
-  %h3 Step 2: Embed our simple javascript in your site.
+  %h3#sec2.inactive 
+    .checkmark
+    Step 2: Embed our simple javascript in your site.
   #section2{:style => "display: none"}
     =# This is filled in with the _check_include_form partial by the create.js.rjs view.
-  %h3 Step 3: Tell us who you want to get feedback from
+  %h3#sec3.inactive 
+    .checkmark
+    Step 3: Tell us who you want to get feedback from
   #section3{:style => "display: none"}
     =# This is filled in with the _invite_commenters_form by the check_include.js.rjs view.
-  %h3 Done!
+  %h3#sec4.inactive Done!
   #section4{:style => "display: none"}
     =# This is filled in with the _link_to_site partial
   
