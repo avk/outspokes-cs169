@@ -177,7 +177,7 @@ class Test::Unit::TestCase
   def validate_post_fail
     json_string = @response.body.match(/.*window.name='(.+)'/)[1]
     obj = JSON.parse(json_string)
-    assert obj["authorized"] == false, "Should return json with authorized:false if post fails. Instead got: #{obj.inspect}"
+    assert obj["success"] == false, "Should return JSON with success:false if post fails. Instead got: #{obj.inspect}"
   end
   
   # no callback when using windowname

@@ -96,9 +96,9 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
   end
   
   test "should allow people to agree with a feedback" do
-    invite = invites(:one)
+    invite = invites(:two)
     callback = 'jsfeed'
-    feedback = feedbacks(:two)
+    feedback = feedbacks(:one)
     assert invite.commenter_id != feedback.commenter_id
     opinion = 'agree'
     
@@ -111,9 +111,9 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
   end
 
   test "should allow people to disagree with a feedback" do
-    invite = invites(:one)
+    invite = invites(:two)
     callback = 'jsfeed'
-    feedback = feedbacks(:two)
+    feedback = feedbacks(:one)
     assert invite.commenter_id != feedback.commenter_id
     opinion = 'disagree'
     
