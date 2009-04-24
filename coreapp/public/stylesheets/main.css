@@ -47,7 +47,7 @@ h1#company_name {
   color: green; }
 
 #sites_table {
-  width: 100%; }
+  width: 73%; }
   #sites_table th {
     font-size: 1.5em;
     font-weight: bold;
@@ -74,6 +74,17 @@ h1#company_name {
     #account_block fieldset #account_email {
       margin: 2px 0;
       width: 90%; }
+
+#vertical_container {
+  width: 75%; }
+  #vertical_container h3, #vertical_container div {
+    padding: .5em; }
+  #vertical_container h3 {
+    background-color: #6FFF82;
+    font-size: 1.3em;
+    font-weight: bold; }
+  #vertical_container div {
+    background-color: white; }
 
 #footer {
   background-color: #eee; }

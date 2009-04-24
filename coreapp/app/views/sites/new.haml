@@ -16,22 +16,22 @@
   
 %h2 Follow these three easy steps to add your site
 #vertical_container
-  %h3.accordion_toggle Step 1: Tell us where your site lives
-  .accordion_content#section1{:style => "display: inline"}
+  %h3 Step 1: Tell us where your site lives
+  #section1{}
     - remote_form_for(@site,  :url => sites_url+'.js') do |f|
       = f.text_field :url
       = f.check_box :public
       = f.label :public, 'Make my site available for public feedback'
       = f.submit "Create My Site"
-  %h3.accordion_toggle Step 2: Embed our simple javascript in your site.
-  .accordion_content#section2{:style => "display: none"}
+  %h3 Step 2: Embed our simple javascript in your site.
+  #section2{:style => "display: none"}
     =# This is filled in with the _check_include_form partial by the create.js.rjs view.
-  %h3.accordion_toggle Step 3: Tell us who you want to get feedback from
-  .accordion_content#section3{:style => "display: none"}
+  %h3 Step 3: Tell us who you want to get feedback from
+  #section3{:style => "display: none"}
     =# This is filled in with the _invite_commenters_form by the check_include.js.rjs view.
-  %h3.accordion_toggle Done!
-  .accordion_content#section4
-    =# This is filled in with the _....
+  %h3 Done!
+  #section4{:style => "display: none"}
+    =# This is filled in with the _link_to_site partial
   
 = link_to "Take me back to my dashboard", root_url
 
