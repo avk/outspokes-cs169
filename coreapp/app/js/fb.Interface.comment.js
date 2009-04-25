@@ -204,7 +204,7 @@
 		cmt[0].setAttribute('id', 'body_' + c_id);
 		bar.append('<span class="commenter_name">'+ c.name +'</span>');
 		
-		bar.append('<span class="cmt_date">' + new Date(c.timestamp) + '</span>');
+		bar.append('<span class="cmt_date">' + fb.get_timestamp(c.timestamp) + '</span>');
 
 		
 		bar.click(function(){ cmt.toggle(); });

@@ -122,6 +122,42 @@
     }
     return str;
   };
+
+  /**
+   * For a timestamp less than 60 minutes ago, returns a string like
+   *              45 minutes ago
+   * Otherwise, formats the time as something like
+   *              2009/04/24 3:14 PM
+   */
+  fb.get_timestamp = (function() {
+    function _make_length (num, len) {
+      var rtn = num.toString();
+      while (rtn.length < len) {
+        rtn = "0" + rtn;
+      }
+      return rtn;
+    }
+    return function (seconds) {
+      var d = new Date(seconds);
+      var diff_min = Math.ceil(((new Date()) - d)/1000/60);
+      var rtn = "";
+      if (diff_min < 60) {
+        rtn += diff_min + " ";
+        rtn += (diff_min == 1) ? "minute" : "minutes";
+        rtn += " ago";
+      } else {
+        rtn += d.getFullYear() + "/";
+        rtn += _make_length(d.getMonth(), 2) + "/";
+        rtn += _make_length(d.getDate(), 2) + " ";
+        rtn += (d.getHours() % 12 == 0) ? 12 : (d.getHours() % 12);
+        rtn += ":";
+        rtn += _make_length(d.getMinutes(), 2);
+        rtn += " ";
+        rtn += (d.getHours() < 12) ? "AM" : "PM";
+      }
+      return rtn;
+    };
+  })();
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
