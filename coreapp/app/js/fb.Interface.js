@@ -41,7 +41,7 @@
         admin_panel.append(close_link);
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
-          src : fb.env.admin_panel_address(_fb.site_id()),
+          src : fb.env.admin_panel_address,
           width : '100%',
           height : '100%', 
           frameborder : 0,

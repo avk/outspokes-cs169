@@ -14,14 +14,11 @@ function() {
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
-    // must be a function since the actual site id (i.e. _fb.site_id()) 
-    // isn't available at this point in execution
-    fb.env.admin_panel_address = function(site_id) {
-      return "<%= WIDGET_DOMAIN %>admin_panel/" + site_id + "/pages";
-    }
+    // will be set properly in the callback if authorized as the admin
+    fb.env.admin_panel_address = null;
 
     // DO NOT USE THIS!!!!!
-    // This is only for convenience purposes, and should never be
+    // This is only for convenience in testing, and should never be
     // using in the JS
     fb.env.get = function (key) {
       return _fb[key]();
@@ -49,6 +46,7 @@ function() {
           fb.cookie('fb_hash_admin_validation_token', _fb.admin());
         }
         _fb.site_id.set(data.site_id);
+        fb.env.admin_panel_address = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/pages";
       }
 
       if (fb.env.url_token === "") {
