@@ -1,4 +1,10 @@
 (function() {
+  if (window.frameElement) {
+    if (window.frameElement.id == 'outspokes_admin_panel_iframe') {
+      top.location.replace(window.location.href);
+      return;
+    }
+  }
 
   var _setter = function (default_value) {
     return (function() {

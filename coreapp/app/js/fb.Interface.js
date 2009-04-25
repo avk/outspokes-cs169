@@ -24,6 +24,7 @@
 		toggle: 'toggle',
       },
       admin   : {
+        iframe  : 'outspokes_admin_panel_iframe',
         panel   : 'outspokes_admin_panel',
         open    : 'open_admin_panel',
         close   : 'close_admin_panel',
@@ -41,6 +42,7 @@
         admin_panel.append(close_link);
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
+          id : this.dom.admin.iframe,
           src : fb.env.admin_panel_address,
           width : '100%',
           height : '100%', 
