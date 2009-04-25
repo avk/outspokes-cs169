@@ -24,6 +24,7 @@
 		toggle: 'toggle',
       },
       admin   : {
+        iframe  : 'outspokes_admin_panel_iframe',
         panel   : 'outspokes_admin_panel',
         open    : 'open_admin_panel',
         close   : 'close_admin_panel',
@@ -36,11 +37,12 @@
       build : function(widget) {
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
-        var close_link = $("<a href='#'>x</a>").attr('id',this.dom.admin.close);
+        var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
         close_link.click(this.hide);
         admin_panel.append(close_link);
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
+          id : this.dom.admin.iframe,
           src : fb.env.admin_panel_address,
           width : '100%',
           height : '100%', 
