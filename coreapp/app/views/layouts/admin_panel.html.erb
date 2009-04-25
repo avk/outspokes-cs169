@@ -14,7 +14,7 @@
           <% [{ :text => 'Pages', :url => admin_panel_site_pages_path(@site) },
               { :text => 'Commenters', :url => admin_panel_commenters_path(@site) }].each do |link| -%>
               <li>
-                <%= link_to_unless_current (link[:text], link[:url]) do 
+                <%= link_to_unless_current(link[:text], link[:url]) do 
                       '<span class=\'current\'>' + link[:text] + '</span>'
                     end %>
               </li>

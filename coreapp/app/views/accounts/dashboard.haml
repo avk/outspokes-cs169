@@ -9,9 +9,7 @@
   - else
     - for site in @sites
       %tr
-        %td= site.name
-        %td= link_to site.admin_url.split('?')[0], site.admin_url
-        %td= link_to 'Admin Panel', admin_panel_site_pages_path(site)
+        %td= link_to h(site.name), site.admin_url
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
         
   %tr
