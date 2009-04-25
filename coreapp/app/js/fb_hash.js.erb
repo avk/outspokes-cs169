@@ -43,6 +43,7 @@ function() {
         if (typeof _fb.admin() === "string") {
           fb.cookie('fb_hash_admin_validation_token', _fb.admin());
         }
+        _fb.site_id.set(data.site_id);
       }
 
       if (fb.env.url_token === "") {
@@ -60,7 +61,14 @@ function() {
 
     if (!_admin_validation_token && _wants_admin) {
       fb.$(function() {
-        var login_panel = fb.$('<div></div>');
+        var login_panel = fb.$('<div></div>').css({
+          'position': 'fixed',
+          'top': '0%',
+          'left': '0%',
+          'height': '100%',
+          'width': '100%',
+          'z-index': '1001'
+        });
         login_panel.append(fb.$('<div></div>').css({
           'background-color': 'black',
           'color': 'transparent',
@@ -72,7 +80,7 @@ function() {
           'position': 'absolute',
           'top': '0%',
           'width': '100%',
-          'z-index': '1001'
+          'z-index': '1002'
         }));
         login_panel.append(fb.$('<div></div>').css({
           'background-color': 'white',
@@ -81,13 +89,13 @@ function() {
           'height': '25%',
           'width': '25%',
           'top': '37.5%',
-          'left': '37.5%',
+          'left': '36.5%',
           'margin': '0',
           'overflow': 'hidden',
           'padding': '5px',
           'position': 'absolute',
           'opacity': '1.0',
-          'z-index': '1002'
+          'z-index': '1003'
         }));
 
         var form = fb.$('<form onsubmit="return false;"></form>');

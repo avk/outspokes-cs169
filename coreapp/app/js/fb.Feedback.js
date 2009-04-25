@@ -61,8 +61,11 @@
     } else if (typeof options !== "undefined") {
       callback = options;
     }
-    if (!_fb.first() && _fb.admin()) {
+    if (_fb.admin()) {
       params.validation_token = _fb.admin();
+      if (_fb.site_id()) {
+        params.site_id = _fb.site_id();
+      }
     }
 
     if (callback) {
