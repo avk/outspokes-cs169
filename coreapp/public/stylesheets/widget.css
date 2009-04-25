@@ -39,29 +39,32 @@ version: 3.0.0pr2
 }
 #outspokes_admin_panel {
     background-color: white;
-    border: 16px solid #eee;
+    border: 10px solid #ddd;
     color: black;
     display: none;
     height: 50%;
     left: 25%;
     margin: 0;
-    overflow: hidden;
     padding: 5px;
-    position: absolute;
+    position: fixed;
     top: 25%;
     width: 50%;
     z-index:1002;
 }
     #outspokes_admin_panel a#close_admin_panel,
     #outspokes_admin_panel a#close_admin_panel:link {
-        background-color: transparent;
-        color: #333;
-        font-family: Helvetica;
+        background-image: url(/images/x_icon_40x40.png);
+        display: block;
+        float: right;
+        font-family: Helvetica, sans-serif;
         font-size: 2em;
+        height: 40px;
         position: absolute;
-        right: 0;
+        right: -30px;
         text-decoration: none;
-        top: 0;
+        top: -30px;
+        width: 40px;
+        z-index: 1003;
     }
     #outspokes_admin_panel a#close_admin_panel:visited {
         color: #333;
