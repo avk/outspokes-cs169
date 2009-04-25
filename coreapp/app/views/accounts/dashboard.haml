@@ -10,7 +10,6 @@
     - for site in @sites
       %tr
         %td= link_to h(site.name), site.admin_url
-        %td= link_to 'Admin Panel', admin_panel_site_pages_path(site)
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
         
   %tr
