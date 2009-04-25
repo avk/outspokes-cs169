@@ -4,6 +4,12 @@ class SessionsController < ApplicationController
   # render new.rhtml
   def new
   end
+  # 
+  # def cancel_login
+  #   respond_to do |format|
+  #     format.html { render :partial => '/accounts/account_bar' }
+  #   end
+  # end
 
   def create
     logout_keeping_session!
@@ -12,7 +18,7 @@ class SessionsController < ApplicationController
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
-      # reset_session
+      reset_session
       self.current_account = account
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag

@@ -6,6 +6,11 @@ version: 3.0.0pr2
 */
 #outspokes html{color:#000;background:#FFF;}#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}#outspokes table{border-collapse:collapse;border-spacing:0;}#outspokes fieldset,#outspokes img{border:0;}#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}#outspokes li{list-style:none;}#outspokes caption,#outspokes th{text-align:left;}#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}#outspokes q:before,#outspokes q:after{content:'';}#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}#outspokes sup{vertical-align:text-top;}#outspokes sub{vertical-align:text-bottom;}#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}#outspokes input,#outspokes textarea,#outspokes select{*font-size:100%;}#outspokes legend{color:#000;}
 
+#outspokes {
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
 /* outermost wrapper for our widget */
 #outspokes {
 	width: 100%;
@@ -13,8 +18,7 @@ version: 3.0.0pr2
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
-	border-top: 2px dotted #111;
-	height: 200px;
+	height: 220px;
 }
 
 /* admin panel, excluded from the wrapper because it overlays everything */
@@ -67,16 +71,12 @@ version: 3.0.0pr2
 /* all other styles must be faux-scoped with our widget wrapper */
 
 #outspokes #new_comment, #outspokes #comment_list {
-	height: 175px;
-}
-
-
-#outspokes #topbar {
-	height: 25px;
+	height: 180px;
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
 	color: beige;
+	margin: 0 10px;
 }
 
 #outspokes a {
@@ -97,31 +97,115 @@ version: 3.0.0pr2
 	overflow-x: hidden;
 }
 
+
+
+#outspokes #comment_list div {
+	padding: 5px;
+	border: 1px solid #111;
+	border-collapse: collapse;
+}
+
+#outspokes #comment_list div * {
+	border: none;
+}
+
+#outspokes #comment_list button {
+	border: 1px solid;
+	cursor: pointer;
+	margin: 0 5px;
+}
+
+#outspokes #comment_list .cmt_bar {
+	background-color: #DDD;
+	border-bottom: 3px solid #CCC;
+	height: 20px;
+	padding: 0 3%;
+	cursor: pointer;
+}
+
+#outspokes #comment_list .commenter_name {
+	font-weight: bold;
+	float: left;
+}
+
+#outspokes #comment_list .cmt_date {
+	font-size: 0.8em;
+	float: right;
+	margin-right: 1%;
+}
+
+#outspokes #comment_list .cmt_text {
+	clear: both;
+}
+
+#outspokes #comment_list .cns_buttons {
+	float: right;
+	padding: 0px;
+	margin: -2% 3%;
+}
+
+#outspokes #comment_list .cns_buttons span{
+	float: left;
+	padding: 0px;
+	margin: -20% 3%;
+}
+
 #outspokes #topbar {
 	background-color: #111;
-	border-bottom: 2px dotted beige;
+	cursor: pointer;
+	height: 23px;
 }
 
 #outspokes #topbar h1 {
 	display: inline;
-	margin-left: 3%;
+	margin-left: 10px;
 	font-weight: bold;
-	font-size: 1.6em;
-	height: 25px;
+	height: 20px;
 }
 
 #outspokes #refresh {
-	position: relative;
-	right: 40%;
+	color: beige;
+	margin-left: 10px;
 }
 
 #outspokes #comment_form {
-	margin-top: -20px;
+	float: right;
+	margin-right: 3%;
 }
 
-#outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
+#outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
 }
+#outspokes #topbar #help {
+	position: absolute;
+	right: 0px;
+	color: beige;
+	background-color: #111;
+	height: 23px;
+}
 
-#outspokes .comment-reply {
+#outspokes #help {
+	float: right;
+	color: beige;
+	margin-right: 3%;
+}
+
+.hide {
+	display: none;
+}
+
+#outspokes em {
+	font-style: italic;
+}
+
+#outspokes #comments_topbar {
+	height: 22px;
+	background: #222;
+	color: beige;
+	padding-left: 3%;
+}
+
+#outspokes #comments_filter {
+	height: 20px;
+	margin-left: 10px;
 }

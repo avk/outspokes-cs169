@@ -89,6 +89,75 @@
       return false;
     }
   };
+
+  fb.find_fb = function() {
+    var possible = [];
+    var stuff = [];
+    for (var i in window) {
+      if (i.search("fb") === 0) {
+        possible.push(i);
+      }
+    }
+
+    var correct = [];
+    for (var i in possible) {
+      if (window[possible[i]] === fb) {
+        correct.push(possible[i]);
+      }
+    }
+
+    fb.assert(correct.length === 1, "There should be only one variable that matches fb");
+    return correct[0];
+  };
+
+  fb.rand_string = function (len) {
+    if (!(len > 0)) {
+      return "";
+    }
+    var vals = "abcdefghijklmnopqrstuvwxyz0123456789".split("");
+    var str = vals[Math.floor(Math.random()*25)];
+    len -= 1;
+    for (len; len > 0; len--) {
+      str += vals[Math.floor(Math.random()*35)];
+    }
+    return str;
+  };
+
+  /**
+   * For a timestamp less than 60 minutes ago, returns a string like
+   *              45 minutes ago
+   * Otherwise, formats the time as something like
+   *              2009/04/24 3:14 PM
+   */
+  fb.get_timestamp = (function() {
+    function _make_length (num, len) {
+      var rtn = num.toString();
+      while (rtn.length < len) {
+        rtn = "0" + rtn;
+      }
+      return rtn;
+    }
+    return function (seconds) {
+      var d = new Date(seconds);
+      var diff_min = Math.ceil(((new Date()) - d)/1000/60);
+      var rtn = "";
+      if (diff_min < 60) {
+        rtn += diff_min + " ";
+        rtn += (diff_min == 1) ? "minute" : "minutes";
+        rtn += " ago";
+      } else {
+        rtn += d.getFullYear() + "/";
+        rtn += _make_length(d.getMonth(), 2) + "/";
+        rtn += _make_length(d.getDate(), 2) + " ";
+        rtn += (d.getHours() % 12 == 0) ? 12 : (d.getHours() % 12);
+        rtn += ":";
+        rtn += _make_length(d.getMinutes(), 2);
+        rtn += " ";
+        rtn += (d.getHours() < 12) ? "AM" : "PM";
+      }
+      return rtn;
+    };
+  })();
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
@@ -100,6 +169,14 @@
       }
     }
     return true;
+  };
+  
+  fb.getProperties = function(obj) {
+    var props = [];
+    for (var x in obj) {
+      props.push(x);
+    }
+    return props;
   };
 
   fb.isString = function (x) {
@@ -118,8 +195,4 @@
 
   fb.assert_false = function (cond, msg) {
     return fb.assert(cond === false, msg);
-  };
-  
-  fb.assertTrue = function (cond, msg) {
-    return fb.assert(cond === true, msg);
   };

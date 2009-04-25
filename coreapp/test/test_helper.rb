@@ -162,4 +162,92 @@ class Test::Unit::TestCase
   end
   
   
+  ### ACTUAL TEST HELPER METHODS ####
+  def validate_json(args)
+    callback = args.delete(:callback)
+    
+    # make sure the response is wrapped in the callback
+    assert @response.body.match("^#{callback}\\(\\{"), "Expecting callback #{callback} but it wasn't found!"
+    
+    # get at just the JSON data (i.e. strip the JS callback wrapping it)
+    json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
+    validate_json_vals(json, args)
+  end
+
+  def get_json(callback)
+    # make sure the response is wrapped in the callback
+    assert @response.body.match("^#{callback}\\(\\{"), "Expecting callback #{callback} but it wasn't found!"
+    
+    # get at just the JSON data (i.e. strip the JS callback wrapping it)
+    json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
+    JSON.parse(json)
+  end
+  
+  def validate_post_fail
+    json_string = @response.body.match(/.*window.name='(.+)'/)[1]
+    obj = JSON.parse(json_string)
+    assert obj["success"] == false, "Should return JSON with success:false if post fails. Instead got: #{obj.inspect}"
+  end
+  
+  # no callback when using windowname
+  def validate_windowname(args)
+     json_string = @response.body.match(/.*window.name='(.+)'/)[1]
+     validate_json_vals(json_string, args)
+  end
+  
+  def validate_json_vals(json_string, intended)
+    # e.g. assert json['authorized'] == true
+    json = JSON.parse(json_string)
+    intended.each do |field_name, field_value|
+      assert json[field_name.to_s] == field_value, "#{field_name} is set to #{json[field_name.to_s].inspect} instead of #{field_value.inspect}"
+    end
+  end
+  
+  # from: http://www.quackit.com/javascript/javascript_reserved_words.cfm
+  def js_keywords
+    %w(
+    break continue do for import new this void
+    case default else function in return typeof while
+    comment delete export if label switch var with
+    abstract implements protected
+    boolean instanceOf public
+    byte int short
+    char interface static
+    double long synchronized
+    false native throws
+    final null transient
+    float package true
+    goto private
+    catch enum throw
+    class extends try
+    const finally
+    debugger super
+    alert eval Link outerHeight scrollTo
+    Anchor FileUpload location outerWidth Select
+    Area find Location Packages self
+    arguments focus locationbar pageXoffset setInterval
+    Array Form Math pageYoffset setTimeout
+    assign Frame menubar parent status
+    blur frames MimeType parseFloat statusbar
+    Boolean Function moveBy parseInt stop
+    Button getClass moveTo Password String
+    callee Hidden name personalbar Submit
+    caller history NaN Plugin sun
+    captureEvents History navigate print taint
+    Checkbox home navigator prompt Text
+    clearInterval Image Navigator prototype Textarea
+    clearTimeout Infinity netscape Radio toolbar
+    close innerHeight Number ref top
+    closed innerWidth Object RegExp toString
+    confirm isFinite onBlur releaseEvents unescape
+    constructor isNan  onError Reset untaint
+    Date java onFocus resizeBy unwatch
+    defaultStatus JavaArray onLoad resizeTo valueOf
+    document JavaClass onUnload routeEvent watch
+    Document JavaObject open scroll window
+    Element JavaPackage opener scrollbars Window
+    escape length Option scrollBy
+    )
+  end
+  
 end

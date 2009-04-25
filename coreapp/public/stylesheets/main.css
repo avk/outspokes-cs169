@@ -1,6 +1,110 @@
-tr blockquote {float:right; margin: 0; font-style:oblique;}
+body {
+  width: 100%;
+  height: 100%; }
 
-.even {background-color: #AFC5FF;}
-.odd {background-color: #EFFFAF;}
+tr blockquote {
+  float: right;
+  margin: 0;
+  font-style: oblique; }
 
-#login_bar {border: 1px solid #666; padding: .5em; width: 20em;} 
+.even {
+  background-color: #AFC5FF; }
+
+.odd {
+  background-color: #EFFFAF; }
+
+#header {
+  background-color: #999999;
+  height: 80px; }
+
+#branding {
+  float: left; }
+
+h1#company_name {
+  font-size: 2em; }
+
+#login_bar {
+  float: right; }
+
+#main_content, #header, #footer {
+  width: 80%;
+  min-width: 740px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1em;
+  position: relative; }
+
+#main_content {
+  background-color: #bbb; }
+
+#flash_error {
+  color: red; }
+
+#flash_warning {
+  color: yellow; }
+
+#flash_notice {
+  color: green; }
+
+#sites_table {
+  width: 73%; }
+  #sites_table th {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 1em; }
+  #sites_table td {
+    padding: .5em;
+    border: 1px solid #999; }
+
+#account_block {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 25%;
+  margin: 1em;
+  background-color: #B3C9EF; }
+  #account_block form {
+    padding: 5%;
+    width: 90%; }
+  #account_block fieldset {
+    width: 100%; }
+    #account_block fieldset legend {
+      font-size: 1.2em;
+      font-weight: bold; }
+    #account_block fieldset #account_email {
+      margin: 2px 0;
+      width: 90%; }
+
+#vertical_container {
+  width: 75%; }
+  #vertical_container h3, #vertical_container div {
+    padding: .5em; }
+  #vertical_container h3 {
+    font-size: 1.3em;
+    font-weight: bold;
+    height: 25px;
+    border-bottom: 1px solid #444; }
+  #vertical_container div {
+    background-color: white; }
+  #vertical_container div.checkmark {
+    width: 25px;
+    height: 25px;
+    float: left;
+    padding: 0;
+    background-color: transparent; }
+  #vertical_container h3.inactive {
+    background-color: #999;
+    color: #666; }
+  #vertical_container h3.completed {
+    background-color: #6FFF82;
+    color: #184F20; }
+    #vertical_container h3.completed div.checkmark {
+      background-image: url(/images/checkmark.gif); }
+  #vertical_container h3.active {
+    background-color: #9BBDCF; }
+
+h3#sec4 {
+  text-align: center; }
+
+#footer {
+  background-color: #eee; }

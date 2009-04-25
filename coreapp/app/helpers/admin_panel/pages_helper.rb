@@ -1,0 +1,2 @@
+module AdminPanel::PagesHelper
+end

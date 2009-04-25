@@ -8,6 +8,7 @@ class SiteTest < ActiveSupport::TestCase
     assert_difference 'Site.count' do
       site = create_site(:url => "http://google.com")
       assert !site.new_record?, "#{site.errors.full_messages.to_sentence}"
+      assert !site.home_page.nil?, "creating a site without a home page"
     end
   end
 
@@ -146,4 +147,129 @@ class SiteTest < ActiveSupport::TestCase
     assert_equal sites(:alt_public), site
   end
 
+  def test_should_be_able_to_retrieve_a_sites_pages_with_the_latest_feedback_for_each_page
+    site = create_site(:url => 'http://www.somethingspecial.com')
+    assert_difference "Page.count", 3 do
+      3.times do |i|
+        site.pages << Page.new(:url => site.url + "/" + i.to_s, :site => site)
+      end
+      site.save
+    end
+    
+    timestamps = {}
+    
+    num_comments = 3
+    assert_difference "Comment.count", (site.pages.size * num_comments) do
+      site.pages.each do |p|
+        num_comments.times do |i| 
+          c = create_private_comment(:page_id => p.id, :content => i.to_s)
+          sleep(1)
+          # puts "#{p.id} comment #{i} : #{c.created_at}" # DEBUG
+          timestamps[p.id] = c.created_at.to_s if i == num_comments - 1
+        end
+      end
+    end
+    
+    got = site.pages_with_latest_feedback
+    got.each do |page|
+      expected = timestamps[page.id].split(" UTC")[0]
+      assert page.latest_feedback == expected, "#{page.url}'s latest feedback #{page.latest_feedback} doesn't equal #{expected}"
+    end
+  end
+
+  test "should be able to list it's commenters" do
+    site = sites(:linkedin)
+    assert site.commenters == site.home_page.commenters
+  end
+  
+  def test_should_be_able_to_generate_a_validation_token_and_return_it
+    site = sites(:linkedin)
+    vtoken = site.new_validation_token
+    site.reload
+    assert !site.validation_token.blank?
+    assert site.validation_token == vtoken
+  end
+  
+  def test_should_not_reuse_validation_tokens
+    site = Site.first
+    tokens = []
+    expected = 5
+    expected.times { tokens << site.new_validation_token }
+    got = tokens.uniq.size
+    assert expected == got, "got #{got} instead of #{expected}"
+  end
+  
+  def test_should_generate_randomized_validation_tokens_for_sites
+    tokens = []
+    Site.all.each { |site| tokens << site.new_validation_token }
+    expected = Site.count
+    got = tokens.uniq.size
+    assert expected == got, "got #{got} instead of #{expected}"
+  end
+  
+  def test_validation_token_attribute_should_not_be_accessible
+    site = create_site(:validation_token => 'abc123')
+    assert site.validation_token.nil?, "validation_token was set through Site.new"
+    site.update_attributes('validation_token' => 'acb123')
+    assert site.validation_token.nil?, "validation_token was set through update_attributes"
+  end
+  
+  def test_validation_timestamp_attribute_should_not_be_accessible
+    site = create_site(:validation_timestamp => 1.year.ago)
+    assert site.validation_timestamp.nil?, "validation_timestamp was set through Site.new"
+    site.update_attributes('validation_timestamp' => 1.year.ago)
+    assert site.validation_timestamp.nil?, "validation_timestamp was set through update_attributes"
+  end
+  
+  def test_should_update_validation_timestamp_when_generating_a_new_validation_token
+    site = sites(:linkedin)
+    site.new_validation_token
+    site.reload
+    recently = 1.minute.ago..1.minute.from_now
+    assert recently.include? site.validation_timestamp
+  end
+  
+  def test_should_be_able_verify_validation_tokens
+    site = sites(:linkedin)
+    valid_token = site.new_validation_token
+    assert valid_token == site.verify_validation_token(valid_token)
+  end
+  
+  def test_should_be_able_to_sniff_out_bad_validation_tokens
+    site = sites(:linkedin)
+    invalid_token = 'total bullshit'
+    valid_token = site.new_validation_token
+    assert valid_token != site.verify_validation_token(invalid_token)
+    assert !site.verify_validation_token(invalid_token)
+  end
+
+  def test_should_regenerate_validation_token_if_not_verified
+    site = sites(:linkedin)
+    invalid_token = 'total bullshit'
+    valid_token = site.new_validation_token
+    old_timestamp = site.validation_timestamp
+    assert !site.verify_validation_token(invalid_token)
+    assert valid_token != site.validation_token
+    assert old_timestamp != site.validation_timestamp
+  end
+  
+  def test_should_not_regenerate_current_validation_tokens
+    site = sites(:linkedin)
+    valid_token = site.new_validation_token
+    timestamp = site.validation_timestamp
+    assert site.verify_validation_token(valid_token)
+    assert valid_token = site.validation_token
+    assert timestamp = site.validation_timestamp
+  end
+  
+  def test_should_regenerate_validation_token_if_more_than_4_hours_old
+    site = sites(:linkedin)
+    valid_token = site.new_validation_token
+    old_timestamp = 4.hours.ago - 1
+    site.validation_timestamp = old_timestamp
+    assert valid_token != site.verify_validation_token(valid_token)
+    assert valid_token != site.validation_token
+    assert old_timestamp != site.validation_timestamp
+  end
+  
 end

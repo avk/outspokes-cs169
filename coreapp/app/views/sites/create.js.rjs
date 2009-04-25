@@ -1,0 +1,11 @@
+page.replace_html('flash_notice', flash[:notice]); 
+page.replace_html('flash_warning', flash[:warning]); 
+page.replace_html('flash_error', flash[:error]);
+flash.discard
+page << "Element.removeClassName('sec1', 'active')"
+page << "Element.addClassName('sec1','completed')"
+page << "Element.removeClassName('sec2', 'inactive')"
+page << "Element.addClassName('sec2', 'active')"
+page.replace_html('section2', :partial => 'check_include_form', :locals=> { :site => @site })
+page << "Effect.BlindUp( 'section1', {duration: 0.3})";
+page << "Effect.BlindDown('section2', {duration: 0.3})";

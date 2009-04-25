@@ -175,4 +175,19 @@ class CommenterTest < ActiveSupport::TestCase
       commenter.destroy
     end
   end
+  
+  test 'should be able to get all of a commenter\'s feedbacks for a site' do
+    site = sites(:linkedin)
+    commenter = commenters(:aaron)
+    
+    page_ids = site.pages.map(&:id)
+    expected = Feedback.find_all_by_commenter_id(commenter.id, :conditions => "page_id IN (#{ page_ids.join(',') })")
+    got = commenter.feedbacks_for_site(site.id)
+    assert got == expected, "got #{got.inspect} instead of #{expected.inspect}"
+  end
+  
+  test 'should get an empty list if requesting all of a commenter\'s feedbacks for a site with a bad site id' do
+    commenter = commenters(:aaron)
+    assert [] == commenter.feedbacks_for_site(-987234)
+  end
 end

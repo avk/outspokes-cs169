@@ -22,4 +22,36 @@ class AccountsController < ApplicationController
       render :action => 'new'
     end
   end
+
+  def edit
+    @account = Account.find(params[:id])
+  end
+
+  def update
+    @account = Account.find(params[:id])
+
+    respond_to do |format|
+      if @account.update_attributes(params[:account])
+        flash[:notice] = 'Your account was successfully updated.'
+        format.html { redirect_to dashboard_account_url(@account.id) }
+        format.xml  { head :ok }
+      else
+        flash[:error] = "uh oh!"        
+        format.html { redirect_to dashboard_account_url(@account.id) }
+        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  def dashboard
+    @account = Account.find(params[:id])
+    @sites = @account.sites
+    @sites_admin_urls = {}
+    for site in @sites
+      @sites_admin_urls[site] = site.admin_url
+    end
+    respond_to do |format|
+      format.html
+    end
+  end
 end

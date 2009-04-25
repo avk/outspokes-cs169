@@ -1,0 +1,2 @@
+module AdminPanel::AdminHelper
+end

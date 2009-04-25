@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Site Admin Panel</title>
+    <%= stylesheet_link_tag 'reset-min', :cache => true %>
+    <%= stylesheet_link_tag 'admin-panel' %>
+  </head>
+  <body id="admin_panel">
+    <%- if @no_navigation.nil? -%>
+      <div id="navigation-wrapper">
+        <ul id="navigation">
+          <% [{ :text => 'Pages', :url => admin_panel_site_pages_path(@site) },
+              { :text => 'Commenters', :url => admin_panel_commenters_path(@site) }].each do |link| -%>
+              <li>
+                <%= link_to_unless_current (link[:text], link[:url]) do 
+                      '<span class=\'current\'>' + link[:text] + '</span>'
+                    end %>
+              </li>
+          <%- end -%>
+        </ul>
+        <div style="clear:both;"></div>
+      </div>
+    <%- end -%>
+    
+    <div id="wrapper">      
+      <%- if flash[:notice] -%><div class="notice"><%= flash[:notice] %></div><%- end -%>
+      <%- if flash[:error] -%><div class="error"><%= flash[:error] %></div><%- end -%>
+      <%- if flash[:warning] -%><div class="warning"><%= flash[:warning] %></div><%- end -%>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>

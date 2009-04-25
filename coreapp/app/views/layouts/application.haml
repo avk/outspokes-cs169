@@ -1,0 +1,33 @@
+!!! Strict
+%html
+  %head
+    %meta{'http-equiv' => "Content-Type", :content => "text/html"}
+    %title 
+      Feedback! 
+      = controller.action_name
+    = stylesheet_link_tag 'reset-min'
+    = stylesheet_link_tag 'acts-as-taggable'
+    = stylesheet_link_tag 'main'
+    = javascript_include_tag :defaults
+    = javascript_include_tag 'accordion'
+
+%body
+  #header
+    #branding
+      %h3#company_name Outspokes
+      %h4#tagline feedback evolved
+  
+    #login_bar= render :partial => '/accounts/account_bar'  
+  
+  #main_content
+    #flash_notice
+      = flash[:notice]
+    #flash_error
+      = flash[:error]
+    #flash_warning
+      = flash[:warning]
+    
+    = yield 
+
+  #footer
+    %p &copy; 2009 Outspokes  
