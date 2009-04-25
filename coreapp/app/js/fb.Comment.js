@@ -85,6 +85,9 @@
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;
     }
+    if (_fb.admin()) {
+      data.validation_token = _fb.admin();
+    }
     if (name) {
       data["name"] = name;
       delete data["url_token"];
