@@ -33,13 +33,20 @@
     
     this.admin_panel = {
       dom   : this.dom,
-      build : function(widget) { // TODO: only show for admins
+      build : function(widget) {
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         var close_link = $("<a href='#'>x</a>").attr('id',this.dom.admin.close);
         close_link.click(this.hide);
         admin_panel.append(close_link);
-        admin_panel.append("<h1>I'm the ADMIN, bitches!</h1>"); // TODO: replace with coreapp iframe
+        var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
+        iframe.attr({
+          src : fb.env.admin_panel_address(_fb.site_id()),
+          width : '100%',
+          height : '100%', 
+          frameborder : 0,
+        });
+        admin_panel.append(iframe);
         admin_panel.appendTo($('body'));
         
         // the background overlay
