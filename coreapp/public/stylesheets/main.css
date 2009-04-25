@@ -103,5 +103,8 @@ h1#company_name {
   #vertical_container h3.active {
     background-color: #9BBDCF; }
 
+h3#sec4 {
+  text-align: center; }
+
 #footer {
   background-color: #eee; }
