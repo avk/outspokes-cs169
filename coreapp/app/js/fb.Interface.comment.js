@@ -57,8 +57,11 @@
       var name = null;
       if (fb.env.pub_page) {
         name = this.name.value;
+        this.name.value = "";
       }
       fb.Comment.post(this.content.value, this.target.value, name);
+      this.content.value = "";
+      this.target.value = "html";
     });
     this.form.find("span").mouseup(select_target);
     self.widget_content.append(this.comments);
