@@ -9,6 +9,8 @@ class Site < ActiveRecord::Base
   validate :has_valid_home_page
   validates_presence_of :account_id
   validates_associated :account
+  
+  after_create :set_name!
 
   def initialize(*args, &block)
     super
@@ -116,9 +118,11 @@ class Site < ActiveRecord::Base
     :order => "f.created_at DESC")
   end
 
-
-
-protected
+  def set_name!
+    agent = WWW::Mechanize.new
+    self.name = agent.get(self.home_page.url).title
+    self.save
+  end
 
   def has_valid_home_page
     if !self.pages.first or !self.pages.first.valid?
@@ -140,5 +144,5 @@ protected
     end
     true
   end
-
+  
 end
