@@ -22,7 +22,7 @@
       this.target = obj.target;
       this.name = obj.name;
       this.opinion = obj.opinion;
-      this.timestamp = obj.timestamp;
+      this.timestamp = obj.timestamp * 1000;
       this.build = null;
 
       fb.Feedback.all[this.feedback_id] = this;
