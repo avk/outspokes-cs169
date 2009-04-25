@@ -1,6 +1,11 @@
 <h1 id="pages_message">
-  People you've invited have commented on 
-  <strong id="page_count"><%= pluralize(@pages.size, 'page') %></strong>.
+  People you've invited 
+  <%- if @pages.size > 0 -%>
+    have commented on 
+    <strong id="page_count"><%= pluralize(@pages.size, 'page') %></strong>.
+  <%- else -%>
+    haven't commented on any pages.
+  <%- end -%>
 </h1>
 
 <%- unless @pages.empty? -%>
