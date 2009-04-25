@@ -31,6 +31,8 @@ class ApplicationController < ActionController::Base
           end
           i = Invite.new(:page => @site.home_page, :commenter => c)
           i.save!
+
+          Mailer.deliver_commenter_invite(c, @site.home_page)
         end
       rescue
         flash[:warning] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
