@@ -53,9 +53,7 @@ function() {
         fb.env.pub_page = true;
       }
 
-      if (!fb.cookie("fb_hash_url_token")) {
-        fb.cookie("fb_hash_url_token", fb.env.url_token);
-      }
+      fb.cookie("fb_hash_url_token", fb.env.url_token);
 
       fb.i = new fb.Interface();
       fb.Feedback.get_callback(data, true);
