@@ -62,9 +62,11 @@ class ApplicationController < ActionController::Base
 
     return if @callback.nil? # no callback should be OK -- return plain JSON or HTML window.name
 
+    @callback.strip!
+
     okay = true
     js_keywords.each do |word|
-      if @callback.match(word)
+      if @callback == word
         okay = false
         break
       end
