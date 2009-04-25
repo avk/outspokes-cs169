@@ -122,8 +122,10 @@
 	this.main_window.append(this.widget_content);
 	
 	this.main_window.append(this.help_content);
-	
+
+  if (_fb.admin()) {
     this.admin_panel.build(this.topbar);
+  }
 
     this.main_window.appendTo($('body'));
     
