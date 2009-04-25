@@ -173,6 +173,15 @@ class Test::Unit::TestCase
     json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
     validate_json_vals(json, args)
   end
+
+  def get_json(callback)
+    # make sure the response is wrapped in the callback
+    assert @response.body.match("^#{callback}\\(\\{"), "Expecting callback #{callback} but it wasn't found!"
+    
+    # get at just the JSON data (i.e. strip the JS callback wrapping it)
+    json = @response.body.sub("#{callback}(", '').sub(/\);?/, '')
+    JSON.parse(json)
+  end
   
   def validate_post_fail
     json_string = @response.body.match(/.*window.name='(.+)'/)[1]

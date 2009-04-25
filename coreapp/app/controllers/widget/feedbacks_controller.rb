@@ -15,19 +15,29 @@ class Widget::FeedbacksController < Widget::WidgetController
     if @authorized
       if !@public
         if page = Page.find_by_url(params[:current_page])
+          site = page.site
           feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
         end
       else
         if page = Page.find_public_page_by_url(params[:current_page])
+          site = page.site
           feedback = page.feedbacks.map { |f| f.json_attributes(nil) }
         end
       end
     end
+
+    if site.nil?
+      site = "null"
+    end
+
+    result = {:authorized => @authorized, :admin => @admin, :feedback => feedback}
+    if @admin and !params[:site_id] and site != "null"
+      result.merge!({:site_id => site.id})
+    end
     
     respond_to do |wants|
       wants.js do
-        render :json => {:authorized => @authorized, :admin => @admin, :feedback => feedback},
-               :callback => params[:callback]
+        render :json => result, :callback => params[:callback]
       end
     end
   end

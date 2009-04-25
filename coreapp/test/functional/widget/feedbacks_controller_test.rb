@@ -440,4 +440,38 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     assert site.validation_token != current_validation_token
   end
 
+  def test_return_site_id_if_admin
+    invite = invites(:one)
+    page = invite.page
+    correct_site_id = page.site.id
+    get :feedback_for_page, :current_page => page.url, :callback => "callback",
+        :url_token => invite.url_token, :email => "quentin@example.com",
+        :password => "monkey"
+    page.site.reload
+    validate_json :callback => "callback", :authorized => true, :admin => page.site.validation_token,
+                  :site_id => correct_site_id
+  end
+
+  def test_dont_return_site_id_after_first_call_if_admin
+    invite = invites(:one)
+    page = invite.page
+    correct_site_id = page.site.id
+    get :feedback_for_page, :current_page => page.url, :callback => "callback",
+        :url_token => invite.url_token, :site_id => correct_site_id,
+        :email => "quentin@example.com", :password => "monkey"
+    page.site.reload
+    validate_json :callback => "callback", :authorized => true, :admin => page.site.validation_token
+    json = get_json("callback")
+    assert !json[:site_id], "site_id should not be present in the returned JSON, received #{json[:site_id].inspect}"
+  end
+
+  def test_dont_return_site_id_if_not_admin
+    invite = invites(:two)
+    page = invite.page
+    assert page.site.account != invite.commenter
+    get :feedback_for_page, :current_page => page.url, :callback => "callback", :url_token => invite.url_token
+    json = get_json("callback")
+    assert !json[:site_id], "site_id should not be present in the returned JSON, received #{json[:site_id].inspect}"
+  end
+
 end

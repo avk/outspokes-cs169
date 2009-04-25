@@ -26,5 +26,6 @@
   _fb.authorized = _setter(false);
   _fb.admin = _setter(false);
   _fb.first = _setter(true);
+  _fb.site_id = _setter(null);
 
 
