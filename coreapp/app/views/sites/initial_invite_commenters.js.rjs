@@ -1,9 +1,11 @@
 page.replace_html('flash_notice', flash[:notice]); 
 page.replace_html('flash_warning', flash[:warning]); 
 page.replace_html('flash_error', flash[:error]);
-flash[:notice]=""
-flash[:warning]=""
-flash[:error]=""
+flash.discard
+page << "Element.removeClassName('sec3', 'active')"
+page << "Element.addClassName('sec3','completed')"
+page << "Element.removeClassName('sec4', 'inactive')"
+page << "Element.addClassName('sec4', 'active')"
 page.replace_html('section4', render(:partial => 'link_to_site', :locals=> { :site => @site }))
-page.call "Effect.BlindUp", "section3"
-page.call "Effect.BlindDown", "section4"
+page << "Effect.BlindUp( 'section3', {duration: 0.3})";
+page << "Effect.BlindDown('section4', {duration: 0.3})";
