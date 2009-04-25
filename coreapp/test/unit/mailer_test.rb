@@ -1,15 +1,49 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class MailerTest < ActionMailer::TestCase
 
-  test 'Should send an email to the correct address' do
-	person = commenters(:one)
-    page = pages(:one)
-	invite = create_invite
+  def setup
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
+  end
 
-    mail = Mailer.create_commenter_invite(person, page)
+  def teardown
+    ActionMailer::Base.deliveries.clear
+  end
 
-    assert_equal mail.to[0], person.email
+  def test_should_send_correct_email_to_correct_address
+    invite = create_invite
+    Mailer.deliver_commenter_invite(invite)
+    mail = ActionMailer::Base.deliveries[0]
+    body = mail.body
+    url = invite.page.url + '?url_token=' + invite.url_token
+    name = invite.page.site.name
+    account_email = invite.page.site.account.email
+
+    assert body.scan(account_email.to_s + " has invited you to")
+    assert body.scan("give feedback on " + name.to_s)
+    assert body.scan(url)
+    assert mail.to[0] == invite.commenter.email.to_s
+    assert mail.from[0] == "outspokes-no-reply@outspokes.com"
+    assert mail.subject == account_email.to_s + " has invited you to give feedback via Outspokes"
+  end
+
+  def test_should_send_correct_email_to_correct_address_for_singleton_page
+    invite = invites(:page)
+    Mailer.deliver_commenter_invite(invite)
+    mail = ActionMailer::Base.deliveries[0]
+    body = mail.body
+    url = invite.page.url + '?url_token=' + invite.url_token
+    name = URI.parse(invite.page.url).host
+    account_email = invite.page.account.email
+
+    assert body.scan(account_email.to_s + " has invited you to")
+    assert body.scan("give feedback on " + name.to_s)
+    assert body.scan(url)
+    assert mail.to[0] == invite.commenter.email.to_s
+    assert mail.from[0] == "outspokes-no-reply@outspokes.com"
+    assert mail.subject == account_email.to_s + " has invited you to give feedback via Outspokes"
   end
 
 end
