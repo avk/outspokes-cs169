@@ -31,7 +31,6 @@ Rails::Initializer.run do |config|
   config.gem "json"
   config.gem "ruby-debug"
   config.gem "haml"
-  config.gem "mechanize"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

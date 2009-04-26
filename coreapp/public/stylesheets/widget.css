@@ -159,13 +159,6 @@ version: 3.0.0pr2
 	height: 23px;
 }
 
-#outspokes #topbar h1 {
-	display: inline;
-	margin-left: 10px;
-	font-weight: bold;
-	height: 20px;
-}
-
 #outspokes #refresh {
 	color: beige;
 	margin-left: 10px;
@@ -179,12 +172,18 @@ version: 3.0.0pr2
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
 }
+#outspokes #topbar #help, 
+#outspokes #topbar #open_admin_panel {
+    position: relative;
+    bottom: 7px;
+}
+#outspokes #topbar #open_admin_panel {
+    display: block;
+    float: right;
+}
 #outspokes #topbar #help {
-	position: absolute;
-	right: 0px;
-	color: beige;
-	background-color: #111;
-	height: 23px;
+    color: beige;
+    background-color: transparent;
 }
 
 #outspokes #help {

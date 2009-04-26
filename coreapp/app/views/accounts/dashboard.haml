@@ -1,3 +1,10 @@
+:javascript
+  function expandScript(el) {
+    var jsRow = el.parentNode.parentNode.nextSibling.nextSibling;
+    new Effect.BlindDown(jsRow);
+    new Effect.Highlight(jsRow);
+  }
+
 %table{:id=>'sites_table'}
   %tr
     %th{:colspan=>4} My Sites
@@ -10,9 +17,15 @@
     - for site in @sites
       %tr
         %td= link_to h(site.name), site.admin_url
-        %td#jsinclude= link_to_remote "Script Include", :method => :get, :url => {:action => :retrieveJS, :controller => :sites}
+        %td  
+          %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
+      %tr.jsinclude{:style => "display:none;"} 
+        %td{:colspan => 3} 
+          Insert this in your site:
+          = text_field_tag 'jsinclude', "<script src='http://localhost:3000/widget/#{site.id}' type='text/javascript'></script>", :size => '100'
         
+      
   %tr
     %td{:colspan=>4}
       = link_to "Add a site!", new_site_path

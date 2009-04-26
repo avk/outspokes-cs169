@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../../test_helper'
 
 class Widget::FeedbacksControllerTest < ActionController::TestCase
 
@@ -472,6 +472,27 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     get :feedback_for_page, :current_page => page.url, :callback => "callback", :url_token => invite.url_token
     json = get_json("callback")
     assert !json[:site_id], "site_id should not be present in the returned JSON, received #{json[:site_id].inspect}"
+  end
+
+  def test_should_indicate_no_commenters_if_none_have_been_invited
+    invite = invites(:aaron_admin)
+    assert invite.page.site.commenters.length == 1, "The only commenter on this site should be the admin"
+    get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
+        :url_token => invite.url_token, :email => "aaron@example.com", :password => "monkey"
+    invite.reload
+    validate_json :callback => "callback", :authorized => true, :admin => invite.page.site.validation_token,
+                  :feedback => [], :no_commenters => true
+  end
+
+  def test_should_not_indicate_no_commenters_if_commenters_exist
+    invite = invites(:one)
+    assert invite.page.site.commenters.length > 1, "The site should have at least one commenter aside from the admin"
+    get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
+        :url_token => invite.url_token, :email => "quentin@example.com", :password => "monkey"
+    invite.reload
+    validate_json :callback => "callback", :authorized => true, :admin => invite.page.site.validation_token
+    json = get_json("callback")
+    assert !json[:no_commenters]
   end
 
 end

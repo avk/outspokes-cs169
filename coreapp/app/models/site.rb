@@ -119,8 +119,9 @@ class Site < ActiveRecord::Base
   end
 
   def set_name!
-    agent = WWW::Mechanize.new
-    self.name = agent.get(self.home_page.url).title
+    # agent = WWW::Mechanize.new
+    # self.name = agent.get(self.home_page.url).title
+    self.name = URI.parse(self.url).host
     self.save
   end
 
