@@ -21,7 +21,7 @@ require 'pathname'
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class ExceptionNotifier < ActionMailer::Base
-  @@sender_address = %("Exception Notifier" <exception.notifier@default.com>)
+  @@sender_address = %("Exception Notifier" <outspokes-no-reply@outspokes.com>)
   cattr_accessor :sender_address
 
   @@exception_recipients = []
