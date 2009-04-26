@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
 
   ### widget
-  map.widget '/widget', :controller => 'widget/source', :action => 'index'
+  map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :accounts, :member => { :dashboard => :get }
   map.resource :session
-  map.resources :sites, :member => { :checkinclude => :put, :initial_invite_commenters => :put }
+  map.resources :sites, :member => { :checkinclude => :put, :initial_invite_commenters => :put, :retrieveJS => :get }
   map.createsiteajax '/createsiteajax',    :controller => 'sites',           :action => 'create_ajax', :conditions => { :method => :post }
   #map.create_site_ajax '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
   

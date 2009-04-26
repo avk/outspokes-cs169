@@ -29,15 +29,10 @@ class SitesController < ApplicationController
         end
         flash[:notice] = 'Site was successfully created.'
         format.html { redirect_to root_path }
-        format.js
-        #format.js { render :update do |page|
-        #  page.call "Effect.BlindDown", "section2"
-        #end
-        #}
       rescue
         flash[:error] = "Could not create site."
         format.html { render :action => "new" }
-        format.js { render :action => :ajax_errors }
+        format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -55,28 +50,34 @@ class SitesController < ApplicationController
     end
   end
   
-  def checkinclude
-    proceede = true
-    @site = Site.find(params[:id])    
-    if(proceede)
-      respond_to do |format|
-        format.js
-      end
-    else
-        render :action => :ajax_errors
+  def retrieveJS
+    respond_to do |format| 
+      format.js
     end
   end
   
-  def initial_invite_commenters
-    @site = Site.find(params[:id])
-    if(invite_commenters)
-      respond_to do |format|
-        format.js
-      end
-    else
-        render :action => :ajax_errors
-    end
-  end
+  # def checkinclude
+  #     proceede = true
+  #     @site = Site.find(params[:id])    
+  #     if(proceede)
+  #       respond_to do |format|
+  #         format.js
+  #       end
+  #     else
+  #         render :action => :ajax_errors
+  #     end
+  #   end
+  #   
+  #   def initial_invite_commenters
+  #     @site = Site.find(params[:id])
+  #     if(invite_commenters)
+  #       respond_to do |format|
+  #         format.js
+  #       end
+  #     else
+  #         render :action => :ajax_errors
+  #     end
+  #   end
 
   
 end

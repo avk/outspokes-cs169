@@ -1,8 +1,9 @@
 class Widget::SourceController < Widget::WidgetController
     Widget::SourceController.page_cache_extension = '.js'
-    caches_page :index
+    # caches_page :index
 
     def index
+      @site = Site.find(params[:id])
       @fb_hash = "fb_" + generate_hash
       @ordered_files = %w(
         pre.js
@@ -15,9 +16,10 @@ class Widget::SourceController < Widget::WidgetController
         fb.Comment.js
       )
       @ordered_files.map! { |f| (RAILS_ROOT + '/app/js/' + f).to_s }
-
-      respond_to do |wants|
-        wants.js # index.js.erb
+      if(@site)
+        respond_to do |wants|
+          wants.js # index.js.erb
+        end
       end
     end
 

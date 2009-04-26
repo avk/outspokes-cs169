@@ -14,7 +14,7 @@ class Widget::FeedbacksController < Widget::WidgetController
 
     if @authorized
       if !@public
-        if page = Page.find_by_url(params[:current_page])
+        if page = @invite.page.site.pages.find_by_url(params[:current_page])
           site = page.site
           feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
         end
@@ -33,6 +33,9 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = {:authorized => @authorized, :admin => @admin, :feedback => feedback}
     if @admin and !params[:site_id] and site != "null"
       result.merge!({:site_id => site.id})
+      if site.commenters.find(:all, :conditions => ["commenters.id != ?", site.account_id]).empty?
+        result.merge!({:no_commenters => true})
+      end
     end
     
     respond_to do |wants|
