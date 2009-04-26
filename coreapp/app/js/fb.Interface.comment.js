@@ -96,19 +96,19 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree');
           var disagree = this.button(c, 'disagree');
-			
-			//admin's consensus statistics
-			var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
+
+          //admin's consensus statistics
+          var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
           
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
-          consensus_div.append(agree);
-          consensus_div.append(disagree);
-		
-		//if admin
-		//consensus_div.append(consensus_count);
-		
+          if (_fb.admin()) {
+            consensus_div.append(consensus_count);
+          } else {
+            consensus_div.append(agree);
+            consensus_div.append(disagree);
+          }
           markup.append(consensus_div);
         }
         return markup;
