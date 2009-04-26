@@ -15,11 +15,11 @@
       widget  : { 
         wrapper : 'outspokes',
         header  : 'topbar',
-		content : 'widget_content',
-		comments_header : 'comments_topbar',
-		help : 'help',
-		help_content: 'help_content',
-		toggle: 'toggle',
+        content : 'widget_content',
+        comments_header : 'comments_topbar',
+        help : 'help',
+        help_content: 'help_content',
+        toggle: 'toggle',
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -73,71 +73,80 @@
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
 
-	this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
- 	var help_link = $('<a href="#">(?)</a>').attr('id',this.dom.widget.help);
-	this.topbar.append('<h1><a href="http://www.outspokes.com" target="_blank">outspokes <em>alpha</em></a></h1>');
-	
-	help_link.click(function() {
-		var content = fb.i.widget_content;
-		var help = fb.i.help_content;
-		var widget = fb.i.main_window;
-		if (widget.height() == '20') {
-			widget.animate( { height:"220px" }, { duration:500 } );
-			help.removeClass("hide");
-		} else {
-			content.toggle();
-			help.toggleClass("hide");
-		}
-	});
-	
-	this.main_window.append(help_link);
+    this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
+    var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
+    logo.css({
+      'display' : 'block',
+      'float'   : 'left',
+      'height'  : '20px',
+      'width'   : '100px',
+      'backgroundImage' : 'url(' + fb.env.logo_address + ')',
+    });
+    this.topbar.append(logo);
 
-	this.topbar.click(function() {
-		var content = fb.i.widget_content;
-		var help = fb.i.help_content;
-		var widget = fb.i.main_window;
-		if (widget.height() == '20') {
-			widget.animate( { height:"220px" }, { duration:500 } );
-			help.addClass("hide"); //always make sure help is hidden before showing content
-			content.show();
-		} else {
-			widget.animate( { height:"20px" }, { duration:500 } );
-			content.hide();
-		}
-	});
-	
-	this.main_window.append(this.topbar);
+    var help_link = $('<a href="#">(?)</a>').attr('id',this.dom.widget.help);
+    help_link.click(function(e) {
+      var content = fb.i.widget_content;
+      var help = fb.i.help_content;
+      var widget = fb.i.main_window;
+      if (widget.height() == '20') {
+        widget.animate( { height:"220px" }, { duration:500 } );
+        help.removeClass("hide");
+      } else {
+        content.toggle();
+        help.toggleClass("hide");
+      }
+      e.stopPropagation();
+    });
+    this.topbar.append(help_link);
 
-	this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
-	this.help_content = $('<div>help yourself</div>').attr('id', this.dom.widget.help_content);
-	this.help_content.addClass("hide");
-	
-	this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
-	var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
-	this.chead.append(comment_span);
-	this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');	
-	this.set_num_comments = function(num_comments) {
-	  comment_span.text(num_comments + ' comments');
-	}
-	
-	this.widget_content.append(this.chead);
-	this.main_window.append(this.widget_content);
-	
-	this.main_window.append(this.help_content);
+    this.topbar.click(function() {
+      var content = fb.i.widget_content;
+      var help = fb.i.help_content;
+      var widget = fb.i.main_window;
+      if (widget.height() == '20') {
+        widget.animate( { height:"220px" }, { duration:500 } );
+        help.addClass("hide"); //always make sure help is hidden before showing content
+        content.show();
+      } else {
+        widget.animate( { height:"20px" }, { duration:500 } );
+        content.hide();
+      }
+    });
 
-  if (_fb.admin()) {
-    this.admin_panel.build(this.topbar);
-  }
+    this.main_window.append(this.topbar);
+
+    this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
+    this.help_content = $('<div>help yourself</div>').attr('id', this.dom.widget.help_content);
+    this.help_content.addClass("hide");
+
+    this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
+    var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
+    this.chead.append(comment_span);
+    this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');
+
+    this.set_num_comments = function(num_comments) {
+      comment_span.text(num_comments + ' comments');
+    }
+
+    this.widget_content.append(this.chead);
+    this.main_window.append(this.widget_content);
+
+    this.main_window.append(this.help_content);
+
+    if (_fb.admin()) {
+      this.admin_panel.build(this.topbar);
+    }
 
     this.main_window.appendTo($('body'));
-    
+
     this.comment = new fb.Interface.comment(this);
-    
+
     fb.Interface.instantiated = true;
   };
-  
+
   fb.Interface.prototype.div = function() {
-  	return $('<div></div>');
+    return $('<div></div>');
   };
 
   fb.Interface.instantiated = false;
