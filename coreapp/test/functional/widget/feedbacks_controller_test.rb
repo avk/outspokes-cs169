@@ -257,7 +257,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
       post :destroy, :id => feedback.id, :url_token => url_token, :validation_token => validation_token,
         :current_page => feedback.page.url, :callback => callback
     end
-    validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => true
+    validate_windowname :authorized => true, :admin => page.site.validation_token, :success => true
   end
   
   test "should add new threaded feedback for page" do

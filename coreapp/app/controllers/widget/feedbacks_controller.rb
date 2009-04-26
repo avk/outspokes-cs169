@@ -118,13 +118,14 @@ class Widget::FeedbacksController < Widget::WidgetController
     end
   
     respond_to do |format|
-      # wants.html do
-      #     @json_data = result.to_json
-      # end
-      format.js do
-        render :json => result,
-               :callback => @callback
+      format.html do
+          @json_data = result.to_json
+          render :action => :new_feedback_for_page
       end
+      # format.js do
+      #   render :json => result,
+      #          :callback => @callback
+      # end
     end
   end
 
