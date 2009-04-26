@@ -58,7 +58,6 @@
         widget.append(open_link);
       },
       show : function() {
-        console.log($('#' + fb.i.dom.admin.panel)[0].display);
         $('#' + fb.i.dom.admin.panel).show();
         $('#' + fb.i.dom.admin.overlay).show();
       },

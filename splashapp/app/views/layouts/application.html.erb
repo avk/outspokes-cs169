@@ -9,9 +9,12 @@
 </head>
 <body>
 
-<p style="color: green"><%= flash[:notice] %></p>
+<div id="front_poll">
+  <%= image_tag 'borderless-logo.png' %>
 
-<%= yield  %>
+  <p style="color: green"><%= flash[:notice] %></p>
 
-</body>
+  <%= yield  %>
+
+</div></body>
 </html>

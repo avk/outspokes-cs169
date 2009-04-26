@@ -50,34 +50,4 @@ class SitesController < ApplicationController
     end
   end
   
-  def retrieveJS
-    respond_to do |format| 
-      format.js
-    end
-  end
-  
-  # def checkinclude
-  #     proceede = true
-  #     @site = Site.find(params[:id])    
-  #     if(proceede)
-  #       respond_to do |format|
-  #         format.js
-  #       end
-  #     else
-  #         render :action => :ajax_errors
-  #     end
-  #   end
-  #   
-  #   def initial_invite_commenters
-  #     @site = Site.find(params[:id])
-  #     if(invite_commenters)
-  #       respond_to do |format|
-  #         format.js
-  #       end
-  #     else
-  #         render :action => :ajax_errors
-  #     end
-  #   end
-
-  
 end
