@@ -254,7 +254,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     callback = 'deleted_comment'
     validation_token = invite.page.site.validation_token
     assert_difference('Comment.count', -1) do
-      delete :destroy, :id => feedback.id, :url_token => url_token, :validation_token => validation_token,
+      post :destroy, :id => feedback.id, :url_token => url_token, :validation_token => validation_token,
         :current_page => feedback.page.url, :callback => callback
     end
     validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => true

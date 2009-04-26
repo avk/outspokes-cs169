@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :delete }
+  map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :post }
   map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
   map.namespace :widget do |widget|
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "create", :conditions => { :method => :post }
