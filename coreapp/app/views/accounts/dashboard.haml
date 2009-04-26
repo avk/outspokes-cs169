@@ -1,3 +1,10 @@
+:javascript
+  function expandScript(el) {
+    var jsRow = el.parentNode.parentNode.nextSibling.nextSibling;
+    new Effect.BlindDown(jsRow);
+    new Effect.Highlight(jsRow);
+  }
+
 %table{:id=>'sites_table'}
   %tr
     %th{:colspan=>4} My Sites
@@ -11,9 +18,9 @@
       %tr
         %td= link_to h(site.name), site.admin_url
         %td  
-          %a{:href => '#'} Script Include
+          %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
-      %tr.jsinclude{:style => ""} 
+      %tr.jsinclude{:style => "display:none;"} 
         %td{:colspan => 3} 
           Insert this in your site:
           = text_field_tag 'jsinclude', "<script src='http://localhost:3000/widget/#{site.id}' type='text/javascript'></script>", :size => '100'
