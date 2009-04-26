@@ -293,17 +293,37 @@
     $(this).html("Change target");
     $(document.body).one('click', function (e) {
       fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+      console.log(e.target);
+      e.target.__marked = true;
+      $("body *").unbind(".elem_select");
     });
+    // Attach to every element _inside_ of body
+    $("body *").bind("mouseenter.elem_select", function (e) {
+      if ("_old_style" in $(this).parent().get(0)) {
+        $(this).parent().eq(0).css('outline', $(this).parent().get(0)._old_style);
+        delete $(this).parent().get(0)["_old_style"];
+      }
+      console.log(this);
+      this._old_style = $(this).css('outline')
+      $(this).css('outline','green solid 2px')
+      e.stopPropagation();
+    });
+    $("body *").bind("mouseleave.elem_select", function (e) {
+      if (! ("__marked" in this)) {
+        $(this).css('outline', this._old_style);
+        delete this["_old_style"];
+    }});
   }
   
   function highlight_target(el) {
     el = $(el);
-    var par = el.wrap("<div></div>").parent();
+//    var par = el.wrap("<div></div>").parent();
+    var old_style = el.css('outline')
     over = function() {
-      par.css('outline','green solid 2px');
+      el.css('outline','green solid 2px');
     }
     out = function() {
-      par.css('outline-style','none');
+      el.css('outline-style', old_style);
     }
     return [over, out];
   }
