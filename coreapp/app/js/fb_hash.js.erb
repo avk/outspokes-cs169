@@ -5,7 +5,7 @@ function() {
     }
 
     fb.env = {};
-    fb.env.current_page = window.location.href.split("?")[0].split("#")[0];
+    fb.env.current_page = window.location.href.split("?")[0].split("#")[0].replace(/(\/)$/, "");
     fb.env.url_token = fb.getParams('url_token') || fb.cookie('fb_hash_url_token') || "";
     var _admin_validation_token = fb.cookie('fb_hash_admin_validation_token');
     var _wants_admin = fb.getParams('admin');
