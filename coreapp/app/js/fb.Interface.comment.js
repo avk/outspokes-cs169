@@ -46,15 +46,19 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += 'Comment:<br /><textarea name="content" cols="30" rows="5" /><br />' +
-          '<input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>' +
+    	formHTML += '<div id="outspokes_form_header">Comment:</div><textarea name="content" cols="30" rows="5" /><br />' +
+          '<input type="submit" value="Submit" />&nbsp;&nbsp;' +
           '<input type="hidden" value="' + target + '" name="target" />' +
-          '</form>'
+          '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
     };
-    
-    this.comments = $('<div id="comment_list"></div>');
+
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
+    var target_button = $('<img id="outspokes_target_button src=' + fb.env.target_address + '/>');
+//    target_button.css('float', 'right').css('margin-top', '5px');
+    target_button.click(select_target);
+    this.form.find("#outspokes_form_header").prepend(target_button);
+    this.comments = $('<div id="comment_list"></div>');
     this.form.find("a").click(function(){fb.Feedback.get();});
     this.form.find("form").submit(function() { 
       var name = null;
@@ -66,7 +70,6 @@
       this.content.value = "";
       this.target.value = "html";
     });
-    this.form.find("span").mouseup(select_target);
     self.widget_content.append(this.comments);
     self.widget_content.append(this.form);
     
@@ -290,29 +293,31 @@
 
   
   function select_target() {
-    $(this).html("Change target");
-    $(document.body).one('click', function (e) {
+    $(this).get(0).value = "Change target";
+    $("body *").not("#outspokes *").bind('mouseup.elem_select', function (e) {
       fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-      console.log(e.target);
       e.target.__marked = true;
       $("body *").unbind(".elem_select");
+      e.stopPropagation();
+      $('#outspokes_target_button').css("background-color", "orange");
     });
     // Attach to every element _inside_ of body
-    $("body *").bind("mouseenter.elem_select", function (e) {
-      if ("_old_style" in $(this).parent().get(0)) {
-        $(this).parent().eq(0).css('outline', $(this).parent().get(0)._old_style);
-        delete $(this).parent().get(0)["_old_style"];
+    $("body *").not("#outspokes *").bind("mouseenter.elem_select", function (e) {
+      if ("_old_style" in $(e.target).parent().get(0)) {
+        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0)._old_style);
+        delete $(e.target).parent().get(0)["_old_style"];
       }
-      console.log(this);
-      this._old_style = $(this).css('outline')
-      $(this).css('outline','green solid 2px')
+      e.target._old_style = $(e.target).css('outline')
+      $(e.target).css('outline','green solid 2px')
       e.stopPropagation();
     });
-    $("body *").bind("mouseleave.elem_select", function (e) {
-      if (! ("__marked" in this)) {
-        $(this).css('outline', this._old_style);
-        delete this["_old_style"];
-    }});
+    $("body *").not("#outspokes *").bind("mouseleave.elem_select", function (e) {
+      if (! ("__marked" in e.target)) {
+        $(e.target).css('outline', e.target._old_style);
+        delete e.target["_old_style"];
+        e.stopPropagation();
+      }
+    });
   }
   
   function highlight_target(el) {
