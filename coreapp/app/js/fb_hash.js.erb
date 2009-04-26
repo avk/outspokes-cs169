@@ -17,6 +17,7 @@ function() {
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
+    fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? true : false;
 
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
 
