@@ -11,8 +11,6 @@
       return false;
     }
 
-    $('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
-
     this.dom = {
       widget  : { 
         wrapper : 'outspokes',
@@ -43,7 +41,7 @@
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
           id : this.dom.admin.iframe,
-          src : fb.env.admin_panel_address,
+          src : fb.env.admin_panel_address.pages,
           width : '100%',
           height : '100%', 
           frameborder : 0,
@@ -60,6 +58,7 @@
         widget.append(open_link);
       },
       show : function() {
+        console.log($('#' + fb.i.dom.admin.panel)[0].display);
         $('#' + fb.i.dom.admin.panel).show();
         $('#' + fb.i.dom.admin.overlay).show();
       },
@@ -67,6 +66,9 @@
         $('#' + fb.i.dom.admin.panel).hide();
         $('#' + fb.i.dom.admin.overlay).hide();
       },
+      set_to_commenters: function() {
+        $("#" + this.dom.admin.iframe)[0].src = fb.env.admin_panel_address.commenters;
+      }
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
@@ -113,20 +115,18 @@
   	this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
   	var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
   	this.chead.append(comment_span);
-  	
+
   	/*** Comment Sorting Dropdown Menu ****/
   	var sort_dropdown = $('<select id="comments_filter"><option>newest</option><option>oldest</option>' +
   	  '<option>mine</option><option>targeted</option><option>consensus</option></select>');
   	sort_dropdown.children().eq(0).click(function() {
   	  fb.i.comment.sort_by_newest();
-  	})
+  	});
   	sort_dropdown.children().eq(1).click(function() {
   	  fb.i.comment.sort_by_oldest();
-  	})
+  	});
   	this.chead.append(sort_dropdown);
-  	
-  	this.chead.append('<a id="refresh" href="javascript:location.reload()">refresh</a>'); /*fix*/
-	
+
   	this.set_num_comments = function(num_comments) {
   	  comment_span.text(num_comments + ' comments');
   	};
