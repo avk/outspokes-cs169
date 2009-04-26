@@ -72,6 +72,14 @@
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+    
+    if (fb.cookie('fb_hash_url_token')) { //admin panel is open on subsequent visits
+      alert(fb.cookie('fb_hash_url_token'));
+      this.main_window.css({'height':'220px'});
+    } else {
+      alert(fb.cookie('fb_hash_url_token'));
+      this.main_window.css({'height':'20px'});
+    }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');

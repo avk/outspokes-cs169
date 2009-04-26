@@ -7,6 +7,9 @@ tr blockquote {
   margin: 0;
   font-style: oblique; }
 
+a:visited {
+  color: #1F46FF; }
+
 .even {
   background-color: #AFC5FF; }
 
@@ -35,7 +38,7 @@ h1#company_name {
   position: relative; }
 
 #main_content {
-  background-color: #bbb; }
+  background-color: transparent; }
 
 #flash_error {
   color: red; }
@@ -47,7 +50,7 @@ h1#company_name {
   color: green; }
 
 #sites_table {
-  width: 73%; }
+  width: 100%; }
   #sites_table th {
     font-size: 1.5em;
     font-weight: bold;
@@ -55,6 +58,8 @@ h1#company_name {
   #sites_table td {
     padding: .5em;
     border: 1px solid #999; }
+  #sites_table tr.jsinclude td {
+    border: none; }
 
 #account_block {
   position: absolute;
@@ -75,36 +80,5 @@ h1#company_name {
       margin: 2px 0;
       width: 90%; }
 
-#vertical_container {
-  width: 75%; }
-  #vertical_container h3, #vertical_container div {
-    padding: .5em; }
-  #vertical_container h3 {
-    font-size: 1.3em;
-    font-weight: bold;
-    height: 25px;
-    border-bottom: 1px solid #444; }
-  #vertical_container div {
-    background-color: white; }
-  #vertical_container div.checkmark {
-    width: 25px;
-    height: 25px;
-    float: left;
-    padding: 0;
-    background-color: transparent; }
-  #vertical_container h3.inactive {
-    background-color: #999;
-    color: #666; }
-  #vertical_container h3.completed {
-    background-color: #6FFF82;
-    color: #184F20; }
-    #vertical_container h3.completed div.checkmark {
-      background-image: url(/images/checkmark.gif); }
-  #vertical_container h3.active {
-    background-color: #9BBDCF; }
-
-h3#sec4 {
-  text-align: center; }
-
 #footer {
-  background-color: #eee; }
+  background-color: #bbb; }
