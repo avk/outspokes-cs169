@@ -8,6 +8,9 @@
       comment_id          : function(id) {
         return (this.comment_id_format.test(id)) ? id : 'comment_' + parseInt(id);
       },
+      number_from_id            : function(dom_id) {
+        return parseInt(dom_id.match(/comment_(\d+)/i)[1]);
+      },
       consensus_wrapper         : function(id) {
         return "consensus_on_comment_" + parseInt(id);
       },
@@ -241,7 +244,40 @@
     this.remove = function(c){
       c.build.remove();
     };
+    
+    this.sort_comments = function(method) {
+      var posts = this.comments.children();
+      this.comments.empty();
+      posts.sort(method(this));
+      this.comments.append(posts);
+    };
+
+    this.newest_sorter = function(self) {
+      return function(a, b) {
+        var a_id = self.dom.number_from_id(a.id);
+        var b_id = self.dom.number_from_id(b.id);
+        return (a_id - b_id);
+      };
+    };
+
+    this.oldest_sorter = function(self) {
+      return function(a, b) {
+          var a_id = self.dom.number_from_id(a.id);
+          var b_id = self.dom.number_from_id(b.id);
+          return (b_id - a_id);
+      };
+    };
+    
+    this.sort_by_newest = function() {
+      this.sort_comments(this.newest_sorter);  
+    };
+    
+    this.sort_by_oldest = function() {
+      this.sort_comments(this.oldest_sorter);  
+    };
+    
   };
+
   
   function select_target() {
     $(this).html("Change target");
