@@ -115,9 +115,7 @@
 	this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
 	var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
 	this.chead.append(comment_span);
-	this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');
-	this.chead.append('<a id="refresh" href="javascript:location.reload()">refresh</a>'); /*fix*/
-	
+	this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');	
 	this.set_num_comments = function(num_comments) {
 	  comment_span.text(num_comments + ' comments');
 	}
