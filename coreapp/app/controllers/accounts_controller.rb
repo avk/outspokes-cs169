@@ -45,7 +45,6 @@ class AccountsController < ApplicationController
   end
   
   def dashboard
-    raise "hello world"
     @account = Account.find(params[:id])
     @sites = @account.sites
     @sites_admin_urls = {}
