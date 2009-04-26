@@ -90,5 +90,12 @@ Rails::Initializer.run do |config|
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_charset = 'utf-8'
+  
+  config.after_initialize do
+    ExceptionNotifier.exception_recipients = %w(feedbackapp@lists.berkeley.edu)
+    ExceptionNotifier.sender_address = %("Outspokes Application Error" <null@outspokes.com>)
+    ExceptionNotifier.email_prefix = "[app err] "
+  end
+
 
 end
