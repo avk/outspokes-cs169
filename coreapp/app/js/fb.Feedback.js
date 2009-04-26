@@ -41,6 +41,7 @@
     this.name = null;
     this.timestamp = null;
     this.build = null;
+    fb.Comment.refresh_count();
   };
   fb.Feedback.prototype.render = function() {};
   
@@ -56,12 +57,13 @@
     };
     var callback = function(data) {
       if (!data.success) {
-        console.log("delete fail!");
+//        console.log("delete fail!");
       } else {
-        console.log("delete win!");
+//        console.log("delete win!");
       }
     };
     $.post(fb.env.destroy_address, data, callback, "json")
+    return true;
   }
   
   /* The feedback class should also have the class variables:
