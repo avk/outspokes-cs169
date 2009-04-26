@@ -38,8 +38,19 @@ function() {
 
       _fb.authorized.set(data.authorized);
       if (!_fb.authorized()) {
+        if (fb.env.login_panel) {
+          fb.env.login_panel.find('div:eq(1)').empty();
+          fb.env.login_panel.find('div:eq(1)').append("<h2 style='text-align:center;'>Login invalid.</h2>");
+          setTimeout("" + fb.find_fb() + ".env.login_panel.remove(); " + fb.find_fb() + "()", 3000);
+          return false;
+        }
         fb.env.init = true;
         return false;
+      }
+
+      if (fb.env.login_panel) {
+        fb.env.login_panel.remove();
+        delete fb.env['login_panel'];
       }
 
       if (data.admin) {
@@ -114,7 +125,7 @@ function() {
         form.submit(function() {
           var _email = this.email.value;
           var _password = this.password.value;
-          login_panel.remove();
+          fb.env.login_panel = login_panel;
           fb.Feedback.get({'email':_email,'password':_password}, login_callback);
           _fb.first.set(false);
           return false;
