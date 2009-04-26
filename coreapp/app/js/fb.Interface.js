@@ -54,7 +54,14 @@
 
         // to open the panel from the widget
         var open_link = $('<a href="#">admin&nbsp;panel</a>').attr('id',this.dom.admin.open);
-        open_link.click(this.show);
+       // open_link.click(this.show);
+
+        
+        open_link.click(function(e) {
+            fb.i.admin_panel.show();
+            e.stopPropagation();
+          });
+        
         widget.append(open_link);
       },
       show : function() {
