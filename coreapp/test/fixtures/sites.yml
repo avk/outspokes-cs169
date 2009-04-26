@@ -4,6 +4,7 @@ linkedin:
   id: 1
 #  url: http://www.linkedin.com/
   account_id: 1
+  validation_token: donkey_balls
 
 facebook:
   id: 2
