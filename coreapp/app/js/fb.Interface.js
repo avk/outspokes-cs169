@@ -11,8 +11,6 @@
       return false;
     }
 
-    $('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
-
     this.dom = {
       widget  : { 
         wrapper : 'outspokes',
@@ -43,7 +41,7 @@
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
           id : this.dom.admin.iframe,
-          src : fb.env.admin_panel_address,
+          src : fb.env.admin_panel_address.pages,
           width : '100%',
           height : '100%', 
           frameborder : 0,
@@ -60,6 +58,7 @@
         widget.append(open_link);
       },
       show : function() {
+        console.log($('#' + fb.i.dom.admin.panel)[0].display);
         $('#' + fb.i.dom.admin.panel).show();
         $('#' + fb.i.dom.admin.overlay).show();
       },
@@ -67,6 +66,9 @@
         $('#' + fb.i.dom.admin.panel).hide();
         $('#' + fb.i.dom.admin.overlay).hide();
       },
+      set_to_commenters: function() {
+        $("#" + this.dom.admin.iframe)[0].src = fb.env.admin_panel_address.commenters;
+      }
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);

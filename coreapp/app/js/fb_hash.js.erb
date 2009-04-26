@@ -17,6 +17,8 @@ function() {
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
 
+    fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
+
     // DO NOT USE THIS!!!!!
     // This is only for convenience in testing, and should never be
     // using in the JS
@@ -46,7 +48,9 @@ function() {
           fb.cookie('fb_hash_admin_validation_token', _fb.admin());
         }
         _fb.site_id.set(data.site_id);
-        fb.env.admin_panel_address = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/pages";
+        fb.env.admin_panel_address = {};
+        fb.env.admin_panel_address.pages = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/pages";
+        fb.env.admin_panel_address.commenters = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/commenters";
       }
 
       if (fb.env.url_token === "") {
@@ -57,6 +61,10 @@ function() {
 
       fb.i = new fb.Interface();
       fb.Feedback.get_callback(data, true);
+      if (data.no_commenters) {
+        fb.i.admin_panel.set_to_commenters();
+        fb.i.admin_panel.show();
+      }
       return true;
     };
 
