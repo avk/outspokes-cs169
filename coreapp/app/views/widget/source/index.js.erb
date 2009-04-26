@@ -1,5 +1,7 @@
 <%= render :file => @ordered_files.shift %>
 
+// Site id is available as @site.id
+
 <%- # the first file is special, because it's assigned to our sole namespacing variable -%>
 <%= @fb_hash %> = <%= render :file => @ordered_files.shift %>
 <%= "  })(" + @fb_hash + ");\n};\n\n" %>
