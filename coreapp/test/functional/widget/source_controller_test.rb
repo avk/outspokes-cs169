@@ -8,7 +8,7 @@ class Widget::SourceControllerTest < ActionController::TestCase
   end 
 
   test "should fetch widget code" do
-    get :index
+    get :index, :id => 1
     assert_response :success
     assert_equal 'text/javascript; charset=utf-8', @response.headers['type']
     assert_not_nil assigns(:fb_hash)
