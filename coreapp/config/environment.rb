@@ -92,4 +92,7 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_charset = 'utf-8'
 
+  ExceptionNotifier.exception_recipients = %w(outspokes@outspokes.com)
+
+
 end
