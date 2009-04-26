@@ -3,7 +3,7 @@ class Widget::FeedbacksController < Widget::WidgetController
   before_filter :authorize
   
   # Authenticity Token doesn't work with random JS calls unless we want to somehow hack that in to js?
-  skip_before_filter :verify_authenticity_token, :only => [:new_feedback_for_page]
+  skip_before_filter :verify_authenticity_token, :only => [:new_feedback_for_page, :destroy]
 
   # GET /feedback_for_page.js
   # params[:url_token] => 'abcdef'
