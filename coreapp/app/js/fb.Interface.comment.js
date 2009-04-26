@@ -216,10 +216,12 @@
 
 		cmt = this.consensus.build(c, cmt);
 
-		//admin only delete
-		var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
-		cmt.append(deleteCmt);
-		
+    //admin only delete
+    if (_fb.admin()) {
+      var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
+      cmt.append(deleteCmt);
+    }
+    
       // set up reply actions
       cmt.append(this.reply.buildLink(c_id));
       cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
