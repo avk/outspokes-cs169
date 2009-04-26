@@ -35,7 +35,7 @@
   };
 
   fb.Comment.prototype.giveOpinion = function(opinion) {
-    if (!fb.env.authorized()) {
+    if (!_fb.authorized()) {
       return;
     }
     var data = {
@@ -73,7 +73,7 @@
   fb.Comment.unrendered = {};
 
   fb.Comment.post = function (content, target, name) {
-    if (!fb.env.authorized()) {
+    if (!_fb.authorized()) {
       return null;
     }
     var data = {
@@ -84,6 +84,9 @@
     };
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;
+    }
+    if (_fb.admin()) {
+      data.validation_token = _fb.admin();
     }
     if (name) {
       data["name"] = name;

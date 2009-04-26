@@ -28,7 +28,7 @@ class EmailReqsController < ApplicationController
 
     respond_to do |format|
       if @email_req.save
-        format.html { redirect_to(@email_req) }
+        format.html { render :template => 'thank_you' }
         format.xml  { render :xml => @email_req, :status => :created, :location => @email_req }
       else
         if EmailReq.find_by_email @email_req.email

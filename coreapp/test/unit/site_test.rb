@@ -148,12 +148,11 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   def test_should_be_able_to_retrieve_a_sites_pages_with_the_latest_feedback_for_each_page
-    site = create_site(:url => 'http://www.somethingspecial.com')
+    site = create_site(:url => 'http://www.google.com')
     assert_difference "Page.count", 3 do
       3.times do |i|
-        site.pages << Page.new(:url => site.url + "/" + i.to_s, :site => site)
+        Page.create(:url => site.url + '/' + i.to_s, :site => site)
       end
-      site.save
     end
     
     timestamps = {}
@@ -271,5 +270,13 @@ class SiteTest < ActiveSupport::TestCase
     assert valid_token != site.validation_token
     assert old_timestamp != site.validation_timestamp
   end
+  
+  def test_should_set_the_name_based_on_the_title_of_the_home_page_after_being_created
+    site = create_site(:url => "http://www.yahoo.com/")
+    expected = 'Yahoo!' # the value of the <title> tag of the above URL
+    got = site.name
+    assert got == expected, "got #{got} instead of #{expected}"
+  end
+  
   
 end

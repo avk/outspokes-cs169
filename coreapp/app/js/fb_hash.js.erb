@@ -14,66 +14,46 @@ function() {
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
+    // will be set properly in the callback if authorized as the admin
+    fb.env.admin_panel_address = null;
 
-    // TODO: Move outside into huge closure so can't be set
-    (function() {
-      var _val = false;
-      var _isSet = false;
-      fb.env.authorized = function (value) {
-        if (_isSet || !value) {
-          return _val;
-        } else {
-          if (typeof _val === "boolean") {
-            _val = value;
-            _isSet = true;
-          }
-          return _val;
-        }
-      };
-    })();
-
-    // TODO: Also most outside with fb.env.authorized above
-    (function() {
-      var _val = false;
-      var _isSet = false;
-      fb.env.admin = function (value) {
-        if (_isSet || !value) {
-          return _val;
-        } else {
-          _val = value;
-          _isSet = true;
-          fb.cookie('fb_hash_admin_validation_token', value);
-          return _val;
-        }
-      };
-    })();
+    // DO NOT USE THIS!!!!!
+    // This is only for convenience in testing, and should never be
+    // using in the JS
+    fb.env.get = function (key) {
+      return _fb[key]();
+    };
 
     var method = fb.rand_string(50);
     var login_callback = fb.find_fb() + "." + method;
     fb[method] = function (data) {
       fb[method] = null;
+      delete fb[method];
       if (!data) {
         fb.env.init = true;
         return false;
       }
 
-      fb.env.authorized(data.authorized);
-      if (!fb.env.authorized()) {
+      _fb.authorized.set(data.authorized);
+      if (!_fb.authorized()) {
         fb.env.init = true;
         return false;
       }
 
       if (data.admin) {
-        fb.env.admin(data.admin);
+        _fb.admin.set(data.admin);
+        if (typeof _fb.admin() === "string") {
+          fb.cookie('fb_hash_admin_validation_token', _fb.admin());
+        }
+        _fb.site_id.set(data.site_id);
+        fb.env.admin_panel_address = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/pages";
       }
 
       if (fb.env.url_token === "") {
         fb.env.pub_page = true;
       }
 
-      if (!fb.cookie("fb_hash_url_token")) {
-        fb.cookie("fb_hash_url_token", fb.env.url_token);
-      }
+      fb.cookie("fb_hash_url_token", fb.env.url_token);
 
       fb.i = new fb.Interface();
       fb.Feedback.get_callback(data, true);
@@ -82,8 +62,14 @@ function() {
 
     if (!_admin_validation_token && _wants_admin) {
       fb.$(function() {
-        console.info("inside");
-        var login_panel = fb.$('<div></div>');
+        var login_panel = fb.$('<div></div>').css({
+          'position': 'fixed',
+          'top': '0%',
+          'left': '0%',
+          'height': '100%',
+          'width': '100%',
+          'z-index': '1001'
+        });
         login_panel.append(fb.$('<div></div>').css({
           'background-color': 'black',
           'color': 'transparent',
@@ -92,10 +78,10 @@ function() {
           'margin': '0',
           'opacity': '0.80',
           'padding': '0',
-          'position': 'absolute',
+          'position': 'fixed',
           'top': '0%',
           'width': '100%',
-          'z-index': '1001'
+          'z-index': '1002'
         }));
         login_panel.append(fb.$('<div></div>').css({
           'background-color': 'white',
@@ -104,13 +90,13 @@ function() {
           'height': '25%',
           'width': '25%',
           'top': '37.5%',
-          'left': '37.5%',
+          'left': '36.5%',
           'margin': '0',
           'overflow': 'hidden',
           'padding': '5px',
-          'position': 'absolute',
+          'position': 'fixed',
           'opacity': '1.0',
-          'z-index': '1002'
+          'z-index': '1003'
         }));
 
         var form = fb.$('<form onsubmit="return false;"></form>');
@@ -120,8 +106,10 @@ function() {
         form.submit(function() {
           var _email = this.email.value;
           var _password = this.password.value;
-          login_panel.parent().remove();
+          login_panel.remove();
           fb.Feedback.get({'email':_email,'password':_password}, login_callback);
+          _fb.first.set(false);
+          return false;
         });
 
         login_panel.find('div:eq(1)').append(form);
@@ -131,8 +119,12 @@ function() {
       return;
     }
 
-    if (typeof _admin_validation_token === "number") {
-      return fb.Feedback.get({'validation_token':_admin_validation_token}, login_callback);
+    if (typeof _admin_validation_token === "string") {
+      fb.Feedback.get({'validation_token':_admin_validation_token}, login_callback);
+      _fb.first.set(false);
+      return;
     }
 
-    return fb.Feedback.get(login_callback);
+    fb.Feedback.get(login_callback);
+    _fb.first.set(false);
+    return;

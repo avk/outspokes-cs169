@@ -72,6 +72,37 @@ h1#company_name
     #account_email
       :margin 2px 0
       :width 90%
+
+#vertical_container
+  :width 75%
+  h3, div
+    :padding .5em
+  h3
+    :font-size 1.3em
+    :font-weight bold
+    :height 25px
+    :border-bottom 1px solid #444
+  div
+    :background-color white
+  div.checkmark
+    :width 25px
+    :height 25px
+    :float left
+    :padding 0
+    :background-color transparent
+  h3.inactive
+    :background-color #999
+    :color #666
+  h3.completed
+    :background-color #6FFF82
+    :color #184F20
+    div.checkmark
+      :background-image url(/images/checkmark.gif)
+  h3.active
+    :background-color #9BBDCF
+    
+h3#sec4
+  :text-align center
     
 #footer
   :background-color #eee

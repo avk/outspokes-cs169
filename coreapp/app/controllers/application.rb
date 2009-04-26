@@ -15,6 +15,38 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
+  # expects params[:emails] and @site
+  def invite_commenters
+    emails = Commenter.parse_email_addresses(params[:emails])
+    
+    emails[:legal].each do |email|
+      begin
+        Commenter.transaction do
+          if c = Commenter.find_by_email(email)
+            # fails transaction if already invited to this page
+            raise "double invite!" if c.pages.include? @site.home_page
+          else
+            c = Commenter.new(:email => email)
+            c.save!
+          end
+          i = Invite.new(:page => @site.home_page, :commenter => c)
+          i.save!
+
+          Mailer.deliver_commenter_invite(i)
+        end
+      rescue
+        flash[:warning] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
+      end
+    end
+    
+    unless emails[:illegal].empty?
+      flash[:error] = "Could not invite #{emails[:illegal].join(', ')}"
+      return false
+    end
+    return true
+  end
+  
+  
   def validate_callback
     # According to http://www.functionx.com/javascript/Lesson05.htm, JS functions:
     # - Must start with a letter or an underscore
@@ -32,9 +64,11 @@ class ApplicationController < ActionController::Base
 
     return if @callback.nil? # no callback should be OK -- return plain JSON or HTML window.name
 
+    @callback.strip!
+
     okay = true
     js_keywords.each do |word|
-      if @callback.match(word)
+      if @callback == word
         okay = false
         break
       end

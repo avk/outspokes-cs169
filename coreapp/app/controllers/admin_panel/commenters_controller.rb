@@ -2,35 +2,13 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
   
   # GET /admin_panel/:site_id/commenters
   def index
-    @commenters = @site.commenters
+    @commenters = @site.commenters.find(:all, :conditions => ["commenters.id != ?", @site.account_id])
+    flash[:warning] = "You haven't invited anyone to give feedback." if @commenters.empty?
   end
 
   # POST /admin_panel/:site_id/commenters
   def create
-    emails = Commenter.parse_email_addresses(params[:emails])
-    
-    emails[:legal].each do |email|
-      begin
-        Commenter.transaction do
-          if c = Commenter.find_by_email(email)
-            # fails transaction if already invited to this page
-            raise "double invite!" if c.pages.include? @site.home_page
-          else
-            c = Commenter.new(:email => email)
-            c.save!
-          end
-          i = Invite.new(:page => @site.home_page, :commenter => c)
-          i.save!
-        end
-      rescue
-        flash[:warning] = "Could not invite one or more of: #{emails[:legal].join(', ')}"
-      end
-    end
-    
-    unless emails[:illegal].empty?
-      flash[:error] = "Could not invite #{emails[:illegal].join(', ')}"
-    end
-    
+    invite_commenters
     redirect_to admin_panel_commenters_path(@site)
   end
 

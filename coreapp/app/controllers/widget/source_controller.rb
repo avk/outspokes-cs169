@@ -1,10 +1,11 @@
-class Widget::SourceController < ApplicationController
+class Widget::SourceController < Widget::WidgetController
     Widget::SourceController.page_cache_extension = '.js'
     caches_page :index
 
     def index
       @fb_hash = "fb_" + generate_hash
       @ordered_files = %w(
+        pre.js
         fb_hash.js.erb
         fb.jQuery.js
         fb.Common.js

@@ -1,31 +1,38 @@
-<%- if @commenters.empty? -%>
-  <em>None</em>
-<%- else -%>
+<p id="invited_message">
+  <%- unless @commenters.empty? -%>
+    You've invited <strong id="invite_count"><%= pluralize(@commenters.size, 'person') %></strong> to give feedback.
+  <% end -%>
+</p>
+
+<%- unless @commenters.empty? -%>
   <ol id="site_commenters">
   <%- @commenters.each do |commenter| -%>
-    <%- unless commenter == current_account -%>
-      <li>
-        <%= commenter.email %>
-        <%- if RAILS_ENV == "development" -%>
-          <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
-          <%= link_to final_url, final_url %>
-        <% end -%>
-        <%= link_to '[ Remove ]', 
+    <li class="invited_commenter">
+      <div class="remove_commenter">
+        <%= link_to 'x', 
             admin_panel_uninvite_path(@site, commenter), 
             :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
             :method => :delete %>
-      </li>
-    <% end -%>
+      </div>
+      <div class="commenter_email">
+        <%- if RAILS_ENV == "development" -%>
+          <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
+          <%= link_to commenter.email, final_url %>
+        <%- else -%>
+          <%= commenter.email %>
+        <% end -%>
+      </div>
+    </li>
   <% end -%>
   </ol>
 <%- end -%>
 
-<hr />
+<fieldset id="invite_commenters">
+  <legend>Invite <%= (@commenters.empty?) ? 'some' : 'more' %> folks</legend>
 
-<h1>Invite more people to give feedback</h1>
-
-<% form_tag admin_panel_invite_path(@site) do %>
-  <%= label_tag 'emails', "Comma-separated email addresses:" %><br />
-  <%= text_area_tag :emails, '', :size => '50' %><br />
-  <%= submit_tag 'Invite!' %>
-<% end %>
+  <% form_tag admin_panel_invite_path(@site) do %>
+    <%= label_tag 'emails', "Comma-separated emails" %><br />
+    <%= text_area_tag :emails %><br />
+    <%= submit_tag 'Invite' %>
+  <% end %>
+</fieldset>

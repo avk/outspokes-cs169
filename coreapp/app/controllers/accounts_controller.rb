@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
-
+  before_filter :login_required, :only => [:dashboard]
+  
   # render new.rhtml
   def new
     @account = Account.new
@@ -48,7 +49,7 @@ class AccountsController < ApplicationController
     @sites = @account.sites
     @sites_admin_urls = {}
     for site in @sites
-      @sites_admin_urls[site] = site.home_page.url.sub(/\/$/i, '') + '?url_token=' + site.home_page.invites.find_by_commenter_id(current_account).url_token
+      @sites_admin_urls[site] = site.admin_url
     end
     respond_to do |format|
       format.html

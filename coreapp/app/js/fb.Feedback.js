@@ -22,7 +22,7 @@
       this.target = obj.target;
       this.name = obj.name;
       this.opinion = obj.opinion;
-      this.timestamp = obj.timestamp;
+      this.timestamp = obj.timestamp * 1000;
       this.build = null;
 
       fb.Feedback.all[this.feedback_id] = this;
@@ -61,8 +61,11 @@
     } else if (typeof options !== "undefined") {
       callback = options;
     }
-    if (fb.env.admin()) {
-      params.validation_token = fb.env.admin();
+    if (_fb.admin()) {
+      params.validation_token = _fb.admin();
+      if (_fb.site_id()) {
+        params.site_id = _fb.site_id();
+      }
     }
 
     if (callback) {
@@ -94,7 +97,7 @@
    * @return {Array[Feedback]} An array of the new feedbacks
    */
   fb.Feedback.get_callback = function (data, render) {
-    if (!(fb.env.authorized() || data.authorized)) {
+    if (!(_fb.authorized() || data.authorized)) {
       return null;
     }
     var i, j;
