@@ -264,7 +264,7 @@
       return function(a, b) {
           var a_id = self.dom.number_from_id(a.id);
           var b_id = self.dom.number_from_id(b.id);
-          return (b_id - a_id);
+          return (fb.Feedback.all[b_id].timestamp - fb.Feedback.all[a_id].timestamp);
       };
     };
     
