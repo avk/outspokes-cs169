@@ -9,3 +9,5 @@ db/*.sqlite3
 db/schema.rb
 coverage/*
 doc/guides
+public/index*.html
+public/test/index*.html

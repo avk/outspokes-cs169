@@ -10,6 +10,7 @@ function() {
     var _admin_validation_token = fb.cookie('fb_hash_admin_validation_token');
     var _wants_admin = fb.getParams('admin');
     fb.env.pub_page = false;
+    fb.env.logo_address = "<%= WIDGET_DOMAIN %>images/widget-logo.png";
     fb.env.get_address = "<%= WIDGET_DOMAIN %>feedback_for_page.js";
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
