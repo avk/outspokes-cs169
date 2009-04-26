@@ -148,7 +148,7 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   def test_should_be_able_to_retrieve_a_sites_pages_with_the_latest_feedback_for_each_page
-    site = create_site(:url => 'http://www.somethingspecial.com')
+    site = create_site(:url => 'http://www.google.com')
     assert_difference "Page.count", 3 do
       3.times do |i|
         Page.create(:url => site.url + '/' + i.to_s, :site => site)
