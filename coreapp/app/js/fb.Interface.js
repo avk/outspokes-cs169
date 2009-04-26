@@ -53,7 +53,7 @@
         $('<div></div>').attr('id',this.dom.admin.overlay).appendTo($('body'));
 
         // to open the panel from the widget
-        var open_link = $('<a href="#">admin</a>').attr('id',this.dom.admin.open);
+        var open_link = $('<a href="#">admin&nbsp;panel</a>').attr('id',this.dom.admin.open);
         open_link.click(this.show);
         widget.append(open_link);
       },
@@ -71,6 +71,12 @@
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+    
+    if (fb.env.first_visit) {
+      this.main_window.css({'height':'20px'});
+    } else {
+      this.main_window.css({'height':'220px'});
+    }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
