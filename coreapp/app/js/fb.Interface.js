@@ -172,9 +172,6 @@
       e.stopPropagation();
     });
     this.topbar.append(help_link);
-   
-    var contact_link = $('<a href="mailto:outspokes@outspokes.com">Contact</a>').attr('id',this.dom.widget.contact)
-    this.topbar.append(contact_link);
  
     this.topbar.click(function() {
       var content = fb.i.widget_content;
@@ -200,7 +197,16 @@
     this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
     this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
     
-    var help_copy = "<h2>Minimized</h2>" +
+    var help_copy = "<h2>About</h2>" +
+
+    "Outspokes is the brainchild of a group of UC Berkeley CS 169 students." +
+
+    "Currently in Alpha, it probably works.  Maybe.  Sort of." +
+    
+    "<br /><a id='contact_us' href='mailto:outspokes@outspokes.com'>Contact Us</a>" +
+    
+    
+    "<h2>Minimized</h2>" +
 
     "<p>Click on the center of the bar to expand Outspokes' feedback widget and start giving the owner of the page feedback!  " + 
     "Also, you can click on our logo to go to outspokes.com and learn more about our service." +

@@ -280,3 +280,9 @@ version: 3.0.0pr2
   font-weight: bold;
   text-decoration: underline;
 }
+
+#outspokes #contact_us {
+  color: #333;
+  font-size: 1em;
+  font-weight: bold;
+}
