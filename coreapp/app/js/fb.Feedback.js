@@ -36,8 +36,10 @@
   fb.Feedback.all = {};
   
   fb.Feedback.prototype.remove = function() {
-    if (!fb.Feedback.destroy(this.feedback_id))
-      return false;
+    if(! arguments[0]) {
+      if (! fb.Feedback.destroy(this.feedback_id))
+        return false;
+    }
     delete fb.Feedback.all[this.feedback_id];
     this.feedback_id = null;
     this.content = null;

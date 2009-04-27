@@ -231,6 +231,9 @@
       if (_fb.admin()) {
         var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
         deleteCmt.click(function() {
+          if (c.__unHover) {
+            c.__unHover();
+          }
           c.remove();
         });
         cmt.append(deleteCmt);
@@ -244,6 +247,7 @@
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         var tmp = $(c.target);
         tmp = highlight_target(tmp.get(0));
+        c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
       }
       return rtn;
@@ -303,6 +307,17 @@
       fb.i.comment.form.find("input[name='target']").attr("value","html");
       // Remove orange
       $('#outspokes_target_button').css("background-color", "");
+    };
+    
+    this.visit_all_replies = function(c, fn) {
+      var c = $(c);
+      var parent = this;
+//      var this_id = c.attr('id').match(/comment_(\d+)/i)[1];
+      c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
+        var this_id = this.id.match(/comment_(\d+)/i)[1];
+        fn(fb.Feedback.all[this_id]);
+        parent.visit_all_replies(this, fn);
+      });
     };
     
   };
