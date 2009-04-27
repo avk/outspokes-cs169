@@ -217,3 +217,12 @@ version: 3.0.0pr2
 	height: 20px;
 	margin-left: 10px;
 }
+
+#outspokes #bubble {
+  width: 230px;
+  height: 150px;
+  position: absolute;
+  border: red 2px solid;
+  right: 0px;
+  top: -134px;
+}

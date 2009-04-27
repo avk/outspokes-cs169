@@ -36,8 +36,7 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
-        //close_link.click(this.hide);
-        
+                
         close_link.click(function(e) {
           
           var content = fb.i.widget_content;
@@ -100,7 +99,12 @@
     
     if (fb.env.first_visit) {
       this.main_window.css({'height':'20px'});
+      
+      var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
+      this.main_window.append(intro_bubble);
+      
     } else {
+      $("#bubble").hide();
       this.main_window.css({'height':'220px'});
     }
 
@@ -120,6 +124,9 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
+      
+      $("#bubble").hide();
+
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:500 } );
         help.removeClass("hide");
@@ -135,6 +142,9 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
+      
+      $("#bubble").hide();
+      
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:500 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
