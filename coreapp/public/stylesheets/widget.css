@@ -10,6 +10,7 @@ version: 3.0.0pr2
 #outspokes {
 	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 11px;
+  line-height: 1em;
 }
 
 /* outermost wrapper for our widget */
@@ -108,7 +109,7 @@ version: 3.0.0pr2
  */
 
 #outspokes #new_comment, #outspokes #comment_list {
-	height: 198px;
+	height: 200px;
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
@@ -118,41 +119,51 @@ version: 3.0.0pr2
 
 #outspokes #new-comment {
 	float: right;
-	width: 30%;
-	margin-right: 3%;
+	width: 25%;
+	margin-right: 2%;
 }
 
 
 #outspokes #comment_list {
 	float: left;
-	width: 60%;
-	margin-left: 3%;
+	width: 70%;
+	margin-left: 3px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
 
-#outspokes #comment_list div {
+/*#outspokes #comment_list div {
 	padding: 5px;
 	border: 1px solid #111;
 	border-collapse: collapse;
-}
+}*/
 
-#outspokes #comment_list div * {
+/*#outspokes #comment_list div * {
 	border: none;
-}
+}*/
 
 #outspokes #comment_list button {
 	border: 1px solid;
 	cursor: pointer;
-	margin: 0 5px;
+  width: 80px;/*
+	margin: 0 5px;*/
+}
+
+#outspokes #comment_list .comment {
+  border:1px solid black;
+  margin-bottom:1px;
 }
 
 #outspokes #comment_list .cmt_bar {
 	background-color: #DDD;
-	border-bottom: 3px solid #CCC;
+/*	border-bottom: 3px solid #CCC;*/
 	height: 20px;
-	padding: 0 3%;
+/*	padding: 0 3%;*/
 	cursor: pointer;
+}
+
+#outspokes #comment_list .cmt_content {
+  border-top: 1px solid black;
 }
 
 #outspokes #comment_list .commenter_name {
@@ -162,19 +173,29 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cmt_date {
 	font-size: 0.8em;
-	float: right;
-	margin-right: 1%;
+	float: right;/*
+	margin-right: 4px;*/
+}
+
+#outspokes #comment_list .cmt_delete_X {
+  color: red;
 }
 
 #outspokes #comment_list .cmt_text {
-	clear: both;
+	/*clear: both;*/
+  margin-right: 80px;
 }
 
-#outspokes #comment_list .cns_buttons {
+#outspokes #comment_list .options {
+  float: right;
+  width: 80px;
+}
+
+/*#outspokes #comment_list .cns_buttons {
 	float: right;
 	padding: 0px;
 	margin: -2% 3%;
-}
+}*/
 
 #outspokes #comment_list .cns_buttons span{
     line-height: 1.3em;
@@ -186,6 +207,10 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cns_buttons .disagreed {
   color: red;
+}
+
+#outspokes #comment_list .replies {
+  padding-left:20px;
 }
 
 #outspokes #topbar {

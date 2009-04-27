@@ -82,9 +82,10 @@
     this.consensus = {
       dom   : this.dom,
       _opinion: function(c_id, color) {
+        console.log("c_id", c_id);
         var comment = null;
         if (typeof c_id == "string") {
-          comment = $('#' + this.dom.comment_id(c_id));
+          comment = $('#' + this.dom.comment_id(c_id) + " > .cmt_content:eq(0)");
         } else {
           comment = c_id;
         }
@@ -108,7 +109,6 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree');
           var disagree = this.button(c, 'disagree');
-          
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
@@ -119,9 +119,9 @@
             consensus_div.append(agree);
             consensus_div.append(disagree);
           }
-          markup.append(consensus_div);
+          return consensus_div;
         }
-        return markup;
+        return "";
       },
       button : function(c, action) {
         var button = $('<button type="button">' + action + '</button><br />');
@@ -146,7 +146,7 @@
           parent_border = 0;
         }
         new_border = parent_border + 1 + "px";
-        rtn.css({ 'border-left': new_border + ' solid black' });
+//        rtn.css({ 'border-left': new_border + ' solid black' });
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
@@ -212,41 +212,41 @@
     };
     
     this.build = function (c) {
-  		var rtn = $('<div></div>').css('width','100%');
   		var c_id = this.dom.comment_id(c.feedback_id);
-  		var bar = $('<div class="cmt_bar"></div>');
-  		var cmt = $('<div></div>');
-  		rtn[0].setAttribute('id', c_id);
-	
-  		bar[0].setAttribute('id', 'bar_' + c_id);
-  		cmt[0].setAttribute('id', 'body_' + c_id);
-  		bar.append('<span class="commenter_name">'+ c.name +'</span>');
-		
-		  bar.append('<span class="cmt_date">' + fb.get_timestamp(c.timestamp) + '</span>');
-		
-  		bar.click(function(){ cmt.toggle(); });
-    
-  		rtn.append(bar);
-  		rtn.append(cmt);
-    	cmt.append('<p class="cmt_text">' + c.content + '</p>');
-
-  		cmt = this.consensus.build(c, cmt);
-
-      //admin only delete
+      var rtn = $('<div></div>').css('width','100%');   // comment-block
+      rtn.attr('id', c_id);
+      var bar = $('<div></div>').addClass('cmt_bar');   // bar
+      bar.attr('id', 'bar_' + c_id);
+      var timestamp_close = $('<div></div>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
       if (_fb.admin()) {
-        var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
+        var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
         deleteCmt.click(function() {
           if (c.__unHover) {
             c.__unHover();
           }
           c.remove();
         });
-        cmt.append(deleteCmt);
+        timestamp_close.append(deleteCmt);
       }
+      bar.append(timestamp_close);
+      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
+      var options = $('<div></div>').addClass('options');
+      content.append(options);
+      var tmp = this.consensus.build(c, content)
+      options.append(tmp);
+      options.append(this.reply.buildLink(c_id));
+      content.append($('<div></div>').addClass('cmt_text').append(c.content));
+      content.append($('<div></div>').css('clear','both'));
 
-      // set up reply actions
-      cmt.append(this.reply.buildLink(c_id));
-      cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
+      var replies = $('<div></div>').attr('id', this.dom.reply_list(c_id)).addClass('replies');
+      var comment = $('<div></div>').addClass('comment');
+      comment.append(bar).append(content);
+      rtn.append(comment).append(replies);
+      bar.click(function() {
+        $(this).find('div').toggle();
+        $(this).parent().parent().find('div.cmt_content:eq(0), div.replies:eq(0)').toggle();
+      });
       
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
