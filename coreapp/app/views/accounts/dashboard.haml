@@ -13,7 +13,11 @@
 
 %table{:id=>'sites_table'}
   %tr
-    %th{:colspan=>4} My Sites
+    %th{:colspan=>4} 
+      My Sites 
+      ( 
+      = link_to "+ new site", new_site_path
+      )
   
   - if @sites.empty?
     %tr
@@ -33,9 +37,9 @@
           in your site:
           = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{site.id}' type='text/javascript'></script>", :class => 'code'
       
-  %tr
-    %td{:colspan=>4}
-      = link_to "Add a site!", new_site_path
+  / %tr
+  /   %td{:colspan=>4}
+  /     = link_to "Add a site!", new_site_path
       
 / #account_block
 /   - form_for @account, :controller => "accounts", :action => "update" do |f| 
