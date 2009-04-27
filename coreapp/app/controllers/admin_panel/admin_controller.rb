@@ -5,9 +5,7 @@ class AdminPanel::AdminController < ApplicationController
   before_filter :get_site
 
   def get_site
-    begin
-      @site = Site.find(params[:site_id])
-    rescue ActiveRecord::RecordNotFound => e
+    unless @site = Site.find_by_validation_token_and_id(params[:validation_token], params[:site_id])
       flash[:error] = "Site not found."
       render :template => "admin_panel/invalid"
     end
