@@ -56,9 +56,14 @@ h1#company_name
   :float right 
 
 #main_content
-  :background-color #eee
+  :background
+    :color #e0e0e0
+    :image url(/images/gradient-bg.png)
+    :position bottom
+    :repeat repeat-x
+  
   .inside
-    :background-color #ddd
+    :background-color #e0e0e0 
 
 ol#steps
   li
@@ -68,15 +73,19 @@ ol#steps
   :margin 0 auto
   
 #signup-button
+  :background-image url(/images/signup-button.png)
   :display block
   :margin 30px auto
   :height 30px
-  :width 100px
+  :width 230px
   :padding 10px
   :text-align center
-  :background-color #B5CCDF
-  :font-size 1.1em
-  :font-weight bold
+  :background-color transparent
+  :color white
+  :line-height 100%
+  :font
+    :size 25px
+    :weight bold
 
 #flash_error
   :color red
