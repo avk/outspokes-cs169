@@ -105,7 +105,7 @@
       $('#' + this.dom.widget.help_content).hide();
       
       var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
-      var close_intro_bubble = $('<a href="#" id="close_intro">close</a>');
+      var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
       
       close_intro_bubble.click(function() 
         {

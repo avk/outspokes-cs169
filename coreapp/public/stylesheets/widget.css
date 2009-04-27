@@ -223,9 +223,14 @@ version: 3.0.0pr2
   top: -134px;
   background-image: url(/images/intro-bubble.png);
   background-repeat: no-repeat;
+  padding: 10px;
 }
 
 #outspokes #bubble #close_intro {
-  position: absolute;
-  right: 5px;
+  color:#666666;
+  font-size:2em;
+  font-weight:bold;
+  left:170px;
+  position:relative;
+  top:-10px;
 }
