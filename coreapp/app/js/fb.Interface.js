@@ -125,7 +125,7 @@
       
     } else {
       $("#bubble").hide();
-      this.main_window.css({'height':'227px'});
+      this.main_window.css({'height':'220px'});
     }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
