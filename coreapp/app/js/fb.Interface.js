@@ -36,7 +36,21 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
-        close_link.click(this.hide);
+        //close_link.click(this.hide);
+        
+        close_link.click(function(e) {
+          
+          var content = fb.i.widget_content;
+          var widget = fb.i.main_window;
+          var help = fb.i.help_content;
+          
+          widget.animate( { height:"220px" }, { duration:500 } );
+          help.addClass("hide"); //always make sure help is hidden before showing content
+          content.show();
+          
+          fb.i.admin_panel.hide();
+        });
+        
         admin_panel.append(close_link);
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
@@ -54,7 +68,19 @@
 
         // to open the panel from the widget
         var open_link = $('<a href="#">admin&nbsp;panel</a>').attr('id',this.dom.admin.open);
-        open_link.click(this.show);
+
+        open_link.click(function(e) {
+          
+          var content = fb.i.widget_content;
+          var widget = fb.i.main_window;
+          
+          widget.animate( { height:"20px" }, { duration:500 } );
+          content.hide();
+          
+          fb.i.admin_panel.show();
+          e.stopPropagation();
+        });
+        
         widget.append(open_link);
       },
       show : function() {
@@ -128,7 +154,17 @@
     this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
     var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
     this.chead.append(comment_span);
-    this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');
+
+  	/*** Comment Sorting Dropdown Menu ****/
+  	var sort_dropdown = $('<select id="comments_filter"><option>newest</option><option>oldest</option>' +
+  	  '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+  	sort_dropdown.children().eq(0).click(function() {
+  	  fb.i.comment.sort_by_newest();
+  	});
+  	sort_dropdown.children().eq(1).click(function() {
+  	  fb.i.comment.sort_by_oldest();
+  	});
+  	this.chead.append(sort_dropdown);
 
     this.set_num_comments = function(num_comments) {
       comment_span.text(num_comments + ' comments');
@@ -148,6 +184,7 @@
     this.comment = new fb.Interface.comment(this);
 
     fb.Interface.instantiated = true;
+  
   };
 
   fb.Interface.prototype.div = function() {

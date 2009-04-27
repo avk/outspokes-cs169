@@ -8,6 +8,9 @@
       comment_id          : function(id) {
         return (this.comment_id_format.test(id)) ? id : 'comment_' + parseInt(id);
       },
+      number_from_id            : function(dom_id) {
+        return parseInt(dom_id.match(/comment_(\d+)/i)[1]);
+      },
       consensus_wrapper         : function(id) {
         return "consensus_on_comment_" + parseInt(id);
       },
@@ -21,7 +24,7 @@
       disagree_bg_color   : 'red',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
-		cform 				: "comment_form",
+    	cform       				: "comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';
       },
@@ -43,15 +46,19 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += 'Comment:<br /><textarea name="content" cols="30" rows="5" /><br />' +
-          '<input type="submit" value="Submit" />&nbsp;&nbsp;<span>Select target</span>' +
+    	formHTML += '<div id="outspokes_form_header">Comment:</div><textarea name="content" cols="30" rows="5" /><br />' +
+          '<input type="submit" value="Submit" />&nbsp;&nbsp;' +
           '<input type="hidden" value="' + target + '" name="target" />' +
-          '</form>'
+          '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
-    }
-    
-    this.comments = $('<div id="comment_list"></div>');
+    };
+
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
+    var target_button = $('<img id="outspokes_target_button src=' + fb.env.target_address + '/>');
+//    target_button.css('float', 'right').css('margin-top', '5px');
+    target_button.click(select_target);
+    this.form.find("#outspokes_form_header").prepend(target_button);
+    this.comments = $('<div id="comment_list"></div>');
     this.form.find("a").click(function(){fb.Feedback.get();});
     this.form.find("form").submit(function() { 
       var name = null;
@@ -63,7 +70,6 @@
       this.content.value = "";
       this.target.value = "html";
     });
-    this.form.find("span").mouseup(select_target);
     self.widget_content.append(this.comments);
     self.widget_content.append(this.form);
     
@@ -96,7 +102,7 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree');
           var disagree = this.button(c, 'disagree');
-
+          
           //admin's consensus statistics
           var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
           
@@ -148,10 +154,12 @@
       },
       // toggles the non-replying interface
       setupInterface  : function() {
-	
-		var replyButton = $('.' + this.dom.reply_links);
-		if (replyButton.attr("disabled")) { replyButton.attr("disabled", "false"); } else { replyButton.attr("disabled", "true"); }
-		
+    		var replyButton = $('.' + this.dom.reply_links);
+    		if (replyButton.attr("disabled")) { 
+    		  replyButton.attr("disabled", "false"); 
+  		  } else { 
+  		    replyButton.attr("disabled", "true"); 
+		    }
         $('#' + this.dom.cform).toggle();
       },
       // start replying to a comment
@@ -162,7 +170,7 @@
         var reply_form = this.dom.reply_form(c_id);
         var form = this.parent.buildCommentForm(reply_form, c_id);
         form.find("form").append('<input type="reset" value="Cancel" />');
-		form.find("form").attr('class','reply');
+    		form.find("form").attr('class','reply');
         form.find("form").submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
@@ -176,7 +184,7 @@
           fb.i.comment.reply.cancel(reply_form);
         });
         //$('#' + this.dom.reply_list(c_id)).before(form);
-		$('#' + this.dom.comment_form).append(form);
+        $('#' + this.dom.comment_form).append(form);
         
         form.find("textarea[name='content']").focus();
         // would be nice to also scroll to the comment form here like:
@@ -194,34 +202,35 @@
     };
     
     this.build = function (c) {
-		var rtn = $('<div></div>').css('width','100%');
-		var c_id = this.dom.comment_id(c.feedback_id);
-		var bar = $('<div class="cmt_bar"></div>');
-		var cmt = $('<div></div>');
-		rtn[0].setAttribute('id', c_id);
+  		var rtn = $('<div></div>').css('width','100%');
+  		var c_id = this.dom.comment_id(c.feedback_id);
+  		var bar = $('<div class="cmt_bar"></div>');
+  		var cmt = $('<div></div>');
+  		rtn[0].setAttribute('id', c_id);
 	
-		bar[0].setAttribute('id', 'bar_' + c_id);
-		cmt[0].setAttribute('id', 'body_' + c_id);
-		bar.append('<span class="commenter_name">'+ c.name +'</span>');
+  		bar[0].setAttribute('id', 'bar_' + c_id);
+  		cmt[0].setAttribute('id', 'body_' + c_id);
+  		bar.append('<span class="commenter_name">'+ c.name +'</span>');
 		
-		bar.append('<span class="cmt_date">' + fb.get_timestamp(c.timestamp) + '</span>');
-
+		  bar.append('<span class="cmt_date">' + fb.get_timestamp(c.timestamp) + '</span>');
 		
-		bar.click(function(){ cmt.toggle(); });
+  		bar.click(function(){ cmt.toggle(); });
     
-		rtn.append(bar);
-		rtn.append(cmt);
-	
+  		rtn.append(bar);
+  		rtn.append(cmt);
     	cmt.append('<p class="cmt_text">' + c.content + '</p>');
 
-		cmt = this.consensus.build(c, cmt);
+  		cmt = this.consensus.build(c, cmt);
 
-    //admin only delete
-    if (_fb.admin()) {
-      var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
-      cmt.append(deleteCmt);
-    }
-    
+      //admin only delete
+      if (_fb.admin()) {
+        var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
+        deleteCmt.click(function() {
+          c.remove();
+        });
+        cmt.append(deleteCmt);
+      }
+
       // set up reply actions
       cmt.append(this.reply.buildLink(c_id));
       cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
@@ -243,28 +252,83 @@
       }
     };
     
-    this.post_failed = function(c){};
+    this.post_failed = function(c) {};
     
     this.remove = function(c){
       c.build.remove();
     };
-  }
+    
+    this.sort_comments = function(method) {
+      var posts = this.comments.children();
+      this.comments.empty();
+      posts.sort(method(this));
+      this.comments.append(posts);
+    };
+
+    this.newest_sorter = function(self) {
+      return function(a, b) {
+        var a_id = self.dom.number_from_id(a.id);
+        var b_id = self.dom.number_from_id(b.id);
+        return (a_id - b_id);
+      };
+    };
+
+    this.oldest_sorter = function(self) {
+      return function(a, b) {
+          var a_id = self.dom.number_from_id(a.id);
+          var b_id = self.dom.number_from_id(b.id);
+          return (fb.Feedback.all[b_id].timestamp - fb.Feedback.all[a_id].timestamp);
+      };
+    };
+    
+    this.sort_by_newest = function() {
+      this.sort_comments(this.newest_sorter);  
+    };
+    
+    this.sort_by_oldest = function() {
+      this.sort_comments(this.oldest_sorter);  
+    };
+    
+  };
+
   
   function select_target() {
-    $(this).html("Change target");
-    $(document.body).one('click', function (e) {
+    $(this).get(0).value = "Change target";
+    $("body *").not("#outspokes *").bind('mouseup.elem_select', function (e) {
       fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+      e.target.__marked = true;
+      $("body *").unbind(".elem_select");
+      e.stopPropagation();
+      $('#outspokes_target_button').css("background-color", "orange");
+    });
+    // Attach to every element _inside_ of body
+    $("body *").not("#outspokes *").bind("mouseenter.elem_select", function (e) {
+      if ("_old_style" in $(e.target).parent().get(0)) {
+        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0)._old_style);
+        delete $(e.target).parent().get(0)["_old_style"];
+      }
+      e.target._old_style = $(e.target).css('outline')
+      $(e.target).css('outline','green solid 2px')
+      e.stopPropagation();
+    });
+    $("body *").not("#outspokes *").bind("mouseleave.elem_select", function (e) {
+      if (! ("__marked" in e.target)) {
+        $(e.target).css('outline', e.target._old_style);
+        delete e.target["_old_style"];
+        e.stopPropagation();
+      }
     });
   }
   
   function highlight_target(el) {
     el = $(el);
-    var par = el.wrap("<div></div>").parent();
+//    var par = el.wrap("<div></div>").parent();
+    var old_style = el.css('outline')
     over = function() {
-      par.css('outline','green solid 2px');
+      el.css('outline','green solid 2px');
     }
     out = function() {
-      par.css('outline-style','none');
+      el.css('outline-style', old_style);
     }
     return [over, out];
   }

@@ -32,6 +32,8 @@
   fb.Feedback.all = {};
   
   fb.Feedback.prototype.remove = function() {
+    if (!fb.Feedback.destroy(this.feedback_id))
+      return false;
     delete fb.Feedback.all[this.feedback_id];
     this.feedback_id = null;
     this.content = null;
@@ -39,8 +41,30 @@
     this.name = null;
     this.timestamp = null;
     this.build = null;
+    fb.Comment.refresh_count();
   };
   fb.Feedback.prototype.render = function() {};
+  
+  fb.Feedback.destroy = function(id) {
+    if (!_fb.admin()) {
+      return false;
+    }
+    var data = {
+      url_token: fb.env.url_token,
+      current_page: fb.env.current_page,
+      validation_token: _fb.admin(),
+      id: id
+    };
+    var callback = function(data) {
+      if (!data.success) {
+//        console.log("delete fail!");
+      } else {
+//        console.log("delete win!");
+      }
+    };
+    $.post(fb.env.destroy_address, data, callback, "json")
+    return true;
+  }
   
   /* The feedback class should also have the class variables:
    * - all: Associative array, feedback_id -> instance

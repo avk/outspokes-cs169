@@ -1,16 +1,39 @@
 body
   :width 100%
   :height 100%
-  
-tr blockquote
-  :float right
-  :margin 0
-  :font-style oblique
-
+  :font
+    :size 14pt
+    :family Helvetica, Arial, sans-serif
+  :line-height 120%
 a
   &:visited
     :color #1F46FF
 
+h2#tagline
+  :font
+    :size 25pt
+    :weight bold
+  :text-align center
+  :margin-bottom 1em
+
+p
+  :margin-bottom 1em
+
+ul
+  :margin
+    :left 1em
+    :bottom 1em
+  li
+    :list-style-type disc
+  
+.inside
+  :width 80%
+  :min-width 740px
+  :max-width 950px
+  :margin 0 auto
+  :padding 2em 1.5em
+  // :position relative
+  
 .even
   :background-color #AFC5FF
 
@@ -18,8 +41,10 @@ a
   :background-color #EFFFAF
 
 #header
-  :background-color #999999
-  :height 80px
+  .inside
+    :height 60px
+    :margin 0 auto
+    :padding 2em 0
   
 #branding
   :float left
@@ -30,17 +55,29 @@ h1#company_name
 #login_bar
   :float right 
 
-#main_content, #header, #footer
-  :width 80%
-  :min-width 740px
-  :max-width 1000px
-  :margin 0 auto
-  :padding 1em
-  :position relative
-  
 #main_content
-  :background-color transparent
+  :background-color #eee
+  .inside
+    :background-color #ddd
+
+ol#steps
+  li
+    :list-style-type decimal
+    :margin-bottom .5em
+  :width 80%
+  :margin 0 auto
   
+#signup-button
+  :display block
+  :margin 30px auto
+  :height 30px
+  :width 100px
+  :padding 10px
+  :text-align center
+  :background-color #B5CCDF
+  :font-size 1.1em
+  :font-weight bold
+
 #flash_error
   :color red
 #flash_warning
@@ -80,4 +117,4 @@ h1#company_name
       :width 90%
 
 #footer
-  :background-color #bbb
+  :text-align center
