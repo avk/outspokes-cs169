@@ -4,14 +4,14 @@ one:
   id: 1
 #  account_id: nil
   site_id: 1
-  url: http://www.msn.com/
+  url: http://www.msn.com
   allow_public_comments: false
 
 two:
   id: 2
   account_id: 1
 #  site_id: nil
-  url: http://www.myspace.com/
+  url: http://www.myspace.com
   allow_public_comments: false
   
 transactions:
@@ -22,13 +22,13 @@ transactions:
 
 from_fb:
   id: 4
-  url: http://www.facebook.com/
+  url: http://www.facebook.com
   site_id: 2
   allow_public_comments: false
 
 from_msn:
   id: 5
-  url: http://www.msn.com/home/
+  url: http://www.msn.com/home
   site_id: 1
   allow_public_comments: false
 
@@ -39,13 +39,13 @@ fb_profile:
 
 public_site:
   id: 6
-  url: http://localhost:3001/asite/
+  url: http://localhost:3001/asite
   site_id: 3
   allow_public_comments: true
 
 alt_public_site:
   id: 7
-  url: http://localhost:3001/anothersite/
+  url: http://localhost:3001/anothersite
   site_id: 4
   allow_public_comments: true
 
@@ -58,5 +58,5 @@ rails_spikes:
 lone:
   id: 666
   account_id: 1
-  url: http://www.duskdesigns.com/
+  url: http://www.duskdesigns.com
 
