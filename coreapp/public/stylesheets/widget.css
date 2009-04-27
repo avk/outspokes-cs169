@@ -207,6 +207,7 @@ version: 3.0.0pr2
 #outspokes #topbar #open_admin_panel {
 
 }
+
 #outspokes #topbar #open_admin_panel {
     display: block;
     float: right;
@@ -226,7 +227,7 @@ version: 3.0.0pr2
   float:right;
 }
 
-.hide {
+#outspokes .hide {
 	display: none;
 }
 
@@ -278,4 +279,10 @@ version: 3.0.0pr2
 #outspokes #help_content h2 {
   font-weight: bold;
   text-decoration: underline;
+}
+
+#outspokes #contact_us {
+  color: #333;
+  font-size: 1em;
+  font-weight: bold;
 }
