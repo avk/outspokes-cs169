@@ -25,11 +25,13 @@
         %td.site_name= link_to h(site.name), site.admin_url
         %td.jsinclude
           %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
-        %td.delete_link= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
-      %tr.jsinclude{:style => "display:none; background-color: #ffffff"} 
-        %td{:colspan => 3} 
-          Insert this in your site:
-          = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{site.id}' type='text/javascript'></script>"        
+        %td.delete_link= link_to 'x', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' }
+      %tr.jsinclude{:style => "display:none; background-color: #eee"} 
+        %td{:colspan => 3, :style => "color: #777"} 
+          Insert this at the bottom of 
+          %strong.tag &lt;body&gt; 
+          in your site:
+          = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{site.id}' type='text/javascript'></script>", :class => 'code'
       
   %tr
     %td{:colspan=>4}

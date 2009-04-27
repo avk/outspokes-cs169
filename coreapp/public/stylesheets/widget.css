@@ -8,9 +8,10 @@ version: 3.0.0pr2
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
 #outspokes {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 11px;
-  line-height: 1em;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1em;
+    z-index: 9999;
 }
 
 /* outermost wrapper for our widget */

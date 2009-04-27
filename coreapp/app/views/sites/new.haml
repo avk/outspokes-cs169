@@ -1,12 +1,8 @@
 - @title = 'New Site'
 
-%h3 Tell us where your site lives (use this format: http://mysite.com):
+%h3 Where's your site?
 - form_for(@site) do |f|
   = f.error_messages
-  = f.text_field :url, :style => "width: 80%;"
-  = f.submit "Create My Site"
-
-= link_to "Take me back to my dashboard", root_url
-
-
-  
+  = f.text_field :url, :value => 'http://mysite.com', :id => 'new-site-url', :onfocus => 'this.style.color = "#333"; if(this.value == "http://mysite.com") { this.value = ""; };', :onblur => 'if(this.value == "") { this.style.color = "#CCC"; this.value = "http://mysite.com"; };'
+  %br
+  = f.submit "Create", :style => 'margin-top: 10px', :onclick => 'if(document.getElementById("new-site-url").value == "http://mysite.com") { alert("Please enter a site."); return false; }'
