@@ -324,7 +324,11 @@
   
   function select_target() {
     $(this).get(0).value = "Change target";
-    $("body *").not("#outspokes *").bind('mouseup.elem_select', function (e) {
+    // Filter out all elements that are part of Outspokes
+    var filter = "body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
+      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)";
+    var page_elements = $(filter);
+    page_elements.bind('mouseup.elem_select', function (e) {
       fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
       e.target.__marked = true;
       $("body *").unbind(".elem_select");
@@ -332,7 +336,7 @@
       $('#outspokes_target_button').css("background-color", "orange");
     });
     // Attach to every element _inside_ of body
-    $("body *").not("#outspokes *").bind("mouseenter.elem_select", function (e) {
+    page_elements.bind("mouseenter.elem_select", function (e) {
       if ("_old_style" in $(e.target).parent().get(0)) {
         $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0)._old_style);
         delete $(e.target).parent().get(0)["_old_style"];
@@ -341,7 +345,7 @@
       $(e.target).css('outline','green solid 2px')
       e.stopPropagation();
     });
-    $("body *").not("#outspokes *").bind("mouseleave.elem_select", function (e) {
+    page_elements.bind("mouseleave.elem_select", function (e) {
       if (! ("__marked" in e.target)) {
         $(e.target).css('outline', e.target._old_style);
         delete e.target["_old_style"];
