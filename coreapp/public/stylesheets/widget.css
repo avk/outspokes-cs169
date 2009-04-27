@@ -230,7 +230,29 @@ version: 3.0.0pr2
   color:#666666;
   font-size:2em;
   font-weight:bold;
-  left:170px;
-  position:relative;
+  left:215px;
+  position:absolute;
   top:-10px;
+}
+
+#outspokes #bubble_content {
+  float:left;
+  line-height: 14px;
+  width: 200px;
+}
+
+#outspokes #help_content {
+  padding: 15px;
+  overflow: scroll;
+  height: 180px;
+}
+
+#outspokes #help_content h1 {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+#outspokes #help_content h2 {
+  font-weight: bold;
+  text-decoration: underline;
 }
