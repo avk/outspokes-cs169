@@ -36,7 +36,20 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
-        close_link.click(this.hide);
+                
+        close_link.click(function(e) {
+          
+          var content = fb.i.widget_content;
+          var widget = fb.i.main_window;
+          var help = fb.i.help_content;
+          
+          widget.animate( { height:"220px" }, { duration:500 } );
+          help.addClass("hide"); //always make sure help is hidden before showing content
+          content.show();
+          
+          fb.i.admin_panel.hide();
+        });
+        
         admin_panel.append(close_link);
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
@@ -53,8 +66,20 @@
         $('<div></div>').attr('id',this.dom.admin.overlay).appendTo($('body'));
 
         // to open the panel from the widget
-        var open_link = $('<a href="#">admin</a>').attr('id',this.dom.admin.open);
-        open_link.click(this.show);
+        var open_link = $('<a href="#">admin&nbsp;panel</a>').attr('id',this.dom.admin.open);
+
+        open_link.click(function(e) {
+          
+          var content = fb.i.widget_content;
+          var widget = fb.i.main_window;
+          
+          widget.animate( { height:"20px" }, { duration:500 } );
+          content.hide();
+          
+          fb.i.admin_panel.show();
+          e.stopPropagation();
+        });
+        
         widget.append(open_link);
       },
       show : function() {
@@ -71,6 +96,30 @@
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+    
+    if (fb.env.first_visit) {
+      this.main_window.css({'height':'20px'});
+      
+      $('#' + this.dom.widget.content).hide();
+      $('#' + this.dom.widget.help_content).hide();
+      
+      var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
+      var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
+      
+      close_intro_bubble.click(function() 
+        {
+          $("#bubble").hide();
+        }
+      );
+      
+      intro_bubble.append(close_intro_bubble);
+      
+      this.main_window.append(intro_bubble);
+      
+    } else {
+      $("#bubble").hide();
+      this.main_window.css({'height':'220px'});
+    }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
@@ -88,13 +137,18 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
+
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:500 } );
+        content.hide();
         help.removeClass("hide");
       } else {
         content.toggle();
         help.toggleClass("hide");
       }
+      
+      $("#bubble").hide();
+      
       e.stopPropagation();
     });
     this.topbar.append(help_link);
@@ -103,6 +157,7 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
+      
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:500 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
@@ -111,6 +166,9 @@
         widget.animate( { height:"20px" }, { duration:500 } );
         content.hide();
       }
+      
+      $("#bubble").hide();
+      
     });
 
     this.main_window.append(this.topbar);
@@ -122,7 +180,17 @@
     this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
     var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
     this.chead.append(comment_span);
-    this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');
+
+  	/*** Comment Sorting Dropdown Menu ****/
+  	var sort_dropdown = $('<select id="comments_filter"><option>newest</option><option>oldest</option>' +
+  	  '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+  	sort_dropdown.children().eq(0).click(function() {
+  	  fb.i.comment.sort_by_newest();
+  	});
+  	sort_dropdown.children().eq(1).click(function() {
+  	  fb.i.comment.sort_by_oldest();
+  	});
+  	this.chead.append(sort_dropdown);
 
     this.set_num_comments = function(num_comments) {
       comment_span.text(num_comments + ' comments');
@@ -142,6 +210,7 @@
     this.comment = new fb.Interface.comment(this);
 
     fb.Interface.instantiated = true;
+  
   };
 
   fb.Interface.prototype.div = function() {

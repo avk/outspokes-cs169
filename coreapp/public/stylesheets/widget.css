@@ -18,7 +18,7 @@ version: 3.0.0pr2
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
-	height: 220px;
+	/*height: 220px;*/
 }
 
 /* admin panel, excluded from the wrapper because it overlays everything */
@@ -148,9 +148,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-	float: left;
-	padding: 0px;
-	margin: -20% 3%;
+    line-height: 1em;
 }
 
 #outspokes #topbar {
@@ -167,6 +165,12 @@ version: 3.0.0pr2
 #outspokes #comment_form {
 	float: right;
 	margin-right: 3%;
+}
+
+#outspokes #outspokes_target_button {
+  float: right;
+  margin-top: 5px;
+  cursor: pointer;
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
@@ -210,4 +214,24 @@ version: 3.0.0pr2
 #outspokes #comments_filter {
 	height: 20px;
 	margin-left: 10px;
+}
+
+#outspokes #bubble {
+  width: 230px;
+  height: 150px;
+  position: absolute;
+  right: 50px;
+  top: -134px;
+  background-image: url(/images/intro-bubble.png);
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+#outspokes #bubble #close_intro {
+  color:#666666;
+  font-size:2em;
+  font-weight:bold;
+  left:170px;
+  position:relative;
+  top:-10px;
 }

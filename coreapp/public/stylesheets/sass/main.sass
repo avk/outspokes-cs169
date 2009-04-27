@@ -1,25 +1,59 @@
 body
   :width 100%
   :height 100%
-  
-tr blockquote
-  :float right
-  :margin 0
-  :font-style oblique
-
+  :font
+    :size 13pt
+    :family Helvetica, Arial, sans-serif
+  :line-height 120%
 a
   &:visited
     :color #1F46FF
 
+h3
+  :font
+    :size 20pt
+    :weight bold
+  :margin-bottom 1em
+
+form
+  :margin-bottom 1em
+
+h2#tagline
+  :font
+    :size 25pt
+    :weight bold
+  :text-align center
+  :margin-bottom 1em
+
+p
+  :margin-bottom 1em
+
+ul
+  :margin
+    :left 1em
+    :bottom 1em
+  li
+    :list-style-type disc
+  
+.inside
+  :width 80%
+  :min-width 740px
+  :max-width 950px
+  :margin 0 auto
+  :padding 2em 1.5em
+  // :position relative
+  
 .even
-  :background-color #AFC5FF
+  :background-color #D1DCEF
 
 .odd
-  :background-color #EFFFAF
+  :background-color #eee
 
 #header
-  :background-color #999999
-  :height 80px
+  .inside
+    :height 60px
+    :margin 0 auto
+    :padding 2em 0
   
 #branding
   :float left
@@ -30,17 +64,38 @@ h1#company_name
 #login_bar
   :float right 
 
-#main_content, #header, #footer
-  :width 80%
-  :min-width 740px
-  :max-width 1000px
-  :margin 0 auto
-  :padding 1em
-  :position relative
-  
 #main_content
-  :background-color transparent
+  :background
+    :color #e0e0e0
+    :image url(/images/gradient-bg.png)
+    :position bottom
+    :repeat repeat-x
   
+  .inside
+    :background-color #e0e0e0 
+
+ol#steps
+  li
+    :list-style-type decimal
+    :margin-bottom .5em
+  :width 80%
+  :margin 0 auto
+  
+#signup-button
+  :background-image url(/images/signup-button.png)
+  :display block
+  :margin 30px auto
+  :height 30px
+  :width 230px
+  :padding 10px
+  :text-align center
+  :background-color transparent
+  :color white
+  :line-height 100%
+  :font
+    :size 25px
+    :weight bold
+
 #flash_error
   :color red
 #flash_warning
@@ -57,9 +112,17 @@ h1#company_name
   td
     :padding .5em
     :border 1px solid #999
+    &.jsinclude
+      :width 20%
+    &.delete_link
+      :width 10%
+    &.site_name
+      :width 70%
   tr.jsinclude td
-    :border none
-    
+    :border
+      :bottom none
+      :top none
+
 #account_block
   :position absolute
   :right 0
@@ -80,4 +143,5 @@ h1#company_name
       :width 90%
 
 #footer
-  :background-color #bbb
+  :text-align center
+  :padding 20px 
