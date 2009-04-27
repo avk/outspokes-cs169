@@ -25,7 +25,7 @@
         %td.site_name= link_to h(site.name), site.admin_url
         %td.jsinclude
           %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
-        %td.delete_link= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
+        %td.delete_link= link_to 'x', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' }
       %tr.jsinclude{:style => "display:none; background-color: #ffffff"} 
         %td{:colspan => 3} 
           Insert this in your site:
