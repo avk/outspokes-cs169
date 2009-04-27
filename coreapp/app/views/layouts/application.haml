@@ -3,8 +3,8 @@
   %head
     %meta{'http-equiv' => "Content-Type", :content => "text/html"}
     %title 
-      Feedback! 
-      = controller.action_name
+      Outspokes - 
+      = @title
     = stylesheet_link_tag 'reset-min'
     = stylesheet_link_tag 'main'
     = javascript_include_tag :defaults
@@ -29,5 +29,4 @@
       = yield 
 
   #footer
-    .inside
-      %p &copy; 2009 Outspokes  
+    %p &copy; 2009 Outspokes  
