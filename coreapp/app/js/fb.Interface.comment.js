@@ -165,7 +165,7 @@
       },
       // start replying to a comment
       start           : function(c_id) {
-        parent.reset_target();
+        fb.i.comment.reset_target();
         this.setupInterface();
         var backend_id = c_id.match(/comment_(\d+)/i)[1];
         // show the reply form
@@ -239,8 +239,6 @@
       // set up reply actions
       cmt.append(this.reply.buildLink(c_id));
       cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
-      
-      console.log(c.target);
       
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {

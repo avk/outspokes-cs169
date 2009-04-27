@@ -12,7 +12,6 @@
 
     fb.Comment.all[this.feedback_id] = this;
     fb.Comment.unrendered[this.feedback_id] = this;
-    console.log(this);
   };
   
   // call to super for methods

@@ -8,7 +8,6 @@
    */
   fb.Feedback = function(obj) {
     if (obj) {
-      console.log(obj);
       fb.assert(arguments.length === 1, "Incorrect number of arguments");
       fb.assert(fb.hasProp(obj, {
         feedback_id:"number",
