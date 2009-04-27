@@ -99,7 +99,7 @@
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
-    if (fb.env.first_visit) {
+    if (fb.env.first_visit && !_fb.admin()) {
       this.main_window.css({'height':'20px'});
       
       $('#' + this.dom.widget.content).hide();
@@ -110,17 +110,10 @@
       " that other people have left and leave your own!<br />Happy commenting!</p>";
       var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
       
-      close_intro_bubble.click(function() 
-        {
-          $("#bubble").hide();
-        }
-      );
-      
+      close_intro_bubble.click(function(){ $("#bubble").hide(); });
       
       intro_bubble.append(close_intro_bubble);
-      
       intro_bubble.append(intro_bubble_content);
-      
       this.main_window.append(intro_bubble);
       
     } else {
