@@ -315,6 +315,7 @@ version: 3.0.0pr2
   padding: 15px;
   overflow: scroll;
   height: 180px;
+  line-height: 1.8em;
 }
 
 #outspokes #help_content h1 {
