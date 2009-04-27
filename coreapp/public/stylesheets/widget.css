@@ -254,9 +254,9 @@ version: 3.0.0pr2
   color:#666666;
   font-size:2em;
   font-weight:bold;
-  left:215px;
+  left:205px;
   position:absolute;
-  top:-10px;
+  top:0px;
 }
 
 #outspokes #bubble_content {
