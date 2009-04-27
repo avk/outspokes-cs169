@@ -14,9 +14,8 @@
 %table{:id=>'sites_table'}
   %tr
     %th{:colspan=>4} 
-      My Sites 
-      ( 
-      = link_to "+ new site", new_site_path
+      My Sites (
+      = link_to "+", new_site_path
       )
   
   - if @sites.empty?
@@ -29,11 +28,11 @@
         %td.site_name= link_to h(site.name), site.admin_url
         %td.jsinclude
           %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
-        %td.delete_link= link_to 'x', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' }
-      %tr.jsinclude{:style => "display:none; background-color: #eee"} 
-        %td{:colspan => 3, :style => "color: #777"} 
+        %td.delete_link= link_to 'X', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' }
+      %tr.jsinclude{:style => "display:none; background-color: #fff"} 
+        %td{:colspan => 3} 
           Insert this at the bottom of 
-          %strong.tag &lt;body&gt; 
+          %b.tag &lt;body&gt; 
           in your site:
           = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{site.id}' type='text/javascript'></script>", :class => 'code'
       

@@ -67,7 +67,7 @@ dl
   // :position relative
   
 .even
-  :background-color #FFFCEF
+  :background-color #EFE1D1
 
 .odd
   :background-color #FFDAAF
@@ -169,17 +169,19 @@ ol#steps
     :padding-bottom 1em
   td
     :padding .5em
-    :border 1px solid #BF8F8F
     &.jsinclude
-      :width 20%
+      :width 7em
     &.delete_link
-      :width 10%
+      :width 1em
     &.site_name
-      :width 70%
-  tr.jsinclude td
-    :border
-      :bottom none
-      :top none
+  tr
+    &.even, &.odd
+      :border 1px solid #BF8F8F 
+    &.jsinclude td
+      :color #777
+      :border
+        :left 1px solid #BF8F8F
+        :right 1px solid #BF8F8F
     input
       :width 99%
       
