@@ -13,7 +13,7 @@
   <%- @pages.each do |page| -%>
     <li class="site_page">
       <div class="remove_page">
-        <%= link_to 'x', 
+        <%= link_to 'delete', 
             admin_panel_delete_site_page_path(@site, page), 
             :confirm => "This will remove all of the feedback on this page. Are you sure?", 
             :method => :delete %>
