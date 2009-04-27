@@ -32,7 +32,7 @@ class SitesController < ApplicationController
         flash[:notice] = 'Site was successfully created.'
         format.html { redirect_to root_path }
       rescue
-        flash[:error] = "Could not create site."
+        flash[:error] = "Could not create site.  "
         format.html { render :action => "new" }
         format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
       end
