@@ -156,6 +156,7 @@
       var widget = fb.i.main_window;
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:250 } );
+        content.hide();
         help.removeClass("hide");
       } else {
 
