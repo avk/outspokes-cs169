@@ -2,16 +2,16 @@
 
 %h3 Log in
 
-- form_tag session_path do
-  = label_tag 'email'
+- form_tag session_path, :class => 'login' do
+  = label_tag 'email', nil, :class => 'wide_left'
   = text_field_tag 'email', @email
-
-  = label_tag 'password'
+  %br
+  = label_tag 'password', nil, :class => 'wide_left'
   = password_field_tag 'password', nil
-
+  
   / 
     Uncomment this if you want this functionality
     = label_tag 'remember_me', 'Remember me'
     = check_box_tag 'remember_me', '1', @remember_me
-
-  = submit_tag 'Log in'
+  %br
+  = submit_tag 'Log in', :class => 'submit'
