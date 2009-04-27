@@ -207,6 +207,7 @@ version: 3.0.0pr2
 #outspokes #topbar #open_admin_panel {
 
 }
+
 #outspokes #topbar #open_admin_panel {
     display: block;
     float: right;
@@ -226,7 +227,7 @@ version: 3.0.0pr2
   float:right;
 }
 
-.hide {
+#outspokes .hide {
 	display: none;
 }
 
