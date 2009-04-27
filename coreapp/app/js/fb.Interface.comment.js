@@ -46,8 +46,8 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += '<div id="outspokes_form_header">Comment:</div><textarea name="content" cols="30" rows="5" /><br />' +
-          '<input type="submit" value="Submit" />&nbsp;&nbsp;' +
+    	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" cols="30" rows="5" />' +
+          '<div id="outspokes_form_buttons"><input type="reset" value="Cancel" class="second_button" /><input type="submit" value="Submit" /></div>&nbsp;&nbsp;' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
@@ -68,7 +68,13 @@
       }
       fb.Comment.post(this.content.value, this.target.value, name);
       this.content.value = "";
-      this.target.value = "html";
+      fb.i.comment.reset_target();
+    });
+    // Cancel button
+    var textarea = this.form.find('textarea')
+    this.form.find("input[type='reset']").click(function() {
+      textarea.text("");
+      fb.i.comment.reset_target();
     });
     self.widget_content.append(this.comments);
     self.widget_content.append(this.form);
@@ -151,24 +157,30 @@
       },
       // toggles the non-replying interface
       setupInterface  : function() {
-    		var replyButton = $('.' + this.dom.reply_links);
-    		if (replyButton.attr("disabled")) { 
-    		  replyButton.attr("disabled", "false"); 
-  		  } else { 
-  		    replyButton.attr("disabled", "true"); 
-		    }
+    		var replyButtons = $('.' + this.dom.reply_links);
+        replyButtons.each(function(i) {
+          var button = $(this)
+          if (button.attr("disabled")) { 
+            button.removeAttr("disabled"); 
+          } else { 
+             button.attr("disabled", "disabled"); 
+          }
+        });
+
         $('#' + this.dom.cform).toggle();
       },
       // start replying to a comment
       start           : function(c_id) {
+        fb.i.comment.reset_target();
         this.setupInterface();
-
+        var backend_id = c_id.match(/comment_(\d+)/i)[1];
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
-        var form = this.parent.buildCommentForm(reply_form, c_id);
-        form.find("form").append('<input type="reset" value="Cancel" />');
-    		form.find("form").attr('class','reply');
-        form.find("form").submit(function() { 
+        var form_container = this.parent.buildCommentForm(reply_form, c_id);
+        var form = form_container.find("form");
+        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
+    		form.attr('class','reply');
+        form.submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
             name = this.name.value;
@@ -176,12 +188,13 @@
           fb.Comment.post(this.content.value, this.target.value, name);
           fb.i.comment.reply.finish(reply_form);
         });
-        
-        form.find("input[type='reset']").click(function(){ 
+        var cancel_button = form.find('input[type="reset"]');
+        cancel_button.unbind('click');
+        cancel_button.click(function(){ 
           fb.i.comment.reply.cancel(reply_form);
         });
         //$('#' + this.dom.reply_list(c_id)).before(form);
-        $('#' + this.dom.comment_form).append(form);
+        $('#' + this.dom.comment_form).append(form_container);
         
         form.find("textarea[name='content']").focus();
         // would be nice to also scroll to the comment form here like:
@@ -223,6 +236,9 @@
       if (_fb.admin()) {
         var deleteCmt = $('<button type="button" id="delete_cmt">delete</button>');
         deleteCmt.click(function() {
+          if (c.__unHover) {
+            c.__unHover();
+          }
           c.remove();
         });
         cmt.append(deleteCmt);
@@ -234,8 +250,9 @@
       
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
-        var tmp = $(c.target)[0];
-        tmp = highlight_target(tmp);
+        var tmp = $(c.target);
+        tmp = highlight_target(tmp.get(0));
+        c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
       }
       return rtn;
@@ -286,12 +303,37 @@
       this.sort_comments(this.oldest_sorter);  
     };
     
+    this.reset_target = function() {
+      // Un-highlight element
+      var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
+      old_element.css('outline', old_element.get(0)._old_style);
+      delete old_element.get(0)["_old_style"];
+      // Reset form target
+      fb.i.comment.form.find("input[name='target']").attr("value","html");
+      // Remove orange
+      $('#outspokes_target_button').css("background-color", "");
+    };
+    
+    this.visit_all_replies = function(c, fn) {
+      var c = $(c);
+      var parent = this;
+//      var this_id = c.attr('id').match(/comment_(\d+)/i)[1];
+      c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
+        var this_id = this.id.match(/comment_(\d+)/i)[1];
+        fn(fb.Feedback.all[this_id]);
+        parent.visit_all_replies(this, fn);
+      });
+    };
+    
   };
-
   
   function select_target() {
     $(this).get(0).value = "Change target";
-    $("body *").not("#outspokes *").bind('mouseup.elem_select', function (e) {
+    // Filter out all elements that are part of Outspokes
+    var filter = "body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
+      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)";
+    var page_elements = $(filter);
+    page_elements.bind('mouseup.elem_select', function (e) {
       fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
       e.target.__marked = true;
       $("body *").unbind(".elem_select");
@@ -299,7 +341,7 @@
       $('#outspokes_target_button').css("background-color", "orange");
     });
     // Attach to every element _inside_ of body
-    $("body *").not("#outspokes *").bind("mouseenter.elem_select", function (e) {
+    page_elements.bind("mouseenter.elem_select", function (e) {
       if ("_old_style" in $(e.target).parent().get(0)) {
         $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0)._old_style);
         delete $(e.target).parent().get(0)["_old_style"];
@@ -308,7 +350,7 @@
       $(e.target).css('outline','green solid 2px')
       e.stopPropagation();
     });
-    $("body *").not("#outspokes *").bind("mouseleave.elem_select", function (e) {
+    page_elements.bind("mouseleave.elem_select", function (e) {
       if (! ("__marked" in e.target)) {
         $(e.target).css('outline', e.target._old_style);
         delete e.target["_old_style"];
@@ -317,8 +359,8 @@
     });
   }
   
-  function highlight_target(el) {
-    el = $(el);
+  function highlight_target(el_dom) {
+    el = $(el_dom);
 //    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline')
     over = function() {

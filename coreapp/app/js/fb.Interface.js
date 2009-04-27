@@ -20,6 +20,7 @@
         help : 'help',
         help_content: 'help_content',
         toggle: 'toggle',
+        contact: 'contactus',
         comment_count : 'comment-count',
       },
       admin   : {
@@ -36,7 +37,7 @@
       build : function(widget) {
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
-        var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
+        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
                 
         close_link.click(function(e) {
           
@@ -44,7 +45,7 @@
           var widget = fb.i.main_window;
           var help = fb.i.help_content;
           
-          widget.animate( { height:"220px" }, { duration:500 } );
+          widget.animate( { height:"220px" }, { duration:250 } );
           help.addClass("hide"); //always make sure help is hidden before showing content
           content.show();
           
@@ -67,14 +68,14 @@
         $('<div></div>').attr('id',this.dom.admin.overlay).appendTo($('body'));
 
         // to open the panel from the widget
-        var open_link = $('<a href="#">admin&nbsp;panel</a>').attr('id',this.dom.admin.open);
+        var open_link = $('<a href="#">Admin Panel</a>').attr('id',this.dom.admin.open);
 
         open_link.click(function(e) {
           
           var content = fb.i.widget_content;
           var widget = fb.i.main_window;
           
-          widget.animate( { height:"20px" }, { duration:500 } );
+          widget.animate( { height:"20px" }, { duration:250 } );
           content.hide();
           
           fb.i.admin_panel.show();
@@ -102,8 +103,7 @@
       this.main_window.css({'height':'20px'});
       
       $('#' + this.dom.widget.content).hide();
-      $('#' + this.dom.widget.help_content).hide();
-      
+            
       var intro_bubble = $('<div></div>').attr('id','bubble');
       var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
       "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
@@ -137,13 +137,14 @@
       'height'  : '20px',
       'width'   : '100px',
       'backgroundImage' : 'url(' + fb.env.logo_address + ')',
+      'backgroundRepeat' : 'no-repeat',
     });
     topbarLeft.append(logo);
 
-    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
+    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
     comment_count.attr('id', this.dom.widget.comment_count);
     this.set_num_comments = function(num_comments) {
-      comment_count.text(num_comments + ' comments');
+      comment_count.text(num_comments + ' Comments');
     }
     topbarLeft.append(comment_count);
     this.topbar.append(topbarLeft);
@@ -153,14 +154,18 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
-
       if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:500 } );
+        widget.animate( { height:"220px" }, { duration:250 } );
         content.hide();
         help.removeClass("hide");
       } else {
-        content.toggle();
+
         help.toggleClass("hide");
+        if (content.css('display') == 'none') {
+          content.show();
+        } else {
+          content.hide();
+        }
       }
       
       $("#bubble").hide();
@@ -168,18 +173,18 @@
       e.stopPropagation();
     });
     this.topbar.append(help_link);
-
+ 
     this.topbar.click(function() {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
       
       if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:500 } );
+        widget.animate( { height:"220px" }, { duration:250 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
         content.show();
       } else {
-        widget.animate( { height:"20px" }, { duration:500 } );
+        widget.animate( { height:"20px" }, { duration:250 } );
         content.hide();
       }
       
@@ -193,7 +198,16 @@
     this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
     this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
     
-    var help_copy = "<h2>Minimized</h2>" +
+    var help_copy = "<h2>About</h2>" +
+
+    "Outspokes is the brainchild of a group of UC Berkeley CS 169 students." +
+
+    "Currently in Alpha, it probably works.  Maybe.  Sort of." +
+    
+    "<br /><a id='contact_us' href='mailto:outspokes@outspokes.com'>Contact Us</a>" +
+    
+    
+    "<h2>Minimized</h2>" +
 
     "<p>Click on the center of the bar to expand Outspokes' feedback widget and start giving the owner of the page feedback!  " + 
     "Also, you can click on our logo to go to outspokes.com and learn more about our service." +
