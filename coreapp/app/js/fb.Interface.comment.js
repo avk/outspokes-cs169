@@ -103,14 +103,12 @@
           var agree = this.button(c, 'agree');
           var disagree = this.button(c, 'disagree');
           
-          //admin's consensus statistics
-          var consensus_count = $('<span>xxx agreed</span><br /><span>xxx disagreed</span>');
-          
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append(consensus_count);
+            consensus_div.append($('<span class="agreed">' + c.agreed + ' agreed</span><br />'));
+            consensus_div.append($('<span class="disagreed">' + c.disagreed + ' disagreed</span><br />'));
           } else {
             consensus_div.append(agree);
             consensus_div.append(disagree);
@@ -148,7 +146,6 @@
       // constructs a "reply" link
       buildLink       : function(c_id) {
         var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">&raquo; reply</button>');
-		
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },

@@ -148,9 +148,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-	float: left;
-	padding: 0px;
-	margin: -20% 3%;
+    line-height: 1em;
 }
 
 #outspokes #topbar {
