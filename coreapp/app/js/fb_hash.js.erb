@@ -10,6 +10,7 @@ function() {
     var _admin_validation_token = fb.cookie('fb_hash_admin_validation_token');
     var _wants_admin = fb.getParams('admin');
     fb.env.pub_page = false;
+    fb.env.base_domain = "<%= WIDGET_DOMAIN %>";
     fb.env.logo_address = "<%= WIDGET_DOMAIN %>images/widget-logo.png";
     fb.env.target_address = "<%= WIDGET_DOMAIN %>images/target-icon.png"
     fb.env.get_address = "<%= WIDGET_DOMAIN %>feedback_for_page.js";
@@ -110,8 +111,8 @@ function() {
           'background-color': 'white',
           'border': '16px solid #eee',
           'color': 'black',
-          'height': '10.5em',
-          'width': '14em',
+          'height': '170px',
+          'width': '230px',
           'top': '37.5%',
           'left': '36.5%',
           'margin': '0',
