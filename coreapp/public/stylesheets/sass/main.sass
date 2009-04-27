@@ -2,12 +2,21 @@ body
   :width 100%
   :height 100%
   :font
-    :size 14pt
+    :size 13pt
     :family Helvetica, Arial, sans-serif
   :line-height 120%
 a
   &:visited
     :color #1F46FF
+
+h3
+  :font
+    :size 20pt
+    :weight bold
+  :margin-bottom 1em
+
+form
+  :margin-bottom 1em
 
 h2#tagline
   :font
@@ -35,10 +44,10 @@ ul
   // :position relative
   
 .even
-  :background-color #AFC5FF
+  :background-color #D1DCEF
 
 .odd
-  :background-color #EFFFAF
+  :background-color #eee
 
 #header
   .inside
@@ -104,7 +113,9 @@ ol#steps
     :padding .5em
     :border 1px solid #999
   tr.jsinclude td
-    :border none
+    :border
+      :bottom none
+      :top none
     
 #account_block
   :position absolute
@@ -127,3 +138,4 @@ ol#steps
 
 #footer
   :text-align center
+  :padding 20px 

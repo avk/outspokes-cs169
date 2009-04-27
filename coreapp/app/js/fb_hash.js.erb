@@ -19,8 +19,8 @@ function() {
     fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
-    fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? true : false;
-
+    fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;
+    
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
 
     // DO NOT USE THIS!!!!!
