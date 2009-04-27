@@ -8,12 +8,17 @@ body
 a
   &:visited
     :color #1F46FF
+h1
+  :font
+    :size 25pt
+    :weight bold
+  :margin-bottom 1em
 
 h3
   :font
     :size 20pt
     :weight bold
-  :margin-bottom 1em
+  :margin-bottom .5em
 
 form
   :margin-bottom 1em
@@ -24,24 +29,32 @@ form
     :size 25pt
     :weight bold
   :margin-bottom 1em
-  :line-height 0.9em
+  :line-height 1.1em
 
 p
   :margin-bottom 1em
 
-ul
+ul, ol
   :margin
     :left 1em
     :bottom 1em
   li
     :list-style-type disc
+    
+dl
+  :margin-bottom 1.5em
+  dt
+    :margin-bottom .5em
+    :font-weight bold
+  dd
+    :margin-bottom 1em
   
 .inside
   :width 80%
   :min-width 740px
   :max-width 950px
   :margin 0 auto
-  :padding 2em 1.5em
+  :padding 1.5em
   // :position relative
   
 .even
@@ -58,6 +71,9 @@ ul
   
 #branding
   :float left
+
+h1
+  :font-size 1.5em
 
 h1#company_name
   :font-size 2em
@@ -98,12 +114,23 @@ ol#steps
     :size 25px
     :weight bold
 
+#flash_error, #flash_warning, #flash_notice 
+  :border 1px solid
+  :margin 0 0 1em
+  :padding 10px 
+  :background-repeat no-repeat
+  :background-position 10px center
+  :width 500px
+
 #flash_error
-  :color red
+  :color #D8000C
+  :background-color #FFBABA
 #flash_warning
-  :color yellow
+  :color #9F6000
+  :background-color #FEEFB3
 #flash_notice
-  :color green
+  :color #4F8A10
+  :background-color #DFF2BF
   
 #sites_table 
   :width 100%
@@ -124,7 +151,9 @@ ol#steps
     :border
       :bottom none
       :top none
-
+    input
+      :width 99%
+      
 #account_block
   :position absolute
   :right 0
