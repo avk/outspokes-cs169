@@ -1,6 +1,9 @@
 - if logged_in?
-  = link_to "Log out", logout_path, { :title => "Log out" } 
-  \|
+  = h(current_account.email)
+  (
+  = link_to "log out", logout_path, { :title => "Log out" } 
+  )
+  %hr
   = link_to "Dashboard", dashboard_account_path(current_account.id)
 - else 
   = link_to "Log in",  login_path,  { :title => "Log in" } 
