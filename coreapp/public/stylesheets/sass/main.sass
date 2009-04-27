@@ -54,7 +54,7 @@ dl
   :min-width 740px
   :max-width 950px
   :margin 0 auto
-  :padding 2em 1.5em
+  :padding 1.5em
   // :position relative
   
 .even
@@ -111,12 +111,23 @@ ol#steps
     :size 25px
     :weight bold
 
+#flash_error, #flash_warning, #flash_notice 
+  :border 1px solid
+  :margin 0 0 1em
+  :padding 10px 
+  :background-repeat no-repeat
+  :background-position 10px center
+  :width 500px
+
 #flash_error
-  :color red
+  :color #D8000C
+  :background-color #FFBABA
 #flash_warning
-  :color yellow
+  :color #9F6000
+  :background-color #FEEFB3
 #flash_notice
-  :color green
+  :color #4F8A10
+  :background-color #DFF2BF
   
 #sites_table 
   :width 100%

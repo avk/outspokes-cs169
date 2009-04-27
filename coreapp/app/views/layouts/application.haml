@@ -19,12 +19,15 @@
   
   #main_content
     .inside
-      #flash_notice
-        = flash[:notice]
-      #flash_error
-        = flash[:error]
-      #flash_warning
-        = flash[:warning]
+      - if flash[:notice]
+        #flash_notice
+          = flash[:notice]
+      - if flash[:error]
+        #flash_error
+          = flash[:error]
+      - if flash[:warning]
+        #flash_warning
+          = flash[:warning]
     
       = yield 
 

@@ -2,6 +2,7 @@
 
 %h3 Tell us where your site lives (use this format: http://mysite.com):
 - form_for(@site) do |f|
+  = f.error_messages
   = f.text_field :url, :style => "width: 80%;"
   = f.submit "Create My Site"
 
