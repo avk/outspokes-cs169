@@ -1,8 +1,8 @@
 - @title = 'New Site'
 
-%h2 Tell us where your site lives (use this format: http://mysite.com):
+%h3 Tell us where your site lives (use this format: http://mysite.com):
 - form_for(@site) do |f|
-  = f.text_field :url
+  = f.text_field :url, :size => 90
   = f.submit "Create My Site"
 
 = link_to "Take me back to my dashboard", root_url
