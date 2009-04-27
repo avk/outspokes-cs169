@@ -123,7 +123,7 @@
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
-    var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
+    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank">&nbsp;</a>');
     logo.css({
       'display' : 'block',
       'float'   : 'left',
@@ -142,7 +142,7 @@
     topbarLeft.append(comment_count);
     this.topbar.append(topbarLeft);
 
-    var help_link = $('<a href="#">(?)</a>').attr('id',this.dom.widget.help);
+    var help_link = $('<a href="#">&nbsp;</a>').attr('id',this.dom.widget.help);
     help_link.click(function(e) {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
