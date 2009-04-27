@@ -68,7 +68,7 @@
       }
       fb.Comment.post(this.content.value, this.target.value, name);
       this.content.value = "";
-      this.target.value = "html";
+      fb.i.comment.reset_target();
     });
     self.widget_content.append(this.comments);
     self.widget_content.append(this.form);
@@ -168,6 +168,7 @@
       },
       // start replying to a comment
       start           : function(c_id) {
+        parent.reset_target();
         this.setupInterface();
         var backend_id = c_id.match(/comment_(\d+)/i)[1];
         // show the reply form
@@ -242,10 +243,12 @@
       cmt.append(this.reply.buildLink(c_id));
       cmt.append('<div id="' + this.dom.reply_list(c_id) + '"></div>');
       
+      console.log(c.target);
+      
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
-        var tmp = $(c.target)[0];
-        tmp = highlight_target(tmp);
+        var tmp = $(c.target);
+        tmp = highlight_target(tmp.get(0));
         rtn.hover(tmp[0], tmp[1]);
       }
       return rtn;
@@ -296,8 +299,18 @@
       this.sort_comments(this.oldest_sorter);  
     };
     
+    this.reset_target = function() {
+      // Un-highlight element
+      var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
+      old_element.css('outline', old_element.get(0)._old_style);
+      delete old_element.get(0)["_old_style"];
+      // Reset form target
+      fb.i.comment.form.find("input[name='target']").attr("value","html");
+      // Remove orange
+      $('#outspokes_target_button').css("background-color", "");
+    };
+    
   };
-
   
   function select_target() {
     $(this).get(0).value = "Change target";
@@ -327,8 +340,8 @@
     });
   }
   
-  function highlight_target(el) {
-    el = $(el);
+  function highlight_target(el_dom) {
+    el = $(el_dom);
 //    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline')
     over = function() {
