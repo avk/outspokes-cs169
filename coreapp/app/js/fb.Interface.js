@@ -144,7 +144,7 @@
     var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
     comment_count.attr('id', this.dom.widget.comment_count);
     this.set_num_comments = function(num_comments) {
-      comment_count.text(num_comments + ' comments');
+      comment_count.text(num_comments + ' Comments');
     }
     topbarLeft.append(comment_count);
     this.topbar.append(topbarLeft);
@@ -160,10 +160,8 @@
         content.hide();
         help.removeClass("hide");
       } else {
-        
-        content.toggle();
+        content.toggle(); //this toggle is not working
         help.toggleClass("hide");
-        
       }
       
       $("#bubble").hide();
@@ -172,7 +170,7 @@
     });
     this.topbar.append(help_link);
    
-    var contact_link = $('<a href="mailto:outspokes@outspokes.com">Contact Outspokes</a>').attr('id',this.dom.widget.contact)
+    var contact_link = $('<a href="mailto:outspokes@outspokes.com">Contact</a>').attr('id',this.dom.widget.contact)
     this.topbar.append(contact_link);
  
     this.topbar.click(function() {
