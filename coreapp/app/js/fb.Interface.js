@@ -214,7 +214,7 @@
 
     "<h2>General</h2>" +
 
-    "<p>Click on a comment to minimize or maximize it.  If a comment is targeted, hover your mouse over it" + 
+    "<p>Click on a comment to minimize or maximize it.  If a comment is targeted, hover your mouse over it " + 
     "to see what element of the page has been attached to the comment.</p>" +
 
     "<p>To leave a comment, type in the text box on the right side of the widget, then click on the post button to the" + 
