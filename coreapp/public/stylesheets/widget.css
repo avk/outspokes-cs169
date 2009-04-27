@@ -148,7 +148,15 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-    line-height: 1em;
+    line-height: 1.3em;
+}
+
+#outspokes #comment_list .cns_buttons .agreed {
+  color: green;
+}
+
+#outspokes #comment_list .cns_buttons .disagreed {
+  color: red;
 }
 
 #outspokes #topbar {
