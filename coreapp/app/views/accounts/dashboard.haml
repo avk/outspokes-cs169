@@ -1,3 +1,5 @@
+- @title = 'Dashboard'
+
 :javascript
   function expandScript(el) {
     var jsRow = el.parentNode.parentNode.nextSibling.nextSibling;
@@ -15,7 +17,7 @@
         Whoops, you don't have any sites.
   - else
     - for site in @sites
-      %tr
+      %tr{:class => cycle('even','odd')}
         %td= link_to h(site.name), site.admin_url
         %td  
           %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
