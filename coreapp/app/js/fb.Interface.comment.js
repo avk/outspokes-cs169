@@ -46,8 +46,8 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += '<div id="outspokes_form_header">Comment:</div><textarea name="content" cols="30" rows="5" /><br />' +
-          '<input type="submit" value="Submit" />&nbsp;&nbsp;' +
+    	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" cols="30" rows="5" />' +
+          '<div id="outspokes_form_buttons"><input type="submit" value="Submit" /></div>&nbsp;&nbsp;' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
@@ -169,13 +169,14 @@
       // start replying to a comment
       start           : function(c_id) {
         this.setupInterface();
-
+        var backend_id = c_id.match(/comment_(\d+)/i)[1];
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
-        var reset_button = $('<input type="reset" value="Cancel" />');
-        form.append(reset_button);
+        var reset_button = $('<input type="reset" value="Cancel" class="second_button" />');
+        form.find('#outspokes_form_buttons').prepend(reset_button);
+        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
     		form.attr('class','reply');
         form.submit(function() { 
           var name = null;
