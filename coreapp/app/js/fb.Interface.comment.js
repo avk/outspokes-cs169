@@ -54,7 +54,7 @@
     };
 
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
-    var target_button = $('<img id="outspokes_target_button src=' + fb.env.target_address + '/>');
+    var target_button = $('<img id="outspokes_target_button src="' + fb.env.target_address + '" />');
 //    target_button.css('float', 'right').css('margin-top', '5px');
     target_button.click(select_target);
     this.form.find("#outspokes_form_header").prepend(target_button);
