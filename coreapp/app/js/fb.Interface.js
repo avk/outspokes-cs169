@@ -101,6 +101,16 @@
       this.main_window.css({'height':'20px'});
       
       var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
+      var close_intro_bubble = $('<a href="#" id="close_intro">close</a>');
+      
+      close_intro_bubble.click(function() 
+        {
+          $("#bubble").hide();
+        }
+      );
+      
+      intro_bubble.append(close_intro_bubble);
+      
       this.main_window.append(intro_bubble);
       
     } else {

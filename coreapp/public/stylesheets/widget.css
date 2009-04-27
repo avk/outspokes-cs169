@@ -223,6 +223,13 @@ version: 3.0.0pr2
   height: 150px;
   position: absolute;
   border: red 2px solid;
-  right: 0px;
+  right: 50px;
   top: -134px;
+  background-color: #EEE;
+  opacity: 0.7;
+}
+
+#outspokes #bubble #close_intro {
+  position: absolute;
+  right: 5px;
 }
