@@ -110,7 +110,7 @@ version: 3.0.0pr2
  */
 
 #outspokes #new_comment, #outspokes #comment_list {
-	height: 200px;
+	height: 197px;
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
@@ -131,6 +131,7 @@ version: 3.0.0pr2
 	margin-left: 3px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+  padding-right: 3px;
 }
 
 /*#outspokes #comment_list div {
