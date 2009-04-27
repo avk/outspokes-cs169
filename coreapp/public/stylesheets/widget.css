@@ -23,6 +23,9 @@ version: 3.0.0pr2
 
 /* admin panel, excluded from the wrapper because it overlays everything */
 
+/*
+ *  ADMIN PANEL
+ */
 #outspokes_overlay {
     background-color: black;
     color: transparent;
@@ -70,12 +73,35 @@ version: 3.0.0pr2
         color: #333;
     }
 
+/*
+ *  END ADMIN PANEL
+ */
 
 /* all other styles must be faux-scoped with our widget wrapper */
 
+/*
+ *  GENERAL
+ */
+ 
 #outspokes strong {
   font-weight: bold;
 }
+
+#outspokes .hide {
+  display: none;
+}
+
+#outspokes em {
+  font-style: italic;
+}
+
+#outspokes a {
+  text-decoration: none;
+}
+
+/*
+ *  END GENERAL
+ */
 
 #outspokes #new_comment, #outspokes #comment_list {
 	height: 198px;
@@ -86,15 +112,12 @@ version: 3.0.0pr2
 	margin: 0 10px;
 }
 
-#outspokes a {
-	text-decoration: none;
-}
-
 #outspokes #new-comment {
 	float: right;
 	width: 30%;
 	margin-right: 3%;
 }
+
 
 #outspokes #comment_list {
 	float: left;
@@ -103,8 +126,6 @@ version: 3.0.0pr2
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
-
-
 
 #outspokes #comment_list div {
 	padding: 5px;
@@ -170,10 +191,6 @@ version: 3.0.0pr2
 	line-height: 200%;
 }
 
-#outspokes #refresh {
-	color: beige;
-	margin-left: 10px;
-}
 
 #outspokes #comment_form {
 	float: right;
@@ -223,26 +240,16 @@ version: 3.0.0pr2
     float: right;
 }
 #outspokes #topbar #help {
-    color: beige;
-    background-color: transparent;
-}
-
-#outspokes #help {
-	float: right;
-	color: beige;
-	margin-right: 3%;
+  background-image: url(/images/help.png);
+  background-repeat: no-repeat;
+  height: 20px;
+  width: 20px;
+  float: right;
+  margin-right: 3%;
 }
 
 #outspokes #topbar #contactus {
   float:right;
-}
-
-#outspokes .hide {
-	display: none;
-}
-
-#outspokes em {
-	font-style: italic;
 }
 
 #outspokes #comment-count {
