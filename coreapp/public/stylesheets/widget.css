@@ -185,8 +185,8 @@ version: 3.0.0pr2
   text-align: right;
 }
 
-#outspokes #comment_form .second_button {
-  margin-right: 2%;
+#outspokes #comment_form .button {
+  margin-left: 2%;
 }
 
 #outspokes #outspokes_target_button {
