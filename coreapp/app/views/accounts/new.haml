@@ -7,17 +7,18 @@
 
 - form_for :account, :url => accounts_path do |f|
   %p
-    = label_tag 'email'
+    = label_tag 'email', :class => 'wide_left'
     %br
     = f.text_field :email
   %p
-    = label_tag 'password'
+    = label_tag 'password', :class => 'wide_left'
     %br
     = f.password_field :password
   %p
-    = label_tag 'password_confirmation', 'Confirm Password'
+    = label_tag 'password_confirmation', 'Confirm Password', :class => 'wide_left'
     %br
     = f.password_field :password_confirmation
+  %div{:style=>"clear:both;"}
   %p
-    = submit_tag 'Sign up'
+    = submit_tag 'Sign up', :class => 'submit'
 
