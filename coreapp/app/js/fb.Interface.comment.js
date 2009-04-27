@@ -46,7 +46,7 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" cols="30" rows="5" />' +
+    	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" cols="40" rows="5" />' +
           '<div id="outspokes_form_buttons"><input type="reset" value="Cancel" class="second_button" /><input type="submit" value="Submit" /></div>&nbsp;&nbsp;' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
