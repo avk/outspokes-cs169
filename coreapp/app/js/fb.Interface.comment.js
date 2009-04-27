@@ -154,12 +154,16 @@
       },
       // toggles the non-replying interface
       setupInterface  : function() {
-    		var replyButton = $('.' + this.dom.reply_links);
-    		if (replyButton.attr("disabled")) { 
-    		  replyButton.attr("disabled", "false"); 
-  		  } else { 
-  		    replyButton.attr("disabled", "true"); 
-		    }
+    		var replyButtons = $('.' + this.dom.reply_links);
+        replyButtons.each(function(i) {
+          var button = $(this)
+          if (button.attr("disabled")) { 
+            button.removeAttr("disabled"); 
+          } else { 
+             button.attr("disabled", "disabled"); 
+          }
+        });
+
         $('#' + this.dom.cform).toggle();
       },
       // start replying to a comment
@@ -168,10 +172,12 @@
 
         // show the reply form
         var reply_form = this.dom.reply_form(c_id);
-        var form = this.parent.buildCommentForm(reply_form, c_id);
-        form.find("form").append('<input type="reset" value="Cancel" />');
-    		form.find("form").attr('class','reply');
-        form.find("form").submit(function() { 
+        var form_container = this.parent.buildCommentForm(reply_form, c_id);
+        var form = form_container.find("form");
+        var reset_button = $('<input type="reset" value="Cancel" />');
+        form.append(reset_button);
+    		form.attr('class','reply');
+        form.submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
             name = this.name.value;
@@ -180,11 +186,11 @@
           fb.i.comment.reply.finish(reply_form);
         });
         
-        form.find("input[type='reset']").click(function(){ 
+        reset_button.click(function(){ 
           fb.i.comment.reply.cancel(reply_form);
         });
         //$('#' + this.dom.reply_list(c_id)).before(form);
-        $('#' + this.dom.comment_form).append(form);
+        $('#' + this.dom.comment_form).append(form_container);
         
         form.find("textarea[name='content']").focus();
         // would be nice to also scroll to the comment form here like:
