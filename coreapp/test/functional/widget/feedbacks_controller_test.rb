@@ -245,14 +245,20 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   
-  # test "should destroy feedback" do
-  #   feedback = feedbacks(:one)
-  #   page = feedback.page
-  #   assert_difference('Comment.count', -1) do
-  #     delete :destroy, :id => feedback.id
-  #   end
-  #   assert_redirected_to page_path(page)
-  # end
+  test "should destroy feedback" do
+    feedback = feedbacks(:one)
+    page = feedback.page
+    page.site.new_validation_token
+    invite = invites(:one)
+    url_token = invite.url_token
+    callback = 'deleted_comment'
+    validation_token = invite.page.site.validation_token
+    assert_difference('Comment.count', -1) do
+      post :destroy, :id => feedback.id, :url_token => url_token, :validation_token => validation_token,
+        :current_page => feedback.page.url, :callback => callback
+    end
+    validate_windowname :authorized => true, :admin => page.site.validation_token, :success => true
+  end
   
   test "should add new threaded feedback for page" do
     invite = invites(:one)

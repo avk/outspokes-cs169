@@ -169,6 +169,12 @@ version: 3.0.0pr2
 	margin-right: 3%;
 }
 
+#outspokes #outspokes_target_button {
+  float: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
 }

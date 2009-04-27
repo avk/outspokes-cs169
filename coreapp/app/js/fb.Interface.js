@@ -154,7 +154,17 @@
     this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
     var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
     this.chead.append(comment_span);
-    this.chead.append('<select id="comments_filter"><option>newest</option><option>oldest</option><option>mine</option><option>targeted</option><option>consensus</option></select>');
+
+  	/*** Comment Sorting Dropdown Menu ****/
+  	var sort_dropdown = $('<select id="comments_filter"><option>newest</option><option>oldest</option>' +
+  	  '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+  	sort_dropdown.children().eq(0).click(function() {
+  	  fb.i.comment.sort_by_newest();
+  	});
+  	sort_dropdown.children().eq(1).click(function() {
+  	  fb.i.comment.sort_by_oldest();
+  	});
+  	this.chead.append(sort_dropdown);
 
     this.set_num_comments = function(num_comments) {
       comment_span.text(num_comments + ' comments');
@@ -174,6 +184,7 @@
     this.comment = new fb.Interface.comment(this);
 
     fb.Interface.instantiated = true;
+  
   };
 
   fb.Interface.prototype.div = function() {

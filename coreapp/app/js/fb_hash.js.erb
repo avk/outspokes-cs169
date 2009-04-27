@@ -11,10 +11,12 @@ function() {
     var _wants_admin = fb.getParams('admin');
     fb.env.pub_page = false;
     fb.env.logo_address = "<%= WIDGET_DOMAIN %>images/widget-logo.png";
+    fb.env.target_address = "<%= WIDGET_DOMAIN %>images/target-icon.png"
     fb.env.get_address = "<%= WIDGET_DOMAIN %>feedback_for_page.js";
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
+    fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? true : false;
