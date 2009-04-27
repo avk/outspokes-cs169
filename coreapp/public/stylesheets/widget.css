@@ -189,13 +189,19 @@ version: 3.0.0pr2
   margin-left: 2%;
 }
 
+#outspokes #outspokes_form_header {
+  height:20px;
+  line-height:200%;
+  margin: 5px 0;
+  
+}
 #outspokes #outspokes_form_header span {
   font-weight: bold;
+  font-size: 14px;
 }
 
 #outspokes #outspokes_target_button {
   float: right;
-  margin-top: 5px;
   cursor: pointer;
 }
 
