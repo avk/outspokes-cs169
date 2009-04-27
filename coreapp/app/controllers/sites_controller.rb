@@ -17,6 +17,8 @@ class SitesController < ApplicationController
   def create
     # Checkboxes return "0" and "1", not true/false
     params[:site][:public] = params[:site][:public] == "1" ? true : false
+    pageurl = params[:site][:url]
+    if(params[:site][:url][params[:site][:url].length-1, 1]=='/') then params[:site][:url].chop! end
     @site = Site.new(params[:site])
     @site.account = current_account
 

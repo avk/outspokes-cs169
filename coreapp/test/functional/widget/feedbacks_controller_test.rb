@@ -356,7 +356,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     site = Site.find(site.id)
     site.save
     page = site.home_page
-    public_site = create_site({:account => admin, :url => "http://www.xkcd.com/"})
+    public_site = create_site({:account => admin, :url => "http://www.xkcd.com"})
     public_page = Page.create({:site_id => public_site.id, :url => "http://www.xkcd.com/blah.html"})
     public_page.site.public = true
     public_site = public_page.site
