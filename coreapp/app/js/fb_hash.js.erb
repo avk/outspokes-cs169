@@ -124,10 +124,10 @@ function() {
         }));
 
         var form = fb.$('<form onsubmit="return false;"></form>');
-        form.append('Please log into <img src="http://localhost:3000/images/widget-logo.png" height="20" width="100" alt="outspokes" style="position: relative;top:5px;">:<br>')
+        form.append('Please log into <img src="' + fb.env.logo_address + '" height="20" width="100" alt="Outspokes" style="position: relative;top:5px;">:<br>')
         form.append('<label for="outspokes_email">Email:</label><br /><input type="text" id="outspokes_email" name="email" size="20" /><br />');
         form.append('<label for="outspokes_password">Password:</label><br /><input type="password" id="outspokes_password" name="password" size="20" /><br />');
-        form.append('<input type="submit" value="Submit" style="margin-top: .5em" />');
+        form.append('<input type="submit" value="Submit" style="margin-top: .7em" />');
         form.submit(function() {
           var _email = this.email.value;
           var _password = this.password.value;
