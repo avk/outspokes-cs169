@@ -231,7 +231,13 @@ version: 3.0.0pr2
   color:#666666;
   font-size:2em;
   font-weight:bold;
-  left:170px;
-  position:relative;
+  left:215px;
+  position:absolute;
   top:-10px;
+}
+
+#outspokes #bubble_content {
+  float:left;
+  line-height: 14px;
+  width: 200px;
 }

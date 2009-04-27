@@ -103,7 +103,10 @@
       $('#' + this.dom.widget.content).hide();
       $('#' + this.dom.widget.help_content).hide();
       
-      var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
+      var intro_bubble = $('<div></div>').attr('id','bubble');
+      var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
+      "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
+      " that other people have left and leave your own!<br />Happy commenting!</p>";
       var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
       
       close_intro_bubble.click(function() 
@@ -112,7 +115,10 @@
         }
       );
       
+      
       intro_bubble.append(close_intro_bubble);
+      
+      intro_bubble.append(intro_bubble_content);
       
       this.main_window.append(intro_bubble);
       
