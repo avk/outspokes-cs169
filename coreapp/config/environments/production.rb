@@ -24,5 +24,3 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 WIDGET_DOMAIN = "http://beta.outspokes.com/"
-
-ExceptionNotifier.exception_recipients = %w(cloudofstrife@gmail.com)
