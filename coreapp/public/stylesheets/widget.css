@@ -223,7 +223,10 @@ version: 3.0.0pr2
 
 #outspokes #comment_form {
 	float: right;
-	margin-right: 3%;
+	width: 100%;
+}
+#outspokes #comment_form textarea {
+  width: 100%;
 }
 
 #outspokes #outspokes_form_buttons {
@@ -234,6 +237,7 @@ version: 3.0.0pr2
 #outspokes #comment_form .button {
   margin-left: 2%;
 }
+
 
 #outspokes #outspokes_form_header {
   height:20px;
@@ -321,11 +325,17 @@ version: 3.0.0pr2
 #outspokes #help_content h1 {
   font-weight: bold;
   font-size: 1.5em;
+  margin-bottom: .75em;
 }
 
 #outspokes #help_content h2 {
+  font-size: 1.25em;
   font-weight: bold;
+  margin: .25em 0;
   text-decoration: underline;
+}
+#outspokes #help_content p {
+  margin-bottom: 3px;
 }
 
 #outspokes #contact_us {

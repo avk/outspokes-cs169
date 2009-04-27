@@ -193,11 +193,9 @@
     
     var help_copy = "<h2>About</h2>" +
 
-    "Outspokes is the brainchild of a group of UC Berkeley CS 169 students." +
-
-    "Currently in Alpha, it probably works.  Maybe.  Sort of." +
+    "<p>Outspokes is the brainchild of a group of UC Berkeley CS 169 students." +
     
-    "<br /><a id='contact_us' href='mailto:outspokes@outspokes.com'>Contact Us</a>" +
+    "<br /><a id='contact_us' href='mailto:outspokes@outspokes.com'>Contact Us</a></p>" +
     
     
     "<h2>Minimized</h2>" +
