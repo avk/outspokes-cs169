@@ -6,27 +6,28 @@
       Feedback! 
       = controller.action_name
     = stylesheet_link_tag 'reset-min'
-    =# stylesheet_link_tag 'acts-as-taggable'
     = stylesheet_link_tag 'main'
     = javascript_include_tag :defaults
     = javascript_include_tag 'accordion'
 
 %body
   #header
-    #branding
-      = link_to image_tag('borderless-logo.png'), root_url
-  
-    #login_bar= render :partial => '/accounts/account_bar'  
+    .inside
+      #branding
+        = link_to image_tag('borderless-logo.png', :alt => "Outspokes"), root_url
+      #login_bar= render :partial => '/accounts/account_bar'  
   
   #main_content
-    #flash_notice
-      = flash[:notice]
-    #flash_error
-      = flash[:error]
-    #flash_warning
-      = flash[:warning]
+    .inside
+      #flash_notice
+        = flash[:notice]
+      #flash_error
+        = flash[:error]
+      #flash_warning
+        = flash[:warning]
     
-    = yield 
+      = yield 
 
   #footer
-    %p &copy; 2009 Outspokes  
+    .inside
+      %p &copy; 2009 Outspokes  
