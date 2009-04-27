@@ -103,8 +103,7 @@
       this.main_window.css({'height':'20px'});
       
       $('#' + this.dom.widget.content).hide();
-      $('#' + this.dom.widget.help_content).hide();
-      
+            
       var intro_bubble = $('<div></div>').attr('id','bubble');
       var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
       "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
@@ -161,8 +160,10 @@
         content.hide();
         help.removeClass("hide");
       } else {
+        
         content.toggle();
         help.toggleClass("hide");
+        
       }
       
       $("#bubble").hide();
