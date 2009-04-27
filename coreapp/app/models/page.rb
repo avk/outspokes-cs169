@@ -1,5 +1,7 @@
 class Page < ActiveRecord::Base
 
+
+
   belongs_to :site
   belongs_to :account
 
@@ -9,6 +11,7 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
+  # validates_format_of :url, :with => URI.regexp(['.*'])
   validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
   validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
   validates_inclusion_of :allow_public_comments, :in => [true, false] # must be either public or private  
@@ -16,6 +19,8 @@ class Page < ActiveRecord::Base
   validate :has_account_xor_site
   validate :is_child_of_site
   validate :publicness_matches_site, :if => :site
+  validate :page_url_can_not_have_trailing_slashes
+  
   
   def self.find_public_page_by_url(url)
     pages = Page.find_all_by_url url
@@ -56,6 +61,12 @@ protected
     return if (!site) || site.home_page.blank?
     unless allow_public_comments == site.public
       errors.add :allow_public_comments, "Page's privacy must match site"
+    end
+  end
+  
+  def page_url_can_not_have_trailing_slashes
+    if(url)
+      errors.add(:url, "Url can not have trailing slashes") unless url[url.length-1, 1]!='/'
     end
   end
 end

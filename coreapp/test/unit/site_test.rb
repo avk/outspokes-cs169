@@ -34,8 +34,8 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   test 'should always return pages they order they were created' do
-    site = create_site(:url => "http://google.com/")
-    %w(about contact_us FAQ).each do |page|
+    site = create_site(:url => "http://google.com")
+    %w(/about /contact_us /FAQ).each do |page|
       site.pages << Page.new(:url => site.home_page.url + page)
     end
     ordered_pages = Page.find_by_sql "SELECT * FROM pages p WHERE p.site_id = #{site.id} ORDER BY created_at ASC"
@@ -43,20 +43,20 @@ class SiteTest < ActiveSupport::TestCase
   end
   
   test 'should require at least one page' do
-    url = "http://yahoo.com/"
+    url = "http://yahoo.com"
     site = create_site(:url => url)
     assert site.pages.size >= 1, "Site has at least one page"
     assert site.pages[0].url == url, "Site's home_page's url is its first page's url"
   end
   
   test 'should delete all pages when deleted' do
-    base_url = "http://google.com/"
+    base_url = "http://google.com"
     site = nil
     assert_difference "Site.count", 1 do
       site = create_site(:url => base_url)
     end
     
-    page_urls = %w(maps movies alerts)
+    page_urls = %w(/maps /movies /alerts)
     assert_difference "Page.count", page_urls.size do
       page_urls.each do |page_url|
         site.pages << Page.new(:url => "#{base_url + page_url}")
@@ -72,7 +72,7 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   test 'should respond to home page' do
-    url = "http://yahoo.com/"
+    url = "http://yahoo.com"
     site = create_site(:url => url)
     assert site.pages[0] == site.home_page
   end

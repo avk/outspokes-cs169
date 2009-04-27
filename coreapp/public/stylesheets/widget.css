@@ -73,6 +73,10 @@ version: 3.0.0pr2
 
 /* all other styles must be faux-scoped with our widget wrapper */
 
+#outspokes strong {
+  font-weight: bold;
+}
+
 #outspokes #new_comment, #outspokes #comment_list {
 	height: 180px;
 }
@@ -148,7 +152,15 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-    line-height: 1em;
+    line-height: 1.3em;
+}
+
+#outspokes #comment_list .cns_buttons .agreed {
+  color: green;
+}
+
+#outspokes #comment_list .cns_buttons .disagreed {
+  color: red;
 }
 
 #outspokes #topbar {
@@ -166,6 +178,15 @@ version: 3.0.0pr2
 #outspokes #comment_form {
 	float: right;
 	margin-right: 3%;
+}
+
+#outspokes #outspokes_form_buttons {
+  padding-top: 3%;
+  text-align: right;
+}
+
+#outspokes #comment_form .second_button {
+  margin-right: 2%;
 }
 
 #outspokes #outspokes_target_button {
