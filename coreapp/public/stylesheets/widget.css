@@ -154,7 +154,9 @@ version: 3.0.0pr2
 #outspokes #topbar {
 	background-color: #111;
 	cursor: pointer;
-	height: 23px;
+	height: 20px;
+	padding: 3px 0;
+	line-height: 200%;
 }
 
 #outspokes #refresh {
@@ -174,12 +176,10 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
-	padding: 0 10px;
 }
 #outspokes #topbar #help, 
 #outspokes #topbar #open_admin_panel {
-    position: relative;
-    bottom: 7px;
+
 }
 #outspokes #topbar #open_admin_panel {
     display: block;
@@ -194,6 +194,10 @@ version: 3.0.0pr2
 	float: right;
 	color: beige;
 	margin-right: 3%;
+}
+
+#outspokes #topbar #contactus {
+  float:right;
 }
 
 .hide {
