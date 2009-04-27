@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class CommentTest < ActiveSupport::TestCase
   test "should create feedback" do
@@ -46,11 +46,13 @@ class CommentTest < ActiveSupport::TestCase
       "content" => feedback.content,
       "target" => feedback.target,
       "opinion" => commenter.opinion_of(feedback.id),
+      "agreed" => feedback.agreed,
+      "disagreed" => feedback.disagreed
     }
     
     assert Comment.json_attribute_names.sort == json_atts.keys.sort
     feedback.json_attributes(commenter).each do |key, value|
-      assert json_atts[key] == value, "expected #{json_atts[key].inspect} got #{value.inspect}"
+      assert json_atts[key] == value, "for #{key}: expected #{json_atts[key].inspect} got #{value.inspect}"
     end
   end
   
