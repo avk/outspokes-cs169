@@ -142,7 +142,7 @@
     });
     topbarLeft.append(logo);
 
-    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
+    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
     comment_count.attr('id', this.dom.widget.comment_count);
     this.set_num_comments = function(num_comments) {
       comment_count.text(num_comments + ' comments');
