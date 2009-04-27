@@ -64,8 +64,8 @@ function() {
         }
         _fb.site_id.set(data.site_id);
         fb.env.admin_panel_address = {};
-        fb.env.admin_panel_address.pages = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/pages";
-        fb.env.admin_panel_address.commenters = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + "/commenters";
+        fb.env.admin_panel_address.pages = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/pages";
+        fb.env.admin_panel_address.commenters = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/commenters";
       }
 
       if (fb.env.url_token === "") {
@@ -123,7 +123,7 @@ function() {
         }));
 
         var form = fb.$('<form onsubmit="return false;"></form>');
-        form.append('Please log into <img src="http://localhost:3000/images/widget-logo.png" height="20" width="100" style="position: relative;top:5px;">:<br>')
+        form.append('Please log into <img src="' + fb.env.logo_address + '" height="20" width="100" alt="Outspokes" style="position: relative;top:5px;">:<br>')
         form.append('Email:<br /><input type="text" name="email" size="20" /><br />');
         form.append('Password:<br /><input type="password" name="password" size="20" /><br />');
         form.append('<input type="submit" value="Submit" />');
