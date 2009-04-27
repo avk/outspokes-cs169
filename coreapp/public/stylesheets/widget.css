@@ -236,8 +236,6 @@ version: 3.0.0pr2
 
 #outspokes #comment-count {
     color: beige;
-    position: relative;
-    bottom: 5px;
 }
 
 #outspokes #bubble {
