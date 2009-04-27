@@ -21,7 +21,7 @@
         Whoops, you don't have any sites.
   - else
     - for site in @sites
-      %tr{:class => cycle('even','odd')}
+      %tr{:class => cycle('odd','even')}
         %td.site_name= link_to h(site.name), site.admin_url
         %td.jsinclude
           %a{:href => '#', :onClick => 'expandScript(this)'} Script Include

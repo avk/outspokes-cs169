@@ -1,4 +1,0 @@
-page.replace_html('flash_notice', flash[:notice]); 
-page.replace_html('flash_warning', flash[:warning]); 
-page.replace_html('flash_error', flash[:error]);
-flash.discard
