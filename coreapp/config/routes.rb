@@ -19,6 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
+  map.faq '/faq', :controller => 'home', :action => 'faq'
+  map.about '/about', :controller => 'home', :action => 'about'
 
   map.resources :accounts, :member => { :dashboard => :get }
   map.resource :session
