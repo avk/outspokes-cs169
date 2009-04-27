@@ -99,7 +99,7 @@
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
-    if (fb.env.first_visit) {
+    if (fb.env.first_visit && !_fb.admin()) {
       this.main_window.css({'height':'20px'});
       
       $('#' + this.dom.widget.content).hide();
@@ -110,17 +110,10 @@
       " that other people have left and leave your own!<br />Happy commenting!</p>";
       var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
       
-      close_intro_bubble.click(function() 
-        {
-          $("#bubble").hide();
-        }
-      );
-      
+      close_intro_bubble.click(function(){ $("#bubble").hide(); });
       
       intro_bubble.append(close_intro_bubble);
-      
       intro_bubble.append(intro_bubble_content);
-      
       this.main_window.append(intro_bubble);
       
     } else {
@@ -214,7 +207,7 @@
 
     "<h2>General</h2>" +
 
-    "<p>Click on a comment to minimize or maximize it.  If a comment is targeted, hover your mouse over it" + 
+    "<p>Click on a comment to minimize or maximize it.  If a comment is targeted, hover your mouse over it " + 
     "to see what element of the page has been attached to the comment.</p>" +
 
     "<p>To leave a comment, type in the text box on the right side of the widget, then click on the post button to the" + 

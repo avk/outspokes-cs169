@@ -14,8 +14,8 @@ class Widget::FeedbacksController < Widget::WidgetController
 
     if @authorized
       if !@public
+        site = @invite.page.site
         if page = @invite.page.site.pages.find_by_url(params[:current_page])
-          site = page.site
           feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
         end
       else
