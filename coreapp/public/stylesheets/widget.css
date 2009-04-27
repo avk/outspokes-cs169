@@ -173,6 +173,11 @@ version: 3.0.0pr2
   cursor: pointer;
 }
 
+#outspokes #topbarLeft {
+    float: left;
+    width: 200px;
+}
+
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
 	padding: 0 10px;
 }
@@ -204,16 +209,10 @@ version: 3.0.0pr2
 	font-style: italic;
 }
 
-#outspokes #comments_topbar {
-	height: 22px;
-	background: #222;
-	color: beige;
-	padding-left: 3%;
-}
-
-#outspokes #comments_filter {
-	height: 20px;
-	margin-left: 10px;
+#outspokes #comment-count {
+    color: beige;
+    position: relative;
+    bottom: 5px;
 }
 
 #outspokes #bubble {
