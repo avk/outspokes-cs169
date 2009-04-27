@@ -15,11 +15,12 @@
       widget  : { 
         wrapper : 'outspokes',
         header  : 'topbar',
+        headerLeft : 'topbarLeft',
         content : 'widget_content',
-        comments_header : 'comments_topbar',
         help : 'help',
         help_content: 'help_content',
         toggle: 'toggle',
+        comment_count : 'comment-count',
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -103,7 +104,10 @@
       $('#' + this.dom.widget.content).hide();
       $('#' + this.dom.widget.help_content).hide();
       
-      var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
+      var intro_bubble = $('<div></div>').attr('id','bubble');
+      var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
+      "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
+      " that other people have left and leave your own!<br />Happy commenting!</p>";
       var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
       
       close_intro_bubble.click(function() 
@@ -112,7 +116,10 @@
         }
       );
       
+      
       intro_bubble.append(close_intro_bubble);
+      
+      intro_bubble.append(intro_bubble_content);
       
       this.main_window.append(intro_bubble);
       
@@ -122,6 +129,7 @@
     }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
+    var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
     var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
     logo.css({
       'display' : 'block',
@@ -130,7 +138,15 @@
       'width'   : '100px',
       'backgroundImage' : 'url(' + fb.env.logo_address + ')',
     });
-    this.topbar.append(logo);
+    topbarLeft.append(logo);
+
+    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
+    comment_count.attr('id', this.dom.widget.comment_count);
+    this.set_num_comments = function(num_comments) {
+      comment_count.text(num_comments + ' comments');
+    }
+    topbarLeft.append(comment_count);
+    this.topbar.append(topbarLeft);
 
     var help_link = $('<a href="#">(?)</a>').attr('id',this.dom.widget.help);
     help_link.click(function(e) {
@@ -172,45 +188,49 @@
     });
 
     this.main_window.append(this.topbar);
+    this.main_window.append($('<div style="clear:both;"></div>'));
 
     this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
-    this.help_content = $('<div>help yourself</div>').attr('id', this.dom.widget.help_content);
+    this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
+    
+    var help_copy = "<h2>Minimized</h2>" +
+
+    "<p>Click on the center of the bar to expand Outspokes' feedback widget and start giving the owner of the page feedback!  " + 
+    "Also, you can click on our logo to go to outspokes.com and learn more about our service." +
+
+    "<h2>General</h2>" +
+
+    "<p>Click on a comment to minimize or maximize it.  If a comment is targeted, hover your mouse over it" + 
+    "to see what element of the page has been attached to the comment.</p>" +
+
+    "<p>To leave a comment, type in the text box on the right side of the widget, then click on the post button to the" + 
+    "bottom right of the text box to submit it.</p>" +
+    "<p>If you'd like to attach this comment to a portion of the page you're viewing, click the target icon on the top right of" + 
+    "the text box.</p>" +
+
+    "<p>To search the comments left on this page by keyword, type some text in the search bar on the top right of the widget panel," +
+    "and type enter." +
+    "To filter your result, use the drop-down bar above the list of comments to select how you'd want to filter the comments.</p>" +
+
+    "<p>Agreeing/disagreeing with a comment gives the person who requested feedback " +
+    "information about whether other commenters generally agree or disagree with a comment that another commenter has left.  " +
+    "Please note, once you have agreed or disagreed with a comment, you cannot change your vote.</p>";
+    
+    this.help_content.append(help_copy);
+    
     this.help_content.addClass("hide");
 
-    this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
-    var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
-    this.chead.append(comment_span);
-
-  	/*** Comment Sorting Dropdown Menu ****/
-  	var sort_dropdown = $('<select id="comments_filter"><option>newest</option><option>oldest</option>' +
-  	  '<option>mine</option><option>targeted</option><option>consensus</option></select>');
-  	sort_dropdown.children().eq(0).click(function() {
-  	  fb.i.comment.sort_by_newest();
-  	});
-  	sort_dropdown.children().eq(1).click(function() {
-  	  fb.i.comment.sort_by_oldest();
-  	});
-  	this.chead.append(sort_dropdown);
-
-    this.set_num_comments = function(num_comments) {
-      comment_span.text(num_comments + ' comments');
-    }
-
-    this.widget_content.append(this.chead);
     this.main_window.append(this.widget_content);
-
     this.main_window.append(this.help_content);
-
     if (_fb.admin()) {
       this.admin_panel.build(this.topbar);
     }
-
+    
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
 
-    fb.Interface.instantiated = true;
-  
+    fb.Interface.instantiated = true;  
   };
 
   fb.Interface.prototype.div = function() {
