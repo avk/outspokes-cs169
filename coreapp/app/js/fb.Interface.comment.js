@@ -47,7 +47,7 @@
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
     	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" cols="30" rows="5" />' +
-          '<div id="outspokes_form_buttons"><input type="submit" value="Submit" /></div>&nbsp;&nbsp;' +
+          '<div id="outspokes_form_buttons"><input type="reset" value="Cancel" class="second_button" /><input type="submit" value="Submit" /></div>&nbsp;&nbsp;' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
@@ -68,6 +68,12 @@
       }
       fb.Comment.post(this.content.value, this.target.value, name);
       this.content.value = "";
+      fb.i.comment.reset_target();
+    });
+    // Cancel button
+    var textarea = this.form.find('textarea')
+    this.form.find("input[type='reset']").click(function() {
+      textarea.text("");
       fb.i.comment.reset_target();
     });
     self.widget_content.append(this.comments);
@@ -172,8 +178,6 @@
         var reply_form = this.dom.reply_form(c_id);
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
-        var reset_button = $('<input type="reset" value="Cancel" class="second_button" />');
-        form.find('#outspokes_form_buttons').prepend(reset_button);
         form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
     		form.attr('class','reply');
         form.submit(function() { 
@@ -184,8 +188,9 @@
           fb.Comment.post(this.content.value, this.target.value, name);
           fb.i.comment.reply.finish(reply_form);
         });
-        
-        reset_button.click(function(){ 
+        var cancel_button = form.find('input[type="reset"]');
+        cancel_button.unbind('click');
+        cancel_button.click(function(){ 
           fb.i.comment.reply.cancel(reply_form);
         });
         //$('#' + this.dom.reply_list(c_id)).before(form);

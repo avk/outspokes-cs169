@@ -154,16 +154,14 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
-
-      if (widget.height() == '20') {
+      console.log(widget.height());
+      if (widget.height() == '220') {
         widget.animate( { height:"220px" }, { duration:250 } );
         content.hide();
         help.removeClass("hide");
       } else {
-        
         content.toggle();
         help.toggleClass("hide");
-        
       }
       
       $("#bubble").hide();
