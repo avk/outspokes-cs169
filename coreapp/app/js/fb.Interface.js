@@ -15,11 +15,13 @@
       widget  : { 
         wrapper : 'outspokes',
         header  : 'topbar',
+        headerLeft : 'topbarLeft',
         content : 'widget_content',
-        comments_header : 'comments_topbar',
         help : 'help',
         help_content: 'help_content',
         toggle: 'toggle',
+        contact: 'contactus',
+        comment_count : 'comment-count',
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -35,7 +37,7 @@
       build : function(widget) {
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
-        var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
+        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
                 
         close_link.click(function(e) {
           
@@ -43,7 +45,7 @@
           var widget = fb.i.main_window;
           var help = fb.i.help_content;
           
-          widget.animate( { height:"220px" }, { duration:500 } );
+          widget.animate( { height:"220px" }, { duration:250 } );
           help.addClass("hide"); //always make sure help is hidden before showing content
           content.show();
           
@@ -66,14 +68,14 @@
         $('<div></div>').attr('id',this.dom.admin.overlay).appendTo($('body'));
 
         // to open the panel from the widget
-        var open_link = $('<a href="#">admin&nbsp;panel</a>').attr('id',this.dom.admin.open);
+        var open_link = $('<a href="#">Admin Panel</a>').attr('id',this.dom.admin.open);
 
         open_link.click(function(e) {
           
           var content = fb.i.widget_content;
           var widget = fb.i.main_window;
           
-          widget.animate( { height:"20px" }, { duration:500 } );
+          widget.animate( { height:"20px" }, { duration:250 } );
           content.hide();
           
           fb.i.admin_panel.show();
@@ -124,10 +126,11 @@
       
     } else {
       $("#bubble").hide();
-      this.main_window.css({'height':'220px'});
+      this.main_window.css({'height':'227px'});
     }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
+    var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
     var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
     logo.css({
       'display' : 'block',
@@ -135,8 +138,17 @@
       'height'  : '20px',
       'width'   : '100px',
       'backgroundImage' : 'url(' + fb.env.logo_address + ')',
+      'backgroundRepeat' : 'no-repeat',
     });
-    this.topbar.append(logo);
+    topbarLeft.append(logo);
+
+    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
+    comment_count.attr('id', this.dom.widget.comment_count);
+    this.set_num_comments = function(num_comments) {
+      comment_count.text(num_comments + ' comments');
+    }
+    topbarLeft.append(comment_count);
+    this.topbar.append(topbarLeft);
 
     var help_link = $('<a href="#">(?)</a>').attr('id',this.dom.widget.help);
     help_link.click(function(e) {
@@ -145,7 +157,7 @@
       var widget = fb.i.main_window;
 
       if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:500 } );
+        widget.animate( { height:"220px" }, { duration:250 } );
         content.hide();
         help.removeClass("hide");
       } else {
@@ -158,18 +170,21 @@
       e.stopPropagation();
     });
     this.topbar.append(help_link);
-
+   
+    var contact_link = $('<a href="mailto:outspokes@outspokes.com">Contact Outspokes</a>').attr('id',this.dom.widget.contact)
+    this.topbar.append(contact_link);
+ 
     this.topbar.click(function() {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
       
       if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:500 } );
+        widget.animate( { height:"220px" }, { duration:250 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
         content.show();
       } else {
-        widget.animate( { height:"20px" }, { duration:500 } );
+        widget.animate( { height:"20px" }, { duration:250 } );
         content.hide();
       }
       
@@ -178,6 +193,7 @@
     });
 
     this.main_window.append(this.topbar);
+    this.main_window.append($('<div style="clear:both;"></div>'));
 
     this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
     this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
@@ -209,40 +225,17 @@
     
     this.help_content.addClass("hide");
 
-    this.chead = $('<div></div>').attr('id',this.dom.widget.comments_header);
-    var comment_span = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' comments</span>');
-    this.chead.append(comment_span);
-
-  	/*** Comment Sorting Dropdown Menu ****/
-  	var sort_dropdown = $('<select id="comments_filter"><option>newest</option><option>oldest</option>' +
-  	  '<option>mine</option><option>targeted</option><option>consensus</option></select>');
-  	sort_dropdown.children().eq(0).click(function() {
-  	  fb.i.comment.sort_by_newest();
-  	});
-  	sort_dropdown.children().eq(1).click(function() {
-  	  fb.i.comment.sort_by_oldest();
-  	});
-  	this.chead.append(sort_dropdown);
-
-    this.set_num_comments = function(num_comments) {
-      comment_span.text(num_comments + ' comments');
-    }
-
-    this.widget_content.append(this.chead);
     this.main_window.append(this.widget_content);
-
     this.main_window.append(this.help_content);
-
     if (_fb.admin()) {
       this.admin_panel.build(this.topbar);
     }
-
+    
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
 
-    fb.Interface.instantiated = true;
-  
+    fb.Interface.instantiated = true;  
   };
 
   fb.Interface.prototype.div = function() {

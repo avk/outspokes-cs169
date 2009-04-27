@@ -19,12 +19,17 @@
   fb.Comment.prototype.constructor = fb.Comment;
   fb.Comment.prototype.parent = fb.Feedback;
   
+  // Call with "true" as only arg to prevent comment backend comment deletion POST from happening
   fb.Comment.prototype.remove = function() {
+    // remove remaining children
+    fb.i.comment.visit_all_replies(this.build, function(c) {
+      c.remove(true);
+    })
     // remove the comment from the interface
     // must be first
     fb.i.comment.remove(this);
     // super.remove:
-    this.parent.prototype.remove.call(this);
+    this.parent.prototype.remove.call(this, arguments[0]);
     delete fb.Comment.all[this.feedback_id];
     delete fb.Comment.unrendered[this.feedback_id];
     return true;
