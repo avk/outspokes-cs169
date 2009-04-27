@@ -36,8 +36,7 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         var close_link = $("<a href='#'>&nbsp;</a>").attr('id',this.dom.admin.close);
-        //close_link.click(this.hide);
-        
+                
         close_link.click(function(e) {
           
           var content = fb.i.widget_content;
@@ -100,7 +99,25 @@
     
     if (fb.env.first_visit) {
       this.main_window.css({'height':'20px'});
+      
+      $('#' + this.dom.widget.content).hide();
+      $('#' + this.dom.widget.help_content).hide();
+      
+      var intro_bubble = $('<div>Hullo</div>').attr('id','bubble');
+      var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
+      
+      close_intro_bubble.click(function() 
+        {
+          $("#bubble").hide();
+        }
+      );
+      
+      intro_bubble.append(close_intro_bubble);
+      
+      this.main_window.append(intro_bubble);
+      
     } else {
+      $("#bubble").hide();
       this.main_window.css({'height':'220px'});
     }
 
@@ -120,13 +137,18 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
+
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:500 } );
+        content.hide();
         help.removeClass("hide");
       } else {
         content.toggle();
         help.toggleClass("hide");
       }
+      
+      $("#bubble").hide();
+      
       e.stopPropagation();
     });
     this.topbar.append(help_link);
@@ -135,6 +157,7 @@
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
+      
       if (widget.height() == '20') {
         widget.animate( { height:"220px" }, { duration:500 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
@@ -143,6 +166,9 @@
         widget.animate( { height:"20px" }, { duration:500 } );
         content.hide();
       }
+      
+      $("#bubble").hide();
+      
     });
 
     this.main_window.append(this.topbar);
