@@ -21,7 +21,7 @@ class Feedback < ActiveRecord::Base
   @@high_vote_factor = 1.5
   
   def self.json_attribute_names
-    %w(feedback_id name timestamp content target opinion)
+    %w(feedback_id name timestamp content target opinion agreed disagreed)
   end
   
   def abstract?
@@ -51,6 +51,10 @@ class Feedback < ActiveRecord::Base
         else
           json_atts['opinion'] = nil.to_s
         end
+      when 'agreed'
+        json_atts['agreed'] = self.agreed
+      when 'disagreed'
+        json_atts['disagreed'] = self.disagreed
       else
         json_atts[attr] = self[attr.to_sym]
       end

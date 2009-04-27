@@ -15,13 +15,17 @@
         target:"string",
         name:"string",
         timestamp:"number",
-        opinion:""}),
+        opinion:"",
+        agreed:"number",
+        disagreed:"number"}),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
       this.content = obj.content;
       this.target = obj.target;
       this.name = obj.name;
       this.opinion = obj.opinion;
+      this.agreed = obj.agreed;
+      this.disagreed = obj.disagreed;
       this.timestamp = obj.timestamp * 1000;
       this.build = null;
 

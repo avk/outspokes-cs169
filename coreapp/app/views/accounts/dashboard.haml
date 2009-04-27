@@ -1,8 +1,14 @@
+- @title = 'Dashboard'
+
 :javascript
   function expandScript(el) {
     var jsRow = el.parentNode.parentNode.nextSibling.nextSibling;
-    new Effect.BlindDown(jsRow);
-    new Effect.Highlight(jsRow);
+    if (jsRow.style.display == "none") {
+      new Effect.Appear(jsRow, {duration: .2});
+    }
+    else {
+      new Effect.Fade(jsRow, {duration: .2});
+    }
   }
 
 %table{:id=>'sites_table'}
@@ -15,12 +21,12 @@
         Whoops, you don't have any sites.
   - else
     - for site in @sites
-      %tr
+      %tr{:class => cycle('even','odd')}
         %td= link_to h(site.name), site.admin_url
         %td  
           %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
         %td= link_to 'Delete', site, { :confirm => 'Are you sure?', :method => :delete }
-      %tr.jsinclude{:style => "display:none;"} 
+      %tr.jsinclude{:style => "display:none; background-color: #ffffff"} 
         %td{:colspan => 3} 
           Insert this in your site:
           = text_field_tag 'jsinclude', "<script src='http://localhost:3000/widget/#{site.id}' type='text/javascript'></script>", :size => '100'
