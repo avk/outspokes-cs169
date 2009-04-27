@@ -123,7 +123,7 @@
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
-    var logo = $('<a href="http://www.outspokes.com" target="_blank">&nbsp;</a>');
+    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank">&nbsp;</a>');
     logo.css({
       'display' : 'block',
       'float'   : 'left',
