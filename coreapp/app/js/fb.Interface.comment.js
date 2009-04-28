@@ -98,7 +98,7 @@
         this._opinion(c_id, this.dom.disagree_bg_color);
       },
       build : function(c, markup) {
-        if (c.opinion !== "") { // this invitee has voted on this comment
+        if (c.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment
           if (c.opinion === 'agreed') {
             this.agree(markup);
           } else if (c.opinion == 'disagreed') {
