@@ -30,7 +30,8 @@ class SitesController < ApplicationController
           i.save!
         end
         flash[:notice] = 'Site was successfully created.'
-        format.html { redirect_to root_path }
+        debugger
+        format.html { redirect_to dashboard_account_path(current_account.id) }
       rescue
         flash[:error] = "Could not create site.  "
         format.html { render :action => "new" }
@@ -47,7 +48,7 @@ class SitesController < ApplicationController
     @site.destroy
 
     respond_to do |format|
-      format.html { redirect_to(root_url) }
+      format.html { redirect_to(dashboard_account_path(current_account.id)) }
       format.xml  { head :ok }
     end
   end
