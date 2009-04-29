@@ -30,7 +30,6 @@ class SitesController < ApplicationController
           i.save!
         end
         flash[:notice] = 'Site was successfully created.'
-        debugger
         format.html { redirect_to dashboard_account_path(current_account.id) }
       rescue
         flash[:error] = "Could not create site.  "
