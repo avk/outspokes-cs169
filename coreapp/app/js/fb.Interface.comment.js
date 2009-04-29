@@ -307,9 +307,8 @@
     this.visit_all_replies = function(c, fn) {
       var c = $(c);
       var parent = this;
-//      var this_id = c.attr('id').match(/comment_(\d+)/i)[1];
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
-        var this_id = this.id.match(/comment_(\d+)/i)[1]; // Extract id number of comment
+        var this_id = this.id.match(/comment_(\d+)/i)[1]; // Extract id number of comment from id
         fn(fb.Feedback.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
