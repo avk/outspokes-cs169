@@ -302,70 +302,73 @@
       this.sort_comments(this.oldest_sorter);  
     };
     
-    this.reset_target = function() {
-      // Un-highlight element
-      var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
-      old_element.css('outline', old_element.get(0)._old_style);
-      delete old_element.get(0)["_old_style"];
-      // Reset form target
-      fb.i.comment.form.find("input[name='target']").attr("value","html");
-      // Remove orange
-      $('#outspokes_target_button').css("background-color", "");
-    };
-    
+    // Applies function fn to every Comment object that is a reply to the 
+    // DOM comment c -- applies to actual Comment objects, not DOM elements
     this.visit_all_replies = function(c, fn) {
       var c = $(c);
       var parent = this;
 //      var this_id = c.attr('id').match(/comment_(\d+)/i)[1];
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
-        var this_id = this.id.match(/comment_(\d+)/i)[1];
+        var this_id = this.id.match(/comment_(\d+)/i)[1]; // Extract id number of comment
         fn(fb.Feedback.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
+    };
+    
+    this.reset_target = function() {
+      // Un-highlight element, first get its serialized path out of form
+      var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
+      old_element.css('outline', old_element.get(0).__old_style);
+      // delete modification to original element
+      delete old_element.get(0)["__old_style"];
+      // Reset form target
+      fb.i.comment.form.find("input[name='target']").attr("value","html");
+      // Remove orange background on target
+      $('#outspokes_target_button').css("background-color", "");
     };
     
   };
   
   function select_target() {
     $(this).get(0).value = "Change target";
-    // Filter out all elements that are part of Outspokes
-    var filter = "body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
-      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)";
-    var page_elements = $(filter);
+    // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
+    var page_elements = $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
+      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)");
+    // Mark clicked-on elemement
     page_elements.bind('mouseup.elem_select', function (e) {
       fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-      e.target.__marked = true;
-      $("body *").unbind(".elem_select");
+      page_elements.unbind(".elem_select");
+      $(e.target).css('outline', "3px solid red");
       e.stopPropagation();
       $('#outspokes_target_button').css("background-color", "orange");
     });
-    // Attach to every element _inside_ of body
+    // Store old outline style as a property of each element to be restored later
+    // TODO: Store each individual outline style instead of 'outline' as JS breaks CSS up oddly
     page_elements.bind("mouseenter.elem_select", function (e) {
-      if ("_old_style" in $(e.target).parent().get(0)) {
-        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0)._old_style);
-        delete $(e.target).parent().get(0)["_old_style"];
+      if ("__old_style" in $(e.target).parent().get(0)) {
+        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0).__old_style);
+        delete $(e.target).parent().get(0)["__old_style"];
       }
-      e.target._old_style = $(e.target).css('outline')
+      e.target.__old_style = $(e.target).css('outline')
       $(e.target).css('outline','green solid 2px')
       e.stopPropagation();
     });
+    // Don't un-highlight if the element has been clicked on
     page_elements.bind("mouseleave.elem_select", function (e) {
-      if (! ("__marked" in e.target)) {
-        $(e.target).css('outline', e.target._old_style);
-        delete e.target["_old_style"];
-        e.stopPropagation();
-      }
+      $(e.target).css('outline', e.target.__old_style);
+      delete e.target["__old_style"];
+      e.stopPropagation();
     });
   }
   
   function highlight_target(el_dom) {
-    el = $(el_dom);
+    var el = $(el_dom);
 //    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline')
-    over = function() {
+    var over = function() {
       el.css('outline','green solid 2px');
     }
-    out = function() {
+    var out = function() {
       el.css('outline-style', old_style);
     }
     return [over, out];
