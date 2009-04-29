@@ -82,10 +82,9 @@
     this.consensus = {
       dom   : this.dom,
       _opinion: function(c_id, color) {
-        console.log("c_id", c_id);
         var comment = null;
         if (typeof c_id == "string") {
-          comment = $('#' + this.dom.comment_id(c_id) + " > .cmt_content:eq(0)");
+          comment = $('#' + this.dom.comment_id(c_id) + " .cmt_content:eq(0)");
         } else {
           comment = c_id;
         }
