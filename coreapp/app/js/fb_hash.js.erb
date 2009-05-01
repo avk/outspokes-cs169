@@ -134,7 +134,6 @@ function() {
           var _password = this.password.value;
           fb.env.login_panel = login_panel;
           fb.Feedback.get({'email':_email,'password':_password}, login_callback);
-          _fb.first.set(false);
           return false;
         });
 
@@ -147,10 +146,8 @@ function() {
 
     if (typeof _admin_validation_token === "string") {
       fb.Feedback.get({'validation_token':_admin_validation_token}, login_callback);
-      _fb.first.set(false);
       return;
     }
 
     fb.Feedback.get(login_callback);
-    _fb.first.set(false);
     return;
