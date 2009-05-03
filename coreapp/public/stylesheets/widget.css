@@ -273,6 +273,7 @@ version: 3.0.0pr2
   line-height: 180%;
   background:#E0E0E0 url(/images/gradient-bg-tb.png) repeat-x scroll center bottom;
   color: #666;
+  padding-top: 4px;
 }
 
 #outspokes #topbar select#comments_filter {
