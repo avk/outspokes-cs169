@@ -129,6 +129,7 @@ version: 3.0.0pr2
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
+  background-color: #d0d0d0;
 }
 
 #outspokes #comment_list .options {
@@ -139,10 +140,19 @@ version: 3.0.0pr2
   cursor: pointer;
   background-color:white;
   border:2px outset #777;
-  -moz-border-radius: 10px;
-  padding:2px 5px;
+  -moz-border-radius: 7px;
+  padding:1px 5px;
   font-weight:bold;
   width: 100%;
+  margin: 1px 0 3px;
+}
+
+#outspokes #comment_list .options button.agree{
+  color: green;
+}
+
+#outspokes #comment_list .options button.disagree{
+  color: red;
 }
 
 #outspokes #comment_list .thread {
@@ -151,12 +161,12 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .comment {
-  border: 1px solid #bfbfbf;
+  border: 1px solid #adadad;
   border-top: none;
 }
 
 #outspokes #comment_list .cmt_bar {
-  background-color: #c9c9c9;
+  background-color: #FFDAAF;
   height: 1em;
   padding:.7em;
   cursor: pointer;
@@ -164,6 +174,8 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cmt_content {
   padding:.7em;
+  background-color: white;
+  
 }
 
 #outspokes #comment_list .commenter_name {
@@ -183,7 +195,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_text {
-  width: 80%;
+  width: 90%;
 }
 
 
@@ -208,7 +220,7 @@ version: 3.0.0pr2
 #outspokes #topbar {
   background-color: #2F1900;
   cursor: pointer;
-  height: 20px;
+  height: 30px; /* topbar height : must match variables topbar_height and topbar_int_height in fb.Interface*/
   line-height: 180%;
 }
 
@@ -234,7 +246,7 @@ version: 3.0.0pr2
 #outspokes #outspokes_form_header {
   height:20px;
   margin: 5px 0;
-
+  line-height: 200%;
 }
 #outspokes #outspokes_form_header span {
   font-weight: bold;
@@ -277,8 +289,6 @@ version: 3.0.0pr2
   float: right;
 }
 #outspokes #topbar #help {
-  height: 20px;
-  width: 20px;
   float: right;
   margin-right: 2%;
 }

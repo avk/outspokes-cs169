@@ -1,7 +1,5 @@
 class Page < ActiveRecord::Base
 
-
-
   belongs_to :site
   belongs_to :account
 
@@ -49,7 +47,7 @@ protected
   def is_child_of_site
     # This validation is only relevant if this page belongs to a site; urls are validated seperately and shouldn't be checked here
     return true if site_id.blank? or url.nil?
-    return true if id == site.home_page.id # If this _is_ the home_page, anything goes
+    return true if site.home_page and id == site.home_page.id # If this _is_ the home_page, anything goes
     this_host = URI.parse(url).host
     root_host = URI.parse(site.url).host
     if this_host != root_host
