@@ -20,8 +20,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#6F5',
-      disagree_bg_color   : 'red',
+      agree_bg_color      : '#9FFFA3',
+      disagree_bg_color   : '#FF9F9F',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
     	cform       				: "comment_form",
@@ -47,7 +47,8 @@
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
     	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />' +
-          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" /><input class="button" type="submit" value="Submit" /></div>' +
+          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" />' +
+          '<input class="button" type="submit" value="Submit" /></div>' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
@@ -56,7 +57,13 @@
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
     var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
 //    target_button.css('float', 'right').css('margin-top', '5px');
-    target_button.click(select_target);
+    target_button.click(function() {
+      $(this)[0].value = "Change target";
+      fb.select_target(function(e) {
+        fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+        $('#outspokes_target_button').css("background-color", "orange");
+      })
+    });
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
     this.form.find("a").click(function(){fb.Feedback.get();});
@@ -106,8 +113,8 @@
           }
         } else { // this invitee should be allowed to vote on this comment
           var consensus_div = $('<div></div>');
-          var agree = this.button(c, 'agree');
-          var disagree = this.button(c, 'disagree');
+          var agree = this.button(c, 'agree').addClass('agree');
+          var disagree = this.button(c, 'disagree').addClass('disagree');
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
@@ -150,7 +157,7 @@
       },
       // constructs a "reply" link
       buildLink       : function(c_id) {
-        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">&raquo; reply</button>');
+        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply &raquo;</button>');
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
@@ -330,38 +337,6 @@
     };
     
   };
-  
-  function select_target() {
-    $(this).get(0).value = "Change target";
-    // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
-    var page_elements = $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
-      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)");
-    // Mark clicked-on elemement
-    page_elements.bind('mouseup.elem_select', function (e) {
-      fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-      page_elements.unbind(".elem_select");
-      $(e.target).css('outline', "3px solid red");
-      e.stopPropagation();
-      $('#outspokes_target_button').css("background-color", "orange");
-    });
-    // Store old outline style as a property of each element to be restored later
-    // TODO: Store each individual outline style instead of 'outline' as JS breaks CSS up oddly
-    page_elements.bind("mouseenter.elem_select", function (e) {
-      if ("__old_style" in $(e.target).parent().get(0)) {
-        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0).__old_style);
-        delete $(e.target).parent().get(0)["__old_style"];
-      }
-      e.target.__old_style = $(e.target).css('outline')
-      $(e.target).css('outline','green solid 2px')
-      e.stopPropagation();
-    });
-    // Don't un-highlight if the element has been clicked on
-    page_elements.bind("mouseleave.elem_select", function (e) {
-      $(e.target).css('outline', e.target.__old_style);
-      delete e.target["__old_style"];
-      e.stopPropagation();
-    });
-  }
   
   function highlight_target(el_dom) {
     var el = $(el_dom);

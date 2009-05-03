@@ -22,6 +22,9 @@
         toggle: 'toggle',
         contact: 'contactus',
         comment_count : 'comment-count',
+        topbar_height : '30px',
+        topbar_int_height : 30, //same as topbar_height in int form
+        height : '250px',
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -31,6 +34,7 @@
         overlay : 'outspokes_overlay',
       },
     }
+    var dom = this.dom;
     
     this.admin_panel = {
       dom   : this.dom,
@@ -45,7 +49,7 @@
           var widget = fb.i.main_window;
           var help = fb.i.help_content;
           
-          widget.animate( { height:"220px" }, { duration:250 } );
+          widget.animate( { height:dom.widget.height }, { duration:250 } );
           help.addClass("hide"); //always make sure help is hidden before showing content
           content.show();
           
@@ -75,7 +79,7 @@
           var content = fb.i.widget_content;
           var widget = fb.i.main_window;
           
-          widget.animate( { height:"20px" }, { duration:250 } );
+          widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
           content.hide();
           
           fb.i.admin_panel.show();
@@ -100,9 +104,8 @@
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
     if (fb.env.first_visit) {
-        
         //widget minimized on first visit
-        this.main_window.css({'height':'20px'});
+        this.main_window.css({'height':dom.widget.topbar_height});
         $('#' + this.dom.widget.content).hide();
       
       if (!_fb.admin()) { //first time commenter to see intro bubble
@@ -123,7 +126,7 @@
       } 
     } else {
       $("#bubble").hide();
-      this.main_window.css({'height':'220px'});
+      this.main_window.css({'height':dom.widget.height});
     }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
@@ -165,13 +168,16 @@
     topbarLeft.append(sort_dropdown);
     this.topbar.append(topbarLeft);
 
-    var help_link = $('<a href="#">&nbsp;</a>').attr('id',this.dom.widget.help);
+    var help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
+    help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
+    
     help_link.click(function(e) {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
-      if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:250 } );
+      
+      if (widget.height() == dom.widget.topbar_int_height) {
+        widget.animate( { height: dom.widget.height }, { duration:250 } );
         content.hide();
         help.removeClass("hide");
       } else {
@@ -195,12 +201,12 @@
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
       
-      if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:250 } );
+      if (widget.height() == dom.widget.topbar_int_height ) {
+        widget.animate( { height:dom.widget.height }, { duration:250 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
         content.show();
       } else {
-        widget.animate( { height:"20px" }, { duration:250 } );
+        widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
         content.hide();
       }
       
