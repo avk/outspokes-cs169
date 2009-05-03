@@ -20,8 +20,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#6F5',
-      disagree_bg_color   : 'red',
+      agree_bg_color      : '#9FFFA3',
+      disagree_bg_color   : '#FF9F9F',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
     	cform       				: "comment_form",
@@ -47,7 +47,8 @@
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
     	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />' +
-          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" /><input class="button" type="submit" value="Submit" /></div>' +
+          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" />' +
+          '<input class="button" type="submit" value="Submit" /></div>' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
@@ -56,7 +57,13 @@
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
     var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
 //    target_button.css('float', 'right').css('margin-top', '5px');
-    target_button.click(select_target);
+    target_button.click(function() {
+      $(this)[0].value = "Change target";
+      fb.select_target(function(e) {
+        fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+        $('#outspokes_target_button').css("background-color", "orange");
+      })
+    });
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
     this.form.find("a").click(function(){fb.Feedback.get();});
@@ -106,14 +113,14 @@
           }
         } else { // this invitee should be allowed to vote on this comment
           var consensus_div = $('<div></div>');
-          var agree = this.button(c, 'agree');
-          var disagree = this.button(c, 'disagree');
+          var agree = this.button(c, 'agree').addClass('agree');
+          var disagree = this.button(c, 'disagree').addClass('disagree');
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append($('<span class="agreed">' + c.agreed + ' agreed</span><br />'));
-            consensus_div.append($('<span class="disagreed">' + c.disagreed + ' disagreed</span><br />'));
+            consensus_div.append($('<span class="agreed">' + c.agreed + ' agreed</span>'));
+            consensus_div.append($('<span class="disagreed">' + c.disagreed + ' disagreed</span>'));
           } else {
             consensus_div.append(agree);
             consensus_div.append(disagree);
@@ -123,7 +130,7 @@
         return "";
       },
       button : function(c, action) {
-        var button = $('<button type="button">' + action + '</button><br />');
+        var button = $('<button type="button">' + action + '</button>');
         button[0].setAttribute("id", eval('this.dom.' + action + '_with(c.feedback_id)'));
         button.click(function() { eval('c.' + action + '()'); });
         return button;
@@ -150,7 +157,7 @@
       },
       // constructs a "reply" link
       buildLink       : function(c_id) {
-        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">&raquo; reply</button>');
+        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply &raquo;</button>');
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
@@ -213,10 +220,11 @@
     this.build = function (c) {
   		var c_id = this.dom.comment_id(c.feedback_id);
       var rtn = $('<div></div>').css('width','100%');   // comment-block
-      rtn.attr('id', c_id);
+      rtn.attr('id', c_id).addClass('thread');
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
-      var timestamp_close = $('<div></div>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
+      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
         deleteCmt.click(function() {
@@ -228,7 +236,6 @@
         timestamp_close.append(deleteCmt);
       }
       bar.append(timestamp_close);
-      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
       content.append(options);
@@ -273,33 +280,36 @@
     
     this.sort_comments = function(method) {
       var posts = this.comments.children();
-      this.comments.empty();
-      posts.sort(method(this));
-      this.comments.append(posts);
+      posts.sort(method);
+      posts.appendTo(this.comments);
     };
-
-    this.newest_sorter = function(self) {
-      return function(a, b) {
-        var a_id = self.dom.number_from_id(a.id);
-        var b_id = self.dom.number_from_id(b.id);
-        return (a_id - b_id);
-      };
-    };
-
-    this.oldest_sorter = function(self) {
-      return function(a, b) {
-          var a_id = self.dom.number_from_id(a.id);
-          var b_id = self.dom.number_from_id(b.id);
-          return (fb.Feedback.all[b_id].timestamp - fb.Feedback.all[a_id].timestamp);
-      };
+    
+    // Returns the timestamp of the most recent comment in given thread
+    var age_of_thread = function(comment) {
+      var dom = fb.i.comment.dom;
+      var time = fb.Feedback.all[dom.number_from_id(comment.id)].timestamp;
+      fb.i.comment.visit_all_replies(comment, function(reply) {
+        if (reply.timestamp > time) {
+          time = reply.timestamp;
+        }
+      });
+      return time;
     };
     
     this.sort_by_newest = function() {
-      this.sort_comments(this.newest_sorter);  
+      this.sort_comments(function(a, b) {
+        var a_age = age_of_thread(a);
+        var b_age = age_of_thread(b);
+        return (b_age - a_age);
+      });  
     };
     
     this.sort_by_oldest = function() {
-      this.sort_comments(this.oldest_sorter);  
+      this.sort_comments(function(a, b) {
+        var a_age = age_of_thread(a);
+        var b_age = age_of_thread(b);
+        return (a_age - b_age);
+      });  
     };
     
     // Applies function fn to every Comment object that is a reply to the 
@@ -308,7 +318,7 @@
       var c = $(c);
       var parent = this;
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
-        var this_id = this.id.match(/comment_(\d+)/i)[1]; // Extract id number of comment from id
+        var this_id = parent.dom.number_from_id(this.id); // Extract id number of comment from id
         fn(fb.Feedback.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
@@ -327,38 +337,6 @@
     };
     
   };
-  
-  function select_target() {
-    $(this).get(0).value = "Change target";
-    // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
-    var page_elements = $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
-      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)");
-    // Mark clicked-on elemement
-    page_elements.bind('mouseup.elem_select', function (e) {
-      fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-      page_elements.unbind(".elem_select");
-      $(e.target).css('outline', "3px solid red");
-      e.stopPropagation();
-      $('#outspokes_target_button').css("background-color", "orange");
-    });
-    // Store old outline style as a property of each element to be restored later
-    // TODO: Store each individual outline style instead of 'outline' as JS breaks CSS up oddly
-    page_elements.bind("mouseenter.elem_select", function (e) {
-      if ("__old_style" in $(e.target).parent().get(0)) {
-        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0).__old_style);
-        delete $(e.target).parent().get(0)["__old_style"];
-      }
-      e.target.__old_style = $(e.target).css('outline')
-      $(e.target).css('outline','green solid 2px')
-      e.stopPropagation();
-    });
-    // Don't un-highlight if the element has been clicked on
-    page_elements.bind("mouseleave.elem_select", function (e) {
-      $(e.target).css('outline', e.target.__old_style);
-      delete e.target["__old_style"];
-      e.stopPropagation();
-    });
-  }
   
   function highlight_target(el_dom) {
     var el = $(el_dom);

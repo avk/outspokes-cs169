@@ -22,6 +22,9 @@
         toggle: 'toggle',
         contact: 'contactus',
         comment_count : 'comment-count',
+        topbar_height : '30px',
+        topbar_int_height : 30, //same as topbar_height in int form
+        height : '250px',
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -31,6 +34,7 @@
         overlay : 'outspokes_overlay',
       },
     }
+    var dom = this.dom;
     
     this.admin_panel = {
       dom   : this.dom,
@@ -45,7 +49,7 @@
           var widget = fb.i.main_window;
           var help = fb.i.help_content;
           
-          widget.animate( { height:"220px" }, { duration:250 } );
+          widget.animate( { height:dom.widget.height }, { duration:250 } );
           help.addClass("hide"); //always make sure help is hidden before showing content
           content.show();
           
@@ -75,7 +79,7 @@
           var content = fb.i.widget_content;
           var widget = fb.i.main_window;
           
-          widget.animate( { height:"20px" }, { duration:250 } );
+          widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
           content.hide();
           
           fb.i.admin_panel.show();
@@ -100,9 +104,8 @@
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
     if (fb.env.first_visit) {
-        
         //widget minimized on first visit
-        this.main_window.css({'height':'20px'});
+        this.main_window.css({'height':dom.widget.topbar_height});
         $('#' + this.dom.widget.content).hide();
       
       if (!_fb.admin()) { //first time commenter to see intro bubble
@@ -123,37 +126,58 @@
       } 
     } else {
       $("#bubble").hide();
-      this.main_window.css({'height':'220px'});
+      this.main_window.css({'height':dom.widget.height});
     }
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
-    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank">&nbsp;</a>');
-    logo.css({
-      'display' : 'block',
-      'float'   : 'left',
-      'height'  : '20px',
-      'width'   : '100px',
-      'backgroundImage' : 'url(' + fb.env.logo_address + ')',
-      'backgroundRepeat' : 'no-repeat',
-    });
+    
+    /*logo link*/
+    
+    var logo_img = fb.env.logo_address;
+    var logo_lnk = fb.env.base_domain;
+    
+    var logo = $('<a href="' + logo_lnk + '" target="_blank"></a>');
+    logo.append('<img src="' +  logo_img  + '" alt="outspokes" />');
+    logo.attr('id', 'logo');
+    
     topbarLeft.append(logo);
-
-    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
+    var comment_count = $('<span></span>');
     comment_count.attr('id', this.dom.widget.comment_count);
+    // Singular "Comment" for one comment
     this.set_num_comments = function(num_comments) {
-      comment_count.text(num_comments + ' Comments');
+      var comments_text = num_comments == 1 ? " Comment" : " Comments";
+      comment_count.text(num_comments + comments_text);
     }
+    this.set_num_comments(fb.getProperties(fb.Feedback.all).length);
     topbarLeft.append(comment_count);
+    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');// +
+//      '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+    sort_dropdown.children().eq(0).click(function(e) {
+      fb.i.comment.sort_by_newest();
+      e.stopPropagation();
+    });
+    // Don't trigger outspokes minimize when clicking on dropdown
+    sort_dropdown.click(function(e) {
+      e.stopPropagation();
+    });
+    sort_dropdown.children().eq(1).click(function(e) {
+      fb.i.comment.sort_by_oldest();
+      e.stopPropagation();
+    });
+    topbarLeft.append(sort_dropdown);
     this.topbar.append(topbarLeft);
 
-    var help_link = $('<a href="#">&nbsp;</a>').attr('id',this.dom.widget.help);
+    var help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
+    help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
+    
     help_link.click(function(e) {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
-      if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:250 } );
+      
+      if (widget.height() == dom.widget.topbar_int_height) {
+        widget.animate( { height: dom.widget.height }, { duration:250 } );
         content.hide();
         help.removeClass("hide");
       } else {
@@ -177,12 +201,12 @@
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
       
-      if (widget.height() == '20') {
-        widget.animate( { height:"220px" }, { duration:250 } );
+      if (widget.height() == dom.widget.topbar_int_height ) {
+        widget.animate( { height:dom.widget.height }, { duration:250 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
         content.show();
       } else {
-        widget.animate( { height:"20px" }, { duration:250 } );
+        widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
         content.hide();
       }
       

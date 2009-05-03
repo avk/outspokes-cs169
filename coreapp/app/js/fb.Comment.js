@@ -98,6 +98,10 @@
       delete data["url_token"];
     }
     var callback = function(data) {
+      if (! data.success) {
+        fb.Feedback.get();
+        return;
+      }
       var x = fb.Feedback.get_callback(data, "render");
       for (var i in x) {
         if (x[i].content == content && x[i].target == target) {
@@ -119,6 +123,8 @@
       fb.Comment.unrendered[i].render();
     }
     fb.Comment.refresh_count();
+    // Re-sort comments based on sort/filter dropdown
+    fb.$("#comments_filter :selected").click()
   };
   
   fb.Comment.refresh_count = function() {
