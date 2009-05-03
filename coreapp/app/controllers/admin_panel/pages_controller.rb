@@ -16,4 +16,17 @@ class AdminPanel::PagesController < AdminPanel::AdminController
     end
   end
   
+  def search
+    @pages = @site.pages_with_latest_feedback
+    unless params[:search].length == 0
+      terms = params[:search].split( / *"(.*?)" *| / )
+      @search_feedbacks = Hash.new
+      @pages.each do |page|
+        @search_feedbacks[page.id] = Feedback.find(:all, :conditions => [ "page_id = ?", page.id])
+        @search_feedbacks[page.id].sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
+        @search_feedbacks[page.id]=@search_feedbacks[page.id].find_all{|item| item.search_score(terms) > 0 }
+      end
+    end
+    render :partial => "index_pages"
+  end
 end
