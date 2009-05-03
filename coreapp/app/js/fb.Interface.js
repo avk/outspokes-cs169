@@ -22,8 +22,8 @@
         toggle: 'toggle',
         contact: 'contactus',
         comment_count : 'comment-count',
-        topbar_height : '30px',
-        topbar_int_height : 30, //same as topbar_height in int form
+        topbar_height : '28px',
+        topbar_int_height : 28, //same as topbar_height in int form
         height : '250px',
       },
       admin   : {
