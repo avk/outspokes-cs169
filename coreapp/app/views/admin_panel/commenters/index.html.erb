@@ -10,7 +10,7 @@
     <li class="invited_commenter">
       <div class="remove_commenter">
         <%= link_to 'X', 
-            admin_panel_uninvite_path(@site, commenter), 
+            admin_panel_uninvite_path(@site, @site.validation_token, commenter), 
             :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
             :method => :delete %>
       </div>
