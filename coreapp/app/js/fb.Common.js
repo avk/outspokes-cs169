@@ -149,7 +149,7 @@
         rtn += _make_length(d.getMonth(), 2) + "/";
         rtn += _make_length(d.getDate(), 2) + "/";
         rtn += d.getFullYear() + " ";
-        rtn += (d.getHours() % 12 == 0) ? 12 : (d.getHours() % 12) + ":";
+        rtn += ((d.getHours() % 12 == 0) ? 12 : (d.getHours() % 12)) + ":";
         rtn += _make_length(d.getMinutes(), 2) + " ";
         rtn += (d.getHours() < 12) ? "AM" : "PM";
       }
