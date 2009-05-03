@@ -197,7 +197,6 @@ class CommentTest < ActiveSupport::TestCase
   test "feedback should have rgt" do
     feedback = create_private_comment
     assert !feedback.rgt.nil?
-
   end
 
   test "should not be case sensitive when searching" do

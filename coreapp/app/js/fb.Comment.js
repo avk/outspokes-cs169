@@ -98,6 +98,10 @@
       delete data["url_token"];
     }
     var callback = function(data) {
+      if (! data.success) {
+        fb.Feedback.get();
+        return;
+      }
       var x = fb.Feedback.get_callback(data, "render");
       for (var i in x) {
         if (x[i].content == content && x[i].target == target) {

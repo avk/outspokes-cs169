@@ -278,6 +278,24 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => true
   end
   
+  test "cannot reply to deleted comment" do
+    invite = invites(:one)
+    callback = 'jsfeed'
+    page = invite.page
+	  parent = page.feedbacks.first
+    content = "replying to first feedback a;lkjsdflkasdjfla"
+    
+    parent.destroy
+    
+    assert_no_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+          :current_page => page.url, :callback => callback, :content => content, :target => "html",
+          :parent_id => parent.id, :email => "quentin@example.com", :password => "monkey"
+    end
+
+    validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => false
+  end
+  
   test "should be able to post public comments" do
     page = pages(:transactions)
     content = "HUH THIS SITE IS LAME YO"
