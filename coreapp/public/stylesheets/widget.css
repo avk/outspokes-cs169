@@ -8,87 +8,86 @@ version: 3.0.0pr2
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
 #outspokes {
-    font-family: Verdana, Helvetica, sans-serif;
-    font-size: 11px;
-    line-height: 1em;
-    z-index: 9999;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 120%;
+  z-index: 9999;
 }
 
 /* outermost wrapper for our widget */
 #outspokes {
-	width: 100%;
-	background-color: #EEE;
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	/*height: 220px;*/
+  width: 100%;
+  background-color: #fcfcfc;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
 }
 
 /* admin panel, excluded from the wrapper because it overlays everything */
 
 /*
- *  ADMIN PANEL
- */
+*  ADMIN PANEL
+*/
 #outspokes_overlay {
-    background-color: black;
-    color: transparent;
-    display: none;
-    height: 100%;
-    left: 0%;
-    margin: 0;
-    opacity: 0.80;
-    padding: 0;
-    position: fixed;
-    top: 0%;
-    width: 100%;
-    z-index: 1001;
+  background-color: black;
+  color: transparent;
+  display: none;
+  height: 100%;
+  left: 0%;
+  margin: 0;
+  opacity: 0.80;
+  padding: 0;
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  z-index: 1001;
 }
 #outspokes_admin_panel {
-    background-color: white;
-    border: 10px solid #ddd;
-    color: black;
-    display: none;
-    height: 50%;
-    left: 25%;
-    margin: 0;
-    padding: 5px;
-    position: fixed;
-    top: 25%;
-    width: 50%;
-    z-index:1002;
+  background-color: white;
+  border: 10px solid #ddd;
+  color: black;
+  display: none;
+  height: 50%;
+  left: 25%;
+  margin: 0;
+  padding: 5px;
+  position: fixed;
+  top: 25%;
+  width: 50%;
+  z-index:1002;
 }
-    #outspokes_admin_panel a#close_admin_panel,
-    #outspokes_admin_panel a#close_admin_panel:link {
-        background-color: transparent;
-        background-image: url(/images/x_icon_40x40.png);
-        border-bottom: none;
-        color: transparent;
-        display: block;
-        float: right;
-        font-family: Helvetica, sans-serif;
-        font-size: 2em;
-        height: 40px;
-        position: absolute;
-        right: -30px;
-        text-decoration: none;
-        top: -30px;
-        width: 40px;
-        z-index: 1003;
-    }
-    #outspokes_admin_panel a#close_admin_panel:visited {
-        color: #333;
-    }
+#outspokes_admin_panel a#close_admin_panel,
+#outspokes_admin_panel a#close_admin_panel:link {
+  background-color: transparent;
+  background-image: url(/images/x_icon_40x40.png);
+  border-bottom: none;
+  color: transparent;
+  display: block;
+  float: right;
+  font-family: Helvetica, sans-serif;
+  font-size: 2em;
+  height: 40px;
+  position: absolute;
+  right: -30px;
+  text-decoration: none;
+  top: -30px;
+  width: 40px;
+  z-index: 1003;
+}
+#outspokes_admin_panel a#close_admin_panel:visited {
+  color: #333;
+}
 
 /*
- *  END ADMIN PANEL
- */
+*  END ADMIN PANEL
+*/
 
 /* all other styles must be faux-scoped with our widget wrapper */
 
 /*
- *  GENERAL
- */
- 
+*  GENERAL
+*/
+
 #outspokes strong {
   font-weight: bold;
 }
@@ -106,101 +105,92 @@ version: 3.0.0pr2
 }
 
 /*
- *  END GENERAL
- */
+*  END GENERAL
+*/
 
 #outspokes #new_comment, #outspokes #comment_list {
-	height: 197px;
+  height: 197px;
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
-	color: beige;
-	margin: 0 10px;
+  color: beige;
+  margin: 0 10px;
 }
 
 #outspokes #new-comment {
-	float: right;
-	width: 25%;
-	margin-right: 2%;
+  float: right;
+  width: 25%;
+  margin-right: 2%;
 }
 
 
 #outspokes #comment_list {
-	float: left;
-	width: 70%;
-	margin-left: 3px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-  padding-right: 3px;
-}
-
-/*#outspokes #comment_list div {
-	padding: 5px;
-	border: 1px solid #111;
-	border-collapse: collapse;
-}*/
-
-/*#outspokes #comment_list div * {
-	border: none;
-}*/
-
-#outspokes #comment_list button {
-	border: 1px solid;
-	cursor: pointer;
-  width: 80px;/*
-	margin: 0 5px;*/
-}
-
-#outspokes #comment_list .comment {
-  border:1px solid black;
-  margin-bottom:1px;
-}
-
-#outspokes #comment_list .cmt_bar {
-	background-color: #DDD;
-/*	border-bottom: 3px solid #CCC;*/
-	height: 20px;
-/*	padding: 0 3%;*/
-	cursor: pointer;
-}
-
-#outspokes #comment_list .cmt_content {
-  border-top: 1px solid black;
-}
-
-#outspokes #comment_list .commenter_name {
-	font-weight: bold;
-	float: left;
-}
-
-#outspokes #comment_list .cmt_date {
-	font-size: 0.8em;
-	float: right;/*
-	margin-right: 4px;*/
-}
-
-#outspokes #comment_list .cmt_delete_X {
-  color: red;
-}
-
-#outspokes #comment_list .cmt_text {
-	/*clear: both;*/
-  margin-right: 80px;
+  float: left;
+  width: 70%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 #outspokes #comment_list .options {
   float: right;
-  width: 80px;
+  width: 8%;
+}
+#outspokes #comment_list .options button {
+  cursor: pointer;
+  background-color:white;
+  border:2px outset #777;
+  -moz-border-radius: 10px;
+  padding:2px 5px;
+  font-weight:bold;
+  width: 100%;
 }
 
-/*#outspokes #comment_list .cns_buttons {
-	float: right;
-	padding: 0px;
-	margin: -2% 3%;
-}*/
+#outspokes #comment_list .thread {
+  margin-bottom: 10px;
+
+}
+
+#outspokes #comment_list .comment {
+  border: 1px solid #bfbfbf;
+  border-top: none;
+}
+
+#outspokes #comment_list .cmt_bar {
+  background-color: #c9c9c9;
+  height: 1em;
+  padding:.7em;
+  cursor: pointer;
+}
+
+#outspokes #comment_list .cmt_content {
+  padding:.7em;
+}
+
+#outspokes #comment_list .commenter_name {
+  font-weight: bold;
+  float: left;
+}
+
+#outspokes #comment_list .cmt_date {
+  font-size: 0.8em;
+  float: right;
+}
+
+#outspokes #comment_list .cmt_delete_X {
+  color: red;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+#outspokes #comment_list .cmt_text {
+  width: 80%;
+}
+
 
 #outspokes #comment_list .cns_buttons span{
-    line-height: 1.3em;
+  display: block;
+  width: 100%;
+  line-height: 1.3em;
 }
 
 #outspokes #comment_list .cns_buttons .agreed {
@@ -212,20 +202,20 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .replies {
-  padding-left:20px;
+  padding-left:1.5em;
 }
 
 #outspokes #topbar {
-	background-color: #111;
-	cursor: pointer;
-	height: 20px;
-	line-height: 200%;
+  background-color: #2F1900;
+  cursor: pointer;
+  height: 20px;
+  line-height: 180%;
 }
 
 
 #outspokes #comment_form {
-	float: right;
-	width: 100%;
+  float: right;
+  width: 100%;
 }
 #outspokes #comment_form textarea {
   width: 100%;
@@ -243,9 +233,8 @@ version: 3.0.0pr2
 
 #outspokes #outspokes_form_header {
   height:20px;
-  line-height:200%;
   margin: 5px 0;
-  
+
 }
 #outspokes #outspokes_form_header span {
   font-weight: bold;
@@ -258,9 +247,22 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbarLeft {
-    float: left;
-    width: 200px;
-    line-height: 200%;
+  float: left;
+  width: 400px;
+  height:20px;
+}
+
+#outspokes #topbarLeft #logo {
+  display : block;
+  float   : left;
+  height  : 20px;
+  width   : 100px;
+
+}
+
+#outspokes select#comments_filter {
+  margin-left: 10px;
+  height: 15px;
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
@@ -271,16 +273,14 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbar #open_admin_panel {
-    display: block;
-    float: right;
+  display: block;
+  float: right;
 }
 #outspokes #topbar #help {
-  background-image: url(/images/help.png);
-  background-repeat: no-repeat;
   height: 20px;
   width: 20px;
   float: right;
-  margin-right: 3%;
+  margin-right: 2%;
 }
 
 #outspokes #topbar #contactus {
@@ -288,7 +288,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment-count {
-    color: beige;
+  color: beige;
 }
 
 #outspokes #bubble {

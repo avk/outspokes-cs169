@@ -99,23 +99,28 @@
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
-    if (fb.env.first_visit && !_fb.admin()) {
-      this.main_window.css({'height':'20px'});
+    if (fb.env.first_visit) {
+        
+        //widget minimized on first visit
+        this.main_window.css({'height':'20px'});
+        $('#' + this.dom.widget.content).hide();
       
-      $('#' + this.dom.widget.content).hide();
-            
-      var intro_bubble = $('<div></div>').attr('id','bubble');
-      var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
-      "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
-      " that other people have left and leave your own!<br />Happy commenting!</p>";
-      var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
-      
-      close_intro_bubble.click(function(){ $("#bubble").hide(); });
-      
-      intro_bubble.append(close_intro_bubble);
-      intro_bubble.append(intro_bubble_content);
-      this.main_window.append(intro_bubble);
-      
+      if (!_fb.admin()) { //first time commenter to see intro bubble
+        
+        var intro_bubble = $('<div></div>').attr('id','bubble');
+        
+        var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
+        "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
+        " that other people have left and leave your own!<br />Happy commenting!</p>";
+        var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
+
+        close_intro_bubble.click(function(){ $("#bubble").hide(); });
+
+        intro_bubble.append(close_intro_bubble);
+        intro_bubble.append(intro_bubble_content);
+        
+        this.main_window.append(intro_bubble);
+      } 
     } else {
       $("#bubble").hide();
       this.main_window.css({'height':'220px'});
@@ -123,26 +128,46 @@
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
-    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank">&nbsp;</a>');
-    logo.css({
-      'display' : 'block',
-      'float'   : 'left',
-      'height'  : '20px',
-      'width'   : '100px',
-      'backgroundImage' : 'url(' + fb.env.logo_address + ')',
-      'backgroundRepeat' : 'no-repeat',
-    });
+    
+    /*logo link*/
+    
+    var logo_img = fb.env.logo_address;
+    var logo_lnk = fb.env.base_domain;
+    
+    var logo = $('<a href="' + logo_lnk + '" target="_blank"></a>');
+    logo.append('<img src="' +  logo_img  + '" alt="outspokes" />');
+    logo.attr('id', 'logo');
+    
     topbarLeft.append(logo);
-
-    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
+    var comment_count = $('<span></span>');
     comment_count.attr('id', this.dom.widget.comment_count);
+    // Singular "Comment" for one comment
     this.set_num_comments = function(num_comments) {
-      comment_count.text(num_comments + ' Comments');
+      var comments_text = num_comments == 1 ? " Comment" : " Comments";
+      comment_count.text(num_comments + comments_text);
     }
+    this.set_num_comments(fb.getProperties(fb.Feedback.all).length);
     topbarLeft.append(comment_count);
+    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');// +
+//      '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+    sort_dropdown.children().eq(0).click(function(e) {
+      fb.i.comment.sort_by_newest();
+      e.stopPropagation();
+    });
+    // Don't trigger outspokes minimize when clicking on dropdown
+    sort_dropdown.click(function(e) {
+      e.stopPropagation();
+    });
+    sort_dropdown.children().eq(1).click(function(e) {
+      fb.i.comment.sort_by_oldest();
+      e.stopPropagation();
+    });
+    topbarLeft.append(sort_dropdown);
     this.topbar.append(topbarLeft);
 
-    var help_link = $('<a href="#">&nbsp;</a>').attr('id',this.dom.widget.help);
+    var help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
+    help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
+    
     help_link.click(function(e) {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
