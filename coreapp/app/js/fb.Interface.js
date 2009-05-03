@@ -128,15 +128,16 @@
 
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
-    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank">&nbsp;</a>');
-    logo.css({
-      'display' : 'block',
-      'float'   : 'left',
-      'height'  : '20px',
-      'width'   : '100px',
-      'backgroundImage' : 'url(' + fb.env.logo_address + ')',
-      'backgroundRepeat' : 'no-repeat',
-    });
+    
+    /*logo link*/
+    
+    var logo_img = fb.env.logo_address;
+    var logo_lnk = fb.env.base_domain;
+    
+    var logo = $('<a href="' + logo_lnk + '" target="_blank"></a>');
+    logo.append('<img src="' +  logo_img  + '" alt="outspokes" />');
+    logo.attr('id', 'logo');
+    
     topbarLeft.append(logo);
 
     var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
