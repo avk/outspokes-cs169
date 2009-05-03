@@ -108,21 +108,15 @@ version: 3.0.0pr2
 *  END GENERAL
 */
 
+/*
+* COMMENTS
+*/
+
 #outspokes #new_comment, #outspokes #comment_list {
   height: 230px; /*must change this if heights are changed in fb.Interface and fb.Interface.comment*/
 }
 
-#outspokes #topbar h1, #outspokes #topbar a{
-  color: beige;
-  margin: 0 10px;
-}
-
-#outspokes #new-comment {
-  float: right;
-  width: 25%;
-  margin-right: 2%;
-}
-
+/* COMMENT LIST */
 
 #outspokes #comment_list {
   float: left;
@@ -217,13 +211,16 @@ version: 3.0.0pr2
   border-left: 1px solid #adadad;
 }
 
-#outspokes #topbar {
-  background-color: #2F1900;
-  cursor: pointer;
-  height: 20px; /*must match variables topbar_height and topbar_int_height in fb.Interface*/
-  line-height: 180%;
-}
 
+/* END COMMENT LIST */
+
+/* COMMENTING FORM */
+
+#outspokes #new-comment {
+  float: right;
+  width: 25%;
+  margin-right: 2%;
+}
 
 #outspokes #comment_form {
   float: right;
@@ -258,6 +255,42 @@ version: 3.0.0pr2
   cursor: pointer;
 }
 
+/* END COMMENTING FORM*/
+
+/*
+* END COMMENTS
+*/
+
+/* TOPBAR */
+
+#outspokes #topbar h1, #outspokes #topbar a{
+  margin: 0 10px;
+}
+
+#outspokes #topbar {
+  cursor: pointer;
+  height: 28px; /* topbar height : must match variables topbar_height and topbar_int_height in fb.Interface*/
+  line-height: 180%;
+  background:#E0E0E0 url(/images/gradient-bg-tb.png) repeat-x scroll center bottom;
+  color: #666;
+}
+
+#outspokes #topbar select#comments_filter {
+  margin-left: 10px;
+}
+
+#outspokes #topbar #open_admin_panel {
+  display: block;
+  float: right;
+  color: #666;
+}
+#outspokes #topbar #help {
+  float: right;
+  margin-right: 2%;
+}
+
+/* Topbar Left */
+
 #outspokes #topbarLeft {
   float: left;
   width: 400px;
@@ -269,37 +302,12 @@ version: 3.0.0pr2
   float   : left;
   height  : 20px;
   width   : 100px;
-
 }
 
-#outspokes select#comments_filter {
-  margin-left: 10px;
-  height: 15px;
-}
+/* END TOPBAR */
 
-#outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
-}
-#outspokes #topbar #help, 
-#outspokes #topbar #open_admin_panel {
 
-}
-
-#outspokes #topbar #open_admin_panel {
-  display: block;
-  float: right;
-}
-#outspokes #topbar #help {
-  float: right;
-  margin-right: 2%;
-}
-
-#outspokes #topbar #contactus {
-  float:right;
-}
-
-#outspokes #comment-count {
-  color: beige;
-}
+/* FIRST TIME BUBBLE */
 
 #outspokes #bubble {
   width: 230px;
@@ -326,6 +334,10 @@ version: 3.0.0pr2
   line-height: 14px;
   width: 200px;
 }
+
+/* END FIRST TIME BUBBLE */
+
+/* HELP PANEL */
 
 #outspokes #help_content {
   padding: 15px;
@@ -355,3 +367,5 @@ version: 3.0.0pr2
   font-size: 1em;
   font-weight: bold;
 }
+
+/* END HELP PANEL */
