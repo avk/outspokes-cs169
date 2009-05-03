@@ -112,8 +112,8 @@
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append($('<span class="agreed">' + c.agreed + ' agreed</span><br />'));
-            consensus_div.append($('<span class="disagreed">' + c.disagreed + ' disagreed</span><br />'));
+            consensus_div.append($('<span class="agreed">' + c.agreed + ' agreed</span>'));
+            consensus_div.append($('<span class="disagreed">' + c.disagreed + ' disagreed</span>'));
           } else {
             consensus_div.append(agree);
             consensus_div.append(disagree);
@@ -123,7 +123,7 @@
         return "";
       },
       button : function(c, action) {
-        var button = $('<button type="button">' + action + '</button><br />');
+        var button = $('<button type="button">' + action + '</button>');
         button[0].setAttribute("id", eval('this.dom.' + action + '_with(c.feedback_id)'));
         button.click(function() { eval('c.' + action + '()'); });
         return button;
@@ -216,7 +216,8 @@
       rtn.attr('id', c_id).addClass('thread');
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
-      var timestamp_close = $('<div></div>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
+      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
         deleteCmt.click(function() {
@@ -228,7 +229,6 @@
         timestamp_close.append(deleteCmt);
       }
       bar.append(timestamp_close);
-      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
       content.append(options);

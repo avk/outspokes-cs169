@@ -10,14 +10,14 @@ version: 3.0.0pr2
 #outspokes {
     font-family: Verdana, Helvetica, sans-serif;
     font-size: 11px;
-    line-height: 1em;
+    line-height: 120%;
     z-index: 9999;
 }
 
 /* outermost wrapper for our widget */
 #outspokes {
 	width: 100%;
-	background-color: #EEE;
+	background-color: #fcfcfc;
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
@@ -128,10 +128,10 @@ version: 3.0.0pr2
 #outspokes #comment_list {
 	float: left;
 	width: 70%;
-	margin-left: 3px;
+/*  margin-left: 3px;*/
 	overflow-y: scroll;
 	overflow-x: hidden;
-  padding-right: 3px;
+  /*padding-right: 3px;*/
 }
 
 /*#outspokes #comment_list div {
@@ -144,28 +144,45 @@ version: 3.0.0pr2
 	border: none;
 }*/
 
-#outspokes #comment_list button {
-	border: 1px solid;
+
+#outspokes #comment_list .options {
+  float: right;
+  width: 6em;
+}
+#outspokes #comment_list .options button {
+/*  border: 1px solid;*/
 	cursor: pointer;
-  width: 80px;/*
-	margin: 0 5px;*/
+  background-color:white;
+  border:2px outset #777;
+  -moz-border-radius: 5px;
+/*  margin: 0 5px;*/
+  padding:2px 5px;
+  font-weight:bold;
+  width: 100%;
+}
+
+#outspokes #comment_list .thread {
+  margin-bottom: 10px;
+
 }
 
 #outspokes #comment_list .comment {
-  border:1px solid black;
-  margin-bottom:1px;
+  /* margin-bottom:1px; */
+  border: 1px solid #bfbfbf;
+  border-top: none;
 }
 
 #outspokes #comment_list .cmt_bar {
-	background-color: #DDD;
+	background-color: #c9c9c9;
 /*	border-bottom: 3px solid #CCC;*/
-	height: 20px;
-/*	padding: 0 3%;*/
+	height: 1em;
+  padding:.7em;
 	cursor: pointer;
 }
 
 #outspokes #comment_list .cmt_content {
-  border-top: 1px solid black;
+  /*border-top: 1px solid black;*/
+  padding:.7em;
 }
 
 #outspokes #comment_list .commenter_name {
@@ -175,12 +192,14 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cmt_date {
 	font-size: 0.8em;
-	float: right;/*
-	margin-right: 4px;*/
+  float: right;
+/*  margin-right: 4px;*/
 }
 
 #outspokes #comment_list .cmt_delete_X {
   color: red;
+  margin-left: 5px;
+  font-weight: bold;
 }
 
 #outspokes #comment_list .cmt_text {
@@ -188,10 +207,6 @@ version: 3.0.0pr2
   margin-right: 80px;
 }
 
-#outspokes #comment_list .options {
-  float: right;
-  width: 80px;
-}
 
 /*#outspokes #comment_list .cns_buttons {
 	float: right;
@@ -200,6 +215,8 @@ version: 3.0.0pr2
 }*/
 
 #outspokes #comment_list .cns_buttons span{
+    display: block;
+    width: 100%;
     line-height: 1.3em;
 }
 
@@ -212,7 +229,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .replies {
-  padding-left:20px;
+  padding-left:1.5em;
 }
 
 #outspokes #topbar {
