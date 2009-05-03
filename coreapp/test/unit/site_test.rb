@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SiteTest < ActiveSupport::TestCase
   
-  self.use_transactional_fixtures = false
+  # self.use_transactional_fixtures = false
 
   test 'should create site' do
     assert_difference 'Site.count' do
@@ -80,6 +80,7 @@ class SiteTest < ActiveSupport::TestCase
   test "can't change a site's home_page once created" do 
     site = create_site(:url => "http://google.com")
     new_page = create_page()
+    site.reload
     site.home_page = new_page
     assert site.errors.on_base
     assert site.home_page != new_page
@@ -110,8 +111,8 @@ class SiteTest < ActiveSupport::TestCase
   end
   
   test 'changeing site.url raises exception' do
-    url = "http://google.com"
-    site = create_site(:url => url)
+    site = sites(:linkedin)
+    url = site.url
     assert_raise Exception do
       site.url = "http://yahoo.com"
     end
@@ -162,8 +163,6 @@ class SiteTest < ActiveSupport::TestCase
       site.pages.each do |p|
         num_comments.times do |i| 
           c = create_private_comment(:page_id => p.id, :content => i.to_s)
-          sleep(1)
-          # puts "#{p.id} comment #{i} : #{c.created_at}" # DEBUG
           timestamps[p.id] = c.created_at.to_s if i == num_comments - 1
         end
       end

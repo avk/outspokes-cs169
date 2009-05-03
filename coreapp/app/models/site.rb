@@ -5,12 +5,10 @@ class Site < ActiveRecord::Base
 
   attr_protected :validation_token, :validation_timestamp
 
-  before_validation :commit_home_page
-  validate :has_valid_home_page
   validates_presence_of :account_id
   validates_associated :account
   
-  after_create :set_name!
+  after_create :set_home_page!, :set_name!
 
   def initialize(*args, &block)
     super
@@ -22,7 +20,7 @@ class Site < ActiveRecord::Base
   # url and home_page logic ####################################################################
   def url
     if (not home_page)
-      nil
+      @url
     else
       home_page.url
     end
@@ -31,8 +29,9 @@ class Site < ActiveRecord::Base
   def url=(url)
     if (home_page)
       raise Exception.new("Cannot set a URL for a site that already has a home_page: #{self}")
+    else
+      @url = url # used in the after_save :set_home_page! callback
     end
-    self.home_page = Page.new(:url => url, :site => self, :allow_public_comments => public)
   end
 
   def home_page
@@ -118,6 +117,17 @@ class Site < ActiveRecord::Base
     :order => "f.created_at DESC")
   end
 
+
+  # callbacks ###########################################################################################
+
+  def validate
+    errors.add_to_base("URL can't be blank") if self.url == nil
+  end
+  
+  def set_home_page!
+    self.home_page = Page.new(:url => @url, :site => self, :allow_public_comments => @is_public)
+  end
+
   def set_name!
     # agent = WWW::Mechanize.new
     # self.name = agent.get(self.home_page.url).title
@@ -125,25 +135,4 @@ class Site < ActiveRecord::Base
     self.save
   end
 
-  def has_valid_home_page
-    if !self.pages.first or !self.pages.first.valid?
-      errors.add_to_base("Site must have a valid home_page to be valid")
-    end
-  end
-
-  def commit_home_page
-    if home_page and !home_page.valid?
-      begin
-        Site.transaction do
-          save_with_validation(false)
-          home_page.save!
-          save!
-        end
-      rescue
-        return false
-      end
-    end
-    true
-  end
-  
 end
