@@ -172,7 +172,9 @@
     topbarLeft.append(sort_dropdown);
     this.topbar.append(topbarLeft);
 
-    var help_link = $('<a href="#">&nbsp;</a>').attr('id',this.dom.widget.help);
+    var help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
+    help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
+    
     help_link.click(function(e) {
       var content = fb.i.widget_content;
       var help = fb.i.help_content;
