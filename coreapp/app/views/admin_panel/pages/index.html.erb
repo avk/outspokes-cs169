@@ -14,7 +14,7 @@
     <li class="site_page">
       <div class="remove_page">
         <%= link_to 'x', 
-            admin_panel_delete_site_page_path(@site, page), 
+            admin_panel_delete_site_page_path(@site, @site.validation_token, page), 
             :confirm => "This will remove all of the feedback on this page. Are you sure?", 
             :method => :delete %>
       </div>
