@@ -236,7 +236,7 @@ version: 3.0.0pr2
 	background-color: #111;
 	cursor: pointer;
 	height: 20px;
-	line-height: 200%;
+  line-height: 200%;
 }
 
 
@@ -278,6 +278,14 @@ version: 3.0.0pr2
     float: left;
     width: 200px;
     line-height: 200%;
+    height:20px;
+}
+
+#outspokes #topbarLeft #logo {
+  display : block
+  float   : left
+  height  : 20px
+  width   : 100px
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {
