@@ -20,8 +20,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#6F5',
-      disagree_bg_color   : 'red',
+      agree_bg_color      : '#9FFFA3',
+      disagree_bg_color   : '#FF9F9F',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
     	cform       				: "comment_form",
@@ -47,7 +47,8 @@
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
     	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />' +
-          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" /><input class="button" type="submit" value="Submit" /></div>' +
+          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" />' +
+          '<input class="button" type="submit" value="Submit" /></div>' +
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
       return $('<div id="' + id + '"></div>').append(formHTML);
@@ -106,8 +107,8 @@
           }
         } else { // this invitee should be allowed to vote on this comment
           var consensus_div = $('<div></div>');
-          var agree = this.button(c, 'agree');
-          var disagree = this.button(c, 'disagree');
+          var agree = this.button(c, 'agree').addClass('agree');
+          var disagree = this.button(c, 'disagree').addClass('disagree');
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
@@ -150,7 +151,7 @@
       },
       // constructs a "reply" link
       buildLink       : function(c_id) {
-        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">&raquo; reply</button>');
+        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply &raquo;</button>');
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
