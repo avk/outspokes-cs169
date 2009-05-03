@@ -276,8 +276,13 @@ version: 3.0.0pr2
 
 #outspokes #topbarLeft {
     float: left;
-    width: 200px;
+    width: 400px;
     line-height: 200%;
+}
+
+#outspokes select#comments_filter {
+  margin-left: 10px;
+  height: 15px;
 }
 
 #outspokes #topbar #help, #outspokes #topbar #toggle, #outspokes #topbar #open_admin_panel {

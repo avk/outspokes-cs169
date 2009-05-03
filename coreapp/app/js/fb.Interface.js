@@ -139,13 +139,30 @@
     logo.attr('id', 'logo');
     
     topbarLeft.append(logo);
-
-    var comment_count = $('<span>'+ fb.getProperties(fb.Feedback.all).length + ' Comments</span>');
+    var comment_count = $('<span></span>');
     comment_count.attr('id', this.dom.widget.comment_count);
+    // Singular "Comment" for one comment
     this.set_num_comments = function(num_comments) {
-      comment_count.text(num_comments + ' Comments');
+      var comments_text = num_comments == 1 ? " Comment" : " Comments";
+      comment_count.text(num_comments + comments_text);
     }
+    this.set_num_comments(fb.getProperties(fb.Feedback.all).length);
     topbarLeft.append(comment_count);
+    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');// +
+//      '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+    sort_dropdown.children().eq(0).click(function(e) {
+      fb.i.comment.sort_by_newest();
+      e.stopPropagation();
+    });
+    // Don't trigger outspokes minimize when clicking on dropdown
+    sort_dropdown.click(function(e) {
+      e.stopPropagation();
+    });
+    sort_dropdown.children().eq(1).click(function(e) {
+      fb.i.comment.sort_by_oldest();
+      e.stopPropagation();
+    });
+    topbarLeft.append(sort_dropdown);
     this.topbar.append(topbarLeft);
 
     var help_link = $('<a href="#">&nbsp;</a>').attr('id',this.dom.widget.help);

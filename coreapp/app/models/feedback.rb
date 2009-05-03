@@ -13,6 +13,7 @@ class Feedback < ActiveRecord::Base
   
   validates_inclusion_of :public, :in => [true, false] # must be either public or private  
   validates_presence_of :name, :if => :public
+  validate :has_valid_parent
   
   acts_as_nested_set
   
@@ -139,5 +140,15 @@ class Feedback < ActiveRecord::Base
     terms.map{|term| if(self.content.downcase.include? term.downcase) then score += term.length; end}
     score
   end
+  
+  protected
+  def has_valid_parent
+    if ! parent_id.nil?
+      if ! parent.valid?
+        errors.add(:parent, "Cannot create a feeedback with an invalid parent")
+      end
+    end
+  end
+  
   
 end
