@@ -22,9 +22,9 @@
         toggle: 'toggle',
         contact: 'contactus',
         comment_count : 'comment-count',
-        topbar_height : '20px',
-        topbar_int_height : 20, //same as topbar_height in int form
-        height : '220px',
+        topbar_height : '30px',
+        topbar_int_height : 30, //same as topbar_height in int form
+        height : '250px',
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
