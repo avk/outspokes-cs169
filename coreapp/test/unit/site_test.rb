@@ -2,8 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SiteTest < ActiveSupport::TestCase
   
-  # self.use_transactional_fixtures = false
-
   test 'should create site' do
     assert_difference 'Site.count' do
       site = create_site(:url => "http://google.com")

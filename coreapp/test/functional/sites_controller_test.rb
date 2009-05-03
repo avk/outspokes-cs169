@@ -2,15 +2,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SitesControllerTest < ActionController::TestCase
   
-  self.use_transactional_fixtures = false
-  
   test "should get new" do
     login_as :quentin
     get :new
     assert_response :success
   end
 
-  test "not not logged in should not get new" do
+  test "not logged in should not get new" do
     get :new
     assert_redirected_to new_session_path
   end
