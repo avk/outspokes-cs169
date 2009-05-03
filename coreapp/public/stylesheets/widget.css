@@ -128,7 +128,7 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .options {
   float: right;
-  width: 8%;
+  width: 80px;
 }
 #outspokes #comment_list .options button {
   cursor: pointer;
@@ -159,7 +159,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_bar {
-  background-color: #FFDAAF;
+  background-color: #accfcc;
   height: 1em;
   padding:.7em;
   cursor: pointer;
@@ -188,7 +188,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_text {
-  width: 90%;
+  padding-right: 100px;
 }
 
 
