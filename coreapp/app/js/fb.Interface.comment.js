@@ -213,7 +213,7 @@
     this.build = function (c) {
   		var c_id = this.dom.comment_id(c.feedback_id);
       var rtn = $('<div></div>').css('width','100%');   // comment-block
-      rtn.attr('id', c_id);
+      rtn.attr('id', c_id).addClass('thread');
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
       var timestamp_close = $('<div></div>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
