@@ -119,6 +119,8 @@
       fb.Comment.unrendered[i].render();
     }
     fb.Comment.refresh_count();
+    // Re-sort comments based on sort/filter dropdown
+    fb.$("#comments_filter :selected").click()
   };
   
   fb.Comment.refresh_count = function() {

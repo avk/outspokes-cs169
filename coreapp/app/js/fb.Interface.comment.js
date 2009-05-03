@@ -273,33 +273,36 @@
     
     this.sort_comments = function(method) {
       var posts = this.comments.children();
-      this.comments.empty();
-      posts.sort(method(this));
-      this.comments.append(posts);
+      posts.sort(method);
+      posts.appendTo(this.comments);
     };
-
-    this.newest_sorter = function(self) {
-      return function(a, b) {
-        var a_id = self.dom.number_from_id(a.id);
-        var b_id = self.dom.number_from_id(b.id);
-        return (a_id - b_id);
-      };
-    };
-
-    this.oldest_sorter = function(self) {
-      return function(a, b) {
-          var a_id = self.dom.number_from_id(a.id);
-          var b_id = self.dom.number_from_id(b.id);
-          return (fb.Feedback.all[b_id].timestamp - fb.Feedback.all[a_id].timestamp);
-      };
+    
+    // Returns the timestamp of the most recent comment in given thread
+    var age_of_thread = function(comment) {
+      var dom = fb.i.comment.dom;
+      var time = fb.Feedback.all[dom.number_from_id(comment.id)].timestamp;
+      fb.i.comment.visit_all_replies(comment, function(reply) {
+        if (reply.timestamp > time) {
+          time = reply.timestamp;
+        }
+      });
+      return time;
     };
     
     this.sort_by_newest = function() {
-      this.sort_comments(this.newest_sorter);  
+      this.sort_comments(function(a, b) {
+        var a_age = age_of_thread(a);
+        var b_age = age_of_thread(b);
+        return (b_age - a_age);
+      });  
     };
     
     this.sort_by_oldest = function() {
-      this.sort_comments(this.oldest_sorter);  
+      this.sort_comments(function(a, b) {
+        var a_age = age_of_thread(a);
+        var b_age = age_of_thread(b);
+        return (a_age - b_age);
+      });  
     };
     
     // Applies function fn to every Comment object that is a reply to the 
@@ -308,7 +311,7 @@
       var c = $(c);
       var parent = this;
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
-        var this_id = this.id.match(/comment_(\d+)/i)[1]; // Extract id number of comment from id
+        var this_id = parent.dom.number_from_id(this.id); // Extract id number of comment from id
         fn(fb.Feedback.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
