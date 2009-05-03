@@ -83,9 +83,14 @@ class Widget::FeedbacksController < Widget::WidgetController
 
       if params[:parent_id]
         # since parent_id is based on /comment_\d+/i, we extract the \d+
-        feedback.move_to_child_of params[:parent_id].sub(/\D+/, '').to_i
+        parent_id = params[:parent_id].sub(/\D+/, '').to_i
+        if Feedback.find_by_id(parent_id).nil? # If feedback doesn't exist, destroy the feedback
+          feedback.destroy
+        else
+          feedback.move_to_child_of parent_id
+        end
       end
-      if !feedback.valid?
+      if !feedback.valid? or feedback.frozen? # feedback will be frozen if destroyed
         success = false
         feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
       else
