@@ -109,7 +109,7 @@ version: 3.0.0pr2
 */
 
 #outspokes #new_comment, #outspokes #comment_list {
-  height: 197px;
+  height: 230px; /*must change this if heights are changed in fb.Interface and fb.Interface.comment*/
 }
 
 #outspokes #topbar h1, #outspokes #topbar a{
@@ -161,8 +161,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .comment {
-  border: 1px solid #adadad;
-  border-top: none;
+  border-bottom: 1px solid #adadad;
 }
 
 #outspokes #comment_list .cmt_bar {
@@ -214,13 +213,14 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .replies {
-  padding-left:1.5em;
+  margin-left:1.5em;
+  border-left: 1px solid #adadad;
 }
 
 #outspokes #topbar {
   background-color: #2F1900;
   cursor: pointer;
-  height: 30px; /* topbar height : must match variables topbar_height and topbar_int_height in fb.Interface*/
+  height: 20px; /*must match variables topbar_height and topbar_int_height in fb.Interface*/
   line-height: 180%;
 }
 
