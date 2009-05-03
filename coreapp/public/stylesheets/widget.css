@@ -154,7 +154,7 @@ version: 3.0.0pr2
 	cursor: pointer;
   background-color:white;
   border:2px outset #777;
-  -moz-border-radius: 5px;
+  -moz-border-radius: 10px;
 /*  margin: 0 5px;*/
   padding:2px 5px;
   font-weight:bold;
