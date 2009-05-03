@@ -156,6 +156,36 @@
       return rtn;
     };
   })();
+
+  fb.select_target = function (select_function) {
+    // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
+    var page_elements = $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
+      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)");
+    // Mark clicked-on elemement
+    page_elements.bind('mouseup.elem_select', function (e) {
+      select_function(e);
+      page_elements.unbind(".elem_select");
+      $(e.target).css('outline', "3px solid red");
+      e.stopPropagation();
+    });
+    // Store old outline style as a property of each element to be restored later
+    // TODO: Store each individual outline style instead of 'outline' as JS breaks CSS up oddly
+    page_elements.bind("mouseenter.elem_select", function (e) {
+      if ("__old_style" in $(e.target).parent().get(0)) {
+        $(e.target).parent().eq(0).css('outline', $(e.target).parent().get(0).__old_style);
+        delete $(e.target).parent().get(0)["__old_style"];
+      }
+      e.target.__old_style = $(e.target).css('outline')
+      $(e.target).css('outline','green solid 2px')
+      e.stopPropagation();
+    });
+    // Don't un-highlight if the element has been clicked on
+    page_elements.bind("mouseleave.elem_select", function (e) {
+      $(e.target).css('outline', e.target.__old_style);
+      delete e.target["__old_style"];
+      e.stopPropagation();
+    });
+  };
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {
