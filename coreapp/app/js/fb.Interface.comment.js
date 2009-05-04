@@ -45,13 +45,14 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	var form_header = '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />';
+    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
       formHTML += form_header;
       var form_buttons = 
           '<div id="outspokes_form_buttons">' +
-          'Private <input type="checkbox" name="isPrivate" value="true">' +
-          '<input class="button" type="reset" value="Cancel" />' +
-          '<input class="button" type="submit" value="Submit" /></div>';
+          '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
+          '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>' +
+          '<input class="button" type="reset" value="Clear" />' +
+          '<input class="button" type="submit" value="Post" /></div>';
       formHTML += form_buttons;
       var form_finish = 
           '<input type="hidden" value="' + target + '" name="target" />' +
@@ -194,10 +195,10 @@
         var reply_form = this.dom.reply_form(c_id);
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
-        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
+        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>");
         form.find('#outspokes_form_buttons').html(
           '<input class="button" type="reset" value="Cancel" />' +
-          '<input class="button" type="submit" value="Submit" />');
+          '<input class="button" type="submit" value="Reply" />');
         form.attr('class','reply');
         form.submit(function() { 
           var name = null;
