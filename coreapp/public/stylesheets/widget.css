@@ -157,8 +157,11 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .thread {
-  margin-bottom: 10px;
-  width: 100%;
+  margin: 0 5px 10px 5px;
+  width: 99%;
+}
+#outspokes #comment_list .replies .thread {
+  margin-bottom: 0;
 }
 
 #outspokes #comment_list .cmt_bar {
@@ -252,7 +255,18 @@ version: 3.0.0pr2
   text-align: right;
 }
 
+#outspokes #outspokes_form_buttons #private_wrapper {
+  float: left;
+}
+#outspokes #outspokes_form_buttons #private_wrapper label {
+  background-color: inherit;
+  color: #555;
+  font-size: 1.1em;
+  vertical-align: 15%
+}
+
 #outspokes #comment_form .button {
+  font-weight: bold;
   margin-left: 2%;
 }
 

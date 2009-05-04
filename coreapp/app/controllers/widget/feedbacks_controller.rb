@@ -16,7 +16,12 @@ class Widget::FeedbacksController < Widget::WidgetController
       if !@public
         site = @invite.page.site
         if page = @invite.page.site.pages.find_by_url(params[:current_page])
-          feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
+          if @admin
+            feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
+          elsif
+            feedback = page.feedbacks.find(:all, :conditions => 
+                       [ "private = false OR commenter_id = ?", @commenter.id ]).map { |f| f.json_attributes(@commenter) }
+          end
         end
       else
         if page = Page.find_public_page_by_url(params[:current_page])
@@ -78,7 +83,8 @@ class Widget::FeedbacksController < Widget::WidgetController
       end
 
       feedback = Comment.new :commenter => @commenter, :name => name, :content => content,
-                             :target => params[:target], :public => public_comment
+                             :target => params[:target], :public => public_comment, 
+                             :private => params[:isPrivate]
       page.feedbacks << feedback
 
       if params[:parent_id]

@@ -20,8 +20,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#9FFFA3',
-      disagree_bg_color   : '#FF9F9F',
+      agree_bg_color      : '#33EE44',
+      disagree_bg_color   : '#FF3322',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
     	cform       				: "comment_form",
@@ -45,11 +45,19 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />' +
-          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" />' +
-          '<input class="button" type="submit" value="Submit" /></div>' +
+    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
+      formHTML += form_header;
+      var form_buttons = 
+          '<div id="outspokes_form_buttons">' +
+          '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
+          '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>' +
+          '<input class="button" type="reset" value="Clear" />' +
+          '<input class="button" type="submit" value="Post" /></div>';
+      formHTML += form_buttons;
+      var form_finish = 
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
+      formHTML += form_finish; 
       return $('<div id="' + id + '"></div>').append(formHTML);
     };
 
@@ -71,7 +79,7 @@
         name = this.name.value;
         this.name.value = "";
       }
-      fb.Comment.post(this.content.value, this.target.value, name);
+      fb.Comment.post(this.content.value, this.target.value, name, this.isPrivate.checked);
       this.content.value = "";
       fb.i.comment.reset_target();
     });
@@ -89,7 +97,7 @@
       _opinion: function(c_id, color) {
         var comment = null;
         if (typeof c_id == "string") {
-          comment = $('#' + this.dom.comment_id(c_id) + " .cmt_content:eq(0)");
+          comment = $('#' + this.dom.comment_id(c_id));
         } else {
           comment = c_id;
         }
@@ -187,14 +195,17 @@
         var reply_form = this.dom.reply_form(c_id);
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
-        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
+        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>");
+        form.find('#outspokes_form_buttons').html(
+          '<input class="button" type="reset" value="Cancel" />' +
+          '<input class="button" type="submit" value="Reply" />');
         form.attr('class','reply');
         form.submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
             name = this.name.value;
           }
-          fb.Comment.post(this.content.value, this.target.value, name);
+          fb.Comment.post(this.content.value, this.target.value, name, false);
           fb.i.comment.reply.finish(reply_form);
         });
         var cancel_button = form.find('input[type="reset"]');
@@ -244,7 +255,7 @@
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
       content.append(options);
-      var tmp = this.consensus.build(c, content)
+      var tmp = this.consensus.build(c, bar);
       options.append(tmp);
       options.append(this.reply.buildLink(c_id));
       content.append($('<div></div>').addClass('cmt_text').append(c.content));

@@ -121,7 +121,11 @@ class Site < ActiveRecord::Base
   # callbacks ###########################################################################################
 
   def validate
-    errors.add_to_base("URL can't be blank") if self.url == nil
+    if self.url.nil?
+      errors.add_to_base("URL can't be blank")
+    else
+      errors.add_to_base("URL is invalid") unless (self.url.match URI.regexp(['http', 'https']))
+    end
   end
   
   def set_home_page!

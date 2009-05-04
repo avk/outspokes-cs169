@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CommentTest < ActiveSupport::TestCase
+  
+  def test_must_not_be_abstract
+    c = create_private_comment
+    assert !c.abstract?
+  end
+  
   test "should create feedback" do
     assert_difference 'Comment.count' do
       feedback = create_private_comment

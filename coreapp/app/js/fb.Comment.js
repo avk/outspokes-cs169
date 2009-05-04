@@ -52,7 +52,7 @@
     };
     var callback = function(response) {
       if (response.authorized && response.opinion !== '') {
-        eval("fb.i.comment.consensus." + opinion + "(response.feedback_id)");
+        eval("fb.i.comment.consensus." + opinion + "('bar_comment_' + response.feedback_id)");
         $('#' + fb.i.comment.dom.consensus_wrapper(response.feedback_id)).remove();
       } else {
         alert("Could not get your opinion on this comment.");
@@ -77,7 +77,7 @@
   fb.Comment.all = {};
   fb.Comment.unrendered = {};
 
-  fb.Comment.post = function (content, target, name) {
+  fb.Comment.post = function (content, target, name, isPrivate) {
     if (!_fb.authorized()) {
       return null;
     }
@@ -85,7 +85,8 @@
       url_token: fb.env.url_token,
       current_page: fb.env.current_page,
       content: content,
-      target: target
+      target: target,
+      isPrivate: isPrivate
     };
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;
