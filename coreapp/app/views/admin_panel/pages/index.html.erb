@@ -5,11 +5,6 @@
   <%- if @pages.size > 0 -%>
     have commented on 
     <strong id="page_count"><%= pluralize(@pages.size, 'page') %></strong>.
-    <%= text_field('admin_panel_search', 'id', :value => 'Search Feedback', :onfocus => 'if(this.value == "Search Feedback") { this.value = ""; }; ', :onblur => 'if(this.value == "") { this.value = "Search Feedback"; }; ')  %>
-    <%= observe_field('admin_panel_search_id',  :frequency => 1,
-      :update => 'site_pages', :url =>
-      { :controller => 'pages', :action=> 'search', :id=>@site.id },
-      :with => "'search=' + escape(value)") %>
   <%- else -%>
     haven't commented on any pages.
   <%- end -%>

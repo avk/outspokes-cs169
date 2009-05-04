@@ -22,9 +22,15 @@
               </li>
           <%- end -%>
         </ul>
-        <div style="clear:both;"></div>
+        
+        <% form_remote_tag(:url => {:action => "search", :controller => "pages"}, :update => "site_pages", :html =>{:id => "search_bar"})  do %>
+          <%= text_field_tag('search', 'id', :value => 'Search Feedback', :onfocus => 'if(this.value == "Search Feedback") { this.value = ""; }; ', :onblur => 'if(this.value == "") { this.value = "Search Feedback"; }; ')  %>
+          <%= submit_tag 'Go', :id => 'search_button' %>
+        <% end %>
+        <div style="clear:both;"></div> 
       </div>
     <%- end -%>
+    
     
     <div id="wrapper">
       <%- if flash[:notice] -%><div class="notice"><%= flash[:notice] %></div><%- end -%>

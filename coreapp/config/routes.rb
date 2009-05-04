@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     # pages
     admin.site_pages '/:site_id/:validation_token/pages', :controller => 'pages', :action => 'index', :conditions => { :method => :get }
     admin.delete_site_page '/:site_id/:validation_token/pages/:id', :controller => 'pages', :action => 'destroy', :conditions => { :method => :delete }
-    admin.search '/:site_id/:validation_token/search', :controller => 'pages', :action => 'search'
+    admin.search '/:site_id/:validation_token/search', :controller => 'pages', :action => 'search', :conditions => {:method => :post}
     
     # commenters
     admin.commenters '/:site_id/:validation_token/commenters', :controller => 'commenters', :action => 'index', :conditions => { :method => :get }
