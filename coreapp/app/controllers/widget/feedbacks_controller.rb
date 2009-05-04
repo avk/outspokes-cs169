@@ -19,7 +19,8 @@ class Widget::FeedbacksController < Widget::WidgetController
           if @admin
             feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
           elsif
-            feedback = page.feedbacks.find_all_by_private(false).map { |f| f.json_attributes(@commenter) }
+            feedback = page.feedbacks.find(:all, :conditions => 
+                       [ "private = false OR commenter_id = ?", @commenter.id ]).map { |f| f.json_attributes(@commenter) }
           end
         end
       else
