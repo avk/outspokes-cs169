@@ -115,6 +115,10 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree').addClass('agree');
           var disagree = this.button(c, 'disagree').addClass('disagree');
+          
+          agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+          disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+          
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
@@ -158,6 +162,7 @@
       // constructs a "reply" link
       buildLink       : function(c_id) {
         var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply&nbsp;&raquo;</button>');
+        replyLink.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },

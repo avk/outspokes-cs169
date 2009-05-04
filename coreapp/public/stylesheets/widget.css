@@ -104,6 +104,10 @@ version: 3.0.0pr2
   text-decoration: none;
 }
 
+#outspokes #comment_list .options button.hover {
+  background: #E0E0E0;
+}
+
 /*
 *  END GENERAL
 */
@@ -132,8 +136,9 @@ version: 3.0.0pr2
 }
 #outspokes #comment_list .options button {
   cursor: pointer;
-  background-color:white;
+  background-color:#F7F7F7;
   border:2px outset #777;
+  border-width: 2px 1px 2px 1px;
   -moz-border-radius: 7px;
   padding:1px 5px;
   font-weight:bold;
