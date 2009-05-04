@@ -49,8 +49,11 @@
           var widget = fb.i.main_window;
           var help = fb.i.help_content;
           
+          //opening widget
+          
           widget.animate( { height:dom.widget.height }, { duration:250 } );
           help.addClass("hide"); //always make sure help is hidden before showing content
+          sort_dropdown.show();
           content.show();
           
           fb.i.admin_panel.hide();
@@ -79,7 +82,10 @@
           var content = fb.i.widget_content;
           var widget = fb.i.main_window;
           
+          //closing widget
+          
           widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
+          sort_dropdown.hide();
           content.hide();
           
           fb.i.admin_panel.show();
@@ -176,16 +182,18 @@
       var help = fb.i.help_content;
       var widget = fb.i.main_window;
       
-      if (widget.height() == dom.widget.topbar_int_height) {
+      if (widget.height() == dom.widget.topbar_int_height) { //if collapsed show entire widget
         widget.animate( { height: dom.widget.height }, { duration:250 } );
         content.hide();
         help.removeClass("hide");
-      } else {
+      } else {  //otherwise just toggle the content
 
         help.toggleClass("hide");
         if (content.css('display') == 'none') {
+          sort_dropdown.show();
           content.show();
         } else {
+          sort_dropdown.hide();
           content.hide();
         }
       }
@@ -204,9 +212,11 @@
       if (widget.height() == dom.widget.topbar_int_height ) {
         widget.animate( { height:dom.widget.height }, { duration:250 } );
         help.addClass("hide"); //always make sure help is hidden before showing content
+        sort_dropdown.show();
         content.show();
       } else {
         widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
+        sort_dropdown.hide();
         content.hide();
       }
       
