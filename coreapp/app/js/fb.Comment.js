@@ -52,7 +52,7 @@
     };
     var callback = function(response) {
       if (response.authorized && response.opinion !== '') {
-        eval("fb.i.comment.consensus." + opinion + "(response.feedback_id)");
+        eval("fb.i.comment.consensus." + opinion + "('bar_comment_' + response.feedback_id)");
         $('#' + fb.i.comment.dom.consensus_wrapper(response.feedback_id)).remove();
       } else {
         alert("Could not get your opinion on this comment.");

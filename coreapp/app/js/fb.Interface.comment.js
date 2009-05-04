@@ -89,7 +89,7 @@
       _opinion: function(c_id, color) {
         var comment = null;
         if (typeof c_id == "string") {
-          comment = $('#' + this.dom.comment_id(c_id) + " .cmt_content:eq(0)");
+          comment = $('#' + this.dom.comment_id(c_id));
         } else {
           comment = c_id;
         }
