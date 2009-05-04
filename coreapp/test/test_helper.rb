@@ -161,6 +161,19 @@ class Test::Unit::TestCase
     Opinion.create(valid_options_for_opinion.merge(options))
   end
   
+  # Page Edits
+  
+  def valid_options_for_page_edit
+    page = pages(:one)
+    commenter = commenters(:one)
+    { :page_id => page.id, :commenter_id => commenter.id, :changeset => {"copy" => {},"styles" => {}}.to_json }
+  end
+  
+  def create_page_edit(options={})
+    PageEdit.create(valid_options_for_page_edit.merge(options))
+  end
+  
+  
   
   ### ACTUAL TEST HELPER METHODS ####
   def validate_json(args)
