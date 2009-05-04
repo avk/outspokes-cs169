@@ -40,7 +40,6 @@
     };
     
     this.buildCommentForm = function (id, target) {
-	/*'<a id="refresh" href="#">refresh</a>' why is refresh in the comment form? */
       var formHTML = '<form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
@@ -56,7 +55,6 @@
 
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
     var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
-//    target_button.css('float', 'right').css('margin-top', '5px');
     target_button.click(function() {
       $(this)[0].value = "Change target";
       fb.select_target(function(e) {
@@ -156,7 +154,7 @@
           parent_border = 0;
         }
         new_border = parent_border + 1 + "px";
-//        rtn.css({ 'border-left': new_border + ' solid black' });
+
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
@@ -190,7 +188,7 @@
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
         form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
-    		form.attr('class','reply');
+        form.attr('class','reply');
         form.submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
@@ -229,6 +227,7 @@
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
       bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      bar.append($('<div></div>').addClass('targeted_icon'));
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
@@ -265,6 +264,7 @@
         tmp = highlight_target(tmp.get(0));
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
+        rtn.addClass('targeted');
       }
       return rtn;
     };
