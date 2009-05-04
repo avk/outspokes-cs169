@@ -40,7 +40,6 @@
     };
     
     this.buildCommentForm = function (id, target) {
-	/*'<a id="refresh" href="#">refresh</a>' why is refresh in the comment form? */
       var formHTML = '<form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
@@ -56,7 +55,6 @@
 
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
     var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
-//    target_button.css('float', 'right').css('margin-top', '5px');
     target_button.click(function() {
       $(this)[0].value = "Change target";
       fb.select_target(function(e) {
