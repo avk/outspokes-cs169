@@ -77,7 +77,7 @@
   fb.Comment.all = {};
   fb.Comment.unrendered = {};
 
-  fb.Comment.post = function (content, target, name) {
+  fb.Comment.post = function (content, target, name, isPrivate) {
     if (!_fb.authorized()) {
       return null;
     }
@@ -85,7 +85,8 @@
       url_token: fb.env.url_token,
       current_page: fb.env.current_page,
       content: content,
-      target: target
+      target: target,
+      isPrivate: isPrivate
     };
     if (fb.i.comment.dom.comment_id_format.test(target)) {
       data.parent_id = target;

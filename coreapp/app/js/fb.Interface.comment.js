@@ -45,11 +45,18 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	formHTML += '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />' +
-          '<div id="outspokes_form_buttons"><input class="button" type="reset" value="Cancel" />' +
-          '<input class="button" type="submit" value="Submit" /></div>' +
+    	var form_header = '<div id="outspokes_form_header"><span>Comment:</span></div><textarea name="content" rows="7" />';
+      formHTML += form_header;
+      var form_buttons = 
+          '<div id="outspokes_form_buttons">' +
+          'Private <input type="checkbox" name="isPrivate" value="true">' +
+          '<input class="button" type="reset" value="Cancel" />' +
+          '<input class="button" type="submit" value="Submit" /></div>';
+      formHTML += form_buttons;
+      var form_finish = 
           '<input type="hidden" value="' + target + '" name="target" />' +
           '</form>';
+      formHTML += form_finish; 
       return $('<div id="' + id + '"></div>').append(formHTML);
     };
 
@@ -71,7 +78,7 @@
         name = this.name.value;
         this.name.value = "";
       }
-      fb.Comment.post(this.content.value, this.target.value, name);
+      fb.Comment.post(this.content.value, this.target.value, name, this.isPrivate.checked);
       this.content.value = "";
       fb.i.comment.reset_target();
     });
@@ -188,13 +195,16 @@
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
         form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>:");
+        form.find('#outspokes_form_buttons').html(
+          '<input class="button" type="reset" value="Cancel" />' +
+          '<input class="button" type="submit" value="Submit" />');
         form.attr('class','reply');
         form.submit(function() { 
           var name = null;
           if (fb.env.pub_page) {
             name = this.name.value;
           }
-          fb.Comment.post(this.content.value, this.target.value, name);
+          fb.Comment.post(this.content.value, this.target.value, name, false);
           fb.i.comment.reply.finish(reply_form);
         });
         var cancel_button = form.find('input[type="reset"]');
