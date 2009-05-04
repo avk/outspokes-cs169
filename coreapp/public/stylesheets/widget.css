@@ -165,7 +165,7 @@ version: 3.0.0pr2
   padding:.7em;
   cursor: pointer;
   border: 1px solid #777;
-  border-width: 1px 0px 0px 1px;
+  border-width: 0px 0px 0px 1px;
 }
 
 #outspokes #comment_list .cmt_bar .targeted_icon {
