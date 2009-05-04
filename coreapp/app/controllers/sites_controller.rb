@@ -7,10 +7,10 @@ class SitesController < ApplicationController
   def new
     @site = Site.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @site }
-    end
+    # respond_to do |format|
+    #     format.html # new.html.erb
+    #     format.xml  { render :xml => @site }
+    #   end
   end
 
   # POST /sites
@@ -33,7 +33,7 @@ class SitesController < ApplicationController
         flash[:notice] = 'Site was successfully created.'
         format.html { redirect_to dashboard_account_path(current_account.id) }
       rescue
-        flash[:error] = "Could not create site.  "
+        flash[:error] = "Could not create site."
         format.html { render :action => "new" }
         format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
       end
