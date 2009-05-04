@@ -3,7 +3,21 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
   # GET /admin_panel/:site_id/commenters
   def index
     @commenters = @site.commenters.find(:all, :conditions => ["commenters.id != ?", @site.account_id])
-    flash[:warning] = "You haven't invited anyone to give feedback." if @commenters.empty?
+    @commenters_commented = Array.new; @commenters_visited = Array.new; @commenters_not_visited = Array.new;
+    @commenters.each do |commenter|
+      # debugger
+      if(Feedback.find(:all, :conditions => ["commenter_id == ?", commenter.id]) && (not Feedback.find(:all, :conditions => ["commenter_id == ?", commenter.id]).select{|feedback| feedback.page.site == @site }.empty?))
+        @commenters_commented.push(commenter)
+      elsif(commenter.last_visited_at)
+        @commenters_visited.push(commenter)
+      else
+        @commenters_not_visited.push(commenter)
+      end
+    end
+    #@commenters_visited = @site.commenters.find(:all, :conditions => ["commenters.id != ? AND commenters.last_visited_at > commenters.created_at", @site.account_id])
+    #@commenters_not_visited = @site.commenters.find(:all, :conditions => ["commenters.id != ? AND commenters.last_visited_at <= commenters.created_at", @site.account_id])
+    @total_commenters = @commenters_commented.size + @commenters_visited.size + @commenters_not_visited.size 
+    flash[:warning] = "You haven't invited anyone to give feedback." if @total_commenters == 0
   end
 
   # POST /admin_panel/:site_id/commenters

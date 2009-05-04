@@ -19,6 +19,8 @@ class Widget::WidgetController < ApplicationController
       @authorized = true
       @public = site.public
       @commenter = @invite.commenter
+      @commenter.last_visited_at = Time.now
+      @commenter.save!
       if @commenter == site.account
         if params[:email] and params[:password]
           if @commenter == Account.authenticate(params[:email], params[:password])
