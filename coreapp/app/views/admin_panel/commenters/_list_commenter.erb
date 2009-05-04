@@ -1,0 +1,16 @@
+<li class="invited_commenter">
+  <div class="remove_commenter">
+    <%= link_to 'X', 
+    admin_panel_uninvite_path(@site, @site.validation_token, commenter), 
+    :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
+    :method => :delete %>
+  </div>
+  <div class="commenter_email">
+    <%- if RAILS_ENV == "development" -%>
+    <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
+    <%= link_to commenter.truncated_email, final_url %>
+    <%- else -%>
+    <%= commenter.truncated_email %> 
+    <% end -%>
+  </div>
+</li>
