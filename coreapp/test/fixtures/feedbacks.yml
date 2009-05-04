@@ -31,7 +31,7 @@ three:
   rgt: 2
   type: Comment
   public: false
-  private: false
+  private: true
   
 four:
   page_id: 1
@@ -176,7 +176,7 @@ six:
 
 privatecomment:
   page_id: 3
-  commenter_id: 1
+  commenter_id: 2
   content: I also  hate this page
   target: html
   type: Comment
