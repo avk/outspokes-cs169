@@ -165,8 +165,8 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cmt_bar {
   background-color: #accfcc;
-  height: 1em;
-  padding:.7em;
+  height: 15px;
+  padding: 3px .7em;
   cursor: pointer;
 }
 
