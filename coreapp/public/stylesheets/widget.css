@@ -173,7 +173,7 @@ version: 3.0.0pr2
 #outspokes #comment_list .cmt_content {
   padding:.7em;
   background-color: white;
-  
+  -moz-border-radius-bottomleft:7px;
 }
 
 #outspokes #comment_list .commenter_name {
