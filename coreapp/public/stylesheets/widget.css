@@ -104,10 +104,6 @@ version: 3.0.0pr2
   text-decoration: none;
 }
 
-#outspokes #comment_list .options button.hover {
-  background: #E0E0E0;
-}
-
 /*
 *  END GENERAL
 */
@@ -144,6 +140,10 @@ version: 3.0.0pr2
   font-weight:bold;
   width: 100%;
   margin: 1px 0 3px;
+}
+
+#outspokes #comment_list .options button.hover {
+  background: #E0E0E0;
 }
 
 #outspokes #comment_list .options button.agree{
