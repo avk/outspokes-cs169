@@ -113,7 +113,9 @@ version: 3.0.0pr2
 */
 
 #outspokes #new_comment, #outspokes #comment_list {
-  height: 230px; /*must change this if heights are changed in fb.Interface and fb.Interface.comment*/
+  /*  must change this if heights are changed in fb.Interface and fb.Interface.comment
+      Remember that you also have to consider padding in the top bar to set this correctly */
+  height: 217px; 
 }
 
 /* COMMENT LIST */
