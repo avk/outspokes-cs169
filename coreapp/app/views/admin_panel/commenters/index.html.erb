@@ -69,7 +69,7 @@
       <div class="commenter_email">
         <%- if RAILS_ENV == "development" -%>
           <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
-          <%= link_to commenter.email, final_url %>
+          <%= link_to commenter.truncated_email, final_url %>
         <%- else -%>
           <%= commenter.email %>
         <% end -%>

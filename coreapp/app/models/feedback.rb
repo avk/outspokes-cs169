@@ -43,7 +43,7 @@ class Feedback < ActiveRecord::Base
       when 'feedback_id'
         json_atts['feedback_id'] = id
       when 'name'
-        json_atts['name'] = public ? name : commenter.email
+        json_atts['name'] = public ? name : commenter.truncated_email
       when 'timestamp'
         json_atts['timestamp'] = created_at.to_i
       when 'opinion'

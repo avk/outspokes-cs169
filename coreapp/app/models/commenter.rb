@@ -69,5 +69,7 @@ class Commenter < ActiveRecord::Base
     end
   end
   
-
+  def truncated_email
+    return (self.email.length >= 20) ? self.email.first(20) + '...' : self.email
+  end
 end

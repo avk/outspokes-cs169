@@ -40,7 +40,6 @@
     };
     
     this.buildCommentForm = function (id, target) {
-	/*'<a id="refresh" href="#">refresh</a>' why is refresh in the comment form? */
       var formHTML = '<form id="comment_form" name="newcomment" onsubmit="return false;">';
     	if (fb.env.pub_page) {
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
@@ -56,7 +55,6 @@
 
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
     var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
-//    target_button.css('float', 'right').css('margin-top', '5px');
     target_button.click(function() {
       $(this)[0].value = "Change target";
       fb.select_target(function(e) {
@@ -115,12 +113,16 @@
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree').addClass('agree');
           var disagree = this.button(c, 'disagree').addClass('disagree');
+          
+          agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+          disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+          
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append($('<span class="agreed">' + c.agreed + ' agreed</span>'));
-            consensus_div.append($('<span class="disagreed">' + c.disagreed + ' disagreed</span>'));
+            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed</span>'));
+            consensus_div.append($('<span class="disagreed">' + c.disagreed + '&nbsp;disagreed</span>'));
           } else {
             consensus_div.append(agree);
             consensus_div.append(disagree);
@@ -157,7 +159,8 @@
       },
       // constructs a "reply" link
       buildLink       : function(c_id) {
-        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply &raquo;</button>');
+        var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply&nbsp;&raquo;</button>');
+        replyLink.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
@@ -219,7 +222,7 @@
     
     this.build = function (c) {
   		var c_id = this.dom.comment_id(c.feedback_id);
-      var rtn = $('<div></div>').css('width','100%');   // comment-block
+      var rtn = $('<div></div>');   // comment-block
       rtn.attr('id', c_id).addClass('thread');
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);

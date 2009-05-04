@@ -95,4 +95,5 @@ class ApplicationController < ActionController::Base
     value.gsub!(/[\r\n]/, replace_val)
     return value
   end
+  
 end
