@@ -20,8 +20,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#9FFFA3',
-      disagree_bg_color   : '#FF9F9F',
+      agree_bg_color      : '#33EE44',
+      disagree_bg_color   : '#FF3322',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
     	cform       				: "comment_form",
@@ -243,7 +243,7 @@
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
       content.append(options);
-      var tmp = this.consensus.build(c, content)
+      var tmp = this.consensus.build(c, bar);
       options.append(tmp);
       options.append(this.reply.buildLink(c_id));
       content.append($('<div></div>').addClass('cmt_text').append(c.content));
