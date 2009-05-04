@@ -17,7 +17,7 @@ version: 3.0.0pr2
 /* outermost wrapper for our widget */
 #outspokes {
   width: 100%;
-  background-color: #fcfcfc;
+  background-color: #CCC;
   position: fixed;
   bottom: 0px;
   left: 0px;
@@ -273,11 +273,12 @@ version: 3.0.0pr2
 
 #outspokes #topbar {
   cursor: pointer;
-  height: 28px; /* topbar height : must match variables topbar_height and topbar_int_height in fb.Interface*/
+  height: 27px; /* topbar height : must match variables topbar_height and topbar_int_height in fb.Interface*/
   line-height: 180%;
   background:#E0E0E0 url(/images/gradient-bg-tb.png) repeat-x scroll center bottom;
   color: #666;
-  padding-top: 4px;
+  padding-top: 5px;
+  border-bottom: 1px solid #AAA;
 }
 
 #outspokes #topbar select#comments_filter {
