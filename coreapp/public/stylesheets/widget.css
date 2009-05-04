@@ -159,15 +159,13 @@ version: 3.0.0pr2
   width: 100%;
 }
 
-#outspokes #comment_list .comment {
-  border-bottom: 1px solid #adadad;
-}
-
 #outspokes #comment_list .cmt_bar {
   background-color: #accfcc;
   height: 15px;
   padding: 3px .7em;
   cursor: pointer;
+  border: 1px solid #777;
+  border-width: 0px 0px 0px 1px;
 }
 
 #outspokes #comment_list .cmt_bar .targeted_icon {
@@ -185,6 +183,8 @@ version: 3.0.0pr2
   padding:.7em;
   background-color: white;
   -moz-border-radius-bottomleft:7px;
+  border: 1px solid #777;
+  border-width: 0px 0px 1px 1px;
 }
 
 #outspokes #comment_list .commenter_name {
