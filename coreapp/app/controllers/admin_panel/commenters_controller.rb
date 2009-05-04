@@ -6,11 +6,12 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
     @commenters_commented = []; @commenters_visited = []; @commenters_not_visited = [];
     @commenters.each do |commenter|
       if (commenter.last_visited_at)
-        if not commenter.feedbacks.empty?
+        if (commenter.feedbacks) and (not commenter.feedbacks.select { |fb| fb.page.site == @site }.empty? )
           @commenters_commented.push(commenter)
         else
           @commenters_visited.push(commenter)
         end
+
       else
         @commenters_not_visited.push(commenter)
       end
