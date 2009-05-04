@@ -266,6 +266,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_form .button {
+  font-weight: bold;
   margin-left: 2%;
 }
 
