@@ -9,7 +9,6 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
-  # validates_format_of :url, :with => URI.regexp(['.*'])
   validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
   validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
   validates_inclusion_of :allow_public_comments, :in => [true, false] # must be either public or private  
