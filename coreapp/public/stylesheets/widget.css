@@ -174,7 +174,7 @@ version: 3.0.0pr2
   width: 15px;
   height: 15px;
   float: left;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #outspokes #comment_list .targeted .cmt_bar .targeted_icon {

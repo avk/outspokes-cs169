@@ -226,8 +226,9 @@
       rtn.attr('id', c_id).addClass('thread');
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
-      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       bar.append($('<div></div>').addClass('targeted_icon'));
+      
+      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
