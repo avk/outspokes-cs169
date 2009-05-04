@@ -170,6 +170,17 @@ version: 3.0.0pr2
   cursor: pointer;
 }
 
+#outspokes #comment_list .cmt_bar .targeted_icon {
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-left: 10px;
+}
+
+#outspokes #comment_list .targeted .cmt_bar .targeted_icon {
+  background: url(/images/target-icon-small.png) no-repeat center center;
+}
+
 #outspokes #comment_list .cmt_content {
   padding:.7em;
   background-color: white;
