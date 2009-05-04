@@ -3,10 +3,9 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
   # GET /admin_panel/:site_id/commenters
   def index
     @commenters = @site.commenters.find(:all, :conditions => ["commenters.id != ?", @site.account_id])
-    @commenters_commented = Array.new; @commenters_visited = Array.new; @commenters_not_visited = Array.new;
+    @commenters_commented = @commenters_visited = @commenters_not_visited = []
     @commenters.each do |commenter|
-      # debugger
-      if(Feedback.find(:all, :conditions => ["commenter_id == ?", commenter.id]) && (not Feedback.find(:all, :conditions => ["commenter_id == ?", commenter.id]).select{|feedback| feedback.page.site == @site }.empty?))
+      if (commenter.feedbacks and (not commenter.feedbacks.select { |fb| fb.page.site == @site }.empty? ))
         @commenters_commented.push(commenter)
       elsif(commenter.last_visited_at)
         @commenters_visited.push(commenter)

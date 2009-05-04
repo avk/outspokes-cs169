@@ -25,11 +25,6 @@
           <%= commenter.email %> 
         <% end -%>
       </div>
-      <div class="commenter_comments" style="display:none;" id=commenter_comments_<%=commenter.id%> >
-      <%- Feedback.find(:all, :conditions => ["commenter_id == ?", commenter.id]).select{|feedback| feedback.page.site == @site }.each do |feedback| %>
-        <div class="feedback_snippet"><%= feedback.content[0, 50] %></div>
-      <%- end %>
-      </div>
     </li>
   <% end -%>
   </ol>
