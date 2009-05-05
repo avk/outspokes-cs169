@@ -47,11 +47,14 @@
     	}
     	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
       formHTML += form_header;
-      var form_buttons = 
-          '<div id="outspokes_form_buttons">' +
-          '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
-          '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>' +
-          '<input class="button" type="reset" value="Clear" />' +
+      var form_buttons =  '<div id="outspokes_form_buttons">'
+      if ( !_fb.admin() ) {
+        form_buttons += '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
+                        '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>';
+      } else {
+        form_buttons += '<input type="hidden" value="false" name="isPrivate" />'
+      }
+      form_buttons += '<input class="button" type="reset" value="Clear" />' +
           '<input class="button" type="submit" value="Post" /></div>';
       formHTML += form_buttons;
       var form_finish = 
