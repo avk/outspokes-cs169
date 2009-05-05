@@ -157,8 +157,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .thread {
-  margin: 0 5px 10px 5px;
-  width: 99%;
+  margin: 0 0 10px 5px;
 }
 #outspokes #comment_list .replies .thread {
   margin-bottom: 0;
@@ -202,6 +201,7 @@ version: 3.0.0pr2
 #outspokes #comment_list .commenter_name {
   font-weight: bold;
   float: left;
+  margin-right: 10px;
 }
 
 #outspokes #comment_list .cmt_date {
@@ -211,8 +211,9 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cmt_delete_X {
   color: red;
-  margin-left: 5px;
+  margin-left: 15px;
   font-weight: bold;
+
 }
 
 #outspokes #comment_list .cmt_text {

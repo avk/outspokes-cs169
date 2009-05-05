@@ -70,6 +70,7 @@ class Commenter < ActiveRecord::Base
   end
   
   def truncated_email
-    return (self.email.length >= 20) ? self.email.first(20) + '...' : self.email
+    shortened_email = self.email.split('@').first
+    return (shortened_email.length >= 20) ? shortened_email.first(20) + '...' : shortened_email
   end
 end
