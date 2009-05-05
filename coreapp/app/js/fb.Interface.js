@@ -269,7 +269,10 @@
       this.admin_panel.build(this.topbar);
     }
         
-    $('<div style="height: 250px;"></div>').appendTo($('body'));
+    // This div is for shifting the site's content up so the widget won't obscure it. However, the 
+    // height of this div must change depending on whether the widget is expanded or not. For now,
+    // it's static height.
+    $('<div id="widget_clear" style="height: 250px;"></div>').appendTo($('body'));
     
     this.main_window.appendTo($('body'));
 
