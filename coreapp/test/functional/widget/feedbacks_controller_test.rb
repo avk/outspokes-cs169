@@ -78,7 +78,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     
     assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
     feedback = invite.page.feedbacks.find(:all, :conditions => 
-               [ "private = false OR commenter_id = ?", invite.commenter_id ]).map { |f| f.json_attributes(invite.commenter) }
+               [ "private = ? OR commenter_id = ?", false, invite.commenter_id ]).map { |f| f.json_attributes(invite.commenter) }
 
     get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url,
         :callback => callback
