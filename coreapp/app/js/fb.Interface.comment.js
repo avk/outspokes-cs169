@@ -50,7 +50,7 @@
       var form_buttons =  '<div id="outspokes_form_buttons">'
       if ( !_fb.admin() ) {
         form_buttons += '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
-                          '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>';
+                        '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>';
       } else {
         form_buttons += '<input type="hidden" value="false" name="isPrivate" />'
       }
