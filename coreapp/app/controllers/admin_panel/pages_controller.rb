@@ -18,7 +18,7 @@ class AdminPanel::PagesController < AdminPanel::AdminController
   
   def search
     @pages = @site.pages_with_latest_feedback
-    unless params[:search].length == 0
+    unless params[:search].empty?
       terms = params[:search].split( / *"(.*?)" *| / )
       @search_feedbacks = Hash.new
       @pages.each do |page|

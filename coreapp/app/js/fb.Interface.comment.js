@@ -47,11 +47,14 @@
     	}
     	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
       formHTML += form_header;
-      var form_buttons = 
-          '<div id="outspokes_form_buttons">' +
-          '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
-          '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>' +
-          '<input class="button" type="reset" value="Clear" />' +
+      var form_buttons =  '<div id="outspokes_form_buttons">'
+      if ( !_fb.admin() ) {
+        form_buttons += '<div id="private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
+                        '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>';
+      } else {
+        form_buttons += '<input type="hidden" value="false" name="isPrivate" />'
+      }
+      form_buttons += '<input class="button" type="reset" value="Clear" />' +
           '<input class="button" type="submit" value="Post" /></div>';
       formHTML += form_buttons;
       var form_finish = 
@@ -235,10 +238,21 @@
   		var c_id = this.dom.comment_id(c.feedback_id);
       var rtn = $('<div></div>');   // comment-block
       rtn.attr('id', c_id).addClass('thread');
+      
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
-      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       bar.append($('<div></div>').addClass('targeted_icon'));
+      
+      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      
+      // snippet
+      var snippet_length = 100;
+      var snippet = c.content;
+      if (c.content.length > snippet_length) { // shorten if needed
+        snippet = snippet.substring(0, snippet_length) + '...';
+      }
+      bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
+      
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
@@ -265,8 +279,8 @@
       comment.append(bar).append(content);
       rtn.append(comment).append(replies);
       bar.click(function() {
-        $(this).find('div').toggle();
         $(this).parent().parent().find('div.cmt_content:eq(0), div.replies:eq(0)').toggle();
+        $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
       });
       
       // bind the comment to its target
@@ -276,6 +290,7 @@
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
         rtn.addClass('targeted');
+        rtn.find('.snippet').before($('<div></div>').addClass('targeted_icon'));
       }
       return rtn;
     };

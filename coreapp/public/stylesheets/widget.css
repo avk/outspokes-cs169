@@ -11,7 +11,7 @@ version: 3.0.0pr2
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 120%;
-  z-index: 9999;
+  z-index: 999;
 }
 
 /* outermost wrapper for our widget */
@@ -173,11 +173,18 @@ version: 3.0.0pr2
   border-width: 0px 0px 0px 1px;
 }
 
+#outspokes #comment_list .cmt_bar .snippet {
+  color: #555555;
+  display: inline;
+  font-style: italic;
+  padding-left: 5px;
+}
+
 #outspokes #comment_list .cmt_bar .targeted_icon {
   width: 15px;
   height: 15px;
   float: left;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #outspokes #comment_list .targeted .cmt_bar .targeted_icon {

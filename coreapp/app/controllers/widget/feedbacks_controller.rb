@@ -1,4 +1,5 @@
 class Widget::FeedbacksController < Widget::WidgetController
+  
   before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page, :destroy]
   before_filter :authorize
   
@@ -20,7 +21,7 @@ class Widget::FeedbacksController < Widget::WidgetController
             feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
           elsif
             feedback = page.feedbacks.find(:all, :conditions => 
-                       [ "private = false OR commenter_id = ?", @commenter.id ]).map { |f| f.json_attributes(@commenter) }
+                       [ "private = ? OR commenter_id = ?", false, @commenter.id ]).map { |f| f.json_attributes(@commenter) }
           end
         end
       else
