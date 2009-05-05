@@ -223,7 +223,6 @@
       $("#bubble").hide();
       
     });
-
     this.main_window.append(this.topbar);
     this.main_window.append($('<div style="clear:both;"></div>'));
 
@@ -269,6 +268,8 @@
     if (_fb.admin()) {
       this.admin_panel.build(this.topbar);
     }
+        
+    $('<div style="height: 250px;"></div>').appendTo($('body'));
     
     this.main_window.appendTo($('body'));
 
