@@ -1,8 +1,10 @@
-<p><%= @account_email %> has invited you to give feedback on <%= @name %>.</p>
+<p><%= @account_email %> has invited you to give feedback on "<%= @name %>."</p>
 
-<p>Please follow the link below to give feedback!</p>
+<p>Please follow the link below to your friend's site to give feedback!</p>
 
 <%= link_to @url, @url %>
+
+<p>This is all powered by <%= link_to "Outspokes", WIDGET_DOMAIN %>. While we're in alpha, we highly recommend using <a href="http://getfirefox.com">Mozilla Firefox</a> to give feedback.</p>
 
 <p>Thanks,<br />
 The Outspokes Team</p>
