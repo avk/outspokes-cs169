@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-
 class Widget::OpinionsControllerTest < ActionController::TestCase
   
   def setup

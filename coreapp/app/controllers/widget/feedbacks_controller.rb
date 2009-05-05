@@ -1,4 +1,5 @@
 class Widget::FeedbacksController < Widget::WidgetController
+  
   before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page, :destroy]
   before_filter :authorize
   
