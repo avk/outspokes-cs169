@@ -12,10 +12,10 @@ class Widget::SourceController < Widget::WidgetController
         fb.Common.js
         fb.Interface.js
         fb.Interface.comment.js
-        fb.Interface.page_edit.js
+        fb.Interface.user_style.js
         fb.Feedback.js
         fb.Comment.js
-        fb.PageEdit.js
+        fb.UserStyle.js
       )
       @ordered_files.map! { |f| (RAILS_ROOT + '/app/js/' + f).to_s }
       if(@site)
