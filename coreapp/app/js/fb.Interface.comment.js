@@ -24,7 +24,7 @@
       disagree_bg_color   : '#FF3322',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
-    	cform       				: "comment_form",
+      cform               : "comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';
       },
@@ -241,7 +241,6 @@
       
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
-      bar.append($('<div></div>').addClass('targeted_icon'));
       
       bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       
@@ -290,7 +289,7 @@
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
         rtn.addClass('targeted');
-        rtn.find('.snippet').before($('<div></div>').addClass('targeted_icon'));
+        rtn.find('.commenter_name').before($('<div></div>').addClass('targeted_icon'));
       }
       return rtn;
     };
