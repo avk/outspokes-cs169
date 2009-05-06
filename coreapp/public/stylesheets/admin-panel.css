@@ -68,14 +68,13 @@ body {
 #invited_message,
 #pages_message {
   color: #666;
-  font-size: 1.2em;
+  font-size: 1.4em;
   margin: 5px 0;
   padding: 0;
 }
 #invited_message #invite_count,
 #pages_message #page_count {
   color: #333;
-  font-size: 1.2em;
   font-weight: bold;
 }
 
@@ -86,28 +85,35 @@ body {
 
 .invited_commenter,
 .site_page {
-  font-size: 1.5em;
-  padding: 5px;
+  font-size: 1.4em;
+  padding-left:10px ;
 }
 .invited_commenter:hover,
 .site_page:hover {
   background-color: #eee;
 }
+.commenter_details {
+  padding-left: 10px;
+  font-size: .8em;
+}
+.commenter_details:hover {
+  background-color: white;
+}
 
 .commenter_email,
 .page_details {
-  padding-left: 10px;
+  padding-left: 1;
 }
 .page_details .latest_feedback {
   color: #999;
   display: block;
-  font-size: 60%;
+  font-size: .6em;
 }
 
 .remove_commenter,
 .remove_page {
   float: right;
-  width: 50px;
+  width: 20px;
 }
 .remove_commenter a,
 .remove_commenter a:link,

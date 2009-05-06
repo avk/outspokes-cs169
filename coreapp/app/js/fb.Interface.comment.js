@@ -246,7 +246,7 @@
       bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       
       // snippet
-      var snippet_length = 100;
+      var snippet_length = 75;
       var snippet = c.content;
       if (c.content.length > snippet_length) { // shorten if needed
         snippet = snippet.substring(0, snippet_length) + '...';
