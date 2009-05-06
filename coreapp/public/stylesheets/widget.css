@@ -202,19 +202,19 @@ version: 3.0.0pr2
   font-weight: bold;
   float: left;
   margin-right: 10px;
-  width: 160px;
+  width: 17em;
 }
 
 #outspokes #comment_list .cmt_date {
   font-size: 0.8em;
   float: right;
-  width: 100px;
-  text-align: left;
+  width: 150px;
+  text-align: right;
 }
 
 #outspokes #comment_list .cmt_delete_X {
   color: red;
-  margin-left: 15px;
+  margin-left: 10px;
   font-weight: bold;
 
 }
