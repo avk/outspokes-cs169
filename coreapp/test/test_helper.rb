@@ -161,16 +161,16 @@ class Test::Unit::TestCase
     Opinion.create(valid_options_for_opinion.merge(options))
   end
   
-  # Page Edits
+  # User Style
   
-  def valid_options_for_page_edit
+  def valid_options_for_user_style
     page = pages(:one)
     commenter = commenters(:one)
     { :page_id => page.id, :commenter_id => commenter.id, :changeset => {"copy" => {},"styles" => {}}.to_json }
   end
   
-  def create_page_edit(options={})
-    PageEdit.create(valid_options_for_page_edit.merge(options))
+  def create_user_style(options={})
+    UserStyle.create(valid_options_for_user_style.merge(options))
   end
   
   

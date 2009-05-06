@@ -1,4 +1,4 @@
-class PageEdit < Feedback
+class UserStyle < Feedback
   
   belongs_to :commenter
   belongs_to :page
