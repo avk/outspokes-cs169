@@ -7,7 +7,7 @@
 </p>
 
 <%- unless @commenters_commented.empty? -%>
-<p>Gave Feedback</p>
+<span>Gave Feedback</span>
 <ol id="site_commenters_commented">
   <%- @commenters_commented.each do |commenter| -%>
     <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
