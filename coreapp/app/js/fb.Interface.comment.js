@@ -24,7 +24,7 @@
       disagree_bg_color   : '#FF3322',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
-    	cform       				: "comment_form",
+      cform               : "comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';
       },
@@ -241,10 +241,11 @@
       
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
+      
       bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       
       // snippet
-      var snippet_length = 100;
+      var snippet_length = 75;
       var snippet = c.content;
       if (c.content.length > snippet_length) { // shorten if needed
         snippet = snippet.substring(0, snippet_length) + '...';
@@ -288,7 +289,7 @@
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
         rtn.addClass('targeted');
-        rtn.find('.snippet').before($('<div></div>').addClass('targeted_icon'));
+        rtn.find('.commenter_name').before($('<div></div>').addClass('targeted_icon'));
       }
       return rtn;
     };

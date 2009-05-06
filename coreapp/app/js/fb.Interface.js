@@ -223,7 +223,6 @@
       $("#bubble").hide();
       
     });
-
     this.main_window.append(this.topbar);
     this.main_window.append($('<div style="clear:both;"></div>'));
 
@@ -273,6 +272,7 @@
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
+    this.page_edit = new fb.Interface.page_edit(this);
 
     fb.Interface.instantiated = true;  
   };

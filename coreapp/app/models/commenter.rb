@@ -1,7 +1,7 @@
 class Commenter < ActiveRecord::Base
 
   has_many :invites, :dependent => :destroy
-  has_many :pages, :through => :invites
+  has_many :pages, :through => :invites # pages invited to, not pages commented on
   has_many :feedbacks, :dependent => :destroy
   has_many :opinions, :dependent => :destroy
 
@@ -69,7 +69,16 @@ class Commenter < ActiveRecord::Base
     end
   end
   
+  def feedbacks_for_page(page_id)
+    self.feedbacks.select {|f| f.page_id == page_id }
+  end
+  
+  def commented_pages
+    feedbacks.find(:all, :include => :page).map {|f| f.page }  
+  end  
+  
   def truncated_email
-    return (self.email.length >= 20) ? self.email.first(20) + '...' : self.email
+    shortened_email = self.email.split('@').first
+    return (shortened_email.length >= 15) ? shortened_email.first(15) + '...' : shortened_email
   end
 end
