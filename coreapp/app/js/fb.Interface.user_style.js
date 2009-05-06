@@ -1,6 +1,6 @@
   var $ = fb.$;
 
-  fb.Interface.page_edit = function (self) {
+  fb.Interface.user_style = function (self) {
     
     // Common identifiers used in this interface
     this.dom = {
