@@ -138,16 +138,12 @@
     this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
     
-    /*logo link*/
-    
-    var logo_img = fb.env.logo_address;
-    var logo_lnk = fb.env.base_domain;
-    
-    var logo = $('<a href="' + logo_lnk + '" target="_blank"></a>');
-    logo.append('<img src="' +  logo_img  + '" alt="outspokes" />');
+    // Logo
+    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank"></a>');
+    logo.append('<img src="' + fb.env.logo_address + '" alt="outspokes" />');
     logo.attr('id', 'logo');
-    
     topbarLeft.append(logo);
+    
     var comment_count = $('<span></span>');
     comment_count.attr('id', this.dom.widget.comment_count);
     // Singular "Comment" for one comment
