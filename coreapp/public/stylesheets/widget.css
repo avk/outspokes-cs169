@@ -355,6 +355,8 @@ version: 3.0.0pr2
 #outspokes #topbar #help {
   float: right;
   margin-right: 2%;
+  position: relative;
+  top: 2px;
 }
 
 /* Topbar Left */
