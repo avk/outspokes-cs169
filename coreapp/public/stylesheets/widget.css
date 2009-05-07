@@ -297,7 +297,7 @@ version: 3.0.0pr2
   border-bottom: none;
   cursor: pointer;
   float: right;
-  left: 3px;
+  left: 1px;
   margin-top: -2px;
   padding: 2px 7px 6px 7px;
   position: relative;
@@ -356,6 +356,7 @@ version: 3.0.0pr2
   float: right;
   margin-right: 2%;
   position: relative;
+  right: 6px;
   top: 2px;
 }
 
