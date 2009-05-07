@@ -7,30 +7,33 @@
 </p>
 
 <%- unless @commenters_commented.empty? -%>
-<span>Gave Feedback</span>
-<ol id="site_commenters_commented">
+<ul id="site_commenters_commented" class="site_commenters">
+  <p>Gave Feedback</p>
+
   <%- @commenters_commented.each do |commenter| -%>
     <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
 <% end -%>
-</ol>
+</ul>
 <%- end -%>
 
 <%- unless @commenters_visited.empty? -%>
-<p>Visited</p>
-<ol id="site_commenters_visited">
+<ul id="site_commenters_visited" class="site_commenters">
+  <p>Visited</p>
+  
   <%- @commenters_visited.each do |commenter| -%>
     <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
   <% end -%>
-</ol>
+</ul>
 <%- end -%>
 
 <%- unless @commenters_not_visited.empty? -%>
-<p>Didn't Visit Yet</p>
-<ol id="site_commenters_not_visited">
+<ul id="site_commenters_not_visited" class="site_commenters">
+  <p>Didn't Visit Yet</p>
+  
   <%- @commenters_not_visited.each do |commenter| -%>
     <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
   <% end -%>
-</ol>
+</ul>
 <%- end -%>
 
 
@@ -38,7 +41,7 @@
   <legend>Invite <%= (@total_commenters == 0) ? 'some' : 'more' %> folks</legend>
 
   <% form_tag admin_panel_invite_path(@site) do %>
-    <%= label_tag 'emails', "Comma-separated emails" %><br />
+    <%= label_tag 'emails', "Separate each email with commas" %><br />
     <%= text_area_tag :emails %><br />
     <%= submit_tag 'Invite' %>
   <% end %>
