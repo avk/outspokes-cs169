@@ -27,9 +27,7 @@
         <%= prettier_time Time.parse(page.latest_feedback) %>
       </span>
       <div class="search_match">
-        <%- if @search_feedbacks && @search_feedbacks[page.id] -%>
-        <% debugger %>
-        
+        <%- if @search_feedbacks && @search_feedbacks[page.id] -%>        
           <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
             <p>
             <%= (matching_feedback.commenter.truncated_email + ' - ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50]%>

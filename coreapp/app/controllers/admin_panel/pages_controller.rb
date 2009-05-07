@@ -30,6 +30,6 @@ class AdminPanel::PagesController < AdminPanel::AdminController
       end
       flash[:warning] = "No search results found for '#{terms}'" if @search_feedbacks.empty?
     end
-    redirect_to :action => :index
+    render :action => :index
   end
 end
