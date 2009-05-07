@@ -70,7 +70,8 @@
       $(this)[0].value = "Change target";
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-        $('#outspokes_target_button').css("background-color", "orange");
+        $('#outspokes_target_button').addClass('target_set');
+        $('#outspokes_form_header').find('span').text('Targeted Comment');
       })
     });
     this.form.find("#outspokes_form_header").prepend(target_button);
@@ -362,8 +363,8 @@
       delete old_element.get(0)["__old_style"];
       // Reset form target
       fb.i.comment.form.find("input[name='target']").attr("value","html");
-      // Remove orange background on target
-      $('#outspokes_target_button').css("background-color", "");
+      $('#outspokes_target_button').removeClass('target_set');
+      $('#outspokes_form_header').find('span').text('Comment');
     };
     
   };
