@@ -19,7 +19,7 @@
         <%- if @search_feedbacks && @search_feedbacks[page.id] -%>
           <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
             <p>
-            <%= (matching_feedback.commenter.email + ' - ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50]%>
+            <%= (matching_feedback.commenter.truncated_email + ': ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50] + "..."%>
             </p>
           <%- end -%>
         <%- end -%>

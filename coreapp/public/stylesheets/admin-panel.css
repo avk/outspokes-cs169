@@ -64,6 +64,13 @@ body {
 }
 
 /* pages & commenters */
+
+.even {
+  background-color: white; }
+
+.odd {
+  background-color: #accfcc; }
+  
 #invited_message,
 #pages_message {
   color: #666;

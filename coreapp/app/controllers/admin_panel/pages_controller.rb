@@ -19,7 +19,7 @@ class AdminPanel::PagesController < AdminPanel::AdminController
   def search
     @search_feedbacks = {}
     @pages = @site.pages_with_latest_feedback
-    unless params[:search].empty?
+    unless params[:search].empty? or params[:search] == "Search Feedback"
       terms = params[:search].split( / *"(.*?)" *| / )
       @pages.each do |page|
         @search_feedbacks[page.id] = Feedback.find_all_by_page_id(page.id)
