@@ -10,21 +10,21 @@
     if (!_fb.authorized()) {
       return false;
     }
-
+    
     this.dom = {
       widget  : { 
         wrapper : 'outspokes',
         header  : 'topbar',
         headerLeft : 'topbarLeft',
         content : 'widget_content',
+        edits : 'widget_edits',
         help : 'help',
         help_content: 'help_content',
-        toggle: 'toggle',
         contact: 'contactus',
-        comment_count : 'comment-count',
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
         height : '250px',
+        navigation : 'navigation'
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -34,32 +34,239 @@
         overlay : 'outspokes_overlay',
       },
     }
-    var dom = this.dom;
+    
+    this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+    
+    
+    // WIDGET DISPLAYING //////////////////////////////////////////////////////////////////
+    
+    this.is_widget_minimized = function() {
+      return (this.main_window.height() === this.dom.widget.topbar_int_height) ? true : false;
+    }
+    
+    this.is_widget_maximized = function() {
+      return !this.is_widget_minimized();
+    }
+    
+    this.toggle_widget = function() {
+      if (this.is_widget_minimized()) {
+        this.show_widget();
+      } else {
+        this.hide_widget();
+      }
+    }
+    
+    this.show_widget = function() {
+      this.main_window.animate( 
+        { height : this.dom.widget.height }, 
+        { duration : 250 } 
+      );
+      // should only display the sort menu for the current navigation link
+      this.nav.current.find('select').show();
+    }
+    
+    this.hide_widget = function() {
+      this.main_window.animate( 
+        { height : this.dom.widget.topbar_height }, 
+        { duration : 250 } 
+      );
+      // hide the sort menu for all navigation links, 
+      // since it doesn't have any visible effect when the widget's collapsed
+      for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
+        this.nav.elements.list[which_element].find('select').hide();
+      }
+    }
+    
+    
+    
+    // TOPBAR //////////////////////////////////////////////////////////////////
+    
+    this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
+    this.topbar.click(function() { fb.i.toggle_widget(); });
+    
+    var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
+    this.topbar.append(topbarLeft);
+    
+    // Logo
+    var logo = $('<a href="' + fb.env.base_domain + '" target="_blank"></a>');
+    logo.append('<img src="' + fb.env.logo_address + '" alt="outspokes" />');
+    logo.attr('id', 'logo');    
+    // clicking on the logo shouldn't toggle the widget:
+    logo.click( function(e) { e.stopPropagation(); } );
+    topbarLeft.append(logo);
+    
+    
+    
+    // NAVIGATION //////////////////////////////////////////////////////////////////
+    
+    this.nav = {
+      /*
+        TO ADD A NEW NAVIGATION ELEMENT: 
+        add an entry to elements.labels, elements.counts, and elements.content
+      */
+      
+      // because this.dom is inaccessible below
+      dom : this.dom,
+      // DOM element representing navigation bar (initialized by build)
+      bar : null, 
+      // where the user has navigated to
+      current : null,
+      // equivalent to navigating to a specific element:
+      setCurrent : function(which_element) {
+        if (this.current) {
+          this.current.removeClass('outspokes-current');
+        }
+        this.current = this.elements.list[which_element];
+        this.current.addClass('outspokes-current');
+      },
+      
+      // ordered set of navigation elements:
+      elements : {
+        // ordered set of DOM elements
+        list : [],
+        // the ***singular*** text content of the label
+        // same order as list of elements
+        labels : [
+          'Comment',
+          'Edit'
+        ],
+        // the number of feebdacks under this navigation element
+        // same order as list of elements
+        counts : [
+          fb.getProperties(fb.Comment.all).length,
+          0 // fb.getProperties(fb.UserStyle.all).length
+        ],
+        // which content the navigation elements correspond to,
+        // these reference variable names in this class (fb.Interface)
+        // same order as list of elements
+        content : [
+          "widget_content",
+          "edits"
+        ],
+        /*
+        clicking on an element:
+          makes it the current element
+          shows it's content
+          shows it's sort menu
+          hides the content of all the other elements
+          hides the sort menus of all the other elements
+        */
+        click : function(clicked_element, event) {
+          for (var which_element = 0; which_element < fb.i.nav.elements.content.length; which_element++) {
+            var content = fb.i[ fb.i.nav.elements.content[which_element] ];
+            if (clicked_element === fb.i.nav.elements.list[which_element][0]) {
+              fb.i.nav.setCurrent(which_element);
+              fb.i.nav.elements.list[which_element].find('select').show();
+              content.show();
+            } else {
+              content.hide();
+              fb.i.nav.elements.list[which_element].find('select').hide();
+            }
+          }
+        }
+      },
+      
+      // creates the bar and returns it
+      build : function() {
+        this.bar = $('<ul></ul>');
+        this.bar.addClass(this.dom.widget.navigation);
+        this.bar.click( function(e) { 
+          // if the widget is open, don't collapse it
+          if (fb.i.main_window.height() > fb.i.dom.widget.topbar_int_height) {
+            e.stopPropagation();
+          }
+        });
+        
+        // builds each element, labels it, and attaches a uniform onclick handler
+        for (var which_element = 0; which_element < this.elements.labels.length; which_element++) {
+          var element = $('<li></li>');
+          element.append('<span></span>'); // for the text label
+          
+          // set_label_count depends on element being in this.elements.list:
+          this.elements.list.push(element);
+          this.set_label_count( this.elements.counts[which_element], which_element );
+          
+          element.click( function(e) { fb.i.nav.elements.click(this, e) });
+          this.bar.append(element);
+        }
+        // set first navigation element to current
+        this.setCurrent(0);
+        
+        return this.bar;
+      },
+      // sets a navigation element label
+      // which_element is an index into this.elements
+      set_label_count : function(count, which_element) {
+        var new_label = count + ' ' + this.elements.labels[which_element];
+        if (count !== 1) {
+          new_label += 's';
+        }
+        this.elements.list[which_element].find('span').text(new_label);
+      }
+    }
+    topbarLeft.append(this.nav.build());
+    
+    this.set_num_comments = function(num_comments) {
+      fb.i.nav.set_label_count(num_comments, 0); // Comments is the first navigation tab
+    }
+    
+    
+    
+    // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
+    
+    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');    
+    sort_dropdown.click(function(e) {
+      e.stopPropagation(); // Don't trigger outspokes minimize when clicking on dropdown
+    });
+    
+    sort_dropdown.children().eq(0).click(function(e) {
+      fb.i.comment.sort_by_newest();
+    });
+    sort_dropdown.children().eq(1).click(function(e) {
+      fb.i.comment.sort_by_oldest();
+    });
+    
+    this.nav.elements.list[0].append(sort_dropdown);
+
+
+
+    // HELP LINK //////////////////////////////////////////////////////////////////
+
+    this.help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
+    this.help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
+    
+    // the help link will behave like the other navigation links (part 1):
+    this.nav.elements.list.push(this.help_link);
+    this.nav.elements.content.push('help_content'); // refers to this.help_content
+    
+    this.help_link.click(function(e) {
+      // the help link will behave like the other navigation links (part 2):
+      fb.i.nav.elements.click(this, e);
+      
+      // don't toggle the widget if it's maximized because you want to read help content
+      if (fb.i.is_widget_maximized()) {
+        e.stopPropagation();
+      }
+    });
+    this.topbar.append(this.help_link);
+    
+    
+    
+    // ADMIN PANEL //////////////////////////////////////////////////////////////////
     
     this.admin_panel = {
       dom   : this.dom,
-      build : function(widget) {
+      build : function() {
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
-        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
-                
-        close_link.click(function(e) {
-          
-          var content = fb.i.widget_content;
-          var widget = fb.i.main_window;
-          var help = fb.i.help_content;
-          
-          //opening widget
-          
-          widget.animate( { height:dom.widget.height }, { duration:250 } );
-          help.addClass("hide"); //always make sure help is hidden before showing content
-          sort_dropdown.show();
-          content.show();
-          
-          fb.i.admin_panel.hide();
-        });
         
+        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);        
+        close_link.click(function(e) {
+          fb.i.admin_panel.hide();
+          fb.i.show_widget();
+        });        
         admin_panel.append(close_link);
+        
         var iframe = $('<iframe>Your browser does not support iframes.</iframe>');
         iframe.attr({
           id : this.dom.admin.iframe,
@@ -76,23 +283,15 @@
 
         // to open the panel from the widget
         var open_link = $('<a href="#">Admin Panel</a>').attr('id',this.dom.admin.open);
-
         open_link.click(function(e) {
-          
-          var content = fb.i.widget_content;
-          var widget = fb.i.main_window;
-          
-          //closing widget
-          
-          widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
-          sort_dropdown.hide();
-          content.hide();
+          // don't toggle the widget if I'm opening the admin panel, just hide it
+          e.stopPropagation();
+          fb.i.hide_widget();
           
           fb.i.admin_panel.show();
-          e.stopPropagation();
         });
         
-        widget.append(open_link);
+        return open_link;
       },
       show : function() {
         $('#' + fb.i.dom.admin.panel).show();
@@ -107,128 +306,44 @@
       }
     }
     
-    this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
+    if (_fb.admin()) {
+      this.topbar.append(this.admin_panel.build());
+    }
+    
+    
+    
+    // FIRST VISIT //////////////////////////////////////////////////////////////////
     
     if (fb.env.first_visit) {
-        //widget minimized on first visit
-        this.main_window.css({'height':dom.widget.topbar_height});
-        $('#' + this.dom.widget.content).hide();
+      this.hide_widget();
       
-      if (!_fb.admin()) { //first time commenter to see intro bubble
-        
+      if (!_fb.admin()) { // only commenters see the intro on their first visit        
         var intro_bubble = $('<div></div>').attr('id','bubble');
         
-        var intro_bubble_content = "<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
-        "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
-        " that other people have left and leave your own!<br />Happy commenting!</p>";
-        var close_intro_bubble = $('<a href="#" id="close_intro">X</a>');
-
-        close_intro_bubble.click(function(){ $("#bubble").hide(); });
-
-        intro_bubble.append(close_intro_bubble);
-        intro_bubble.append(intro_bubble_content);
+        var close_bubble = function() { $("#bubble").hide(); }
+        var close_bubble_link = $('<a href="#">X</a>').attr('id','close_intro');
+        close_bubble_link.click( close_bubble );
+        intro_bubble.append(close_bubble_link);
+        
+        intro_bubble.append("<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
+          "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
+          " that other people have left and leave your own!<br />Happy commenting!</p>");
+        
+        // the bubble should be closed when clicking on the following:
+        this.topbar.click( close_bubble );
+        this.help_link.click( close_bubble );
         
         this.main_window.append(intro_bubble);
-      } 
+      }
     } else {
-      $("#bubble").hide();
-      this.main_window.css({'height':dom.widget.height});
+      this.show_widget();
     }
-
-    this.topbar = $('<div></div>').attr('id',this.dom.widget.header);
-    var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
     
-    /*logo link*/
     
-    var logo_img = fb.env.logo_address;
-    var logo_lnk = fb.env.base_domain;
     
-    var logo = $('<a href="' + logo_lnk + '" target="_blank"></a>');
-    logo.append('<img src="' +  logo_img  + '" alt="outspokes" />');
-    logo.attr('id', 'logo');
+    // HELP VIEW //////////////////////////////////////////////////////////////////
     
-    topbarLeft.append(logo);
-    var comment_count = $('<span></span>');
-    comment_count.attr('id', this.dom.widget.comment_count);
-    // Singular "Comment" for one comment
-    this.set_num_comments = function(num_comments) {
-      var comments_text = num_comments == 1 ? " Comment" : " Comments";
-      comment_count.text(num_comments + comments_text);
-    }
-    this.set_num_comments(fb.getProperties(fb.Feedback.all).length);
-    topbarLeft.append(comment_count);
-    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');// +
-//      '<option>mine</option><option>targeted</option><option>consensus</option></select>');
-    sort_dropdown.children().eq(0).click(function(e) {
-      fb.i.comment.sort_by_newest();
-      e.stopPropagation();
-    });
-    // Don't trigger outspokes minimize when clicking on dropdown
-    sort_dropdown.click(function(e) {
-      e.stopPropagation();
-    });
-    sort_dropdown.children().eq(1).click(function(e) {
-      fb.i.comment.sort_by_oldest();
-      e.stopPropagation();
-    });
-    topbarLeft.append(sort_dropdown);
-    this.topbar.append(topbarLeft);
-
-    var help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
-    help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
-    
-    help_link.click(function(e) {
-      var content = fb.i.widget_content;
-      var help = fb.i.help_content;
-      var widget = fb.i.main_window;
-      
-      if (widget.height() == dom.widget.topbar_int_height) { //if collapsed show entire widget
-        widget.animate( { height: dom.widget.height }, { duration:250 } );
-        content.hide();
-        help.removeClass("hide");
-      } else {  //otherwise just toggle the content
-
-        help.toggleClass("hide");
-        if (content.css('display') == 'none') {
-          sort_dropdown.show();
-          content.show();
-        } else {
-          sort_dropdown.hide();
-          content.hide();
-        }
-      }
-      
-      $("#bubble").hide();
-      
-      e.stopPropagation();
-    });
-    this.topbar.append(help_link);
- 
-    this.topbar.click(function() {
-      var content = fb.i.widget_content;
-      var help = fb.i.help_content;
-      var widget = fb.i.main_window;
-      
-      if (widget.height() == dom.widget.topbar_int_height ) {
-        widget.animate( { height:dom.widget.height }, { duration:250 } );
-        help.addClass("hide"); //always make sure help is hidden before showing content
-        sort_dropdown.show();
-        content.show();
-      } else {
-        widget.animate( { height:dom.widget.topbar_height }, { duration:250 } );
-        sort_dropdown.hide();
-        content.hide();
-      }
-      
-      $("#bubble").hide();
-      
-    });
-    this.main_window.append(this.topbar);
-    this.main_window.append($('<div style="clear:both;"></div>'));
-
-    this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
     this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
-    
     var help_copy = "<h2>About</h2>" +
 
     "<p>Outspokes is the brainchild of a group of UC Berkeley CS 169 students." +
@@ -258,25 +373,24 @@
     "<p>Agreeing/disagreeing with a comment gives the person who requested feedback " +
     "information about whether other commenters generally agree or disagree with a comment that another commenter has left.  " +
     "Please note, once you have agreed or disagreed with a comment, you cannot change your vote.</p>";
-    
     this.help_content.append(help_copy);
-    
     this.help_content.addClass("hide");
 
+
+    // WRAPUP //////////////////////////////////////////////////////////////////
+
+    this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
+    this.edits = $('<div></div>').attr('id',this.dom.widget.edits).hide();
+
+    this.main_window.append(this.topbar);
+    this.main_window.append($('<div style="clear:both;"></div>'));
     this.main_window.append(this.widget_content);
+    this.main_window.append(this.edits);
     this.main_window.append(this.help_content);
-    if (_fb.admin()) {
-      this.admin_panel.build(this.topbar);
-    }
-        
-    // This div is for shifting the site's content up so the widget won't obscure it. However, the 
-    // height of this div must change depending on whether the widget is expanded or not. For now,
-    // it's static height.
-    $('<div id="widget_clear" style="height: 250px;"></div>').appendTo($('body'));
-    
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
+    // this.user_style = new fb.Interface.user_style(this);
 
     fb.Interface.instantiated = true;  
   };
