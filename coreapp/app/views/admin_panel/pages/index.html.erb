@@ -11,5 +11,35 @@
 </h1>
 
 <%- unless @pages.empty? -%>
-<%= render :partial => 'index_pages', :locals => {}%>
+<ol id="site_pages">
+  <%- if flash[:warning] -%><div id="warning"><%= flash[:warning] %></div><%- end -%>
+  
+<%- @pages.each do |page| -%>
+  <li class="site_page">
+    <div class="remove_page">
+      <%= link_to 'x', 
+          admin_panel_delete_site_page_path(@site, @site.validation_token, page), 
+          :confirm => "This will remove all of the feedback on this page. Are you sure?", 
+          :method => :delete %>
+    </div>
+    <div class="page_details">
+      <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %>
+      <span class="latest_feedback">
+        <%= relative_date Date.parse(page.latest_feedback) %> @ 
+        <%= prettier_time Time.parse(page.latest_feedback) %>
+      </span>
+      <div class="search_match">
+        <%- if @search_feedbacks && @search_feedbacks[page.id] -%>
+          <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
+            <p>
+            <%= (matching_feedback.commenter.email + ' - ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50]%>
+            </p>
+          <%- end -%>
+        <%- end -%>
+      </div>
+    </div>
+  </li>
+<%- end -%>
+</ol>
+<%#= render :partial => 'index_pages', :locals => {}%>
 <% end -%>

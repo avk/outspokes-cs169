@@ -272,7 +272,7 @@
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
-    this.user_style = new fb.Interface.user_style(this);
+    // this.user_style = new fb.Interface.user_style(this);
 
     fb.Interface.instantiated = true;  
   };

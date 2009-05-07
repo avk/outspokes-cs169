@@ -131,8 +131,8 @@
 
 //  NOTE: Uncomment these lines to make this interface take over the widget_content div
 //    (this is a workaround since the rest of the interface doesn't exist).
-//    self.widget_content.empty();
-//    self.widget_content.append(page_edit_new);
+   // self.widget_content.empty();
+   // self.widget_content.append(page_edit_new);
     
   };
   

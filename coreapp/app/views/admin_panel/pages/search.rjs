@@ -2,4 +2,4 @@ if flash[:warning]
   page.replace_html :warning, flash[:warning]
 end
 flash.discard
-render :partial => "index_pages"
+render :action => :index
