@@ -14,14 +14,18 @@ class UserStyle < Feedback
     
     jsonStyle.gsub!(/:eq/, "")
     jsonStyle.gsub!(/[>() ]/, "")
+    filename = "stylefile.css"
     
     cssStyle = JSON.parse jsonStyle #hash object with keys are classes
-
+    
+    f = File.new(filename, "w")
+    
     cssStyle.each_pair {
-      |k, v| puts ".#{k} \{";
-      v.each_pair {|k2, v2| puts "\t#{k2}: #{v2};\n" };
-      puts "\}";
+      |k, v| f.write(".#{k} \{");
+      v.each_pair {|k2, v2| f.write("\t#{k2}: #{v2};\n") };
+      f.write("\}");
     }
+    
     
   end
   
