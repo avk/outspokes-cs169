@@ -26,15 +26,16 @@
         <%= relative_date Date.parse(page.latest_feedback) %> @ 
         <%= prettier_time Time.parse(page.latest_feedback) %>
       </span>
-      <div class="search_match">
-        <%- if @search_feedbacks && @search_feedbacks[page.id] -%>        
+      <%- if @search_feedbacks && @search_feedbacks[page.id] -%>        
+        <div class="search_match">
+          <span>Search Results for This Page</span>
           <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
-            <p>
+          <p>
             <%= (matching_feedback.commenter.truncated_email + ' - ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50]%>
-            </p>
+          </p>
           <%- end -%>
+        </div>
         <%- end -%>
-      </div>
     </div>
   </li>
 <%- end -%>

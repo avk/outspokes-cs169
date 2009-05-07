@@ -82,7 +82,15 @@ body {
   margin: 20px 0;
 }
 
-.site_commenters p {
+.search_match {
+  font-size: 12px;
+}
+
+.search_match p {
+  padding-left: 10px;
+}
+
+.site_commenters p, .search_match span {
   font-weight: bold;
 }
 
