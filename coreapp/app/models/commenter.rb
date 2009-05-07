@@ -81,4 +81,9 @@ class Commenter < ActiveRecord::Base
     shortened_email = self.email.split('@').first
     return (shortened_email.length >= 15) ? shortened_email.first(15) + '...' : shortened_email
   end
+  
+  def short_email
+    self.email.split('@').first
+  end
+  
 end
