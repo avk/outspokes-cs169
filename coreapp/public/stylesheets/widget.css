@@ -336,7 +336,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbar #open_admin_panel {
-  border: 1px solid #C1272D;
+  border: 1px solid transparent;
   border-bottom: none;
   color: #C1272D;
   display: block;
@@ -385,12 +385,17 @@ version: 3.0.0pr2
     margin : -2px 2px 0 2px;
   }
   #outspokes #topbarLeft ul.navigation li:hover {
-    background-color: inherit;
+    background-color: #DDD;
+    border-color: #FFF;
     color: #C1272D;
+    padding-bottom: 6px;
   }
-  #outspokes #topbarLeft ul.navigation li.outspokes-current {
+  #outspokes #topbarLeft ul.navigation li.outspokes-current, 
+  #outspokes #topbarLeft ul.navigation li.outspokes-current:hover {
     background-color: #ccc;
+    border-color: #999;
     color: #333;
+    padding-bottom: 7px;
   }
 
 /* END TOPBAR */
