@@ -336,9 +336,21 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbar #open_admin_panel {
+  border: 1px solid #C1272D;
+  border-bottom: none;
+  color: #C1272D;
   display: block;
   float: right;
-  color: #666;
+  font-size: 1.1em;
+  margin: -2px 2px 0 2px;
+  padding: 2px 10px 5px 10px;
+  position: relative;
+  top: 1px;
+}
+#outspokes #topbar #open_admin_panel:hover {
+  background-color: #DDD;
+  border-color: #FFF;
+  color: #C1272D;
 }
 #outspokes #topbar #help {
   float: right;
