@@ -373,7 +373,7 @@
 //    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline')
     var over = function() {
-      el.css('outline','green solid 2px');
+      el.css('outline','solid 2px');
     }
     var out = function() {
       el.css('outline-style', old_style);
