@@ -20,8 +20,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#33EE44',
-      disagree_bg_color   : '#FF3322',
+      agreed              : 'agreed',
+      disagreed           : 'disagreed',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
       cform               : "comment_form",
@@ -98,20 +98,20 @@
     
     this.consensus = {
       dom   : this.dom,
-      _opinion: function(c_id, color) {
+      _opinion : function(c_id, consensus_class) {
         var comment = null;
         if (typeof c_id == "string") {
           comment = $('#' + this.dom.comment_id(c_id));
         } else {
           comment = c_id;
         }
-        comment.css({ 'background-color' : color });
+        comment.addClass(consensus_class);
       },
       agree: function(c_id) {
-        this._opinion(c_id, this.dom.agree_bg_color);
+        this._opinion(c_id, this.dom.agreed);
       },
       disagree: function(c_id) {
-        this._opinion(c_id, this.dom.disagree_bg_color);
+        this._opinion(c_id, this.dom.disagreed);
       },
       build : function(c, markup) {
         if (c.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment
