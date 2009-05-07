@@ -17,6 +17,7 @@
         header  : 'topbar',
         headerLeft : 'topbarLeft',
         content : 'widget_content',
+        edits : 'widget_edits',
         help : 'help',
         help_content: 'help_content',
         toggle: 'toggle',
@@ -25,6 +26,7 @@
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
         height : '250px',
+        nav_link : 'navigation'
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -144,17 +146,30 @@
     logo.attr('id', 'logo');
     topbarLeft.append(logo);
     
-    var comment_count = $('<span></span>');
-    comment_count.attr('id', this.dom.widget.comment_count);
-    // Singular "Comment" for one comment
+    var navigation = $('<ul></ul>').addClass(this.dom.widget.nav_link);
+    navigation.click( function(e) { e.stopPropagation(); } );
+    var comment_count = $('<li></li>').attr('id', this.dom.widget.comment_count);
+    comment_count.click( function(e) {
+      fb.i.edits.hide();
+      fb.i.widget_content.show();
+    });
+
     this.set_num_comments = function(num_comments) {
       var comments_text = num_comments == 1 ? " Comment" : " Comments";
       comment_count.text(num_comments + comments_text);
     }
     this.set_num_comments(fb.getProperties(fb.Feedback.all).length);
-    topbarLeft.append(comment_count);
-    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');// +
-//      '<option>mine</option><option>targeted</option><option>consensus</option></select>');
+    
+    var link_to_edits = $('<li># Edits</li>').click( function(e) { 
+      fb.i.widget_content.hide();
+      fb.i.edits.show();
+    });
+    
+    navigation.append(comment_count);
+    navigation.append(link_to_edits);
+    topbarLeft.append(navigation);
+    
+    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');
     sort_dropdown.children().eq(0).click(function(e) {
       fb.i.comment.sort_by_newest();
       e.stopPropagation();
@@ -168,6 +183,7 @@
       e.stopPropagation();
     });
     topbarLeft.append(sort_dropdown);
+    
     this.topbar.append(topbarLeft);
 
     var help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
@@ -223,6 +239,7 @@
     this.main_window.append($('<div style="clear:both;"></div>'));
 
     this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
+    this.edits = $('<div></div>').attr('id',this.dom.widget.edits).append("edits!").hide();
     this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
     
     var help_copy = "<h2>About</h2>" +
@@ -260,6 +277,7 @@
     this.help_content.addClass("hide");
 
     this.main_window.append(this.widget_content);
+    this.main_window.append(this.edits);
     this.main_window.append(this.help_content);
     if (_fb.admin()) {
       this.admin_panel.build(this.topbar);

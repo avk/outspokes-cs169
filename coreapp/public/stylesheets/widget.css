@@ -337,8 +337,7 @@ version: 3.0.0pr2
 
 #outspokes #topbarLeft {
   float: left;
-  width: 400px;
-  height:20px;
+  height: 20px;
 }
 
 #outspokes #topbarLeft #logo {
@@ -347,6 +346,22 @@ version: 3.0.0pr2
   height  : 20px;
   width   : 100px;
 }
+
+#outspokes #topbarLeft ul.navigation {
+  display : inline;
+}
+  #outspokes #topbarLeft ul.navigation li {
+    border : 1px solid #999;
+    border-bottom : none;
+    display : block;
+    float : left;
+    padding : 2px 10px 7px 10px;
+    margin : -2px 2px 0 2px;
+  }
+  #outspokes #topbarLeft ul.navigation li:hover {
+    background-color: #ccc;
+    color: #333;
+  }
 
 /* END TOPBAR */
 
