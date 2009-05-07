@@ -17,7 +17,7 @@
   <ul class="commenter_details">
     <%- commenter.commented_pages.each do |page| -%>
       <li>
-        <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %>
+        <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %> <!-- should link to comment list filtered by commenter -->
         (<%= commenter.feedbacks_for_page(page.id).length %>)
       </li>
     <% end %>

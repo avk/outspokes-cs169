@@ -25,8 +25,15 @@ class AdminPanel::PagesController < AdminPanel::AdminController
         @search_feedbacks[page.id] = Feedback.find(:all, :conditions => [ "page_id = ?", page.id])
         @search_feedbacks[page.id].sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
         @search_feedbacks[page.id]=@search_feedbacks[page.id].find_all{|item| item.search_score(terms) > 0 }
+        
+        @search_feedbacks.delete(page.id) if @search_feedbacks[page.id].empty?
       end
+      
+      flash[:warning] = "No search results found for '#{terms}'" if @search_feedbacks.empty?
     end
-    render :partial => "index_pages"
+    respond_to do |f|
+      f.js
+      # render :partial => "index_pages"
+    end
   end
 end
