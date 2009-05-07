@@ -7,17 +7,14 @@ version: 3.0.0pr2
 #outspokes html{color:#000;background:#FFF;}#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}#outspokes table{border-collapse:collapse;border-spacing:0;}#outspokes fieldset,#outspokes img{border:0;}#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}#outspokes li{list-style:none;}#outspokes caption,#outspokes th{text-align:left;}#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}#outspokes q:before,#outspokes q:after{content:'';}#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}#outspokes sup{vertical-align:text-top;}#outspokes sub{vertical-align:text-bottom;}#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}#outspokes input,#outspokes textarea,#outspokes select{*font-size:100%;}#outspokes legend{color:#000;}
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
+/* outermost wrapper for our widget */
 #outspokes {
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 120%;
   z-index: 999;
-}
-
-/* outermost wrapper for our widget */
-#outspokes {
   width: 100%;
-  background-color: #CCC;
+  background-color: #eee;
   position: fixed;
   bottom: 0px;
   left: 0px;
@@ -242,8 +239,9 @@ version: 3.0.0pr2
 }
 
 #outspokes #outspokes_form_buttons {
-  background-color: #eee;
-  border-bottom: 1px dashed #aaa;
+  background-color: #bbb;
+  border-bottom: 1px dashed #777;
+  margin-right: -1px;
   padding: 3px;
   text-align: right;
 }
@@ -253,7 +251,7 @@ version: 3.0.0pr2
 }
 #outspokes #outspokes_form_buttons #private_wrapper label {
   background-color: inherit;
-  color: #555;
+  color: #464646;
   font-size: 1.1em;
   vertical-align: 15%
 }
