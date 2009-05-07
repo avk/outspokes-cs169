@@ -103,9 +103,14 @@ body {
 .site_page:hover {
   background-color: #eee;
 }
+
+li.invited_commenter, li.site_page {
+  margin-bottom : 10px;
+}
 .commenter_details {
   padding-left: 10px;
   font-size: .8em;
+  color: #777;
 }
 .commenter_details:hover {
 }
