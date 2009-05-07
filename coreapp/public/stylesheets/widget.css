@@ -384,12 +384,12 @@ version: 3.0.0pr2
 }
 
 #outspokes #bubble #close_intro {
-  color:#666666;
-  font-size:2em;
-  font-weight:bold;
-  left:205px;
-  position:absolute;
-  top:0px;
+  color: #C1272D;
+  font-size: 1.2em;
+  font-weight: bold;
+  left: 212px;
+  position: absolute;
+  top: 6px;
 }
 
 #outspokes #bubble_content {
