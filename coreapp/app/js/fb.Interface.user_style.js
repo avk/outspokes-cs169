@@ -129,6 +129,7 @@
       copy_link.find('span').addClass(dom.new_edit.middle_panel.tabs.current);
     });
 
+
     // self.edits.append(page_edit_new);
     self.edits.append($("<div style='padding: 70px 20px 20px 20px; font-size: 10em; color: #DDD'>Coming Soon</div>"));
   };

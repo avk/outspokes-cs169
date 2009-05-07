@@ -1,5 +1,5 @@
 <ol id="site_pages">
-  <%- if flash[:warning] -%><div class="warning"><%= flash[:warning] %></div><%- end -%>
+  <%- if flash[:warning] -%><div id="warning"><%= flash[:warning] %></div><%- end -%>
   
 <%- @pages.each do |page| -%>
   <li class="site_page">
