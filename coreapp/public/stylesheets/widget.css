@@ -129,31 +129,21 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .options {
-  float: right;
-  width: 80px;
+  text-align: right;
 }
 #outspokes #comment_list .options button {
   cursor: pointer;
-  background-color:#F7F7F7;
-  border:2px outset #777;
-  border-width: 2px 1px 2px 1px;
-  -moz-border-radius: 7px;
   padding:1px 5px;
   font-weight:bold;
-  width: 100%;
   margin: 1px 0 3px;
 }
 
-#outspokes #comment_list .options button.hover {
-  background: #E0E0E0;
-}
-
-#outspokes #comment_list .options button.agree{
+#outspokes #comment_list .options button.agree:hover {
   color: green;
 }
 
-#outspokes #comment_list .options button.disagree{
-  color: red;
+#outspokes #comment_list .options button.disagree:hover {
+  color: #C1272D;
 }
 
 #outspokes #comment_list .thread {
@@ -212,29 +202,20 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_delete_X {
-  color: red;
+  color: #C1272D;
   margin-left: 10px;
   font-weight: bold;
 
 }
 
-#outspokes #comment_list .cmt_text {
-  padding-right: 100px;
+#outspokes #comment_list .cns_buttons {
+  display: inline;
 }
-
 
 #outspokes #comment_list .cns_buttons span{
-  display: block;
-  width: 100%;
   line-height: 1.3em;
-}
-
-#outspokes #comment_list .cns_buttons .agreed {
-  color: green;
-}
-
-#outspokes #comment_list .cns_buttons .disagreed {
-  color: red;
+  padding: 0 3px;
+  width: 100%;
 }
 
 #outspokes #comment_list .replies {

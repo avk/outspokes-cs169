@@ -133,7 +133,7 @@
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed</span>'));
+            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed,</span>&nbsp;'));
             consensus_div.append($('<span class="disagreed">' + c.disagreed + '&nbsp;disagreed</span>'));
           } else {
             consensus_div.append(agree);
@@ -267,12 +267,13 @@
       bar.append(timestamp_close);
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
-      content.append(options);
+
       var tmp = this.consensus.build(c, bar);
       options.append(tmp);
       options.append(this.reply.buildLink(c_id));
+      
       content.append($('<div></div>').addClass('cmt_text').append(c.content));
-      content.append($('<div></div>').css('clear','both'));
+      content.append(options);
 
       var replies = $('<div></div>').attr('id', this.dom.reply_list(c_id)).addClass('replies');
       var comment = $('<div></div>').addClass('comment');
