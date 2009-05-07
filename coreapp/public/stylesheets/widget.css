@@ -261,7 +261,9 @@ version: 3.0.0pr2
 }
 
 #outspokes #outspokes_form_buttons {
-  padding-top: 3%;
+  background-color: #eee;
+  border-bottom: 1px dashed #aaa;
+  padding: 3px;
   text-align: right;
 }
 
@@ -282,6 +284,7 @@ version: 3.0.0pr2
 
 
 #outspokes #outspokes_form_header {
+  font-style : italic;
   height:20px;
   margin: 5px 0;
   line-height: 200%;
