@@ -9,4 +9,9 @@ class UserStyle < Feedback
     return false
   end
   
+  def json_to_css(jsonStyle)
+    style = JSON.parse jsonStyle
+    
+  end
+  
 end
