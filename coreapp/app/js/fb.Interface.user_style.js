@@ -1,6 +1,6 @@
   var $ = fb.$;
 
-  fb.Interface.page_edit = function (self) {
+  fb.Interface.user_style = function (self) {
     
     // Common identifiers used in this interface
     this.dom = {
@@ -129,16 +129,12 @@
       copy_link.find('span').addClass(dom.new_edit.middle_panel.tabs.current);
     });
 
-//  NOTE: Uncomment these lines to make this interface take over the widget_content div
-//    (this is a workaround since the rest of the interface doesn't exist).
-//    self.widget_content.empty();
-//    self.widget_content.append(page_edit_new);
-    
+    // self.edits.append(page_edit_new);
+    self.edits.append($("<div style='padding: 70px 20px 20px 20px; font-size: 10em; color: #DDD'>Coming Soon</div>"));
   };
   
   function highlight_target(el_dom) {
     var el = $(el_dom);
-//    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline')
     var over = function() {
       el.css('outline','green solid 2px');

@@ -1,4 +1,6 @@
 <ol id="site_pages">
+  <%- if flash[:warning] -%><div class="warning"><%= flash[:warning] %></div><%- end -%>
+  
 <%- @pages.each do |page| -%>
   <li class="site_page">
     <div class="remove_page">
@@ -13,7 +15,7 @@
         <%= relative_date Date.parse(page.latest_feedback) %> @ 
         <%= prettier_time Time.parse(page.latest_feedback) %>
       </span>
-      <span class="search_match">
+      <div class="search_match">
         <%- if @search_feedbacks && @search_feedbacks[page.id] -%>
           <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
             <p>
@@ -21,7 +23,7 @@
             </p>
           <%- end -%>
         <%- end -%>
-      </span>
+      </div>
     </div>
   </li>
 <%- end -%>

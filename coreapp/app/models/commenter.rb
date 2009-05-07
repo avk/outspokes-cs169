@@ -74,7 +74,7 @@ class Commenter < ActiveRecord::Base
   end
   
   def commented_pages
-    feedbacks.find(:all, :include => :page).map {|f| f.page }  
+    self.feedbacks.find(:all, :include => :page, :group => :page_id).map {|f| f.page }  
   end  
   
   def truncated_email
