@@ -359,6 +359,10 @@ version: 3.0.0pr2
     margin : -2px 2px 0 2px;
   }
   #outspokes #topbarLeft ul.navigation li:hover {
+    background-color: inherit;
+    color: #C1272D;
+  }
+  #outspokes #topbarLeft ul.navigation li.outspokes-current {
     background-color: #ccc;
     color: #333;
   }
