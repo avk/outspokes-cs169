@@ -61,7 +61,6 @@
     this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', this.dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', this.dom.edits_view.edits_list);
     this.new_edit_link = $('<a href="#"></a>').attr('id', this.dom.edits_view.new_edit_link);
-    this.edits_view.append(this.new_edit_link);
     
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
@@ -75,13 +74,13 @@
       
       // define its contents
       var us_name = $('<span></span>').addClass(this.dom.edits_view.edit_name).append(user_style.name);
-      // var us_timestamp = $('<span></span>').addClass(this.dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
+      var us_timestamp = $('<span></span>').addClass(this.dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       var agree_button = $('<button type="button">agree</button>');
       var disagree_button = $('<button type="button">disagree</button>');
       
       // attach to the container
       us_block.append(us_name);
-      // us_block.append(us_timestamp);
+      us_block.append(us_timestamp);
       us_block.append(agree_button);
       us_block.append(disagree_button);
       
