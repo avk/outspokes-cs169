@@ -21,7 +21,7 @@ class Widget::FeedbacksController < Widget::WidgetController
             feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
           elsif
             feedback = page.feedbacks.find(:all, :conditions => 
-                       [ "private = ? OR commenter_id = ?", false, @commenter.id ]).map { |f| f.json_attributes(@commenter) }
+                       [ "private = ? OR commenter_id = ? OR parent_id = ?", false, @commenter.id, @commenter.id ]).map { |f| f.json_attributes(@commenter) }
           end
         end
       else
@@ -83,9 +83,19 @@ class Widget::FeedbacksController < Widget::WidgetController
         page = @invite.page.site.pages.find_or_create_by_url(params[:current_page])
       end
 
+      match = params[:target].match(/\Acomment_(\d+)\z/)
+      parent_private = params[:isPrivate] 
+
+      if match
+        puts "MATCHMATCHMATCHMATCH********************************************"
+        parent_id = match[1].to_i
+        parent_private = Comment.find(parent_id).private
+        puts parent_private
+      end
+
       feedback = Comment.new :commenter => @commenter, :name => name, :content => content,
                              :target => params[:target], :public => public_comment, 
-                             :private => params[:isPrivate]
+                             :private => parent_private
       page.feedbacks << feedback
 
       if params[:parent_id]
