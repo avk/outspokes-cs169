@@ -9,9 +9,9 @@
     // call to super for properties
     this.parent.call(this, obj);
     fb.assert(fb.hasProp(obj, {
-        copy:"object",
-        style:"object"}),
+        selectors:"object"}),
         "Object argument to fb.UserStyle constructor of wrong form");
+    this.selectors = obj.selectors;
     this.build = fb.i.user_style.build(this);
 
     fb.UserStyle.all[this.feedback_id] = this;
