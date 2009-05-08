@@ -88,16 +88,6 @@
       return us_block;
     };
     
-    // var new_us1 = new fb.UserStyle({
-    //   feedback_id:"number",
-    //   name:"string",
-    //   timestamp:"number",
-    //   opinion:"",
-    //   agreed:"number",
-    //   disagreed:"number",
-    //   selectors:{num:1, number:2}
-    //   });
-    
     this.edits_view.append(this.edit_list);
     this.edits_view.append(this.new_edit_link);
     
