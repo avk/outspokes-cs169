@@ -164,8 +164,7 @@
         } else {
           parent_border = 0;
         }
-        new_border = parent_border + 1 + "px";
-
+        
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
