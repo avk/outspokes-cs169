@@ -43,7 +43,6 @@
     this.name = null;
     this.timestamp = null;
     this.build = null;
-    fb.Comment.refresh_count();
   };
   fb.Feedback.prototype.render = function() {};
   

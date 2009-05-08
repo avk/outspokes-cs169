@@ -34,10 +34,11 @@
     // remove the comment from the interface
     // must be first
     fb.i.comment.remove(this);
-    // super.remove:
-    this.parent.prototype.remove.call(this, arguments[0]);
     delete fb.Comment.all[this.feedback_id];
     delete fb.Comment.unrendered[this.feedback_id];
+    // super.remove:
+    this.parent.prototype.remove.call(this, arguments[0]);
+    fb.Comment.refresh_count();
     return true;
   };
   
@@ -135,5 +136,5 @@
   };
   
   fb.Comment.refresh_count = function() {
-    fb.i.set_num_comments(fb.getProperties(fb.Feedback.all).length);
+    fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
   };

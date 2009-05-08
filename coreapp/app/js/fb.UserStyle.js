@@ -14,8 +14,8 @@
         "Object argument to fb.UserStyle constructor of wrong form");
     this.build = fb.i.user_style.build(this);
 
-    fb.user_style.all[this.feedback_id] = this;
-    fb.user_style.unrendered[this.feedback_id] = this;
+    fb.UserStyle.all[this.feedback_id] = this;
+    fb.UserStyle.unrendered[this.feedback_id] = this;
   };
   
   // call to super for methods
@@ -27,10 +27,11 @@
     // remove the comment from the interface
     // must be first
     fb.i.user_style.remove(this);
-    // super.remove:
-    this.parent.prototype.remove.call(this, arguments[0]);
     delete fb.UserStyle.all[this.feedback_id];
     delete fb.UserStyle.unrendered[this.feedback_id];
+    // super.remove:
+    this.parent.prototype.remove.call(this, arguments[0]);
+    fb.UserStyle.refresh_count();
     return true;
   };
   
@@ -105,5 +106,5 @@
   };
   
   fb.UserStyle.refresh_count = function() {
-    fb.i.set_num_comments(fb.getProperties(fb.Feedback.all).length);
+    // fb.i.set_num_comments(fb.getProperties(fb.UserStyle.all).length);
   };
