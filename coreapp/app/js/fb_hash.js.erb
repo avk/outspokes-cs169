@@ -18,12 +18,14 @@ function() {
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
+    fb.env.edit_css_address = "<%= WIDGET_DOMAIN %>stylesheets/userstyles.css";
     fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;
     
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
+    fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.edit_css_address + '" />');
 
     // DO NOT USE THIS!!!!!
     // This is only for convenience in testing, and should never be

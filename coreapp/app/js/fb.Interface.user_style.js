@@ -57,7 +57,7 @@
     
     // NEW EDIT //////////////////////////////////////////////////////////////////
     
-    this.new_edit = $('<div></div>');
+    this.new_edit = $('<div><h1>Forthcoming...</h1></div>');
     
     
     
