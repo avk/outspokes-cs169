@@ -128,7 +128,7 @@ class Widget::FeedbacksController < Widget::WidgetController
   def destroy
     result = { :authorized => @authorized, :admin => @admin, :success => false }
     if @admin
-      @feedback = Feedback.find(params[:id])
+      @feedback = Comment.find(params[:id])
       result[:success] = @feedback.destroy ? true : false
     end
   
