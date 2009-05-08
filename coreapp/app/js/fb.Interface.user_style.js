@@ -64,7 +64,7 @@
     this.edits_view.append(this.new_edit_link);
     
     this.render = function(user_style) {
-      this.edit_list.append(user_style.build);
+      this.edit_list.append(this.build(user_style));
     };
     
     this.build = function(user_style) {
