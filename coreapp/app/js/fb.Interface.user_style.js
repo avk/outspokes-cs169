@@ -61,6 +61,7 @@
     this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', this.dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', this.dom.edits_view.edits_list);
     this.new_edit_link = $('<a href="#"></a>').attr('id', this.dom.edits_view.new_edit_link);
+    this.edits_view.append(this.new_edit_link);
     
     this.render = function(user_style) {
       this.edit_list.append(user_style.build);
