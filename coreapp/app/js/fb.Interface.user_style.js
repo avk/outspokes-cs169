@@ -43,7 +43,7 @@
 
     // EDIT LIST //////////////////////////////////////////////////////////////////
 
-    this.edit_list = $('<div></div>');
+    this.edits_view = $('<div></div>');
     
     
     
@@ -63,7 +63,7 @@
     
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
-    self.edits.append(this.edit_list);
+    self.edits.append(this.edits_view);
     self.edits.append(this.new_edit);
 
     // var page_edit_new = $('<div></div>').attr('id', dom.new_edit.wrapper);
