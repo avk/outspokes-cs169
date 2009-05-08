@@ -57,14 +57,14 @@
     
     // NEW EDIT //////////////////////////////////////////////////////////////////
     
-    this.new_edit = $('<div><h1>Forthcoming...</h1></div>');
+    this.new_edit_view = $('<div><h1>Forthcoming...</h1></div>');
     
     
     
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
     self.edits.append(this.edit_list);
-    self.edits.append(this.new_edit);
+    self.edits.append(this.new_edit_view);
 
     // var page_edit_new = $('<div></div>').attr('id', dom.new_edit.wrapper);
     // 
