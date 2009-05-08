@@ -28,21 +28,44 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
   end
 
+  #def update
+  #  @account = Account.find(params[:id])
+ #
+ #   respond_to do |format|
+  #    if @account.update_attributes(params[:account])
+   #     flash[:notice] = 'Your account was successfully updated.'
+    #    format.html { redirect_to dashboard_account_url(@account.id) }
+     #   format.xml  { head :ok }
+      #else
+     #  flash[:error] = "uh oh!"        
+     #  format.html { render :action => "edit" }
+    #   format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+   #  end
+  # end
+ #end
+  
   def update
     @account = Account.find(params[:id])
-
     respond_to do |format|
-      if @account.update_attributes(params[:account])
-        flash[:notice] = 'Your account was successfully updated.'
-        format.html { redirect_to dashboard_account_url(@account.id) }
-        format.xml  { head :ok }
+      if ((params[:account][:password] == params[:account][:password_confirmation]) && !params[:account][:password_confirmation].blank?)
+        if @account.update_attributes(params[:account])
+          flash[:notice] = "Account successfully updated"
+          format.html { redirect_to dashboard_account_url(@account.id) }
+          format.xml  { head :ok }
+        else
+          flash[:alert] = "Password not changed"
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+        end
+               
       else
-        flash[:error] = "uh oh!"        
+        flash[:alert] = "Password mismatch"
         format.html { render :action => "edit" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
   end
+
   
   def dashboard
     @account = Account.find(params[:id])
