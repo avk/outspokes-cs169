@@ -214,6 +214,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons {
+  padding: 0 5px;
   display: inline;
 }
 
@@ -221,6 +222,13 @@ version: 3.0.0pr2
   line-height: 1.3em;
   padding: 0 3px;
   width: 100%;
+}
+
+#outspokes #comment_list .cns_buttons .agreed {
+  color: green;
+}
+#outspokes #comment_list .cns_buttons .disagreed {
+  color: #C1272D;
 }
 
 #outspokes #comment_list .replies {
