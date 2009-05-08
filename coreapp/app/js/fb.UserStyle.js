@@ -105,6 +105,7 @@
     fb.UserStyle.refresh_count();
   };
   
+  // This is UI and should be moved to fb.Interface.user_style
   fb.UserStyle.refresh_count = function() {
     // fb.i.set_num_comments(fb.getProperties(fb.UserStyle.all).length);
   };

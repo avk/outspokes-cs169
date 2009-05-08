@@ -130,11 +130,12 @@
     for (var i in fb.Comment.unrendered) {
       fb.Comment.unrendered[i].render();
     }
+    // The following is UI and should be moved to fb.Interface.comment
     fb.Comment.refresh_count();
-    // Re-sort comments based on sort/filter dropdown
-    fb.$("#comments_filter :selected").click()
+    fb.$("#comments_filter :selected").click(); // Re-sort comments based on sort/filter dropdown
   };
   
+  // This is UI and should be moved to fb.Interface.comment
   fb.Comment.refresh_count = function() {
     fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
   };
