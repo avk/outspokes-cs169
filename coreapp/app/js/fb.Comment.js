@@ -8,6 +8,12 @@
   fb.Comment = function (obj) {
     // call to super for properties
     this.parent.call(this, obj);
+      fb.assert(fb.hasProp(obj, {
+        content:"string",
+        target:"string"}),
+        "Object argument to fb.Comment constructor of wrong form");
+    this.content = obj.content;
+    this.target = obj.target;
     this.build = fb.i.comment.build(this);
 
     fb.Comment.all[this.feedback_id] = this;
