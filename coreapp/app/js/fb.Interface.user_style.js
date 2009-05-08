@@ -13,8 +13,10 @@
         number_from_id            : function(dom_id) {
           return parseInt(dom_id.match(/edit_(\d+)/i)[1]);
         },
+        edit_block : "edit_block", // class
         edit_name : "edit_name", // class
         edit_timestamp : "edit_timestamp", // class
+        consensus_block : "edit_consensus", // class
         agree_with : function() {  },
         disagree_with : function() { },
 
@@ -25,42 +27,14 @@
       new_edit : {
         
       }
-      // new_edit : {
-      //   wrapper : 'page_edit_new',
-      //   target_list: {
-      //     wrapper : 'target_list_wrapper',
-      //     header_span : 'changing',
-      //     list : 'target_list',
-      //     new_button : 'new_button'    // class
-      //   },
-      //   middle_panel: {
-      //     panel : 'middle_panel',
-      //     tabs : {
-      //       tabs : 'tabs',
-      //       current : 'current'    // class
-      //     },
-      //     content : {
-      //       content : 'content',     // class
-      //       options_div : 'options_div',  // class
-      //       button_panel : 'button_panel' // class
-      //     }
-      //   },
-      //   your_changes: {
-      //     wrapper : 'your_changes_wrapper',
-      //     header_span : 'your_changes_header',
-      //     list : 'your_changes',
-      //     clear_button : 'clear_button',    // class
-      //     submit_button : 'submit_button'  // class
-      //   }
-      // }
     };
     var dom = this.dom;
 
     // EDITS_VIEW //////////////////////////////////////////////////////////////////
 
-    this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', this.dom.edits_view.wrapper);
-    this.edit_list = $('<div></div>').attr('id', this.dom.edits_view.edits_list);
-    this.new_edit_link = $('<a href="#"></a>').attr('id', this.dom.edits_view.new_edit_link);
+    this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', dom.edits_view.wrapper);
+    this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
+    this.new_edit_link = $('<a href="#"></a>').attr('id', dom.edits_view.new_edit_link);
     
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
@@ -68,21 +42,28 @@
     
     this.build = function(user_style) {
       // build up the container for a user style item
-      var us_id = this.dom.edits_view.edit_id(user_style.id);
-      var us_block = $('<div></div>').attr('id', us_id);
-      us_block.addClass('us_item');
+      var us_id = dom.edits_view.edit_id(user_style.feedback_id);
+      var us_block = $('<div></div>').attr('id', us_id).addClass(dom.edits_view.edit_block);
       
       // define its contents
-      var us_name = $('<span></span>').addClass(this.dom.edits_view.edit_name).append(user_style.name);
-      var us_timestamp = $('<span></span>').addClass(this.dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
-      var agree_button = $('<button type="button">agree</button>');
-      var disagree_button = $('<button type="button">disagree</button>');
+      var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
+      us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
+      var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
+      var us_consensus = $('<div></div>').addClass(dom.edits_view.consensus_block);
+      var agree_button = $('<button type="button" class="agree">agree</button>');
+      var disagree_button = $('<button type="button" class="disagree">disagree</button>');
       
       // attach to the container
+      us_block.append(us_checkbox);
       us_block.append(us_name);
       us_block.append(us_timestamp);
-      us_block.append(agree_button);
-      us_block.append(disagree_button);
+      
+      // Put the consensus buttons in the consensus block
+      us_consensus.append(agree_button);
+      us_consensus.append(disagree_button);
+      
+      us_block.append(us_consensus);
       
       return us_block;
     };

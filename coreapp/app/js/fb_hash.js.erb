@@ -84,6 +84,28 @@ function() {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
       }
+      // Testing UserStyle data only. Not to be committed
+      var us1 = new fb.UserStyle({
+                "feedback_id" : 23,     
+                "name" : "Arthur",
+                "timestamp" : 8768769769,     
+                "opinion" : "agreed",     
+                "agreed" : 34,     
+                "disagreed" : 9,     
+                "selectors" : [] 
+              }); 
+              var us2 = new fb.UserStyle({
+                "feedback_id" : 25,     
+                "name" : "Hannah",
+                "timestamp" : 123456789,     
+                "opinion" : "agreed",     
+                "agreed" : 7,     
+                "disagreed" : 12,     
+                "selectors" : [] 
+              });
+              fb.UserStyle.render();
+
+      // End test data
       return true;
     };
 

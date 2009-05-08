@@ -5,7 +5,20 @@ http://developer.yahoo.net/yui/license.txt
 version: 3.0.0pr2
 */
 
-#outspokes html{color:#000;background:#FFF;}#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}#outspokes table{border-collapse:collapse;border-spacing:0;}#outspokes fieldset,#outspokes img{border:0;}#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}#outspokes li{list-style:none;}#outspokes caption,#outspokes th{text-align:left;}#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}#outspokes q:before,#outspokes q:after{content:'';}#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}#outspokes sup{vertical-align:text-top;}#outspokes sub{vertical-align:text-bottom;}#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}#outspokes input,#outspokes textarea,#outspokes select{*font-size:100%;}#outspokes legend{color:#000;}
+#outspokes html{color:#000;background:#FFF;}
+#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}
+#outspokes table{border-collapse:collapse;border-spacing:0;}
+#outspokes fieldset,#outspokes img{border:0;}
+#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}
+#outspokes li{list-style:none;}
+#outspokes caption,#outspokes th{text-align:left;}
+#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}
+#outspokes q:before,#outspokes q:after{content:'';}
+#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}
+#outspokes sup{vertical-align:text-top;}
+#outspokes sub{vertical-align:text-bottom;}
+#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+#outspokes legend{color:#000;}
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
 #outspokes {

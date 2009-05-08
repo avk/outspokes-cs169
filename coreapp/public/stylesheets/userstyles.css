@@ -7,7 +7,40 @@
 
 /* List of edits view */
 
-#outspokes {}
+#outspokes {
+  
+}
+#outspokes #edits_list, #outspokes #new_edit_link {height: 217px; }
+
+#outspokes #edits_list {
+  float: left;
+  width: 70%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #aaa;
+}
+
+#outspokes .edit_block {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #999;
+  color: black;
+  height: 20px;
+}
+
+#outspokes .edit_block .toggle_box {
+  float:left; 
+  margin-right: 15px; 
+  height: 25px;
+}
+#outspokes .edit_block .edit_name, 
+#outspokes .edit_block .edit_timestamp {
+  float: left;
+  margin-right: 20px;
+}
+#outspokes .edit_block .edit_consensus {float: right; font-weight: bold;}
+#outspokes .edit_block .edit_consensus button.agree:hover {color: green;}
+#outspokes .edit_block .edit_consensus button.disagree:hover {color: red;}
 
 /* New edit */
 
