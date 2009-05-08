@@ -350,11 +350,19 @@ version: 3.0.0pr2
   color: #C1272D;
 }
 #outspokes #topbar #help {
+  border: 1px solid transparent;
+  border-bottom: none;
+  display: block;
   float: right;
   margin-right: 2%;
+  padding: 2px 5px;
+  padding-bottom: 0;
   position: relative;
-  right: 6px;
-  top: 2px;
+  bottom: 1px;
+}
+#outspokes #topbar #help:hover {
+  background-color: #DDD;
+  border-color: #FFF;
 }
 
 /* Topbar Left */
