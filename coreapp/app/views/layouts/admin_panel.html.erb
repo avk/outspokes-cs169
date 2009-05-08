@@ -22,14 +22,20 @@
               </li>
           <%- end -%>
         </ul>
-        <div style="clear:both;"></div>
+        
+        <% form_tag({ :action => "search", :controller => "pages"}, :id => "search_bar")  do %>
+          <%= text_field_tag('search', 'id', :value => 'Search Feedback', :onfocus => 'if(this.value == "Search Feedback") { this.value = ""; }; ', :onblur => 'if(this.value == "") { this.value = "Search Feedback"; }; ')  %>
+          <%= submit_tag 'Go', :id => 'search_button' %>
+        <% end %>
+        <div style="clear:both;"></div> 
       </div>
     <%- end -%>
     
+    
     <div id="wrapper">
-      <%- if flash[:notice] -%><div class="notice"><%= flash[:notice] %></div><%- end -%>
-      <%- if flash[:error] -%><div class="error"><%= flash[:error] %></div><%- end -%>
-      <%- if flash[:warning] -%><div class="warning"><%= flash[:warning] %></div><%- end -%>
+      <%- if flash[:notice] -%><div id="notice"><%= flash[:notice] %></div><%- end -%>
+      <%- if flash[:error] -%><div id="error"><%= flash[:error] %></div><%- end -%>
+      <%- if flash[:warning] -%><div id="warning"><%= flash[:warning] %></div><%- end -%>
 
       <%= yield %>
     </div>

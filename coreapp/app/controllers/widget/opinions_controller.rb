@@ -1,4 +1,5 @@
 class Widget::OpinionsController < Widget::WidgetController
+  
   before_filter :validate_callback, :only => [:opinion]
   before_filter :authorize
   
