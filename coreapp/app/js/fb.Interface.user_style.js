@@ -4,9 +4,24 @@
     
     // Common identifiers used in this interface
     this.dom = {
-      edit_list : {
-        
+      edits_view : {
+        wrapper : "edits_wrap", // id
+        edit_id_format   : /edit_\d+/i,
+        edit_id          : function(id) {
+          return (this.edit_id_format.test(id)) ? id : 'edit_' + parseInt(id);
+        },
+        number_from_id            : function(dom_id) {
+          return parseInt(dom_id.match(/edit_(\d+)/i)[1]);
+        },
+        edit_name : "edit_name", // class
+        edit_timestamp : "edit_timestamp", // class
+        agree_with : function() {  },
+        disagree_with : function() { },
+
+        edits_list : "edits_list", // id
+        new_edit_link : "new_edit_link" // id
       },
+      
       new_edit : {
         
       }
@@ -41,19 +56,39 @@
     };
     var dom = this.dom;
 
-    // EDIT LIST //////////////////////////////////////////////////////////////////
+    // EDITS_VIEW //////////////////////////////////////////////////////////////////
 
-    this.edits_view = $('<div></div>');
-    
-    
+    this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', this.dom.edits_view.wrapper);
+    this.edit_list = $('<div></div>').attr('id', this.dom.edits_view.edits_list);
+    this.new_edit_link = $('<a href="#"></a>').attr('id', this.dom.edits_view.new_edit_link);
     
     this.render = function(user_style) {
       this.edit_list.append(user_style.build);
     };
     
     this.build = function(user_style) {
+      // build up the container for a user style item
+      var us_id = this.dom.edits_view.edit_id(user_style.id);
+      var us_block = $('<div></div>').attr('id', us_id);
+      us_block.addClass('us_item');
       
+      // define its contents
+      var us_name = $('<span></span>').addClass(this.dom.edits_view.edit_name).append(user_style.name);
+      var us_timestamp = $('<span></span>').addClass(this.dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
+      var agree_button = $('<button type="button">agree</button>');
+      var disagree_button = $('<button type="button">disagree</button>');
+      
+      // attach to the container
+      us_block.append(us_name);
+      us_block.append(us_timestamp);
+      us_block.append(agree_button);
+      us_block.append(disagree_button);
+      
+      return us_block;
     };
+    
+    this.edits_view.append(this.edit_list);
+    this.edits_view.append(this.new_edit_link);
     
     // NEW EDIT //////////////////////////////////////////////////////////////////
     
@@ -64,7 +99,7 @@
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
     self.edits.append(this.edits_view);
-    self.edits.append(this.new_edit);
+    // self.edits.append(this.new_edit);
 
     // var page_edit_new = $('<div></div>').attr('id', dom.new_edit.wrapper);
     // 
