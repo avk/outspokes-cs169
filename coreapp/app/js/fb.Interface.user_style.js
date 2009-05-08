@@ -74,18 +74,28 @@
       
       // define its contents
       var us_name = $('<span></span>').addClass(this.dom.edits_view.edit_name).append(user_style.name);
-      var us_timestamp = $('<span></span>').addClass(this.dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
+      // var us_timestamp = $('<span></span>').addClass(this.dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       var agree_button = $('<button type="button">agree</button>');
       var disagree_button = $('<button type="button">disagree</button>');
       
       // attach to the container
       us_block.append(us_name);
-      us_block.append(us_timestamp);
+      // us_block.append(us_timestamp);
       us_block.append(agree_button);
       us_block.append(disagree_button);
       
       return us_block;
     };
+    
+    var new_us1 = new fb.UserStyle({
+      feedback_id:"number",
+      name:"string",
+      timestamp:"number",
+      opinion:"",
+      agreed:"number",
+      disagreed:"number",
+      selectors:{num:1, number:2}
+      });
     
     this.edits_view.append(this.edit_list);
     this.edits_view.append(this.new_edit_link);
@@ -99,7 +109,7 @@
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
     self.edits.append(this.edits_view);
-    // self.edits.append(this.new_edit);
+    self.edits.append(this.new_edit);
 
     // var page_edit_new = $('<div></div>').attr('id', dom.new_edit.wrapper);
     // 
