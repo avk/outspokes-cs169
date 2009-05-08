@@ -281,7 +281,7 @@
         $(this).parent().parent().find('div.cmt_content:eq(0), div.replies:eq(0)').toggle();
         $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
       });
-      
+
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         var tmp = $(c.target);
@@ -373,7 +373,7 @@
 //    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline')
     var over = function() {
-      el.css('outline','green solid 2px');
+      el.css('outline','solid 3px');
     }
     var out = function() {
       el.css('outline-style', old_style);

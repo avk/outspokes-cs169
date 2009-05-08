@@ -5,37 +5,22 @@
   You've invited <strong id="invite_count"><%= pluralize(@total_commenters, 'person') %></strong> to give feedback.
   <% end -%>
 </p>
+<% [{:commenter_list => @commenters_commented, :section_name => "Gave Feedback", :id_name => "commented"},
+  {:commenter_list => @commenters_visited, :section_name => "Visited", :id_name => "visited"},
+  {:commenter_list => @commenters_not_visited, :section_name => "Not Yet Visited", :id_name => "not_visited"}
+  ].each do |list|%>
 
-<%- unless @commenters_commented.empty? -%>
-<ul id="site_commenters_commented" class="site_commenters">
-  <p>Gave Feedback</p>
+  <%- unless list[:commenter_list].empty? -%>
+    <ul id="site_commenters_<%= list[:id_name] %>" class="site_commenters">
+      <p><%= list[:section_name]%></p>
 
-  <%- @commenters_commented.each do |commenter| -%>
-    <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
-<% end -%>
-</ul>
+      <%- list[:commenter_list].each do |commenter| -%>
+        <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
+      <% end -%>
+    </ul>
+  <%- end -%>
+
 <%- end -%>
-
-<%- unless @commenters_visited.empty? -%>
-<ul id="site_commenters_visited" class="site_commenters">
-  <p>Visited</p>
-  
-  <%- @commenters_visited.each do |commenter| -%>
-    <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
-  <% end -%>
-</ul>
-<%- end -%>
-
-<%- unless @commenters_not_visited.empty? -%>
-<ul id="site_commenters_not_visited" class="site_commenters">
-  <p>Didn't Visit Yet</p>
-  
-  <%- @commenters_not_visited.each do |commenter| -%>
-    <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
-  <% end -%>
-</ul>
-<%- end -%>
-
 
 <fieldset id="invite_commenters">
   <legend>Invite <%= (@total_commenters == 0) ? 'some' : 'more' %> folks</legend>
