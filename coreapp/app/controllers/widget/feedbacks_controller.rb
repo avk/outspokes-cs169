@@ -91,7 +91,7 @@ class Widget::FeedbacksController < Widget::WidgetController
       if params[:parent_id]
         # since parent_id is based on /comment_\d+/i, we extract the \d+
         parent_id = params[:parent_id].sub(/\D+/, '').to_i
-        if Feedback.find_by_id(parent_id).nil? # If feedback doesn't exist, destroy the feedback
+        if Comment.find_by_id(parent_id).nil? # If feedback doesn't exist, destroy the feedback
           feedback.destroy
         else
           feedback.move_to_child_of parent_id
