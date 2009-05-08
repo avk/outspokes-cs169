@@ -9,12 +9,12 @@ version: 3.0.0pr2
 
 /* outermost wrapper for our widget */
 #outspokes {
+  background-color: #333;
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 120%;
   z-index: 999;
   width: 100%;
-  background-color: #eee;
   position: fixed;
   bottom: 0px;
   left: 0px;
@@ -241,44 +241,16 @@ version: 3.0.0pr2
 /* COMMENTING FORM */
 
 #outspokes #new-comment {
+  background-color: transparent;
+  color: #eee;
   float: right;
-  width: 25%;
+  width: 27%;
   margin-right: 2%;
 }
 
-#outspokes #comment_form {
-  float: right;
-  width: 100%;
-}
-#outspokes #comment_form textarea {
-  width: 100%;
-}
-
-#outspokes #outspokes_form_buttons {
-  background-color: #bbb;
-  border-bottom: 1px dashed #777;
-  margin-right: -1px;
-  padding: 3px;
-  text-align: right;
-}
-
-#outspokes #outspokes_form_buttons #private_wrapper {
-  float: left;
-}
-#outspokes #outspokes_form_buttons #private_wrapper label {
-  background-color: inherit;
-  color: #464646;
-  font-size: 1.1em;
-  vertical-align: 15%
-}
-
-#outspokes #comment_form .button {
-  font-weight: bold;
-  margin-left: 2%;
-}
-
-
 #outspokes #outspokes_form_header {
+  background: transparent;
+  color: #ddd;
   font-style : italic;
   height:20px;
   margin: 5px 0;
@@ -294,9 +266,8 @@ version: 3.0.0pr2
   border-bottom: none;
   cursor: pointer;
   float: right;
-  left: 1px;
   margin-top: -2px;
-  padding: 2px 7px 6px 7px;
+  padding: 2px 7px 3px 7px;
   position: relative;
   top: 1px;
 }
@@ -305,6 +276,50 @@ version: 3.0.0pr2
   border: 1px solid #FFF;
   border-bottom: none;
 }
+
+#outspokes #outspokes_form_wrapper {
+  background: #FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center top;
+  color: #333;
+  padding: 5px;
+}
+
+#outspokes #comment_form {
+  float: right;
+  width: 100%;
+}
+#outspokes #comment_form textarea {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  width: 100%;
+}
+
+
+#outspokes #outspokes_form_buttons {
+  -moz-border-radius-bottomleft: 7px;
+  background-color: #bbb;
+  padding: 3px;
+  text-align: right;
+}
+
+#outspokes #outspokes_form_buttons #private_wrapper {
+  float: left;
+  position: relative;
+  left: 5px;
+  top: 2px;
+}
+#outspokes #outspokes_form_buttons #private_wrapper label {
+  background-color: inherit;
+  color: #464646;
+  font-size: 1.1em;
+  vertical-align: 15%
+}
+
+#outspokes #comment_form .button {
+  font-weight: bold;
+  margin-left: 2%;
+}
+
 
 /* END COMMENTING FORM*/
 
@@ -440,9 +455,11 @@ version: 3.0.0pr2
 /* HELP PANEL */
 
 #outspokes #help_content {
+  background-color: #fff;
+  color: #333;
   padding: 15px;
   overflow: scroll;
-  height: 180px;
+  height: 187px;
   line-height: 1.8em;
 }
 

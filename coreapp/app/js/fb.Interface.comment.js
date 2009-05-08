@@ -45,7 +45,7 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
+    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><div id="outspokes_form_wrapper"><textarea name="content" rows="7" /></div>';
       formHTML += form_header;
       var form_buttons =  '<div id="outspokes_form_buttons">'
       if ( !_fb.admin() ) {
