@@ -164,8 +164,7 @@
         } else {
           parent_border = 0;
         }
-        new_border = parent_border + 1 + "px";
-
+        
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
@@ -198,7 +197,7 @@
         var reply_form = this.dom.reply_form(c_id);
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
-        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>");
+        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Comment.all[backend_id].name + "</strong>");
         form.find('#outspokes_form_buttons').html(
           '<input class="button" type="reset" value="Cancel" />' +
           '<input class="button" type="submit" value="Reply" />');
@@ -317,7 +316,7 @@
     // Returns the timestamp of the most recent comment in given thread
     var age_of_thread = function(comment) {
       var dom = fb.i.comment.dom;
-      var time = fb.Feedback.all[dom.number_from_id(comment.id)].timestamp;
+      var time = fb.Comment.all[dom.number_from_id(comment.id)].timestamp;
       fb.i.comment.visit_all_replies(comment, function(reply) {
         if (reply.timestamp > time) {
           time = reply.timestamp;
@@ -349,7 +348,7 @@
       var parent = this;
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
         var this_id = parent.dom.number_from_id(this.id); // Extract id number of comment from id
-        fn(fb.Feedback.all[this_id]);
+        fn(fb.Comment.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
     };

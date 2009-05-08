@@ -11,8 +11,6 @@
       fb.assert(arguments.length === 1, "Incorrect number of arguments");
       fb.assert(fb.hasProp(obj, {
         feedback_id:"number",
-        content:"string",
-        target:"string",
         name:"string",
         timestamp:"number",
         opinion:"",
@@ -20,8 +18,6 @@
         disagreed:"number"}),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
-      this.content = obj.content;
-      this.target = obj.target;
       this.name = obj.name;
       this.opinion = obj.opinion;
       this.agreed = obj.agreed;
@@ -47,7 +43,6 @@
     this.name = null;
     this.timestamp = null;
     this.build = null;
-    fb.Comment.refresh_count();
   };
   fb.Feedback.prototype.render = function() {};
   

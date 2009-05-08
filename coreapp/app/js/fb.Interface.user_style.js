@@ -61,9 +61,10 @@
     this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', this.dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', this.dom.edits_view.edits_list);
     this.new_edit_link = $('<a href="#"></a>').attr('id', this.dom.edits_view.new_edit_link);
+    this.edits_view.append(this.new_edit_link);
     
     this.render = function(user_style) {
-      this.edit_list.append(user_style.build);
+      this.edit_list.append(this.build(user_style));
     };
     
     this.build = function(user_style) {
@@ -86,16 +87,6 @@
       
       return us_block;
     };
-    
-    // var new_us1 = new fb.UserStyle({
-    //   feedback_id:"number",
-    //   name:"string",
-    //   timestamp:"number",
-    //   opinion:"",
-    //   agreed:"number",
-    //   disagreed:"number",
-    //   selectors:{num:1, number:2}
-    //   });
     
     this.edits_view.append(this.edit_list);
     this.edits_view.append(this.new_edit_link);
