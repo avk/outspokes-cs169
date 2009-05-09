@@ -20,12 +20,12 @@
 // @name          Outspokes on Craigslist
 // @namespace     http://www.outspokes.com/ 
 // @description   script will attach outspokes.com's craigslist include 
-// @include       http://www.craigslist.org/* 
+// @include       http://sfbay.craigslist.org/* 
 // @exclude       http://dontexcludeanything.google.com/* 
 // ==/UserScript== 
 
 var headID = document.getElementsByTagName("head")[0];         
 var newScript = document.createElement('script');
 newScript.type = 'text/javascript';
-newScript.src = 'http://localhost:3000/widget/5';
+newScript.src = 'http://localhost:3000/widget/6';
 headID.appendChild(newScript);
