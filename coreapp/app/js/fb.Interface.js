@@ -33,6 +33,8 @@
         close   : 'close_admin_panel',
         overlay : 'outspokes_overlay',
       },
+      non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +
+        " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)"),
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);

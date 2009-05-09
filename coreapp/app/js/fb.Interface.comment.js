@@ -68,14 +68,19 @@
     };
 
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
+
+    // TARGETING ///////////////////////
+
     var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
     target_button.click(function() {
       $(this)[0].value = "Change target";
+      fb.i.comment.reset_target();
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
         $('#outspokes_target_button').css("background-color", "orange");
       });
     });
+
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
     this.form.find("a").click(function(){fb.Feedback.get();});
@@ -416,6 +421,8 @@
     };
     
     this.reset_target = function() {
+      // Stop targetting if currently in process
+      fb.i.dom.non_widget_elements.unbind(".elem_select");
       // Un-highlight element, first get its serialized path out of form
       var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
       old_element.css('outline', old_element.get(0).__old_style);
