@@ -252,13 +252,32 @@
       bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
       
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
+      
+      function confirm_delete() {
+      	var answer = confirm("Sure you want to delete comment?")
+      	if (answer){
+      		alert("Bye bye!")
+      		window.location = "http://www.google.com/";
+      	}
+      	else{
+      		alert("Thanks for sticking around!")
+      	}
+      }
+      
+      
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
         deleteCmt.click(function() {
           if (c.__unHover) {
             c.__unHover();
           }
-          c.remove();
+          var answer = confirm("Sure you want to delete comment?")
+        	if (answer){
+              c.remove();
+        	}
+        	else{
+        		alert("That was close!")
+        	}
         });
         timestamp_close.append(deleteCmt);
       }

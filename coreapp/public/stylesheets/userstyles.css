@@ -23,15 +23,14 @@
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #aaa;
 }
 
 #outspokes .edit_block {
   padding: 10px;
   margin-bottom: 5px;
-  background-color: #999;
   color: black;
   height: 20px;
+  border-bottom: 1px solid #EEE;
 }
 
 #outspokes .edit_block .toggle_box {
