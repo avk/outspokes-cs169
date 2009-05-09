@@ -21,15 +21,136 @@ version: 3.0.0pr2
 #outspokes legend{color:#000;}
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
+/* 
+  Nuke 'em all reset:
+  Default values for ALL CSS 2.1 properties http://www.w3.org/TR/CSS2/propidx.html
+*/
+#outspokes,
+#outspokes_overlay,
+#outspokes_admin_panel {
+  azimuth : center;
+  background-attachment : scroll;
+  background-color : transparent;
+  background-image : none;
+  background-position : 0% 0%;
+  background-repeat : repeat;
+/*  background : see individual properties */
+  border-collapse : separate;
+/*  border-color : see individual properties */
+  border-spacing : 0;
+/*  border-style : see individual properties */
+/*  border-top : see individual properties */
+/*  border-right : see individual properties */
+/*  border-bottom : see individual properties */
+/*  border-left : see individual properties */
+  border-top-color : black; /*the value of the 'color' property */
+  border-right-color : black; /*the value of the 'color' property */
+  border-bottom-color : black; /*the value of the 'color' property */
+  border-left-color : black; /*the value of the 'color' property */
+  border-top-style : none;
+  border-right-style : none;
+  border-bottom-style : none;
+  border-left-style : none;
+  border-top-width : medium;
+  border-right-width : medium;
+  border-bottom-width : medium;
+  border-left-width : medium;
+/*  border-width : see individual properties */
+/*  border : see individual properties */
+  bottom : auto;
+  caption-side : top;
+  clear : none;
+  clip : auto;
+  color : black; /*depends on user agent */
+  content : normal;
+  counter-increment : none;
+  counter-reset : none;
+  cue-after : none;
+  cue-before : none;
+/*  cue : see individual properties */
+  cursor : auto;
+  direction : ltr;
+  display : inline;
+  elevation : level;
+  empty-cells : show;
+  float : none;
+  font-family : Verdana, Helvetica, sans-serif; /*depends on user agent */
+  font-size : medium;
+  font-style : normal;
+  font-variant : normal;
+  font-weight : normal;
+/*  font : see individual properties */
+  height : auto;
+  left : auto;
+  letter-spacing : normal;
+  line-height : normal;
+  list-style-image : none;
+  list-style-position : outside;
+  list-style-type : disc;
+/*  list-style : see individual properties */
+  margin-right : 0;
+  margin-left : 0;
+  margin-top : 0;
+  margin-bottom : 0;
+/*  margin : see individual properties */
+  max-height : none;
+  max-width : none;
+  min-height : 0;
+  min-width : 0;
+  orphans : 2;
+  outline-color : invert;
+  outline-style : none;
+  outline-width : medium;
+/*  outline : see individual properties */
+  overflow : visible;
+  padding-top : 0;
+  padding-right : 0;
+  padding-bottom : 0;
+  padding-left : 0;
+/*  padding : see individual properties */
+  page-break-after : auto;
+  page-break-before : auto;
+  page-break-inside : auto;
+  pause-after : 0;
+  pause-before : 0;
+/*  pause : see individual properties */
+  pitch-range : 50;
+  pitch : medium;
+  play-during : auto;
+  position : static;
+  quotes : none; /*depends on user agent */
+  richness : 50;
+  right : auto;
+  speak-header : once;
+  speak-numeral : continuous;
+  speak-punctuation : none;
+  speak : normal;
+  speech-rate : medium;
+  stress : 50;
+  table-layout : auto;
+  text-align : left; /*"a nameless value that acts as 'left' if 'direction' is 'ltr', 'right' if 'direction' is 'rtl' "*/
+  text-decoration : none;
+  text-indent : 0;
+  text-transform : none;
+  top : auto;
+  unicode-bidi : normal;
+  vertical-align : baseline;
+  visibility : visible;
+  voice-family : announcer, male; /*depends on user agent */
+  volume : medium;
+  white-space : normal;
+  widows : 2;
+  width : auto;
+  word-spacing : normal;
+  z-index : auto;
+}
+
+/* outermost wrapper for our widget */
 #outspokes {
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 120%;
   z-index: 999;
-}
-
-/* outermost wrapper for our widget */
-#outspokes {
   width: 100%;
   background-color: #CCC;
   position: fixed;
