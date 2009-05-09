@@ -53,10 +53,14 @@ class CommentTest < ActiveSupport::TestCase
       "target" => feedback.target,
       "opinion" => commenter.opinion_of(feedback.id),
       "agreed" => feedback.agreed,
-      "disagreed" => feedback.disagreed
+      "disagreed" => feedback.disagreed,
+      "neutral?" => feedback.neutral?,
+      "controversial?" => feedback.controversial?,
+      "popular?" => feedback.popular?,
+      "unpopular?" => feedback.unpopular?
     }
     
-    assert Comment.json_attribute_names.sort == json_atts.keys.sort
+    assert Comment.json_attribute_names.sort == json_atts.keys.sort, "Attributes don't match"
     feedback.json_attributes(commenter).each do |key, value|
       assert json_atts[key] == value, "for #{key}: expected #{json_atts[key].inspect} got #{value.inspect}"
     end

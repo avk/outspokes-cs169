@@ -22,7 +22,7 @@ class Feedback < ActiveRecord::Base
   @@high_vote_factor = 1.5
   
   def self.json_attribute_names
-    %w(feedback_id name timestamp opinion agreed disagreed)
+    %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular?)
   end
   
   def abstract?
@@ -57,6 +57,14 @@ class Feedback < ActiveRecord::Base
         json_atts['agreed'] = self.agreed
       when 'disagreed'
         json_atts['disagreed'] = self.disagreed
+      when 'neutral?'
+        json_atts['neutral?'] = self.neutral?
+      when 'popular?'
+        json_atts['popular?'] = self.popular?
+      when 'unpopular?'
+        json_atts['unpopular?'] = self.unpopular?
+      when 'controversial?'
+        json_atts['controversial?'] = self.controversial?
       else
         json_atts[attr] = self[attr.to_sym]
       end

@@ -15,7 +15,11 @@
         timestamp:"number",
         opinion:"",
         agreed:"number",
-        disagreed:"number"}),
+        disagreed:"number",
+        "neutral?": "boolean",
+        "controversial?": "boolean",
+        "popular?": "boolean",
+        "unpopular?": "boolean"}),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
       this.name = obj.name;
@@ -23,6 +27,10 @@
       this.agreed = obj.agreed;
       this.disagreed = obj.disagreed;
       this.timestamp = obj.timestamp * 1000;
+      this["neutral?"] = obj["neutral?"];
+      this["controversial?"] = obj["controversial?"];
+      this["popular?"] = obj["popular?"];
+      this["unpopular?"] = obj["unpopular?"];
       this.build = null;
 
       fb.Feedback.all[this.feedback_id] = this;

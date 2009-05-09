@@ -29,4 +29,8 @@ alt_public_admin:
   url_token: alt_public_admin
   page_id: 7
   commenter_id: 1
-
+  
+lulz:
+  url_token: quentin2
+  page_id: 2
+  commenter_id: 1
