@@ -18,12 +18,14 @@ function() {
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
     fb.env.opinion_address = "<%= WIDGET_DOMAIN %>opinion_on_feedback";
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
+    fb.env.edit_css_address = "<%= WIDGET_DOMAIN %>stylesheets/userstyles.css";
     fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;
     
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
+    fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.edit_css_address + '" />');
 
     // DO NOT USE THIS!!!!!
     // This is only for convenience in testing, and should never be
@@ -82,6 +84,34 @@ function() {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
       }
+      // Testing UserStyle data only. Not to be committed
+      var us1 = new fb.UserStyle({
+                "feedback_id" : 23,     
+                "name" : "Arthur",
+                "timestamp" : 8768769769,     
+                "opinion" : "agreed",     
+                "agreed" : 34,     
+                "disagreed" : 9,     
+                "selectors" : [] 
+              }); 
+              var us2 = new fb.UserStyle({
+                "feedback_id" : 25,     
+                "name" : "Hannah",
+                "timestamp" : 123456789,     
+                "opinion" : "agreed",     
+                "agreed" : 7,     
+                "disagreed" : 12,     
+                "selectors" : [] 
+              });
+              fb.UserStyle.render();
+
+      // End test data
+      
+      // Arthur only:
+      // fb.i.nav.elements.list[1].click();
+      // fb.i.show_widget();
+      // fb.i.user_style.new_edit_link.click();
+      
       return true;
     };
 

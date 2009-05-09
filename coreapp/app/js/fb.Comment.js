@@ -8,6 +8,13 @@
   fb.Comment = function (obj) {
     // call to super for properties
     this.parent.call(this, obj);
+    console.log(obj);
+      fb.assert(fb.hasProp(obj, {
+        content:"string",
+        target:"string"}),
+        "Object argument to fb.Comment constructor of wrong form: ");
+    this.content = obj.content;
+    this.target = obj.target;
     this.build = fb.i.comment.build(this);
 
     fb.Comment.all[this.feedback_id] = this;
@@ -28,10 +35,11 @@
     // remove the comment from the interface
     // must be first
     fb.i.comment.remove(this);
-    // super.remove:
-    this.parent.prototype.remove.call(this, arguments[0]);
     delete fb.Comment.all[this.feedback_id];
     delete fb.Comment.unrendered[this.feedback_id];
+    // super.remove:
+    this.parent.prototype.remove.call(this, arguments[0]);
+    fb.Comment.refresh_count();
     return true;
   };
   
@@ -123,11 +131,12 @@
     for (var i in fb.Comment.unrendered) {
       fb.Comment.unrendered[i].render();
     }
+    // The following is UI and should be moved to fb.Interface.comment
     fb.Comment.refresh_count();
-    // Re-sort comments based on sort/filter dropdown
-    fb.$("#comments_filter :selected").click()
+    fb.$("#comments_filter :selected").click(); // Re-sort comments based on sort/filter dropdown
   };
   
+  // This is UI and should be moved to fb.Interface.comment
   fb.Comment.refresh_count = function() {
-    fb.i.set_num_comments(fb.getProperties(fb.Feedback.all).length);
+    fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
   };

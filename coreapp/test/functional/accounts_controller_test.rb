@@ -50,8 +50,42 @@ class AccountsControllerTest < ActionController::TestCase
     end
   end
   
+  def test_should_update_account
+    login_as :quentin
+    oldemail = commenters(:quentin).email
+    oldpass = commenters(:quentin).password
+    newemail = 'quire@foo.com'
+    newpass = 'foobar'
+    assert_no_difference 'Account.count' do
+      put :update, :id => commenters(:quentin).id, :account => { :email => newemail,
+           :password => newpass, :password_confirmation => newpass }
+      assert_response :redirect
 
+      commenters(:quentin).reload
+      #debugger      
+      assert commenters(:quentin).email != oldemail
+      assert commenters(:quentin).email == newemail
+      assert commenters(:quentin).crypted_password != commenters(:quentin).encrypt(oldpass)
+      assert commenters(:quentin).crypted_password == commenters(:quentin).encrypt(newpass)
+    end
+  end
   
+  def test_should_not_update_account_mismatched_passwords
+    login_as :quentin
+    assert_no_difference 'Account.count' do
+      put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
+           :password => 'foobara', :password_confirmation => 'foobar' }
+      assert_template 'accounts/edit.haml'
+    end
+  end
+
+  def test_should_not_update_account_not_logged_in
+    assert_no_difference 'Account.count' do
+      put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
+           :password => 'foobara', :password_confirmation => 'foobar' }
+      assert_template 'accounts/edit.haml'
+    end
+  end
 
   protected
     def create_account(options = {})

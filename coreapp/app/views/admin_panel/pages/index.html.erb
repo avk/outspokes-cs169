@@ -13,7 +13,7 @@
 <ol id="site_pages">
   
 <%- @pages.each do |page| -%>
-  <li class="site_page">
+  <li class="site_page <%= cycle('odd','even') %>">
     <div class="remove_page">
       <%= link_to 'x', 
           admin_panel_delete_site_page_path(@site, @site.validation_token, page), 
@@ -26,15 +26,16 @@
         <%= relative_date Date.parse(page.latest_feedback) %> @ 
         <%= prettier_time Time.parse(page.latest_feedback) %>
       </span>
-      <div class="search_match">
-        <%- if @search_feedbacks && @search_feedbacks[page.id] -%>        
+      <%- if @search_feedbacks && @search_feedbacks[page.id] -%>        
+        <div class="search_match">
+          <span>Search Results for This Page</span>
           <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
-            <p>
-            <%= (matching_feedback.commenter.truncated_email + ' - ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50]%>
-            </p>
+          <p>
+            <%= "<span class='commenter_email'>#{matching_feedback.commenter.truncated_email}</span>: " + (matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50] + "..." %>
+          </p>
           <%- end -%>
+        </div>
         <%- end -%>
-      </div>
     </div>
   </li>
 <%- end -%>

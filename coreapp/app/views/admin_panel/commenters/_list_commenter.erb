@@ -1,4 +1,4 @@
-<li class="invited_commenter">
+<li class="invited_commenter <%= cycle('odd','even') %>">
   <div class="remove_commenter">
     <%= link_to 'x', 
     admin_panel_uninvite_path(@site, @site.validation_token, commenter), 
@@ -15,6 +15,8 @@
   </span> 
   <% unless commenter.feedbacks.empty? %> 
   <ul class="commenter_details">
+    <b>on the following pages:</b>
+    
     <%- commenter.commented_pages.each do |page| -%>
       <li>
         <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %> <!-- should link to comment list filtered by commenter -->

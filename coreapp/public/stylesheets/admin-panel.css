@@ -64,6 +64,13 @@ body {
 }
 
 /* pages & commenters */
+
+.even {
+  background-color: white; }
+
+.odd {
+  background-color: #accfcc; }
+  
 #invited_message,
 #pages_message {
   color: #666;
@@ -82,7 +89,15 @@ body {
   margin: 20px 0;
 }
 
-.site_commenters p {
+.search_match {
+  font-size: 12px;
+}
+
+.search_match p {
+  padding-left: 10px;
+}
+
+.site_commenters p, .search_match span {
   font-weight: bold;
 }
 
@@ -95,9 +110,14 @@ body {
 .site_page:hover {
   background-color: #eee;
 }
+
+li.invited_commenter, li.site_page {
+  margin-bottom : 10px;
+}
 .commenter_details {
   padding-left: 10px;
   font-size: .8em;
+  color: #777;
 }
 .commenter_details:hover {
 }
