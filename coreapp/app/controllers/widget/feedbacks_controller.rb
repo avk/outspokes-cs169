@@ -86,7 +86,7 @@ class Widget::FeedbacksController < Widget::WidgetController
       parent_private = params[:isPrivate] 
 
       if match
-        puts "MATCHMATCHMATCHMATCH********************************************"
+        logger.debug "MATCHMATCHMATCHMATCH********************************************"
         parent_id = match[1].to_i
         parent_private = Comment.find(parent_id).private
         puts parent_private
