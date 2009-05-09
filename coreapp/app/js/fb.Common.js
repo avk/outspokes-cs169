@@ -159,8 +159,7 @@
 
   fb.select_target = function (select_function) {
     // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
-    var page_elements = $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," + 
-      " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)");
+    var page_elements = fb.i.dom.non_widget_elements;
     // Mark clicked-on elemement
     page_elements.bind('mouseup.elem_select', function (e) {
       select_function(e);

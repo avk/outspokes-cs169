@@ -33,6 +33,8 @@
         close   : 'close_admin_panel',
         overlay : 'outspokes_overlay',
       },
+      non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +
+        " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)"),
     }
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
@@ -214,9 +216,9 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>' + 
-        '<option>Show popular</option><option>Show unpopular</option><option>Show controversial</option>' +
-        '<option>Show neutral</option>');
+    var sort_dropdown = $('<select id="comments_filter"><option>Newest first</option><option>Oldest first</option>' + 
+        '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
+        '<option>Neutral</option>');
     sort_dropdown.click(function(e) {
       e.stopPropagation(); // Don't trigger outspokes minimize when clicking on dropdown
     });
