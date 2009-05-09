@@ -270,13 +270,14 @@
           if (c.__unHover) {
             c.__unHover();
           }
-          var answer = confirm("Sure you want to delete comment?");
+          var answer = confirm("Are you sure you want to delete the comment? All of its replies will also be deleted.");
           if (answer){
               c.remove();
+              alert("Comment removed.")
           }
-          else{
-            alert("That was close!");
-          }
+          // else{
+          //             alert("That was close!");
+          //           }
         });
         
         timestamp_close.append(deleteCmt);
