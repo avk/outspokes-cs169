@@ -1,7 +1,10 @@
+  /* The following for JSLint: */
+  /*global fb, _fb, document */
+  
   var $ = fb.$;
 
   fb.Interface.comment = function (self) {
-    
+  
     // Common identifiers used in this interface
     this.dom = {
       comment_id_format   : /comment_\d+/i,
@@ -71,7 +74,7 @@
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
         $('#outspokes_target_button').css("background-color", "orange");
-      })
+      });
     });
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
@@ -164,7 +167,7 @@
         } else {
           parent_border = 0;
         }
-        new_border = parent_border + 1 + "px";
+        var new_border = parent_border + 1 + "px";
 
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
@@ -285,7 +288,7 @@
       
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
-        var tmp = $(c.target);
+        tmp = $(c.target);
         tmp = highlight_target(tmp.get(0));
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
@@ -309,10 +312,66 @@
       c.build.remove();
     };
     
+    this.filtering = {
+      flattened: false
+    };
+    
+    // Linearizes all comments and replies as children of #comment_list
+    this.flatten_comments = function() {
+      var container;
+      if (!arguments[0]) {
+        container = $("#comment_list");
+      } else {
+        container = arguments[0];
+      }
+      var list = $("#comment_list");
+      var parent = this;
+      $(container).children().each(function() {
+        this.__container = container;
+        list.append($(this));
+        parent.flatten_comments($("#" + parent.dom.reply_list(this.id)));
+      });
+      this.filtering.flattened = true;
+      return list.children();
+    };
+    
+    // Returns comments to original threaded tree form and un-hides any hidden comments
+    this.unflatten_comments = function() {
+      $("#comment_list").children().each(function() { 
+        $(this).show();
+        $(this).appendTo(this.__container);
+      });
+      this.filtering.flattened = false;
+    };
+    
+    // Sorts comment threads based on method
     this.sort_comments = function(method) {
+      if (this.filtering.flattened) {
+        this.unflatten_comments();
+      }
       var posts = this.comments.children();
       posts.sort(method);
       posts.appendTo(this.comments);
+    };
+    
+    // Flattens comments and hides them if method returns true for given comment
+    this.filter_comments = function(fn) {
+      var posts = this.flatten_comments();
+      posts.each(function() {
+        if (! fn(this)) {
+          $(this).hide(400);
+        } else {
+          $(this).show(400);
+        }
+      });
+    };
+    
+    // Filters comments based on whether prop is true for each Comment object
+    this.filter_by = function(prop) {
+      this.filter_comments(function(post) {
+        var post_id = fb.i.comment.dom.number_from_id(post.id);
+        return fb.Feedback.all[post_id][prop];
+      });
     };
     
     // Returns the timestamp of the most recent comment in given thread
@@ -346,7 +405,7 @@
     // Applies function fn to every Comment object that is a reply to the 
     // DOM comment c -- applies to actual Comment objects, not DOM elements
     this.visit_all_replies = function(c, fn) {
-      var c = $(c);
+      c = $(c);
       var parent = this;
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
         var this_id = parent.dom.number_from_id(this.id); // Extract id number of comment from id
@@ -360,7 +419,7 @@
       var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
       old_element.css('outline', old_element.get(0).__old_style);
       // delete modification to original element
-      delete old_element.get(0)["__old_style"];
+      delete old_element.get(0).__old_style;
       // Reset form target
       fb.i.comment.form.find("input[name='target']").attr("value","html");
       // Remove orange background on target
@@ -372,12 +431,12 @@
   function highlight_target(el_dom) {
     var el = $(el_dom);
 //    var par = el.wrap("<div></div>").parent();
-    var old_style = el.css('outline')
+    var old_style = el.css('outline');
     var over = function() {
       el.css('outline','green solid 2px');
-    }
+    };
     var out = function() {
       el.css('outline-style', old_style);
-    }
+    };
     return [over, out];
   }

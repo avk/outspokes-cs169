@@ -12,7 +12,6 @@ class Widget::FeedbacksController < Widget::WidgetController
   # params[:callback] => 'some_function'
   def feedback_for_page
     feedback = []
-
     if @authorized
       if !@public
         site = @invite.page.site
