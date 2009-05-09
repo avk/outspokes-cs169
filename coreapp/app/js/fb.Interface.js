@@ -214,7 +214,9 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>');    
+    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>' + 
+        '<option>Show popular</option><option>Show unpopular</option><option>Show controversial</option>' +
+        '<option>Show neutral</option>');
     sort_dropdown.click(function(e) {
       e.stopPropagation(); // Don't trigger outspokes minimize when clicking on dropdown
     });
@@ -224,6 +226,19 @@
     });
     sort_dropdown.children().eq(1).click(function(e) {
       fb.i.comment.sort_by_oldest();
+    });
+    
+    sort_dropdown.children().eq(2).click(function(e) {
+      fb.i.comment.filter_by("popular?");
+    });
+    sort_dropdown.children().eq(3).click(function(e) {
+      fb.i.comment.filter_by("unpopular?");
+    });
+    sort_dropdown.children().eq(4).click(function(e) {
+      fb.i.comment.filter_by("controversial?");
+    });
+    sort_dropdown.children().eq(5).click(function(e) {
+      fb.i.comment.filter_by("neutral?");
     });
     
     this.nav.elements.list[0].append(sort_dropdown);

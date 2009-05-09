@@ -315,6 +315,9 @@
     
     // Linearizes all comments and replies as children of #comment_list
     this.flatten_comments = function() {
+      if (this.filtering.flattened) {
+        return $("#comment_list").children();
+      }
       var container;
       if (!arguments[0]) {
         container = $("#comment_list");
@@ -334,8 +337,11 @@
     
     // Returns comments to original threaded tree form and un-hides any hidden comments
     this.unflatten_comments = function() {
+      if (! this.filtering.flattened) {
+        return;
+      }
       $("#comment_list").children().each(function() { 
-        $(this).show();
+        $(this).show(400);
         $(this).appendTo(this.__container);
       });
       this.filtering.flattened = false;
@@ -343,9 +349,7 @@
     
     // Sorts comment threads based on method
     this.sort_comments = function(method) {
-      if (this.filtering.flattened) {
-        this.unflatten_comments();
-      }
+      this.unflatten_comments();
       var posts = this.comments.children();
       posts.sort(method);
       posts.appendTo(this.comments);
