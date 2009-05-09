@@ -1,8 +1,6 @@
 /* General */
 
 #outspokes #widget_edits {
-  background-color: maroon;
-  color: white;
 }
 
 /* List of edits view */
@@ -10,7 +8,13 @@
 #outspokes {
   
 }
-#outspokes #edits_list, #outspokes #new_edit_link {height: 217px; }
+#outspokes #edits_list, 
+#outspokes #new_edit_link { 
+  height: 217px; 
+}
+#outspokes #new_edit_link {
+  float: right;
+}
 
 #outspokes #edits_list {
   float: left;
@@ -46,3 +50,28 @@
 
 #outspokes {}
 
+#outspokes #new_edit_wrap {
+  border: 2px dashed orange;
+  overflow: auto;
+  float: right;
+}
+#outspokes #back_to_edits_list {
+  display: block;
+  float: left;
+  border: 1px solid black;
+  height: 100px;
+  width: 100px;
+}
+#outspokes #your_edits {
+  border: 1px solid red;
+  float: left;
+  height: 100px;
+  width: 100px;
+}
+#outspokes #your_targets {
+  border: 1px solid blue;
+  float: right;
+  height: 100px;
+  margin-right: 2%;
+  width: 25%;
+}

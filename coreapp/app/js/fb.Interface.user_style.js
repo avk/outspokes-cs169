@@ -25,16 +25,37 @@
       },
       
       new_edit : {
-        
+        wrapper : "new_edit_wrap",
+        link_back : "back_to_edits_list",
+        your_edits : "your_edits",
+        your_targets : "your_targets"
       }
     };
     var dom = this.dom;
 
+    // GENERAL //////////////////////////////////////////////////////////////////
+
+    this.slide = function(from, to) {
+      from.animate(
+        { width : '0%' }, // numeric CSS properties
+        300, // duration
+        null, // N/A
+        function() { // callback
+          from.hide();
+          to.show();
+          to.css('width', '100%');
+        }
+      );
+    }
+
     // EDITS_VIEW //////////////////////////////////////////////////////////////////
 
-    this.edits_view = $('<div><h1>Edits view goes here</h1></div>').attr('id', dom.edits_view.wrapper);
+    this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<a href="#"></a>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link = $('<a href="#">New Edit &raquo;</a>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link.click(function() { 
+      fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
+    });
     
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
@@ -70,17 +91,32 @@
     
     this.edits_view.append(this.edit_list);
     this.edits_view.append(this.new_edit_link);
+    this.edits_view.append($('<div style="clear:both;"></div>'));
     
     // NEW EDIT //////////////////////////////////////////////////////////////////
     
-    this.new_edit_view = $('<div><h1>Forthcoming...</h1></div>');
+    this.new_edit_view = $('<div></div>').attr('id', dom.new_edit.wrapper);
+    // must start out collapsed and hidden for the slide transitions to work
+    this.new_edit_view.css('width','0%'); 
+    this.new_edit_view.hide();
     
+    this.edit_list_link = $('<a href="#">&laquo; List Edits</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link.click(function() { 
+      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view); 
+    });
     
+    this.your_edits = $('<div>your edits</div>').attr('id', dom.new_edit.your_edits);
+    this.your_targets = $('<div>targets</div>').attr('id', dom.new_edit.your_targets);
+    
+    this.new_edit_view.append(this.edit_list_link);
+    this.new_edit_view.append(this.your_edits);
+    this.new_edit_view.append(this.your_targets);
     
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
     self.edits.append(this.edits_view);
-    // self.edits.append(this.new_edit_view);
+    self.edits.append(this.new_edit_view);
+    self.edits.append($('<div style="clear:both;"></div>'));
     
     // var page_edit_new = $('<div></div>').attr('id', dom.new_edit.wrapper);
     // 
