@@ -1,4 +1,6 @@
 1) Install greasemonkey
-2) Greasemonkey scripts need to be called xyz.user.js.
-3) The provided greasemonkey
+2) Edit/Create Greasemonkey scripts to refer to your own sites/localhost if you'd like. 
+2b) Note that Greasemonkey scripts must be called xyz.user.js 
+2c) Note that Greasemonkey script comments specify what sites it will run on.
+3) Use firefox to open the xyz.user.js file, and install the script.
 
