@@ -1,4 +1,6 @@
 <ol id="site_pages">
+  <%- if flash[:warning] -%><div id="warning"><%= flash[:warning] %></div><%- end -%>
+  
 <%- @pages.each do |page| -%>
   <li class="site_page">
     <div class="remove_page">
@@ -8,22 +10,20 @@
           :method => :delete %>
     </div>
     <div class="page_details">
-      <% url_link_text = URI.parse(page.url).path %>
-      <% if (url_link_text.empty?) then url_link_text="/";  end%>
-      <%= link_to url_link_text, page.url, :class => 'page_url' %>
+      <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %>
       <span class="latest_feedback">
         <%= relative_date Date.parse(page.latest_feedback) %> @ 
         <%= prettier_time Time.parse(page.latest_feedback) %>
       </span>
-      <span class="search_match">
+      <div class="search_match">
         <%- if @search_feedbacks && @search_feedbacks[page.id] -%>
           <%- @search_feedbacks[page.id].each do |matching_feedback| -%>
             <p>
-            <%= (matching_feedback.commenter.email + ' - ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50]%>
+            <%= (matching_feedback.commenter.truncated_email + ': ' + matching_feedback.content.gsub(/<\/?[^>]*>/, " "))[0,50] + "..."%>
             </p>
           <%- end -%>
         <%- end -%>
-      </span>
+      </div>
     </div>
   </li>
 <%- end -%>

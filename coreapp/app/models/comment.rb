@@ -6,4 +6,8 @@ class Comment < Feedback
     return false
   end
   
+  def self.json_attribute_names
+    super + %w(content target)
+  end
+  
 end

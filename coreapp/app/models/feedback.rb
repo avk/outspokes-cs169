@@ -22,7 +22,7 @@ class Feedback < ActiveRecord::Base
   @@high_vote_factor = 1.5
   
   def self.json_attribute_names
-    %w(feedback_id name timestamp content target opinion agreed disagreed neutral? controversial? popular? unpopular?)
+    %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular?)
   end
   
   def abstract?
@@ -38,7 +38,8 @@ class Feedback < ActiveRecord::Base
   
   def json_attributes(opinionated_commenter)
     json_atts = {}
-    Feedback.json_attribute_names.each do |attr|
+    # self.class lets you get at a class method of anything that inherits from this object
+    self.class.json_attribute_names.each do |attr|
       case attr
       when 'feedback_id'
         json_atts['feedback_id'] = id

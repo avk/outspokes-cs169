@@ -1,171 +1,198 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    font-size: 12px;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 
 #wrapper {
-    margin: 0;
-    padding: 20px;
+  border-top: 1px solid #999;
+  margin: 0;
+  padding: 20px;
 }
 
 /* navigation */
 #navigation-wrapper {
-    border-bottom: 1px solid #999;
-    padding: 0 15px;
-    margin-top: 10px;
-    height: 30px;
+  padding: 0 15px;
+  margin-top: 10px;
+  height: 30px;
 }
 #navigation {
-    float: left;
-    list-style: none;
-    height: 100%;
+  float: left;
+  list-style: none;
+  height: 100%;
 }
-    #navigation li {
-        border-width: 1px;
-        border-style: solid;
-        border-color: #999;
-        border-bottom: none;
-        float: left;
-        margin-right: 10px;
-        height: 100%;
-    }
-        #navigation li .current,
-        #navigation li a {
-            color: #666;
-            display: block;
-            float: left;
-            font-family: Helvetica, sans-serif;
-            line-height: 250%;
-            padding: 0 1em;
-            text-decoration: none;
-        }
-        #navigation li .current {
-            border-bottom: 1px solid white;
-            color: #000;
-            margin-bottom: -1px;
-        }
-        #navigation li a:hover {
-            background-color: #eee;
-        }
-        
+#navigation li {
+  border: 1px solid #999;
+  border-bottom: none;
+  float: left;
+  margin-right: 10px;
+  height: 100%;
+}
+#navigation li .current,
+#navigation li a {
+  color: #666;
+  display: block;
+  float: left;
+  font-family: Helvetica, sans-serif;
+  padding: 8px 1em;
+  text-decoration: none;
+}
+#navigation li .current {
+  border-bottom: 1px solid white;
+  color: #000;
+}
+#navigation li a:hover {
+  background-color: #eee;
+}
+
 #search_bar {
   float:right;
-  padding: 6px 15px;
-  outline: 1px solid #999;
-  height: 18px;
+  height: 100%;
 }
 #search_bar #search {
-  height: 12px;
+  
 }
+
 #search_bar #search_button {
-  background-color: blue;
-  height: 18px;
+  background-color: transparent;
+  color: transparent;
+  cursor: pointer;
+  background-image: url(/images/mag_glass.gif);
+  border: 0;
+  height: 20px;
 }
 
 /* pages & commenters */
+
+.even {
+  background-color: white; }
+
+.odd {
+  background-color: #accfcc; }
+  
 #invited_message,
 #pages_message {
-    color: #666;
-    font-size: 1.2em;
-    margin: 5px 0;
-    padding: 0;
+  color: #666;
+  font-size: 1.4em;
+  margin: 5px 0;
+  padding: 0;
 }
-    #invited_message #invite_count,
-    #pages_message #page_count {
-        color: #333;
-        font-size: 1.2em;
-        font-weight: bold;
-    }
+#invited_message #invite_count,
+#pages_message #page_count {
+  color: #333;
+  font-weight: bold;
+}
 
-#site_commenters,
+.site_commenters,
 #site_pages {
-    margin: 20px 0;
+  margin: 20px 0;
+}
+
+.search_match {
+  font-size: 12px;
+}
+
+.search_match p {
+  padding-left: 10px;
+}
+
+.site_commenters p, .search_match span {
+  font-weight: bold;
 }
 
 .invited_commenter,
 .site_page {
-    font-size: 1.5em;
-    padding: 5px;
+  font-size: 1.25em;
+  padding-left:10px ;
 }
 .invited_commenter:hover,
 .site_page:hover {
-    background-color: #eee;
+  background-color: #eee;
 }
 
-    .commenter_email,
-    .page_details {
-        padding-left: 7px;
-    }
-        .page_details .latest_feedback {
-            color: #999;
-            display: block;
-            font-size: 60%;
-        }
+li.invited_commenter, li.site_page {
+  margin-bottom : 10px;
+}
+.commenter_details {
+  padding-left: 10px;
+  font-size: .8em;
+  color: #777;
+}
+.commenter_details:hover {
+}
 
-    .remove_commenter,
-    .remove_page {
-        float: right;
-        width: 50px;
-    }
-        .remove_commenter a,
-        .remove_commenter a:link,
-        .remove_page a,
-        .remove_page a:link {
-            background-color: transparent;
-            color: #666;
-            text-decoration: none;
-        }
-        .remove_commenter a:hover,
-        .remove_page a:hover {
-            color: red;
-        }
+.commenter_email,
+.page_details {
+  padding-left: 1;
+}
+.page_details .latest_feedback {
+  color: #999;
+  display: block;
+  font-size: .6em;
+}
+
+.remove_commenter,
+.remove_page {
+  float: right;
+  width: 20px;
+}
+.remove_commenter a,
+.remove_commenter a:link,
+.remove_page a,
+.remove_page a:link {
+  background-color: transparent;
+  color: #666;
+  text-decoration: none;
+}
+.remove_commenter a:hover,
+.remove_page a:hover {
+  color: red;
+}
 
 #invite_commenters {
-    background-color: #eee;
-    border: 1px solid #ccc;
-    color: #333;
-    margin: 5px;
-    padding: 20px;
-    width: 510px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 20px;
+  width: 400px;
 }
-    #invite_commenters legend {
-        color: #333;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    #invite_commenters form label {
-        font-style: italic;
-    }
-    #invite_commenters form textarea {
-        height: 100px;
-        width: 400px;
-    }
-    #invite_commenters form input {
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: bold;
-        width: 400px;
-    }
+#invite_commenters legend {
+  color: #333;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+#invite_commenters form label {
+  font-style: italic;
+}
+#invite_commenters form textarea {
+  height: 100px;
+  width: 100%;
+}
+#invite_commenters form input {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  width: 100%;
+}
 
 /* error messages */
-.notice, .warning, .error {
-    border: 1px solid;
-    margin: 10px 0px;
-    padding:15px 10px 15px 50px;
-    background-repeat: no-repeat;
-    background-position: 10px center;
-    width: 500px;
+#notice, #warning, #error {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  width: 500px;
 }
-.notice {
-    color: #4F8A10;
-    background-color: #DFF2BF;
+#notice {
+  color: #4F8A10;
+  background-color: #DFF2BF;
 }
-.warning {
-    color: #9F6000;
-    background-color: #FEEFB3;
+#warning {
+  color: #9F6000;
+  background-color: #FEEFB3;
 }
-.error {
-    color: #D8000C;
-    background-color: #FFBABA;
+#error {
+  color: #D8000C;
+  background-color: #FFBABA;
 }

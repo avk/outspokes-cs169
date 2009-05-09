@@ -47,7 +47,7 @@ class CommentTest < ActiveSupport::TestCase
     
     json_atts = {
       "feedback_id" => feedback.id,
-      "name" => feedback.commenter.email,
+      "name" => feedback.commenter.truncated_email,
       "timestamp" => feedback.created_at.to_i,
       "content" => feedback.content,
       "target" => feedback.target,

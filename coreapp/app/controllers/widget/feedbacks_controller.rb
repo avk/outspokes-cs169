@@ -20,7 +20,7 @@ class Widget::FeedbacksController < Widget::WidgetController
             feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
           elsif
             feedback = page.feedbacks.find(:all, :conditions => 
-                       [ "private = ? OR commenter_id = ?", false, @commenter.id ]).map { |f| f.json_attributes(@commenter) }
+                       [ "private = ? OR commenter_id = ? OR parent_id = ?", false, @commenter.id, @commenter.id ]).map { |f| f.json_attributes(@commenter) }
           end
         end
       else
@@ -82,15 +82,25 @@ class Widget::FeedbacksController < Widget::WidgetController
         page = @invite.page.site.pages.find_or_create_by_url(params[:current_page])
       end
 
+      match = params[:target].match(/\Acomment_(\d+)\z/)
+      parent_private = params[:isPrivate] 
+
+      if match
+        puts "MATCHMATCHMATCHMATCH********************************************"
+        parent_id = match[1].to_i
+        parent_private = Comment.find(parent_id).private
+        puts parent_private
+      end
+
       feedback = Comment.new :commenter => @commenter, :name => name, :content => content,
                              :target => params[:target], :public => public_comment, 
-                             :private => params[:isPrivate]
+                             :private => parent_private
       page.feedbacks << feedback
 
       if params[:parent_id]
         # since parent_id is based on /comment_\d+/i, we extract the \d+
         parent_id = params[:parent_id].sub(/\D+/, '').to_i
-        if Feedback.find_by_id(parent_id).nil? # If feedback doesn't exist, destroy the feedback
+        if Comment.find_by_id(parent_id).nil? # If feedback doesn't exist, destroy the feedback
           feedback.destroy
         else
           feedback.move_to_child_of parent_id
@@ -127,7 +137,7 @@ class Widget::FeedbacksController < Widget::WidgetController
   def destroy
     result = { :authorized => @authorized, :admin => @admin, :success => false }
     if @admin
-      @feedback = Feedback.find(params[:id])
+      @feedback = Comment.find(params[:id])
       result[:success] = @feedback.destroy ? true : false
     end
   

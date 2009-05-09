@@ -15,4 +15,9 @@ module ApplicationHelper
     value.gsub!(/[\r\n]/, replace_val)
     return value
   end
+  
+  def url_link_text(url)
+    link_text = URI.parse(url).path
+    return link_text.empty? ? "/" : link_text
+  end
 end

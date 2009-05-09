@@ -5,40 +5,28 @@
   You've invited <strong id="invite_count"><%= pluralize(@total_commenters, 'person') %></strong> to give feedback.
   <% end -%>
 </p>
+<% [{:commenter_list => @commenters_commented, :section_name => "Gave Feedback", :id_name => "commented"},
+  {:commenter_list => @commenters_visited, :section_name => "Visited", :id_name => "visited"},
+  {:commenter_list => @commenters_not_visited, :section_name => "Not Yet Visited", :id_name => "not_visited"}
+  ].each do |list|%>
 
-<%- unless @commenters_commented.empty? -%>
-<p>Gave Feedback</p>
-<ol id="site_commenters_commented">
-  <%- @commenters_commented.each do |commenter| -%>
-    <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
-<% end -%>
-</ol>
+  <%- unless list[:commenter_list].empty? -%>
+    <ul id="site_commenters_<%= list[:id_name] %>" class="site_commenters">
+      <p><%= list[:section_name]%></p>
+
+      <%- list[:commenter_list].each do |commenter| -%>
+        <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
+      <% end -%>
+    </ul>
+  <%- end -%>
+
 <%- end -%>
-
-<%- unless @commenters_visited.empty? -%>
-<p>Visited</p>
-<ol id="site_commenters_visited">
-  <%- @commenters_visited.each do |commenter| -%>
-    <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
-  <% end -%>
-</ol>
-<%- end -%>
-
-<%- unless @commenters_not_visited.empty? -%>
-<p>Didn't Visit Yet</p>
-<ol id="site_commenters_not_visited">
-  <%- @commenters_not_visited.each do |commenter| -%>
-    <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
-  <% end -%>
-</ol>
-<%- end -%>
-
 
 <fieldset id="invite_commenters">
   <legend>Invite <%= (@total_commenters == 0) ? 'some' : 'more' %> folks</legend>
 
   <% form_tag admin_panel_invite_path(@site) do %>
-    <%= label_tag 'emails', "Comma-separated emails" %><br />
+    <%= label_tag 'emails', "Separate each email with commas" %><br />
     <%= text_area_tag :emails %><br />
     <%= submit_tag 'Invite' %>
   <% end %>

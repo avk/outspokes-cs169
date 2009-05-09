@@ -1,16 +1,28 @@
-<li class="invited_commenter">
+<li class="invited_commenter <%= cycle('odd','even') %>">
   <div class="remove_commenter">
     <%= link_to 'x', 
     admin_panel_uninvite_path(@site, @site.validation_token, commenter), 
     :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
     :method => :delete %>
   </div>
-  <div class="commenter_email">
+  <span class="commenter_email">
+    <%= mail_to commenter.email, commenter.truncated_email, { :subject => "Thanks for giving your feedback via Outspokes!"} %>
+    &nbsp;
     <%- if RAILS_ENV == "development" -%>
-    <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
-    <%= link_to commenter.truncated_email, final_url %>
-    <%- else -%>
-    <%= commenter.truncated_email %> 
-    <% end -%>
-  </div>
+      <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
+      <%= link_to '( login )', final_url, { :title => 'log in as this user', :style => 'color:red' } %>
+    <%- end -%>
+  </span> 
+  <% unless commenter.feedbacks.empty? %> 
+  <ul class="commenter_details">
+    <b>on the following pages:</b>
+    
+    <%- commenter.commented_pages.each do |page| -%>
+      <li>
+        <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %> <!-- should link to comment list filtered by commenter -->
+        (<%= commenter.feedbacks_for_page(page.id).length %>)
+      </li>
+    <% end %>
+  </ul>
+  <% end %>
 </li>

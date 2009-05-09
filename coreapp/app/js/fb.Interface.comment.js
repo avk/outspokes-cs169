@@ -27,7 +27,7 @@
       disagree_bg_color   : '#FF3322',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
-    	cform       				: "comment_form",
+      cform               : "comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';
       },
@@ -167,8 +167,6 @@
         } else {
           parent_border = 0;
         }
-        var new_border = parent_border + 1 + "px";
-
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
@@ -201,7 +199,7 @@
         var reply_form = this.dom.reply_form(c_id);
         var form_container = this.parent.buildCommentForm(reply_form, c_id);
         var form = form_container.find("form");
-        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Feedback.all[backend_id].name + "</strong>");
+        form.find('#outspokes_form_header span').html("Reply to <strong>" + fb.Comment.all[backend_id].name + "</strong>");
         form.find('#outspokes_form_buttons').html(
           '<input class="button" type="reset" value="Cancel" />' +
           '<input class="button" type="submit" value="Reply" />');
@@ -244,12 +242,11 @@
       
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
-      bar.append($('<div></div>').addClass('targeted_icon'));
       
       bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       
       // snippet
-      var snippet_length = 100;
+      var snippet_length = 75;
       var snippet = c.content;
       if (c.content.length > snippet_length) { // shorten if needed
         snippet = snippet.substring(0, snippet_length) + '...';
@@ -285,7 +282,7 @@
         $(this).parent().parent().find('div.cmt_content:eq(0), div.replies:eq(0)').toggle();
         $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
       });
-      
+
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         tmp = $(c.target);
@@ -293,7 +290,7 @@
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
         rtn.addClass('targeted');
-        rtn.find('.snippet').before($('<div></div>').addClass('targeted_icon'));
+        rtn.find('.commenter_name').before($('<div></div>').addClass('targeted_icon'));
       }
       return rtn;
     };
@@ -377,7 +374,7 @@
     // Returns the timestamp of the most recent comment in given thread
     var age_of_thread = function(comment) {
       var dom = fb.i.comment.dom;
-      var time = fb.Feedback.all[dom.number_from_id(comment.id)].timestamp;
+      var time = fb.Comment.all[dom.number_from_id(comment.id)].timestamp;
       fb.i.comment.visit_all_replies(comment, function(reply) {
         if (reply.timestamp > time) {
           time = reply.timestamp;
@@ -409,7 +406,7 @@
       var parent = this;
       c.find('#' + this.dom.reply_list(c.attr('id'))).children().each(function() {
         var this_id = parent.dom.number_from_id(this.id); // Extract id number of comment from id
-        fn(fb.Feedback.all[this_id]);
+        fn(fb.Comment.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
     };
@@ -433,7 +430,7 @@
 //    var par = el.wrap("<div></div>").parent();
     var old_style = el.css('outline');
     var over = function() {
-      el.css('outline','green solid 2px');
+      el.css('outline','solid 3px');
     };
     var out = function() {
       el.css('outline-style', old_style);

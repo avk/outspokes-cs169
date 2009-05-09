@@ -4,7 +4,21 @@ Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
 version: 3.0.0pr2
 */
-#outspokes html{color:#000;background:#FFF;}#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}#outspokes table{border-collapse:collapse;border-spacing:0;}#outspokes fieldset,#outspokes img{border:0;}#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}#outspokes li{list-style:none;}#outspokes caption,#outspokes th{text-align:left;}#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}#outspokes q:before,#outspokes q:after{content:'';}#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}#outspokes sup{vertical-align:text-top;}#outspokes sub{vertical-align:text-bottom;}#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}#outspokes input,#outspokes textarea,#outspokes select{*font-size:100%;}#outspokes legend{color:#000;}
+
+#outspokes html{color:#000;background:#FFF;}
+#outspokes body,#outspokes div,#outspokes dl,#outspokes dt,#outspokes dd,#outspokes ul,#outspokes ol,#outspokes li,#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6,#outspokes pre,#outspokes code,#outspokes form,#outspokes fieldset,#outspokes legend,#outspokes input,#outspokes textarea,#outspokes p,#outspokes blockquote,#outspokes th,#outspokes td{margin:0;padding:0;}
+#outspokes table{border-collapse:collapse;border-spacing:0;}
+#outspokes fieldset,#outspokes img{border:0;}
+#outspokes address,#outspokes caption,#outspokes cite,#outspokes code,#outspokes dfn,#outspokes em,#outspokes strong,#outspokes th,#outspokes var{font-style:normal;font-weight:normal;}
+#outspokes li{list-style:none;}
+#outspokes caption,#outspokes th{text-align:left;}
+#outspokes h1,#outspokes h2,#outspokes h3,#outspokes h4,#outspokes h5,#outspokes h6{font-size:100%;font-weight:normal;}
+#outspokes q:before,#outspokes q:after{content:'';}
+#outspokes abbr,#outspokes acronym{border:0;font-variant:normal;}
+#outspokes sup{vertical-align:text-top;}
+#outspokes sub{vertical-align:text-bottom;}
+#outspokes input,#outspokes textarea,#outspokes select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+#outspokes legend{color:#000;}
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
 #outspokes {
@@ -47,12 +61,12 @@ version: 3.0.0pr2
   border: 10px solid #ddd;
   color: black;
   display: none;
-  height: 50%;
+  height: 60%;
   left: 25%;
   margin: 0;
   padding: 5px;
   position: fixed;
-  top: 25%;
+  top: 20%;
   width: 50%;
   z-index:1002;
 }
@@ -157,8 +171,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .thread {
-  margin: 0 5px 10px 5px;
-  width: 99%;
+  margin: 0 0 10px 5px;
 }
 #outspokes #comment_list .replies .thread {
   margin-bottom: 0;
@@ -174,7 +187,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_bar .snippet {
-  color: #555555;
+  color: #333333;
   display: inline;
   font-style: italic;
   padding-left: 5px;
@@ -202,17 +215,22 @@ version: 3.0.0pr2
 #outspokes #comment_list .commenter_name {
   font-weight: bold;
   float: left;
+  margin-right: 10px;
+  width: 17em;
 }
 
 #outspokes #comment_list .cmt_date {
   font-size: 0.8em;
   float: right;
+  width: 150px;
+  text-align: right;
 }
 
 #outspokes #comment_list .cmt_delete_X {
   color: red;
-  margin-left: 5px;
+  margin-left: 10px;
   font-weight: bold;
+
 }
 
 #outspokes #comment_list .cmt_text {
@@ -333,8 +351,7 @@ version: 3.0.0pr2
 
 #outspokes #topbarLeft {
   float: left;
-  width: 400px;
-  height:20px;
+  height: 20px;
 }
 
 #outspokes #topbarLeft #logo {
@@ -343,6 +360,26 @@ version: 3.0.0pr2
   height  : 20px;
   width   : 100px;
 }
+
+#outspokes #topbarLeft ul.navigation {
+  display : inline;
+}
+  #outspokes #topbarLeft ul.navigation li {
+    border : 1px solid #999;
+    border-bottom : none;
+    display : block;
+    float : left;
+    padding : 2px 10px 7px 10px;
+    margin : -2px 2px 0 2px;
+  }
+  #outspokes #topbarLeft ul.navigation li:hover {
+    background-color: inherit;
+    color: #C1272D;
+  }
+  #outspokes #topbarLeft ul.navigation li.outspokes-current {
+    background-color: #ccc;
+    color: #333;
+  }
 
 /* END TOPBAR */
 
@@ -361,12 +398,12 @@ version: 3.0.0pr2
 }
 
 #outspokes #bubble #close_intro {
-  color:#666666;
-  font-size:2em;
-  font-weight:bold;
-  left:205px;
-  position:absolute;
-  top:0px;
+  color: #C1272D;
+  font-size: 1.2em;
+  font-weight: bold;
+  left: 212px;
+  position: absolute;
+  top: 6px;
 }
 
 #outspokes #bubble_content {
@@ -409,3 +446,194 @@ version: 3.0.0pr2
 }
 
 /* END HELP PANEL */
+
+/*
+* PAGE EDIT
+*/
+
+#outspokes #page_edit_list, #outspokes #page_edit_new{
+  /*  must change this if heights are changed in fb.Interface and fb.Interface.comment
+      Remember that you also have to consider padding in the top bar to set this correctly */
+  height: 207px; 
+}
+
+/* PAGE EDIT LIST */
+
+/* END PAGE EDIT LIST*/
+
+/* PAGE EDIT NEW */
+
+#outspokes #page_edit_new {
+  margin: 5px;
+}
+
+#outspokes #target_list_wrapper {
+  width: 26.5%;
+  height: 100%;
+  float: left;
+  margin-right: 5px;
+}
+
+#outspokes #target_list_wrapper #changing {
+  float: left;
+  font-size: 15px;
+  margin-bottom: 2px;
+  padding: 2px;
+}
+
+#outspokes #target_list_wrapper .new_button {
+  background-color: white;
+  height: 15px;
+  float: right;
+  border: 1px solid black;
+  font-size: 15px;
+  margin-bottom: 2px;
+  padding: 2px;
+}
+
+#outspokes #target_list {
+  background-color: white;
+  border: 1px solid black;
+  height: 183px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#outspokes #target_list .selected {
+  background-color: #EEEF59;
+}
+
+#outspokes #target_list .deactivated {
+  color: #4F4F4F;
+  background-color: #BFBFBF;
+}
+
+#outspokes #target_list .target {
+  border-bottom: 1px solid black;
+}
+
+#outspokes #middle_panel {
+  width: 46%;
+  height: 206px;
+  float: left;
+}
+
+#outspokes #middle_panel #tabs {
+  margin-bottom: 1px;
+}
+
+#outspokes #middle_panel #tabs ul {
+  float: left;
+  list-style: none outside none;
+  padding: 0px;
+}
+
+#outspokes #middle_panel #tabs ul li {
+  background-color: white;
+  border: 1px solid black;
+  border-bottom: none;
+  float: left;
+  margin-right: 7px;
+  list-style: none outside none;
+  cursor: pointer;
+}
+
+#outspokes #middle_panel #tabs ul li span {
+  display: block;
+  float: left;
+  padding: 2px 1em;
+  font-size: 15px;
+  height: 18px;
+}
+
+#outspokes #middle_panel #tabs ul li span.current {
+  border-bottom: 1px solid white;
+  margin-bottom: -1px;
+}
+
+#outspokes #middle_panel .content {
+  font-size: 15px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 20px;
+  height: 143px;
+  margin-top: -1px;
+}
+
+#outspokes #middle_panel input {
+  height: 15px;
+}
+
+#outspokes #middle_panel select {
+  font-size: 9.75px;
+  vertical-align: top;
+}
+
+#outspokes #middle_panel textarea {
+  height: 137px;
+  width: 350px;
+  float: left;
+}
+
+#outspokes #middle_panel .content .button_panel {
+  float: right;
+  
+}
+
+#outspokes #middle_panel .content .button_panel input {
+  height: 30px;
+}
+
+#outspokes #middle_panel .content .options_div {
+  width: 140px;
+  float: left;
+}
+
+#outspokes #your_changes_wrapper {
+  width: 26.5%;
+  height: 100%;
+  float: left;
+  margin-left: 5px;
+}
+
+#outspokes #your_changes_wrapper #your_changes_header {
+  float: left;
+  font-size: 15px;
+  margin-bottom: 2px;
+  padding: 2px;
+}
+
+#outspokes #your_changes_wrapper .clear_button {
+  background-color: white;
+  height: 15px;
+  float: left;
+  border: 1px solid black;
+  font-size: 15px;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  padding: 2px;
+}
+
+#outspokes #your_changes_wrapper .submit_button {
+  background-color: white;
+  height: 15px;
+  float: right;
+  border: 1px solid black;
+  font-size: 15px;
+  margin-bottom: 2px;
+  padding: 2px;
+}
+
+#outspokes #your_changes {
+  background-color: white;
+  border: 1px solid black;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 183px;
+}
+
+/* END PAGE EDIT NEW*/
+
+/*
+* END PAGE EDIT
+*/
