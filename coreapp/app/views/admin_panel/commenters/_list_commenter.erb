@@ -15,8 +15,8 @@
   </span> 
   <% unless commenter.feedbacks.empty? %> 
   made
-  <ul class="commenter_details">
-    <%- commenter.commented_pages.each do |page| -%>
+  <ul class="commenter_details">    
+    <%- commenter.commented_pages(@site).each do |page| -%>
       <li>
         <%= commenter.feedbacks_for_page(page.id).length %> 
         <%= commenter.feedbacks_for_page(page.id).length == 1 ? 'comment' : 'comments' %> on
