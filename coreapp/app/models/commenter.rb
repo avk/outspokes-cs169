@@ -73,8 +73,12 @@ class Commenter < ActiveRecord::Base
     self.feedbacks.select {|f| f.page_id == page_id }
   end
   
-  def commented_pages
-    self.feedbacks.find(:all, :include => :page, :group => :page_id).map {|f| f.page }  
+  def commented_pages(*args)
+    if(args.length == 1)
+      Feedback.find(:all, :joins =>:page, :conditions =>  ["pages.site_id = ? AND feedbacks.commenter_id = ?", args[0], self], :group => "feedbacks.page_id").map {|f| f.page }
+    else
+      self.feedbacks.find(:all, :include => :page, :group => :page_id).map {|f| f.page }  
+    end
   end  
   
   def truncated_email
