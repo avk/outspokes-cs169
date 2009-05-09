@@ -449,13 +449,11 @@
   
   function highlight_target(el_dom) {
     var el = $(el_dom);
-//    var par = el.wrap("<div></div>").parent();
-    var old_style = el.css('outline');
     var over = function() {
-      el.css('outline','solid 3px');
+      el.addClass("outspokes_currently_hovering")
     };
     var out = function() {
-      el.css('outline-style', old_style);
+      el.removeClass("outspokes_currently_hovering")
     };
     return [over, out];
   }
