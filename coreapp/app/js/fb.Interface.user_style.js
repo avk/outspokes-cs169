@@ -35,6 +35,14 @@
 
     // GENERAL //////////////////////////////////////////////////////////////////
 
+    /**
+     * Visual transition from one block-level element to another.
+     * from will end up with display : none and width : 0%
+     * while to will end up with display : block and width : 100%
+     * 
+     * @params from - the element being transitioned away from
+     * @params to - the hidden, width: 0% element being transitioned to
+     */
     this.slide = function(from, to) {
       from.animate(
         { width : '0%' }, // numeric CSS properties
