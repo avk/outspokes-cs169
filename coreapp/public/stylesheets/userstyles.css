@@ -14,6 +14,8 @@
 }
 #outspokes #new_edit_link {
   float: right;
+  font-size: 4em;
+  line-height: 100%;
 }
 
 #outspokes #edits_list {
@@ -48,30 +50,70 @@
 
 /* New edit */
 
-#outspokes {}
-
 #outspokes #new_edit_wrap {
-  border: 2px dashed orange;
-  overflow: auto;
+/*  border: 2px dashed orange;*/
+  background-color: white;
+  color: black;
+  height: 217px;
   float: right;
+  overflow: auto;
+}
+#outspokes #your_edits_left_wrapper {
+  float: left;
+  width: 70%;
+/*overflow-y: scroll;
+  overflow-x: hidden;*/
 }
 #outspokes #back_to_edits_list {
+/*  border: 1px solid black;*/
   display: block;
   float: left;
-  border: 1px solid black;
-  height: 100px;
-  width: 100px;
+  font-size: 4em;
+  line-height: 100%;
+  height: 40px;
+  width: 120px;
 }
 #outspokes #your_edits {
-  border: 1px solid red;
-  float: left;
-  height: 100px;
-  width: 100px;
+/*  border: 1px solid red;*/
+  padding-left: 123px;
 }
+  #outspokes #your_edits h1 {
+    font-size: 1.5em;
+    line-height: 120%;
+    padding-bottom: 5px;
+  }
+  
+  #outspokes #your_edits_wrapper {
+    border: 1px solid #999999;
+    padding: 5px;
+  }
+  
+  #outspokes #your_edits .your_edits_nav {
+    display: inline;
+  }
+    #outspokes #your_edits .your_edits_nav li {
+      border : 1px solid #999;
+      border-bottom : none;
+      display : block;
+      float : left;
+      padding : 2px 10px 7px 10px;
+      margin : -2px 2px 0 2px;
+    }
+    #outspokes #your_edits .your_edits_nav li:hover {
+      background-color: inherit;
+      color: #C1272D;
+    }
+    #outspokes #your_edits .your_edits_nav li.outspokes-current-edit {
+      background-color: inherit;
+      color: #C1272D;
+      text-decoration: underline;
+    }
+
 #outspokes #your_targets {
-  border: 1px solid blue;
+/*  border: 1px solid blue;*/
+  background-color: #eee;
   float: right;
-  height: 100px;
+  height: 215px;
   margin-right: 2%;
   width: 25%;
 }

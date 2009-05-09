@@ -28,6 +28,8 @@
         wrapper : "new_edit_wrap",
         link_back : "back_to_edits_list",
         your_edits : "your_edits",
+        your_edits_wrapper : "your_edits_wrapper",
+        navigation : "your_edits_nav",
         your_targets : "your_targets"
       }
     };
@@ -101,6 +103,8 @@
     this.edits_view.append(this.new_edit_link);
     this.edits_view.append($('<div style="clear:both;"></div>'));
     
+    
+    
     // NEW EDIT //////////////////////////////////////////////////////////////////
     
     this.new_edit_view = $('<div></div>').attr('id', dom.new_edit.wrapper);
@@ -108,17 +112,153 @@
     this.new_edit_view.css('width','0%'); 
     this.new_edit_view.hide();
     
+    // back to list
     this.edit_list_link = $('<a href="#">&laquo; List Edits</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view); 
     });
     
-    this.your_edits = $('<div>your edits</div>').attr('id', dom.new_edit.your_edits);
+    
+    
+    // NEW_EDIT: YOUR EDITS  //////////////////////////////////////////////////////////////////
+    // pane where you pick a style category and set individual properties
+    this.your_edits = $('<div></div>').attr('id', dom.new_edit.your_edits);
+    this.your_edits.append($('<h1>Your Edits</h1>'));
+    this.your_edits_wrapper = $('<div></div>').attr('id', dom.new_edit.your_edits_wrapper);
+    this.your_edits.append(this.your_edits_wrapper);
+    
+    
+    
+    
+    // NEW EDIT: NAVIGATION //////////////////////////////////////////////////////////////////
+    
+    this.nav = {
+      /*
+        TO ADD A NEW NAVIGATION ELEMENT: 
+        add an entry to elements.labels and elements.content
+      */
+      
+      // because this.dom is inaccessible below
+      dom : this.dom,
+      // DOM element representing navigation bar (initialized by build)
+      bar : null, 
+      // where the user has navigated to
+      current : null,
+      // equivalent to navigating to a specific element:
+      setCurrent : function(which_element) {
+        if (this.current) {
+          this.current.removeClass('outspokes-current-edit');
+        }
+        this.current = this.elements.list[which_element];
+        this.current.addClass('outspokes-current-edit');
+      },
+      
+      // ordered set of navigation elements:
+      elements : {
+        // ordered set of DOM elements
+        list : [],
+        // the ***singular*** text content of the label
+        // same order as list of elements
+        labels : [
+          'Color',
+          'Font'
+        ],
+        // which content the navigation elements correspond to,
+        // these reference variable names in this class (fb.Interface.user_style)
+        // same order as list of elements
+        content : [
+          "your_color",
+          "your_font"
+        ],
+        /*
+        clicking on an element:
+          makes it the current element
+          shows it's content
+          hides the content of all the other elements
+        */
+        click : function(clicked_element, event) {
+          for (var which_element = 0; which_element < fb.i.user_style.nav.elements.content.length; which_element++) {
+            var content = fb.i.user_style[ fb.i.user_style.nav.elements.content[which_element] ];
+            if (clicked_element === fb.i.user_style.nav.elements.list[which_element][0]) {
+              fb.i.user_style.nav.setCurrent(which_element);
+              content.show();
+            } else {
+              content.hide();
+            }
+          }
+        }
+      },
+      
+      // creates the bar and returns it
+      build : function() {
+        this.bar = $('<ul></ul>');
+        this.bar.addClass(this.dom.new_edit.navigation);
+        
+        // builds each element, labels it, and attaches a uniform onclick handler
+        for (var which_element = 0; which_element < this.elements.labels.length; which_element++) {
+          var element = $('<li></li>');
+          
+          var label = $('<span></span>');
+          label.text( this.elements.labels[which_element] );
+          element.append(label);
+          
+          element.click( function(e) { fb.i.user_style.nav.elements.click(this, e) });
+          
+          this.elements.list.push(element);
+          this.bar.append(element);
+        }
+        // set first navigation element to current
+        this.setCurrent(0);
+        
+        return this.bar;
+      },
+    }
+    this.your_edits_wrapper.append(this.nav.build());
+    this.your_edits_wrapper.append($('<div style="clear:both;"></div>'));
+    
+    
+    
+    // NEW EDIT: Color //////////////////////////////////////////////////////////////////
+    this.your_color = $('<div></div>');
+    
+    var bgColor = $('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" /><br />');
+    var textColor = $('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />');
+    
+    this.your_color.append(bgColor);
+    this.your_color.append(textColor);
+    
+    this.your_edits_wrapper.append(this.your_color);
+    
+    
+    
+    // NEW EDIT: Font //////////////////////////////////////////////////////////////////
+    this.your_font = $('<div></div>');
+    this.your_font.hide(); // because it's not the default view
+    
+    var fontFamily = $('<label for="fontFamily">Family</label><input type="text" name="fontFamily" /><br />');
+    var fontSize = $('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span><br />');
+    
+    this.your_font.append(fontFamily);
+    this.your_font.append(fontSize);
+    
+    this.your_edits_wrapper.append(this.your_font);
+    
+    
+    
+    // NEW EDIT: targeting sidebar  //////////////////////////////////////////////////////////////////
     this.your_targets = $('<div>targets</div>').attr('id', dom.new_edit.your_targets);
     
-    this.new_edit_view.append(this.edit_list_link);
-    this.new_edit_view.append(this.your_edits);
+    
+    
+    // NEW EDIT: finishing up  //////////////////////////////////////////////////////////////////
+    var your_edits_left_wrapper = $('<div></div>').attr('id', 'your_edits_left_wrapper');
+    your_edits_left_wrapper.append(this.edit_list_link);
+    your_edits_left_wrapper.append(this.your_edits);
+    
+    this.new_edit_view.append(your_edits_left_wrapper);
     this.new_edit_view.append(this.your_targets);
+    
+    
     
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
