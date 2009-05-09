@@ -39,8 +39,8 @@
   fb.getParams = function(param) {
     var obj = {};
     var val;
-    window.location.search.replace(
-      new RegExp("([^?=&]+)(=([^&]*))?","g"),
+    window.location.hash.replace(
+      new RegExp("([^#?=&]+)(=([^&]*))?","g"),
       function( $0, $1, $2, $3 ){
         obj[ $1 ] = $3;});
     if (arguments.length > 0) {
