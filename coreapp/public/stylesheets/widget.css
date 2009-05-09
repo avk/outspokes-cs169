@@ -313,6 +313,17 @@ version: 3.0.0pr2
 
 /* END COMMENTING FORM*/
 
+/* TARGETING CLASSES */
+
+.outspokes_currently_hovering {
+  outline: green solid 2px;
+  cursor: default;
+}
+
+.outspokes_selected_page_element {
+  outline: red solid 2px;
+}
+
 /*
 * END COMMENTS
 */

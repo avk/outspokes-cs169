@@ -437,9 +437,8 @@
       fb.i.dom.non_widget_elements.unbind(".elem_select");
       // Un-highlight element, first get its serialized path out of form
       var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
-      old_element.css('outline', old_element.get(0).__old_style);
-      // delete modification to original element
-      delete old_element.get(0).__old_style;
+      // Remove any classes it may have had
+      old_element.removeClass("outspokes_currently_hovering").removeClass("outspokes_selected_page_element");
       // Reset form target
       fb.i.comment.form.find("input[name='target']").attr("value","html");
       // Remove orange background on target
@@ -450,13 +449,11 @@
   
   function highlight_target(el_dom) {
     var el = $(el_dom);
-//    var par = el.wrap("<div></div>").parent();
-    var old_style = el.css('outline');
     var over = function() {
-      el.css('outline','solid 3px');
+      el.addClass("outspokes_currently_hovering")
     };
     var out = function() {
-      el.css('outline-style', old_style);
+      el.removeClass("outspokes_currently_hovering")
     };
     return [over, out];
   }
