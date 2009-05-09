@@ -8,7 +8,6 @@
   fb.Comment = function (obj) {
     // call to super for properties
     this.parent.call(this, obj);
-    console.log(obj);
       fb.assert(fb.hasProp(obj, {
         content:"string",
         target:"string"}),
