@@ -259,14 +259,26 @@
       bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
       
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
+      
+      
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
+
+        deleteCmt.click( function(e) { e.stopPropagation(); } );
+
         deleteCmt.click(function() {
           if (c.__unHover) {
             c.__unHover();
           }
-          c.remove();
+          var answer = confirm("Sure you want to delete comment?");
+          if (answer){
+              c.remove();
+          }
+          else{
+            alert("That was close!");
+          }
         });
+        
         timestamp_close.append(deleteCmt);
       }
       bar.append(timestamp_close);
