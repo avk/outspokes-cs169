@@ -79,6 +79,14 @@
   fb.Comment.prototype.isReply = function() {
         return fb.i.comment.dom.comment_id_format.test(this.target);
   };
+  
+  fb.Comment.prototype.parent_comment = function() {
+    if (this.isReply()) {
+      return fb.Feedback.all[fb.i.comment.dom.number_from_id(this.target)];
+    } else {
+      return null;
+    }
+  };
 
   // Class variables and static functions
   fb.Comment.all = {};

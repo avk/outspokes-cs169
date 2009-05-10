@@ -251,6 +251,23 @@
       
       bar.append($('<span></span>').addClass('commenter_name').append(c.name));
       
+      var link_span;
+      // Reply link
+      if (c.isReply()) {
+        link_span = $('<span>in reply to </span>').addClass("reply_to_text");
+        var link = $('<a href="#">comment by ' + c.parent_comment().name + '</a>');
+        link_span.append(link);
+        // Go to parent thread when clicking on parent link
+        link.click(function(e) {
+          $("#comments_filter").val("Newest first");
+          $("#comments_filter").children().eq(0).click();
+          fb.$("#comment_list").scrollTo(c.parent_comment().build, 700);
+          e.stopPropagation();
+          return false;
+        });
+        bar.append(link_span);
+      }
+      
       // snippet
       var snippet_length = 75;
       var snippet = c.content.replace(/<br \/>/g, '\n');
@@ -298,6 +315,9 @@
       comment.append(bar).append(content);
       rtn.append(comment).append(replies);
       bar.click(function() {
+        if (link_span) {
+          $(this).parent().toggleClass("collapsed");
+        }
         $(this).parent().parent().find('div.cmt_content:eq(0), div.replies:eq(0)').toggle();
         $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
       });
@@ -348,6 +368,7 @@
       var parent = this;
       $(container).children().each(function() {
         this.__container = container;
+        $(this).addClass("flattened");
         list.append($(this));
         parent.__flatten_recursive($("#" + parent.dom.reply_list(this.id)));
       });
@@ -360,6 +381,7 @@
       }
       $("#comment_list").children().each(function() { 
         $(this).show(400);
+        $(this).removeClass("flattened");
         $(this).appendTo(this.__container);
       });
       this.filtering.flattened = false;

@@ -338,6 +338,18 @@ version: 3.0.0pr2
   margin-right: 10px;
 }
 
+#outspokes #comment_list .flattened .reply_to_text {
+  display: inline;
+}
+
+#outspokes #comment_list .reply_to_text, #outspokes #comment_list .collapsed .reply_to_text {
+  display: none;
+}
+
+#outspokes #comment_list .reply_to_text a:hover {
+  text-decoration: underline;
+}
+
 #outspokes #comment_list .cmt_date {
   font-size: 0.8em;
   float: right;
