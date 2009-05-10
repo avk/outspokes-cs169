@@ -174,13 +174,13 @@
             var content = fb.i[ fb.i.nav.elements.content[which_element] ];
             if (clicked_element === fb.i.nav.elements.list[which_element][0]) {
               fb.i.nav.setCurrent(which_element);
-              fb.i.nav.elements.list[which_element].find('select').show();
+              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
               // Save the current tab in widget cookie state
               fb.save_state("widget_tab", which_element);
               content.show();
             } else {
               content.hide();
-              fb.i.nav.elements.list[which_element].find('select').hide();
+              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
             }
           }
         }
@@ -233,7 +233,7 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter"><option>Newest first</option><option>Oldest first</option>' + 
+    var sort_dropdown = $('<select id="comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
     sort_dropdown.click(function(e) {
@@ -264,14 +264,29 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a href="#">><</a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link = $('<a href="#"  class="hide_when_tab_unselected">><</a>').attr('id',this.dom.widget.collapse);
     this.collapse_link.append('<img src="' +  fb.env.collapse_address  + '" title="Collapse all comments"/>');
     this.nav.elements.list[0].append(this.collapse_link);
+    this.collapse_link.click(function(e) {
+        fb.i.comment.collapse_all();
+        
+        // don't toggle the widget if it's maximized because you want to read help content
+        if (fb.i.is_widget_maximized()) {
+          e.stopPropagation();
+        }
+    })
 
-    this.uncollapse_link = $('<a href="#"><></a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected"><></a>').attr('id',this.dom.widget.uncollapse);
     this.uncollapse_link.append('<img src="' +  fb.env.uncollapse_address  + '" title="Uncollapse all comments"/>');
     this.nav.elements.list[0].append(this.uncollapse_link);
-
+    this.uncollapse_link.click(function(e) {
+        fb.i.comment.uncollapse_all();
+        
+        // don't toggle the widget if it's maximized because you want to read help content
+        if (fb.i.is_widget_maximized()) {
+          e.stopPropagation();
+        }
+    })
 
     // HELP LINK //////////////////////////////////////////////////////////////////
 
