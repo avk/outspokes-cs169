@@ -200,7 +200,7 @@
         }
       });
       if (!found) {
-        fb.UserStyle[feedback_id].remove();
+        fb.UserStyle.all[feedback_id].remove();
       }
       return true;
     });
