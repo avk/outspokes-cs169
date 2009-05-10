@@ -19,6 +19,7 @@
         content : 'widget_content',
         edits : 'widget_edits',
         help : 'help',
+        logout: 'logout',
         help_content: 'help_content',
         contact: 'contactus',
         topbar_height : '28px',
@@ -368,6 +369,9 @@
       this.topbar.append(this.admin_panel.build());
     }
     
+    // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
+    this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
+    this.topbar.append(this.logout_link);
     
     
     // FIRST VISIT //////////////////////////////////////////////////////////////////
