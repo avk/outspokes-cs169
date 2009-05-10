@@ -57,7 +57,8 @@ class CommentTest < ActiveSupport::TestCase
       "neutral?" => feedback.neutral?,
       "controversial?" => feedback.controversial?,
       "popular?" => feedback.popular?,
-      "unpopular?" => feedback.unpopular?
+      "unpopular?" => feedback.unpopular?,
+      "isPrivate" => feedback.private
     }
     
     assert Comment.json_attribute_names.sort == json_atts.keys.sort, "Attributes don't match"
