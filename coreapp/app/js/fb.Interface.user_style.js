@@ -184,7 +184,8 @@
     // back to list
     this.edit_list_link = $('<a href="#">&laquo; List Edits</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(function() { 
-      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view); 
+      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+      fb.i.target.startOver();
     });
     
     
@@ -291,16 +292,16 @@
     this.your_color = $('<div></div>');
     
     var bgColor = $('<div></div>');
-    var bgColorLabel = $('<label for="bgColor">Background</label><span class="pound">#</span>');
-    var bgColorInput = $('<input type="text" name="bgColor" />');
-    bgColorInput.blur( function() {
+    bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
+    bgColor.find('input').blur( function() {
       fb.i.target.current.target.set_style('background-color', '#' + this.value);
     });
-
-    bgColor.append(bgColorLabel);
-    bgColor.append(bgColorInput);
     
-    var textColor = $('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />');
+    var textColor = $('<div></div>');
+    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />'));
+    textColor.find('input').blur( function() {
+      fb.i.target.current.target.set_style('color', '#' + this.value);
+    });
     
     this.your_color.append(bgColor);
     this.your_color.append(textColor);
@@ -313,8 +314,17 @@
     this.your_font = $('<div></div>');
     this.your_font.hide(); // because it's not the default view
     
-    var fontFamily = $('<label for="fontFamily">Family</label><input type="text" name="fontFamily" /><br />');
-    var fontSize = $('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span><br />');
+    var fontFamily = $('<div></div>');
+    fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" /><br />'));
+    fontFamily.find('input').blur( function() {
+      fb.i.target.current.target.set_style('font-family', this.value);
+    });
+
+    var fontSize = $('<div></div>');
+    fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span><br />'));
+    fontSize.find('input').blur( function() {
+      fb.i.target.current.target.set_style('font-size', this.value + 'px');
+    });
     
     this.your_font.append(fontFamily);
     this.your_font.append(fontSize);
