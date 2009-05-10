@@ -76,9 +76,12 @@
         target : null,
         html : null
       }
-      this.build( new fb.Target("html > body") );
+      var default_target = new fb.Target("html > body");
+      if (!fb.i) {
+        this.build(default_target);
+      }
     }
-    
+
     this.startOver();
     self.user_style.your_targets.append(this.target_header);
     self.user_style.your_targets.append(this.target_list);
