@@ -91,6 +91,8 @@ function() {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
       }
+      // Collapse all comments by default
+      fb.i.comment.collapse_all();
       
       // Load in which tab was last used
       var current_tab = fb.get_state("widget_tab");

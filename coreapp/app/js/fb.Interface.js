@@ -239,28 +239,28 @@
     var sort_dropdown = $('<select id="comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
+    
+    this.sorting = {
+      sorting_mode : 0,
+      modes : [ "new", "old", "popular", "unpopular", "controversial", "neutral" ]
+    };
+        
     sort_dropdown.click(function(e) {
       e.stopPropagation(); // Don't trigger outspokes minimize when clicking on dropdown
     });
+    var sorting = this.sorting;
     
-    sort_dropdown.children().eq(0).click(function(e) {
-      fb.i.comment.sort_by_newest();
-    });
-    sort_dropdown.children().eq(1).click(function(e) {
-      fb.i.comment.sort_by_oldest();
-    });
-    
-    sort_dropdown.children().eq(2).click(function(e) {
-      fb.i.comment.filter_by("popular?");
-    });
-    sort_dropdown.children().eq(3).click(function(e) {
-      fb.i.comment.filter_by("unpopular?");
-    });
-    sort_dropdown.children().eq(4).click(function(e) {
-      fb.i.comment.filter_by("controversial?");
-    });
-    sort_dropdown.children().eq(5).click(function(e) {
-      fb.i.comment.filter_by("neutral?");
+    $.each(sorting.modes, function(mode_no, mode) {
+      sort_dropdown.children().eq(mode_no).click(function(e) {
+        sorting.sorting_mode = mode_no;
+        if (mode_no == 0) {
+          fb.i.comment.sort_by_newest();
+        } else if (mode_no == 1) {
+          fb.i.comment.sort_by_oldest();
+        } else {
+          fb.i.comment.filter_by(mode + "?");
+        }
+      });
     });
     
     this.nav.elements.list[0].append(sort_dropdown);
