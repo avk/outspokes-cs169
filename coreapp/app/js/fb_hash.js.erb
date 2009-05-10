@@ -13,6 +13,8 @@ function() {
     fb.env.base_domain = "<%= WIDGET_DOMAIN %>";
     fb.env.logo_address = "<%= WIDGET_DOMAIN %>images/widget-logo.png";
     fb.env.help_address = "<%= WIDGET_DOMAIN %>images/help.png";
+    fb.env.collapse_address = "<%= WIDGET_DOMAIN %>images/collapse.png";
+    fb.env.uncollapse_address = "<%= WIDGET_DOMAIN %>images/uncollapse.png";
     fb.env.target_address = "<%= WIDGET_DOMAIN %>images/target-icon.png";
     fb.env.get_address = "<%= WIDGET_DOMAIN %>feedback_for_page.js";
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
@@ -105,8 +107,8 @@ function() {
       }
 
      // Testing UserStyle data only. Not to be committed
-
-/*      var us1 = new fb.UserStyle({
+/*
+      var us1 = new fb.UserStyle({
         feedback_id:12,
         name:"Bob",
         timestamp:131241341,
@@ -148,7 +150,6 @@ function() {
         "css_path":"sfhsdjfhsdfjsdh"
               });
       fb.UserStyle.render();
-
 */
       // End test data
       

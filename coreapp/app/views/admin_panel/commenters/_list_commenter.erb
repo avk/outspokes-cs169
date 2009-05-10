@@ -1,16 +1,17 @@
 <li class="invited_commenter <%= cycle('odd','even') %>">
   <div class="remove_commenter">
-    <%= link_to 'x', 
+    <%= link_to 'X', 
     admin_panel_uninvite_path(@site, @site.validation_token, commenter), 
     :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
-    :method => :delete %>
+    :method => :delete,
+    :title => "Uninvite #{commenter.email}", :style => 'color:red' %>
   </div>
   <span class="commenter_email">
     <%= mail_to commenter.email, commenter.truncated_email, { :subject => "Thanks for giving your feedback via Outspokes!"} %>
     &nbsp;
     <%- if RAILS_ENV == "development" -%>
       <% final_url = @site.home_page.url.sub(/\/$/i, '') + '#url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
-      <%= link_to '( login )', final_url, { :title => 'log in as this user', :style => 'color:red' } %>
+      <%= link_to '( login )', final_url, { :title => 'Log in as this user', :style => 'color:teal' } %>
     <%- end -%>
   </span> 
   <% unless commenter.feedbacks.empty? %>

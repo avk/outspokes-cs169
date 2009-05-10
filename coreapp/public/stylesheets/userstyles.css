@@ -161,6 +161,10 @@
   border: 1px solid blue;
   margin: 5px 0;
 }
-#outspokes #outspokes_target_list li.outspokes_current_target {
-  border: 1px solid #C1272D;
-}
+  #outspokes #outspokes_target_list li.outspokes_current_target {
+    border: 1px solid #C1272D;
+  }
+  #outspokes #outspokes_target_list li a {
+    display: block;
+    float: right;
+  }
