@@ -298,6 +298,10 @@ version: 3.0.0pr2
   border: 1px solid #777;
   border-width: 0px 0px 0px 1px;
 }
+#outspokes #comment_list .cmt_bar .private {
+  float: left;
+  color: #335588;
+}
 
 #outspokes #comment_list .cmt_bar.disagreed {
   background: #fff url(/images/disagreed_header.png) repeat-x center -4px;
@@ -526,6 +530,13 @@ version: 3.0.0pr2
   border-color: #FFF;
   color: #C1272D;
 }
+
+#outspokes #topbar #outspokes_collapse_all, #outspokes #topbar #outspokes_uncollapse_all {
+  margin: 0px 0px 0px 10px;
+  outline: none;
+}
+
+
 #outspokes #topbar #help {
   border: 1px solid transparent;
   border-bottom: none;
@@ -581,6 +592,9 @@ version: 3.0.0pr2
     color: #333;
     padding-bottom: 7px;
   }
+
+#outspokes #topbarLeft ul.navigation li.outspokes-current span {
+}
 
 /* END TOPBAR */
 

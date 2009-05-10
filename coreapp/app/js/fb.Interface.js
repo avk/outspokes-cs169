@@ -24,7 +24,9 @@
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
         height : '250px',
-        navigation : 'navigation'
+        navigation : 'navigation',
+        collapse : 'outspokes_collapse_all',
+        uncollapse : 'outspokes_uncollapse_all'
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
@@ -71,7 +73,9 @@
         { duration : length } 
       );
       // should only display the sort menu for the current navigation link
-      this.nav.current.find('select').show();
+      for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
+        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+      }
     };
     
     this.hide_widget = function() {
@@ -89,7 +93,7 @@
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('select').hide();
+        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
       }
     };
     
@@ -172,13 +176,13 @@
             var content = fb.i[ fb.i.nav.elements.content[which_element] ];
             if (clicked_element === fb.i.nav.elements.list[which_element][0]) {
               fb.i.nav.setCurrent(which_element);
-              fb.i.nav.elements.list[which_element].find('select').show();
+              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
               // Save the current tab in widget cookie state
               fb.save_state("widget_tab", which_element);
               content.show();
             } else {
               content.hide();
-              fb.i.nav.elements.list[which_element].find('select').hide();
+              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
             }
           }
         }
@@ -231,7 +235,7 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter"><option>Newest first</option><option>Oldest first</option>' + 
+    var sort_dropdown = $('<select id="comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
     
@@ -259,13 +263,37 @@
     });
     
     this.nav.elements.list[0].append(sort_dropdown);
+    
+    // COMMENT TOGGLE LINKS
+    
+    this.collapse_link = $('<a href="#" class="hide_when_tab_unselected"></a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link.append('<img src="' +  fb.env.collapse_address  + '" alt="Collapse all" title="Collapse all comments"/>');
+    this.nav.elements.list[0].append(this.collapse_link);
+    this.collapse_link.click(function(e) {
+        fb.i.comment.collapse_all();
+        
+        // don't toggle the widget if it's maximized because you want to read help content
+        if (fb.i.is_widget_maximized()) {
+          e.stopPropagation();
+        }
+    })
 
-
+    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected"></a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link.append('<img src="' +  fb.env.uncollapse_address  + '" alt="Uncollapse all" title="Uncollapse all comments"/>');
+    this.nav.elements.list[0].append(this.uncollapse_link);
+    this.uncollapse_link.click(function(e) {
+        fb.i.comment.uncollapse_all();
+        
+        // don't toggle the widget if it's maximized because you want to read help content
+        if (fb.i.is_widget_maximized()) {
+          e.stopPropagation();
+        }
+    })
 
     // HELP LINK //////////////////////////////////////////////////////////////////
 
     this.help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
-    this.help_link.append('<img src="' +  fb.env.help_address  + '" alt="outspokes" />');
+    this.help_link.append('<img src="' +  fb.env.help_address  + '" alt="Outspokes Help" title="Outspokes Help"/>');
     
     // the help link will behave like the other navigation links (part 1):
     this.nav.elements.list.push(this.help_link);

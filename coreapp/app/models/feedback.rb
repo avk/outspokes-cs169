@@ -22,7 +22,7 @@ class Feedback < ActiveRecord::Base
   @@high_vote_factor = 1.5
   
   def self.json_attribute_names
-    %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular?)
+    %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular? isPrivate)
   end
   
   def abstract?
@@ -65,6 +65,8 @@ class Feedback < ActiveRecord::Base
         json_atts['unpopular?'] = self.unpopular?
       when 'controversial?'
         json_atts['controversial?'] = self.controversial?
+      when 'isPrivate'
+        json_atts['isPrivate'] = self.private
       else
         json_atts[attr] = self[attr.to_sym]
       end
