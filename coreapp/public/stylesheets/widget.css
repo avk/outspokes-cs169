@@ -499,8 +499,6 @@ version: 3.0.0pr2
 
 #outspokes #topbar select#comments_filter {
   margin-left: 10px;
-  position: relative;
-  top: -4px;
 }
 
 #outspokes #topbar #open_admin_panel {
@@ -584,8 +582,6 @@ version: 3.0.0pr2
   }
 
 #outspokes #topbarLeft ul.navigation li.outspokes-current span {
-  position: relative;
-  top: -6px;
 }
 
 /* END TOPBAR */
