@@ -44,11 +44,23 @@
     
     
     this.build = function(target) {
-      var html = $('<li></li>').text(target.selector);
+      var html = $('<li></li>');
       html.attr('title', target.selector);
       html.click( function(e) {
         fb.i.target.setCurrent(this);
       });
+      
+      if (this.target_list.find('li').length > 0) {
+        var delete_target = $('<a href="#">x</a>');
+        delete_target.click(function(e) {
+          fb.i.target.remove( $(this).parent('li').attr('title') );
+        });
+        html.append(delete_target);
+      }
+      
+      var inner = $('<p></p>');
+      inner.append(target.selector);
+      html.append(inner);
       
       this.all[html.attr('title')] = target;
       this.target_list.append(html);
@@ -68,11 +80,9 @@
     
     this.startOver = function() {
       for (var which_target in this.all) {
-        // $(which_target).remove();         // delete the interface element
-        this.all[which_target].delete();  // delete the instance of Target
-        delete this.all[which_target];    // delete the reference in list
+        this.remove(which_target);
       }
-      this.target_list.empty(); // doesn't quite work...
+      this.target_list.empty();
       this.all = {};
       this.current = {
         target : null,
@@ -83,7 +93,16 @@
         this.build(default_target);
       }
     }
-
+    
+    this.remove = function(target_selector) {
+      var target = this.all[target_selector];
+      target.delete();  // delete the instance of Target
+      delete target;    // delete the reference in list
+      if (target.build) {
+        target.build.remove(); // delete from the DOM
+      }
+    };
+    
     this.startOver();
     self.user_style.your_targets.append(this.target_header);
     self.user_style.your_targets.append(this.target_list);
