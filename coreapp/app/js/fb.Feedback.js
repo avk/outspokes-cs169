@@ -19,8 +19,8 @@
         "neutral?": "boolean",
         "controversial?": "boolean",
         "popular?": "boolean",
-        "unpopular?": "boolean",
-        "isPrivate": "boolean"}),
+        "unpopular?": "boolean"
+        }),
         "Object argument to fb.Feedback constructor of wrong form");
       this.feedback_id = obj.feedback_id;
       this.name = obj.name;
@@ -32,7 +32,6 @@
       this["controversial?"] = obj["controversial?"];
       this["popular?"] = obj["popular?"];
       this["unpopular?"] = obj["unpopular?"]
-      this.isPrivate = obj.isPrivate;
       this.build = null;
 
       fb.Feedback.all[this.feedback_id] = this;
