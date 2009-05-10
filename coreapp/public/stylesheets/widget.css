@@ -283,7 +283,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .thread {
-  margin: 0 0 10px 5px;
+  margin: 0 0 7px 5px;
 }
 #outspokes #comment_list .replies .thread {
   margin-bottom: 0;
