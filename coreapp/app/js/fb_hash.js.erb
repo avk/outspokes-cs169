@@ -20,6 +20,7 @@ function() {
     fb.env.css_address = "<%= WIDGET_DOMAIN %>stylesheets/widget.css";
     fb.env.edit_css_address = "<%= WIDGET_DOMAIN %>stylesheets/userstyles.css";
     fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";
+    fb.env.user_style_get_address = "<%= WIDGET_DOMAIN %>blahblahblabh";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;
@@ -44,17 +45,21 @@ function() {
         return false;
       }
 
-      _fb.authorized.set(data.authorized);
-      if (!_fb.authorized()) {
+      if (!data.authorized) {
         if (fb.env.login_panel) {
           fb.env.login_panel.find('div:eq(1)').empty();
           fb.env.login_panel.find('div:eq(1)').append("<h2 style='text-align:center;'>Login invalid.</h2>");
           setTimeout("" + fb.find_fb() + ".env.login_panel.remove(); " + fb.find_fb() + "()", 3000);
           return false;
+        } else if (_admin_validation_token) {
+          fb.cookie('fb_hash_admin_validation_token', null, {expires: -365});
+          setTimeout("" + fb.find_fb() + "()", 0);
+          return false;
         }
         fb.env.init = true;
         return false;
       }
+      _fb.authorized.set(data.authorized);
 
       if (fb.env.login_panel) {
         fb.env.login_panel.remove();
@@ -98,77 +103,67 @@ function() {
       } else if (widget_position == "down") {
         fb.i.hide_widget(false);
       }
-      
-      // Testing UserStyle data only. Not to be committed
-      // var us1 = new fb.UserStyle({
-      //           "feedback_id" : 23,     
-      //           "name" : "Arthur",
-      //           "timestamp" : 8768769769,     
-      //           "opinion" : "agreed",     
-      //           "agreed" : 34,     
-      //           "disagreed" : 9,     
-      //           "selectors" : [] 
-      //         }); 
-      //         var us2 = new fb.UserStyle({
-      //           "feedback_id" : 25,     
-      //           "name" : "Hannah",
-      //           "timestamp" : 123456789,     
-      //           "opinion" : "agreed",     
-      //           "agreed" : 7,     
-      //           "disagreed" : 12,     
-      //           "selectors" : [] 
-      //         });
-      //         fb.UserStyle.render();
 
+     // Testing UserStyle data only. Not to be committed
+
+/*      var us1 = new fb.UserStyle({
+        feedback_id:12,
+        name:"Bob",
+        timestamp:131241341,
+        opinion:"",
+        agreed:12,
+        disagreed:12,
+        "neutral?": false,
+        "controversial?": true,
+        "popular?": false,
+        "unpopular?": true,
+        "css_path":"sfhsdjfhsdfjsdh"
+              }); 
+              
+      var us2 = new fb.UserStyle({
+        feedback_id:10,
+        name:"Jan",
+        timestamp:234234234,
+        opinion:"",
+        agreed:12,
+        disagreed:12,
+        "neutral?": false,
+        "controversial?": true,
+        "popular?": false,
+        "unpopular?": true,
+        "css_path":"sfhsdjfhsdfjsdh"
+              });
+              
+      var us3 = new fb.UserStyle({
+        feedback_id:13,
+        name:"Dingo Dongers",
+        timestamp:65756756,
+        opinion:"",
+        agreed:12,
+        disagreed:12,
+        "neutral?": false,
+        "controversial?": true,
+        "popular?": false,
+        "unpopular?": true,
+        "css_path":"sfhsdjfhsdfjsdh"
+              });
+      fb.UserStyle.render();
+
+*/
       // End test data
       
       // Arthur only:
-      // fb.i.nav.elements.list[1].click();
-      // fb.i.show_widget();
-      // fb.i.user_style.new_edit_link.click();
+      //fb.i.nav.elements.list[1].click();
+      //fb.i.user_style.new_edit_link.click();
       
       return true;
     };
 
     if (!_admin_validation_token && _wants_admin) {
       fb.$(function() {
-        var login_panel = fb.$('<div></div>').css({
-          'position': 'fixed',
-          'top': '0%',
-          'left': '0%',
-          'height': '100%',
-          'width': '100%',
-          'z-index': '1001'
-        });
-        login_panel.append(fb.$('<div></div>').css({
-          'background-color': 'black',
-          'color': 'transparent',
-          'height': '100%',
-          'left': '0%',
-          'margin': '0',
-          'opacity': '0.80',
-          'padding': '0',
-          'position': 'fixed',
-          'top': '0%',
-          'width': '100%',
-          'z-index': '1002'
-        }));
-        login_panel.append(fb.$('<div></div>').css({
-          'background-color': 'white',
-          'border': '16px solid #eee',
-          'color': 'black',
-          'height': '170px',
-          'width': '230px',
-          'top': '37.5%',
-          'left': '36.5%',
-          'margin': '0',
-          'overflow': 'auto',
-          'padding': '8px',
-          'position': 'fixed',
-          'opacity': '1.0',
-          'z-index': '1003',
-          'font-family':'Helvetica,Arial,sans-serif'
-        }));
+        var login_panel = fb.$('<div></div>').attr('id','outspokes_login_panel_wrapper');
+        login_panel.append(fb.$('<div></div>').attr('id','outspokes_login_panel_background'));
+        login_panel.append(fb.$('<div></div>').attr('id','outspokes_login_panel_inner'));
 
         var form = fb.$('<form onsubmit="return false;"></form>');
         form.append('Please log into <img src="' + fb.env.logo_address + '" height="20" width="100" alt="Outspokes" style="position: relative;top:5px;">:<br>')

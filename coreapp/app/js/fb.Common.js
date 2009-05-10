@@ -144,7 +144,7 @@
       }
     }
 
-    fb.assert(correct.length === 1, "There should be only one variable that matches fb");
+    //fb.assert(correct.length === 1, "There should be only one variable that matches fb");
     return correct[0];
   };
 
