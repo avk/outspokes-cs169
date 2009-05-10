@@ -8,7 +8,7 @@
     };
     var dom = this.dom;
     
-    // maps DOM objects (created by build) to instances of Target
+    // maps target titles (created by build) to instances of Target
     this.all = {};
     // the currently selected Target (to be styled)
     this.current = {
@@ -16,7 +16,8 @@
       html : null
     }; // if changed, also change in clearAll()
     
-    this.target_header = $('<div><h1>Targeting</h1></div>').attr('id', 'outspokes_target_header');
+    this.target_header = $('<div></div>').attr('id', 'outspokes_target_header');
+    this.target_header.append($('<h1>Targeting</h1>'));
     var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
     target_button.click(function() {
       fb.Target.pick(function(target) { // callback
@@ -24,6 +25,7 @@
       });
     });
     this.target_header.append(target_button);
+    this.target_header.append($('<div style="clear:both;"></div>'));
     
     
     this.target_list = $('<ul></ul>').attr('id','outspokes_target_list');
