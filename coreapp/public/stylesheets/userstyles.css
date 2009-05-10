@@ -26,14 +26,18 @@
 }
 
 #outspokes .edit_block {
+  /*margin-bottom: 5px;*/
+  border-bottom: 1px solid #777;
   background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
-  border-color:#777777;
-  border-style:solid;
-  border-width:0 0 0 1px;
-  cursor:pointer;
   height:15px;
   margin-bottom:7px;
   padding:5px;
+}
+
+#outspokes .edit_block.disabled {
+  background-image: none;
+  background-color: #777;
+
 }
 
 #outspokes .edit_block .toggle_box {

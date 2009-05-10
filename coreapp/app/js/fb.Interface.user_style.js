@@ -79,6 +79,22 @@
       // define its contents
       var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
       us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      us_checkbox.click(function() {
+        if (this.checked) {
+          $('.toggle_box').each(function(){
+            this.disabled = true;
+            $(this).parent().addClass('disabled');
+          });
+          this.disabled = false;
+          $(this).parent().removeClass('disabled');
+        } else {
+          $('.toggle_box').each(function(){
+            this.disabled = false;
+            $(this).parent().removeClass('disabled');
+          });
+        }
+        
+      })
       var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       var us_consensus = $('<div></div>').addClass(dom.edits_view.consensus_block);

@@ -90,6 +90,7 @@ function() {
         fb.i.admin_panel.show();
       }
      // Testing UserStyle data only. Not to be committed
+
 /*      var us1 = new fb.UserStyle({
         feedback_id:12,
         name:"Bob",
@@ -132,7 +133,9 @@ function() {
         "css_path":"sfhsdjfhsdfjsdh"
               });
       fb.UserStyle.render();
+
 */
+
       // End test data
       
       // Arthur only:
@@ -144,43 +147,9 @@ function() {
 
     if (!_admin_validation_token && _wants_admin) {
       fb.$(function() {
-        var login_panel = fb.$('<div></div>').css({
-          'position': 'fixed',
-          'top': '0%',
-          'left': '0%',
-          'height': '100%',
-          'width': '100%',
-          'z-index': '100001'
-        });
-        login_panel.append(fb.$('<div></div>').css({
-          'background-color': 'black',
-          'color': 'transparent',
-          'height': '100%',
-          'left': '0%',
-          'margin': '0',
-          'opacity': '0.80',
-          'padding': '0',
-          'position': 'fixed',
-          'top': '0%',
-          'width': '100%',
-          'z-index': '100002'
-        }));
-        login_panel.append(fb.$('<div></div>').css({
-          'background-color': 'white',
-          'border': '16px solid #eee',
-          'color': 'black',
-          'height': '170px',
-          'width': '230px',
-          'top': '37.5%',
-          'left': '36.5%',
-          'margin': '0',
-          'overflow': 'auto',
-          'padding': '8px',
-          'position': 'fixed',
-          'opacity': '1.0',
-          'z-index': '100003',
-          'font-family':'Helvetica,Arial,sans-serif'
-        }));
+        var login_panel = fb.$('<div></div>').attr('id','outspokes_login_panel_wrapper');
+        login_panel.append(fb.$('<div></div>').attr('id','outspokes_login_panel_background'));
+        login_panel.append(fb.$('<div></div>').attr('id','outspokes_login_panel_inner'));
 
         var form = fb.$('<form onsubmit="return false;"></form>');
         form.append('Please log into <img src="' + fb.env.logo_address + '" height="20" width="100" alt="Outspokes" style="position: relative;top:5px;">:<br>')
