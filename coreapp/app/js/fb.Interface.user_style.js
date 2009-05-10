@@ -83,10 +83,10 @@
         us.addClass(consensus_class);
       },
       agree: function(us_id) {
-        this._opinion(us_id, this.dom.agreed);
+        this._opinion(us_id, 'agreed');
       },
       disagree: function(us_id) {
-        this._opinion(us_id, this.dom.disagreed);
+        this._opinion(us_id, 'disagreed');
       },
       build : function(us, markup) {
         if (us.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment

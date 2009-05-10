@@ -64,10 +64,12 @@
 #outspokes .edit_block .edit_timestamp {
   font-size: 0.8em;
 }
-#outspokes .edit_block .edit_consensus {float: right; font-weight: bold;}
-#outspokes .edit_block .edit_consensus button {margin-top: -2px;}
+#outspokes .edit_block .edit_consensus {float: right;}
+#outspokes .edit_block .edit_consensus button {margin-top: -2px; font-weight: bold;}
 #outspokes .edit_block .edit_consensus button.agree:hover {color: green;}
 #outspokes .edit_block .edit_consensus button.disagree:hover {color: red;}
+#outspokes .edit_block .edit_consensus .agreed {color: green;}
+#outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
 /* New edit */
 
