@@ -163,7 +163,7 @@
       us_block.append(us_checkbox);
       us_block.append(us_name);
       us_block.append(us_timestamp);      
-      us_block.append(this.consensus.build(user_style));
+      // us_block.append(this.consensus.build(user_style));
       
       return us_block;
     };

@@ -253,15 +253,32 @@
         bar.append($('<span> &mdash; private</span>').addClass('private'));
       } 
       
+      var link_span;
+      // Reply link
+      if (c.isReply()) {
+        link_span = $('<span>in reply to </span>').addClass("reply_to_text");
+        var link = $('<a href="#">comment by ' + c.parent_comment().name + '</a>');
+        link_span.append(link);
+        // Go to parent thread when clicking on parent link
+        link.click(function(e) {
+          $("#comments_filter").val("Newest first");
+          $("#comments_filter").children().eq(0).click();
+          fb.$("#comment_list").scrollTo(c.parent_comment().build, 700);
+          e.stopPropagation();
+          return false;
+        });
+        bar.append(link_span);
+      }
+      
       // snippet
       var snippet_length = 100;
       var snippet = c.content.replace(/<br \/>/g, '\n');
       if (snippet.length > snippet_length) { // shorten if needed
         snippet = $.trim(snippet.substring(0, snippet_length)).replace(/\n/g, '&nbsp;&nbsp;&nbsp;') + '...';
       }
-      bar.append($('<span></span>').addClass('snippet').append(snippet));
+      bar.append($('<span></span>').addClass('snippet').append(snippet).hide());
       
-      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp)).css('display','none');
+      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp))
       
       
       if (_fb.admin()) {
@@ -283,7 +300,7 @@
       }
       bar.append(timestamp_close);
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
-      content.css('display','none');
+
       var options = $('<div></div>').addClass('options');
 
       var tmp = this.consensus.build(c, bar);
@@ -298,6 +315,9 @@
       comment.append(bar).append(content);
       rtn.append(comment).append(replies);
       bar.click(function() {
+        if (link_span) {
+          $(this).parent().toggleClass("collapsed");
+        }
         $(this).parent().parent().find('div.cmt_content:eq(0)').toggle();
         $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
       });
@@ -334,24 +354,24 @@
     
     // Linearizes all comments and replies as children of #comment_list
     this.flatten_comments = function() {
+      var list = $("#comment_list");
       if (this.filtering.flattened) {
-        return $("#comment_list").children();
+        return list.children();
       }
-      var container;
-      if (!arguments[0]) {
-        container = $("#comment_list");
-      } else {
-        container = arguments[0];
-      }
+      this.__flatten_recursive(list);
+      this.filtering.flattened = true;
+      return list.children();
+    };
+    
+    this.__flatten_recursive = function(container) {
       var list = $("#comment_list");
       var parent = this;
       $(container).children().each(function() {
         this.__container = container;
+        $(this).addClass("flattened");
         list.append($(this));
-        parent.flatten_comments($("#" + parent.dom.reply_list(this.id)));
+        parent.__flatten_recursive($("#" + parent.dom.reply_list(this.id)));
       });
-      this.filtering.flattened = true;
-      return list.children();
     };
     
     // Returns comments to original threaded tree form and un-hides any hidden comments
@@ -361,6 +381,7 @@
       }
       $("#comment_list").children().each(function() { 
         $(this).show(400);
+        $(this).removeClass("flattened");
         $(this).appendTo(this.__container);
       });
       this.filtering.flattened = false;
@@ -438,11 +459,14 @@
         $(".cmt_content").hide();
         $(".cmt_date").hide();
         $(".snippet").show();
+        $(".comment").addClass("collapsed");
     };
+    
     this.uncollapse_all = function() {
         $(".cmt_content").show();
         $(".cmt_date").show();
         $(".snippet").hide();
+        $(".comment").removeClass("collapsed");
     };
     
     this.reset_target = function() {
