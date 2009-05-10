@@ -106,7 +106,7 @@
     // Logo
     var logo = $('<a href="' + fb.env.base_domain + '" target="_blank"></a>');
     logo.append('<img src="' + fb.env.logo_address + '" alt="outspokes" />');
-    logo.attr('id', 'logo');    
+    logo.attr('id', 'outspokes_logo');    
     // clicking on the logo shouldn't toggle the widget:
     logo.click( function(e) { e.stopPropagation(); } );
     topbarLeft.append(logo);

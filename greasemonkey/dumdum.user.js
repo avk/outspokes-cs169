@@ -17,15 +17,15 @@
 // −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− 
 // 
 // ==UserScript== 
-// @name          Outspokes on Apple 
+// @name          Outspokes on Dum Dum Pops 
 // @namespace     http://www.outspokes.com/ 
-// @description   script will attach outspokes.com's google include 
-// @include       http://*.apple.com/* 
-// @exclude       http://dontexcludeanything.apple.com/* 
+// @description   script will attach outspokes.com's dumdum include 
+// @include       http://www.dumdumpops.com/* 
+// @exclude       http://dontexcludeanything.google.com/* 
 // ==/UserScript== 
 
 var headID = document.getElementsByTagName("head")[0];         
 var newScript = document.createElement('script');
 newScript.type = 'text/javascript';
-newScript.src = 'http://localhost:3000/widget/7';
+newScript.src = 'http://localhost:3000/widget/3';
 headID.appendChild(newScript);
