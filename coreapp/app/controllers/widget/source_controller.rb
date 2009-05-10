@@ -1,6 +1,6 @@
 class Widget::SourceController < Widget::WidgetController
     Widget::SourceController.page_cache_extension = '.js'
-    # caches_page :index
+    caches_page :index
 
     def index
       @site = Site.find(params[:id])

@@ -133,53 +133,41 @@
     if (!(_fb.authorized() || data.authorized)) {
       return null;
     }
-    var i, j;
 
-    // An array of the feedback_id's we currently have
-    var oldC = [];
-    for (i in fb.Feedback.all) {
-      oldC.push(i);
-    }
-    oldC.sort(function(a,b) {return a-b;});
-
-    // An array of the feedback_id's we just recevied
-    var newC = [];
-    // An associative array between the feedback_id's we just
-    // just received and their associated comment object.
-    var newCAss = {};
-    for (i in data.feedback) {
-      newC.push(data.feedback[i].feedback_id);
-      newCAss[data.feedback[i].feedback_id] = data.feedback[i];
-    }
-    newC.sort(function(a,b) {return a-b;});
-
-    var rtn = [];
-    i = j = 0;
-    while (i < oldC.length && j < newC.length) {
-      if (oldC[i] == newC[j]) {
-        i++;
-        j++;
-        continue;
-      } else if (oldC[i] < newC[j]) {
-        fb.Feedback.all[oldC[i]].remove();
-        // compare next old comment with the same new comment
-        i++;
-        continue;
-      } else {
-        // Assume feedback is of type Comment right now
-        rtn.push(new fb.Comment(newCAss[newC[i]]));
-        j++;
-        continue;
+    var found;
+    // Get the new feedbacks
+    var new_feedbacks = $.map(
+      $.grep(data.feedback, function(feedback_obj) {
+        found = false;
+        $.each(fb.Feedback.all, function(feedback_id, feedback) {
+          if (feedback_obj.feedback_id == feedback_id) {
+            found = true;
+            return false;
+          }
+        });
+        return !found;
+      }),
+      function (feedback_obj) {
+        return (new fb.Comment(feedback_obj));
       }
-    }
-    for (j; j < newC.length; j++) {
-      rtn.push(new fb.Comment(newCAss[newC[j]]));
-    }
-    for (i; i < oldC.length; i++) {
-      fb.Feedback.all[oldC[i]].remove();
-    }
+    );
+    // Delete the ones that have been deleted in the backend
+    $.each(fb.Feedback.all, function(feedback_id, feedback) {
+      found = false;
+      $.each(data.feedback, function() {
+        if (this.feedback_id == feedback_id) {
+          found = true;
+          return false;
+        }
+      });
+      if (!found) {
+        fb.Feedback[feedback_id].remove();
+      }
+      return true;
+    });
+
     if (render) {
       fb.Comment.render();
     }
-    return rtn;
+    return new_feedbacks;
   };
