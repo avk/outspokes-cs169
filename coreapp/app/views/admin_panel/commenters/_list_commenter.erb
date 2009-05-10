@@ -13,8 +13,7 @@
       <%= link_to '( login )', final_url, { :title => 'log in as this user', :style => 'color:red' } %>
     <%- end -%>
   </span> 
-  <% unless commenter.feedbacks.empty? %> 
-  made
+  <% unless commenter.feedbacks.empty? %>
   <ul class="commenter_details">    
     <%- commenter.commented_pages(@site).each do |page| -%>
       <li>

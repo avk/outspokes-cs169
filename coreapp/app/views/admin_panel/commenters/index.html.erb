@@ -12,7 +12,7 @@
 
   <%- unless list[:commenter_list].empty? -%>
     <ul id="site_commenters_<%= list[:id_name] %>" class="site_commenters">
-      <p><%= list[:section_name]%></p>
+      <h2><%= list[:section_name]%></h2>
 
       <%- list[:commenter_list].each do |commenter| -%>
         <%= render :partial => "list_commenter", :locals => {:commenter => commenter}%>
