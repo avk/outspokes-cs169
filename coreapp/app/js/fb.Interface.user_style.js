@@ -221,7 +221,16 @@
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
     this.your_color = $('<div></div>');
     
-    var bgColor = $('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" /><br />');
+    var bgColor = $('<div></div>');
+    var bgColorLabel = $('<label for="bgColor">Background</label><span class="pound">#</span>');
+    var bgColorInput = $('<input type="text" name="bgColor" />');
+    bgColorInput.blur( function() {
+      fb.i.target.current.target.set_style('background-color', '#' + this.value);
+    });
+
+    bgColor.append(bgColorLabel);
+    bgColor.append(bgColorInput);
+    
     var textColor = $('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />');
     
     this.your_color.append(bgColor);
@@ -246,8 +255,7 @@
     
     
     // NEW EDIT: targeting sidebar  //////////////////////////////////////////////////////////////////
-    this.your_targets = $('<div>targets</div>').attr('id', dom.new_edit.your_targets);
-    
+    this.your_targets = $('<div></div>').attr('id', dom.new_edit.your_targets);
     
     
     // NEW EDIT: finishing up  //////////////////////////////////////////////////////////////////

@@ -10,18 +10,19 @@
     this.element = $(path);
     this.original_styles = {};
     this.new_styles = {};
+    this.build = (fb.i) ? fb.i.target.build(this) : null;
   };
 
   fb.Target.prototype.set_style = function (property, value) {
-    if (!this.original_styles.property) {
-      this.original_styles.property = value;
+    if (!this.original_styles[property]) {
+      this.original_styles[property] = value;
     }
-    this.new_styles.property = value;
+    this.new_styles[property] = value;
     this.element.css(property, value);
   };
 
   fb.Target.prototype.delete = function () {
-    this.element.css(original_styles);
+    this.element.css(this.original_styles);
     this.original_styles = null;
     this.new_styles = null;
     this.selector = null;
