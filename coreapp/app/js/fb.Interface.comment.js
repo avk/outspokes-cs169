@@ -23,8 +23,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#33EE44',
-      disagree_bg_color   : '#FF3322',
+      agreed              : 'agreed',
+      disagreed           : 'disagreed',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
       cform               : "comment_form",
@@ -48,7 +48,7 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
+    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><div id="outspokes_form_wrapper"><textarea name="content" rows="7" /></div>';
       formHTML += form_header;
       var form_buttons =  '<div id="outspokes_form_buttons">'
       if ( !_fb.admin() ) {
@@ -77,7 +77,8 @@
       fb.i.comment.reset_target();
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-        $('#outspokes_target_button').css("background-color", "orange");
+        $('#outspokes_target_button').addClass('target_set');
+        $('#outspokes_form_header').find('span').text('Targeted Comment');
       });
     });
 
@@ -105,20 +106,20 @@
     
     this.consensus = {
       dom   : this.dom,
-      _opinion: function(c_id, color) {
+      _opinion : function(c_id, consensus_class) {
         var comment = null;
         if (typeof c_id == "string") {
           comment = $('#' + this.dom.comment_id(c_id));
         } else {
           comment = c_id;
         }
-        comment.css({ 'background-color' : color });
+        comment.addClass(consensus_class);
       },
       agree: function(c_id) {
-        this._opinion(c_id, this.dom.agree_bg_color);
+        this._opinion(c_id, this.dom.agreed);
       },
       disagree: function(c_id) {
-        this._opinion(c_id, this.dom.disagree_bg_color);
+        this._opinion(c_id, this.dom.disagreed);
       },
       build : function(c, markup) {
         if (c.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment
@@ -140,7 +141,7 @@
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed</span>'));
+            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed,</span>&nbsp;'));
             consensus_div.append($('<span class="disagreed">' + c.disagreed + '&nbsp;disagreed</span>'));
           } else {
             consensus_div.append(agree);
@@ -285,12 +286,13 @@
       bar.append(timestamp_close);
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
-      content.append(options);
+
       var tmp = this.consensus.build(c, bar);
       options.append(tmp);
       options.append(this.reply.buildLink(c_id));
+      
       content.append($('<div></div>').addClass('cmt_text').append(c.content));
-      content.append($('<div></div>').css('clear','both'));
+      content.append(options);
 
       var replies = $('<div></div>').attr('id', this.dom.reply_list(c_id)).addClass('replies');
       var comment = $('<div></div>').addClass('comment');
@@ -442,8 +444,8 @@
       old_element.removeClass("outspokes_currently_hovering").removeClass("outspokes_selected_page_element");
       // Reset form target
       fb.i.comment.form.find("input[name='target']").attr("value","html");
-      // Remove orange background on target
-      $('#outspokes_target_button').css("background-color", "");
+      $('#outspokes_target_button').removeClass('target_set');
+      $('#outspokes_form_header').find('span').text('Comment');
     };
     
   };
