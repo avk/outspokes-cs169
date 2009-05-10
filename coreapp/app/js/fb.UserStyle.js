@@ -57,7 +57,7 @@
     if (fb.UserStyle.applied) {
       fb.UserStyle.applied.unapply();
     }
-    this.link.appendTo(document.body);
+    $('head').append(this.link);
   };
 
   fb.UserStyle.prototype.unapply = function() {
