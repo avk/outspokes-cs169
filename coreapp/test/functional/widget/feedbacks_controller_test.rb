@@ -72,13 +72,20 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     end
   end
 
-  test "should list public feedback for page for user" do
+  test "should list feedback for page for user" do
     invite = invites(:two)
     callback = 'jsfeed'
     
+    feedback = []
     assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
-    feedback = invite.page.feedbacks.find(:all, :conditions => 
-               [ "private = ? OR commenter_id = ?", false, invite.commenter_id ]).map { |f| f.json_attributes(invite.commenter) }
+    for fb in invite.page.feedbacks.roots do
+      if !fb.private || fb.commenter == invite.commenter
+        feedback += fb.self_and_descendants
+      end
+    end
+    feedback = feedback.map { |f| f.json_attributes(invite.commenter) }
+    #feedback = invite.page.feedbacks.find(:all, :conditions => 
+    #           [ "private = ? OR commenter_id = ?", false, invite.commenter_id ]).map { |f| f.json_attributes(invite.commenter) }
 
     get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url,
         :callback => callback
