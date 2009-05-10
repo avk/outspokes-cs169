@@ -161,7 +161,7 @@
         }
       });
       if (!found) {
-        fb.Feedback[feedback_id].remove();
+        fb.Feedback.all[feedback_id].remove();
       }
       return true;
     });

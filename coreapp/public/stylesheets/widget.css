@@ -283,7 +283,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .thread {
-  margin: 0 0 10px 5px;
+  margin: 0 0 7px 5px;
 }
 #outspokes #comment_list .replies .thread {
   margin-bottom: 0;
@@ -400,7 +400,7 @@ version: 3.0.0pr2
   font-size: 14px;
 }
 
-#outspokes #outspokes_target_button {
+#outspokes .outspokes_target_button {
   border: 1px solid transparent;
   border-bottom: none;
   cursor: pointer;
@@ -410,7 +410,7 @@ version: 3.0.0pr2
   position: relative;
   top: 1px;
 }
-#outspokes #outspokes_target_button.target_set {
+#outspokes .outspokes_target_button.target_set {
   background-color: #C1272D;
   border: 1px solid #FFF;
   border-bottom: none;
@@ -524,6 +524,7 @@ version: 3.0.0pr2
   padding-bottom: 0;
   position: relative;
   bottom: 1px;
+  height:25px;
 }
 #outspokes #topbar #help:hover {
   background-color: #DDD;

@@ -71,13 +71,13 @@
 
     // TARGETING ///////////////////////
 
-    var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
+    var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
     target_button.click(function() {
       $(this)[0].value = "Change target";
       fb.i.comment.reset_target();
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-        $('#outspokes_target_button').addClass('target_set');
+        $('.outspokes_target_button').addClass('target_set');
         $('#outspokes_form_header').find('span').text('Targeted Comment');
       });
     });
@@ -253,9 +253,9 @@
       
       // snippet
       var snippet_length = 75;
-      var snippet = c.content;
-      if (c.content.length > snippet_length) { // shorten if needed
-        snippet = snippet.substring(0, snippet_length) + '...';
+      var snippet = c.content.replace(/<br \/>/g, '\n');
+      if (snippet.length > snippet_length) { // shorten if needed
+        snippet = $.trim(snippet.substring(0, snippet_length)).replace(/\n/g, '&nbsp;&nbsp;&nbsp;') + '...';
       }
       bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
       
@@ -443,7 +443,7 @@
       old_element.removeClass("outspokes_currently_hovering").removeClass("outspokes_selected_page_element");
       // Reset form target
       fb.i.comment.form.find("input[name='target']").attr("value","html");
-      $('#outspokes_target_button').removeClass('target_set');
+      $('.outspokes_target_button').removeClass('target_set');
       $('#outspokes_form_header').find('span').text('Comment');
     };
     

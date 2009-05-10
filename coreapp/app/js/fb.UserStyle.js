@@ -57,7 +57,7 @@
     if (fb.UserStyle.applied) {
       fb.UserStyle.applied.unapply();
     }
-    this.link.appendTo(document.body);
+    $('head').append(this.link);
   };
 
   fb.UserStyle.prototype.unapply = function() {
@@ -200,7 +200,7 @@
         }
       });
       if (!found) {
-        fb.UserStyle[feedback_id].remove();
+        fb.UserStyle.all[feedback_id].remove();
       }
       return true;
     });

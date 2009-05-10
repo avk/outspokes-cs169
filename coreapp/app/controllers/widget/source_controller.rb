@@ -13,6 +13,7 @@ class Widget::SourceController < Widget::WidgetController
         fb.Interface.js
         fb.Interface.comment.js
         fb.Interface.user_style.js
+        fb.Interface.target.js
         fb.Target.js
         fb.Feedback.js
         fb.Comment.js

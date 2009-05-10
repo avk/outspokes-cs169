@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "create", :conditions => { :method => :post }
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "delete", :conditions => { :method => :delete }
   end
+  map.css_for_user_style '/css_for_user_style/:user_style_id/styles.css', :controller => 'widget/user_styles', :action => 'css_for_user_style', :conditions => { :method => :get } 
+
 
   ### coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'

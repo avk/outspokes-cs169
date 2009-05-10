@@ -45,17 +45,21 @@ function() {
         return false;
       }
 
-      _fb.authorized.set(data.authorized);
-      if (!_fb.authorized()) {
+      if (!data.authorized) {
         if (fb.env.login_panel) {
           fb.env.login_panel.find('div:eq(1)').empty();
           fb.env.login_panel.find('div:eq(1)').append("<h2 style='text-align:center;'>Login invalid.</h2>");
           setTimeout("" + fb.find_fb() + ".env.login_panel.remove(); " + fb.find_fb() + "()", 3000);
           return false;
+        } else if (_admin_validation_token) {
+          fb.cookie('fb_hash_admin_validation_token', null, {expires: -365});
+          setTimeout("" + fb.find_fb() + "()", 0);
+          return false;
         }
         fb.env.init = true;
         return false;
       }
+      _fb.authorized.set(data.authorized);
 
       if (fb.env.login_panel) {
         fb.env.login_panel.remove();
@@ -85,41 +89,55 @@ function() {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
       }
-      // Testing UserStyle data only. Not to be committed
-      // var us1 = new fb.UserStyle({
-      //        "feedback_id" : 23,     
-      //        "name" : "Arthur",
-      //        "timestamp" : 8768769769,     
-      //        "opinion" : "agreed",     
-      //        "agreed" : 34,     
-      //        "disagreed" : 9,
-      //        "neutral?": false,
-      //        "controversial?": false,
-      //        "popular?": false,
-      //        "unpopular?": false,
-      //        "css_path" : "asdf"
-      //      }); 
-      //      var us2 = new fb.UserStyle({
-      //        "feedback_id" : 25,     
-      //        "name" : "Hannah",
-      //        "timestamp" : 123456789,     
-      //        "opinion" : "agreed",     
-      //        "agreed" : 7,     
-      //        "disagreed" : 12,
-      //        "neutral?": false,
-      //        "controversial?": false,
-      //        "popular?": false,
-      //        "unpopular?": false,     
-      //        "css_path" : "asdf" 
-      //      });
-      //      fb.UserStyle.render();
+     // Testing UserStyle data only. Not to be committed
+      var us1 = new fb.UserStyle({
+        feedback_id:12,
+        name:"Bob",
+        timestamp:131241341,
+        opinion:"",
+        agreed:12,
+        disagreed:12,
+        "neutral?": false,
+        "controversial?": true,
+        "popular?": false,
+        "unpopular?": true,
+        "css_path":"sfhsdjfhsdfjsdh"
+              }); 
+              
+      var us2 = new fb.UserStyle({
+        feedback_id:10,
+        name:"Jan",
+        timestamp:234234234,
+        opinion:"",
+        agreed:12,
+        disagreed:12,
+        "neutral?": false,
+        "controversial?": true,
+        "popular?": false,
+        "unpopular?": true,
+        "css_path":"sfhsdjfhsdfjsdh"
+              });
+              
+      var us3 = new fb.UserStyle({
+        feedback_id:13,
+        name:"Dingo Dongers",
+        timestamp:65756756,
+        opinion:"",
+        agreed:12,
+        disagreed:12,
+        "neutral?": false,
+        "controversial?": true,
+        "popular?": false,
+        "unpopular?": true,
+        "css_path":"sfhsdjfhsdfjsdh"
+              });
+      fb.UserStyle.render();
 
       // End test data
       
       // Arthur only:
-      // fb.i.nav.elements.list[1].click();
-      // fb.i.show_widget();
-      // fb.i.user_style.new_edit_link.click();
+      //fb.i.nav.elements.list[1].click();
+      //fb.i.user_style.new_edit_link.click();
       
       return true;
     };
