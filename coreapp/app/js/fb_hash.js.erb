@@ -45,17 +45,21 @@ function() {
         return false;
       }
 
-      _fb.authorized.set(data.authorized);
-      if (!_fb.authorized()) {
+      if (!data.authorized) {
         if (fb.env.login_panel) {
           fb.env.login_panel.find('div:eq(1)').empty();
           fb.env.login_panel.find('div:eq(1)').append("<h2 style='text-align:center;'>Login invalid.</h2>");
           setTimeout("" + fb.find_fb() + ".env.login_panel.remove(); " + fb.find_fb() + "()", 3000);
           return false;
+        } else if (_admin_validation_token) {
+          fb.cookie('fb_hash_admin_validation_token', null, {expires: -365});
+          setTimeout("" + fb.find_fb() + "()", 0);
+          return false;
         }
         fb.env.init = true;
         return false;
       }
+      _fb.authorized.set(data.authorized);
 
       if (fb.env.login_panel) {
         fb.env.login_panel.remove();
@@ -86,7 +90,7 @@ function() {
         fb.i.admin_panel.show();
       }
      // Testing UserStyle data only. Not to be committed
-      var us1 = new fb.UserStyle({
+/*      var us1 = new fb.UserStyle({
         feedback_id:12,
         name:"Bob",
         timestamp:131241341,
@@ -128,13 +132,12 @@ function() {
         "css_path":"sfhsdjfhsdfjsdh"
               });
       fb.UserStyle.render();
-
+*/
       // End test data
       
       // Arthur only:
-      // fb.i.nav.elements.list[1].click();
-      // fb.i.show_widget();
-      // fb.i.user_style.new_edit_link.click();
+      //fb.i.nav.elements.list[1].click();
+      //fb.i.user_style.new_edit_link.click();
       
       return true;
     };

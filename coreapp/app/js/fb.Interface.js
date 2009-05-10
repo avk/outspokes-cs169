@@ -426,6 +426,7 @@
 
     this.comment = new fb.Interface.comment(this);
     this.user_style = new fb.Interface.user_style(this);
+    this.target = new fb.Interface.target(this);
 
     fb.Interface.instantiated = true;  
   };
