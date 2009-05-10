@@ -256,14 +256,14 @@
       }
       
       // snippet
-      var snippet_length = 75;
+      var snippet_length = 100;
       var snippet = c.content.replace(/<br \/>/g, '\n');
       if (snippet.length > snippet_length) { // shorten if needed
         snippet = $.trim(snippet.substring(0, snippet_length)).replace(/\n/g, '&nbsp;&nbsp;&nbsp;') + '...';
       }
-      bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
+      bar.append($('<span></span>').addClass('snippet').append(snippet));
       
-      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
+      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp)).css('display','none');
       
       
       if (_fb.admin()) {
@@ -288,6 +288,7 @@
       }
       bar.append(timestamp_close);
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
+      content.css('display','none');
       var options = $('<div></div>').addClass('options');
 
       var tmp = this.consensus.build(c, bar);
