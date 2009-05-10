@@ -9,7 +9,7 @@
     <%= mail_to commenter.email, commenter.truncated_email, { :subject => "Thanks for giving your feedback via Outspokes!"} %>
     &nbsp;
     <%- if RAILS_ENV == "development" -%>
-      <% final_url = @site.home_page.url.sub(/\/$/i, '') + '?url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
+      <% final_url = @site.home_page.url.sub(/\/$/i, '') + '#url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
       <%= link_to '( login )', final_url, { :title => 'log in as this user', :style => 'color:red' } %>
     <%- end -%>
   </span> 

@@ -21,17 +21,139 @@ version: 3.0.0pr2
 #outspokes legend{color:#000;}
 #outspokes a,#outspokes a:link,#outspokes a:hover{background-color: transparent;color: black;border: none;}
 
-#outspokes {
-  font-family: Verdana, Helvetica, sans-serif;
-  font-size: 11px;
-  line-height: 120%;
-  z-index: 999;
+/* 
+  Nuke 'em all reset:
+  Default values for ALL CSS 2.1 properties http://www.w3.org/TR/CSS2/propidx.html
+*/
+#outspokes,
+#outspokes_overlay,
+#outspokes_admin_panel {
+  azimuth : center;
+  background-attachment : scroll;
+  background-color : transparent;
+  background-image : none;
+  background-position : 0% 0%;
+  background-repeat : repeat;
+/*  background : see individual properties */
+  border-collapse : separate;
+/*  border-color : see individual properties */
+  border-spacing : 0;
+/*  border-style : see individual properties */
+/*  border-top : see individual properties */
+/*  border-right : see individual properties */
+/*  border-bottom : see individual properties */
+/*  border-left : see individual properties */
+  border-top-color : black; /*the value of the 'color' property */
+  border-right-color : black; /*the value of the 'color' property */
+  border-bottom-color : black; /*the value of the 'color' property */
+  border-left-color : black; /*the value of the 'color' property */
+  border-top-style : none;
+  border-right-style : none;
+  border-bottom-style : none;
+  border-left-style : none;
+  border-top-width : medium;
+  border-right-width : medium;
+  border-bottom-width : medium;
+  border-left-width : medium;
+/*  border-width : see individual properties */
+/*  border : see individual properties */
+  bottom : auto;
+  caption-side : top;
+  clear : none;
+  clip : auto;
+  color : black; /*depends on user agent */
+  content : normal;
+  counter-increment : none;
+  counter-reset : none;
+  cue-after : none;
+  cue-before : none;
+/*  cue : see individual properties */
+  cursor : auto;
+  direction : ltr;
+  display : inline;
+  elevation : level;
+  empty-cells : show;
+  float : none;
+  font-family : Verdana, Helvetica, sans-serif; /*depends on user agent */
+  font-size : medium;
+  font-style : normal;
+  font-variant : normal;
+  font-weight : normal;
+/*  font : see individual properties */
+  height : auto;
+  left : auto;
+  letter-spacing : normal;
+  line-height : normal;
+  list-style-image : none;
+  list-style-position : outside;
+  list-style-type : disc;
+/*  list-style : see individual properties */
+  margin-right : 0;
+  margin-left : 0;
+  margin-top : 0;
+  margin-bottom : 0;
+/*  margin : see individual properties */
+  max-height : none;
+  max-width : none;
+  min-height : 0;
+  min-width : 0;
+  orphans : 2;
+  outline-color : invert;
+  outline-style : none;
+  outline-width : medium;
+/*  outline : see individual properties */
+  overflow : visible;
+  padding-top : 0;
+  padding-right : 0;
+  padding-bottom : 0;
+  padding-left : 0;
+/*  padding : see individual properties */
+  page-break-after : auto;
+  page-break-before : auto;
+  page-break-inside : auto;
+  pause-after : 0;
+  pause-before : 0;
+/*  pause : see individual properties */
+  pitch-range : 50;
+  pitch : medium;
+  play-during : auto;
+  position : static;
+  quotes : none; /*depends on user agent */
+  richness : 50;
+  right : auto;
+  speak-header : once;
+  speak-numeral : continuous;
+  speak-punctuation : none;
+  speak : normal;
+  speech-rate : medium;
+  stress : 50;
+  table-layout : auto;
+  text-align : left; /*"a nameless value that acts as 'left' if 'direction' is 'ltr', 'right' if 'direction' is 'rtl' "*/
+  text-decoration : none;
+  text-indent : 0;
+  text-transform : none;
+  top : auto;
+  unicode-bidi : normal;
+  vertical-align : baseline;
+  visibility : visible;
+  voice-family : announcer, male; /*depends on user agent */
+  volume : medium;
+  white-space : normal;
+  widows : 2;
+  width : auto;
+  word-spacing : normal;
+  z-index : auto;
 }
 
 /* outermost wrapper for our widget */
 #outspokes {
+  background-color: #333;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 120%;
+  z-index: 999999;
+  z-index: 999;
   width: 100%;
-  background-color: #CCC;
   position: fixed;
   bottom: 0px;
   left: 0px;
@@ -54,7 +176,7 @@ version: 3.0.0pr2
   position: fixed;
   top: 0%;
   width: 100%;
-  z-index: 1001;
+  z-index: 100001;
 }
 #outspokes_admin_panel {
   background-color: white;
@@ -68,7 +190,7 @@ version: 3.0.0pr2
   position: fixed;
   top: 20%;
   width: 50%;
-  z-index:1002;
+  z-index: 100002;
 }
 #outspokes_admin_panel a#close_admin_panel,
 #outspokes_admin_panel a#close_admin_panel:link {
@@ -139,35 +261,25 @@ version: 3.0.0pr2
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #aaa;
+  background-color: #333;
 }
 
 #outspokes #comment_list .options {
-  float: right;
-  width: 80px;
+  text-align: right;
 }
 #outspokes #comment_list .options button {
   cursor: pointer;
-  background-color:#F7F7F7;
-  border:2px outset #777;
-  border-width: 2px 1px 2px 1px;
-  -moz-border-radius: 7px;
   padding:1px 5px;
   font-weight:bold;
-  width: 100%;
   margin: 1px 0 3px;
 }
 
-#outspokes #comment_list .options button.hover {
-  background: #E0E0E0;
-}
-
-#outspokes #comment_list .options button.agree{
+#outspokes #comment_list .options button.agree:hover {
   color: green;
 }
 
-#outspokes #comment_list .options button.disagree{
-  color: red;
+#outspokes #comment_list .options button.disagree:hover {
+  color: #C1272D;
 }
 
 #outspokes #comment_list .thread {
@@ -178,12 +290,20 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_bar {
-  background-color: #accfcc;
+/*  background-color: #ccc;*/
+  background: #fff url(/images/unopinionated_header.png) repeat-x center -4px;
   height: 15px;
   padding: 3px .7em;
   cursor: pointer;
   border: 1px solid #777;
   border-width: 0px 0px 0px 1px;
+}
+
+#outspokes #comment_list .cmt_bar.disagreed {
+  background: #fff url(/images/disagreed_header.png) repeat-x center -4px;
+}
+#outspokes #comment_list .cmt_bar.agreed {
+  background: #fff url(/images/agreed_header.png) repeat-x center -4px;
 }
 
 #outspokes #comment_list .cmt_bar .snippet {
@@ -216,7 +336,6 @@ version: 3.0.0pr2
   font-weight: bold;
   float: left;
   margin-right: 10px;
-  width: 17em;
 }
 
 #outspokes #comment_list .cmt_date {
@@ -227,29 +346,28 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_delete_X {
-  color: red;
+  color: #C1272D;
   margin-left: 10px;
   font-weight: bold;
 
 }
 
-#outspokes #comment_list .cmt_text {
-  padding-right: 100px;
+#outspokes #comment_list .cns_buttons {
+  padding: 0 5px;
+  display: inline;
 }
 
-
 #outspokes #comment_list .cns_buttons span{
-  display: block;
-  width: 100%;
   line-height: 1.3em;
+  padding: 0 3px;
+  width: 100%;
 }
 
 #outspokes #comment_list .cns_buttons .agreed {
   color: green;
 }
-
 #outspokes #comment_list .cns_buttons .disagreed {
-  color: red;
+  color: #C1272D;
 }
 
 #outspokes #comment_list .replies {
@@ -262,41 +380,17 @@ version: 3.0.0pr2
 /* COMMENTING FORM */
 
 #outspokes #new-comment {
+  background-color: transparent;
+  color: #eee;
   float: right;
-  width: 25%;
+  width: 26%;
   margin-right: 2%;
 }
 
-#outspokes #comment_form {
-  float: right;
-  width: 100%;
-}
-#outspokes #comment_form textarea {
-  width: 100%;
-}
-
-#outspokes #outspokes_form_buttons {
-  padding-top: 3%;
-  text-align: right;
-}
-
-#outspokes #outspokes_form_buttons #private_wrapper {
-  float: left;
-}
-#outspokes #outspokes_form_buttons #private_wrapper label {
-  background-color: inherit;
-  color: #555;
-  font-size: 1.1em;
-  vertical-align: 15%
-}
-
-#outspokes #comment_form .button {
-  font-weight: bold;
-  margin-left: 2%;
-}
-
-
 #outspokes #outspokes_form_header {
+  background: transparent;
+  color: #ddd;
+  font-style : italic;
   height:20px;
   margin: 5px 0;
   line-height: 200%;
@@ -307,9 +401,64 @@ version: 3.0.0pr2
 }
 
 #outspokes #outspokes_target_button {
-  float: right;
+  border: 1px solid transparent;
+  border-bottom: none;
   cursor: pointer;
+  float: right;
+  margin-top: -2px;
+  padding: 2px 7px 3px 7px;
+  position: relative;
+  top: 1px;
 }
+#outspokes #outspokes_target_button.target_set {
+  background-color: #C1272D;
+  border: 1px solid #FFF;
+  border-bottom: none;
+}
+
+#outspokes #outspokes_form_wrapper {
+  background: #FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center top;
+  color: #333;
+  padding: 5px;
+}
+
+#outspokes #comment_form {
+  float: right;
+  width: 100%;
+}
+#outspokes #comment_form textarea {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  width: 100%;
+}
+
+
+#outspokes #outspokes_form_buttons {
+  -moz-border-radius-bottomleft: 7px;
+  background-color: #bbb;
+  padding: 3px;
+  text-align: right;
+}
+
+#outspokes #outspokes_form_buttons #private_wrapper {
+  float: left;
+  position: relative;
+  left: 5px;
+  top: 2px;
+}
+#outspokes #outspokes_form_buttons #private_wrapper label {
+  background-color: inherit;
+  color: #464646;
+  font-size: 1.1em;
+  vertical-align: 15%
+}
+
+#outspokes #comment_form .button {
+  font-weight: bold;
+  margin-left: 2%;
+}
+
 
 /* END COMMENTING FORM*/
 
@@ -349,13 +498,36 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbar #open_admin_panel {
+  border: 1px solid transparent;
+  border-bottom: none;
+  color: #C1272D;
   display: block;
   float: right;
-  color: #666;
+  font-size: 1.1em;
+  margin: -2px 2px 0 2px;
+  padding: 2px 10px 5px 10px;
+  position: relative;
+  top: 1px;
+}
+#outspokes #topbar #open_admin_panel:hover {
+  background-color: #DDD;
+  border-color: #FFF;
+  color: #C1272D;
 }
 #outspokes #topbar #help {
+  border: 1px solid transparent;
+  border-bottom: none;
+  display: block;
   float: right;
   margin-right: 2%;
+  padding: 2px 5px;
+  padding-bottom: 0;
+  position: relative;
+  bottom: 1px;
+}
+#outspokes #topbar #help:hover {
+  background-color: #DDD;
+  border-color: #FFF;
 }
 
 /* Topbar Left */
@@ -384,12 +556,17 @@ version: 3.0.0pr2
     margin : -2px 2px 0 2px;
   }
   #outspokes #topbarLeft ul.navigation li:hover {
-    background-color: inherit;
+    background-color: #DDD;
+    border-color: #FFF;
     color: #C1272D;
+    padding-bottom: 6px;
   }
-  #outspokes #topbarLeft ul.navigation li.outspokes-current {
+  #outspokes #topbarLeft ul.navigation li.outspokes-current, 
+  #outspokes #topbarLeft ul.navigation li.outspokes-current:hover {
     background-color: #ccc;
+    border-color: #999;
     color: #333;
+    padding-bottom: 7px;
   }
 
 /* END TOPBAR */
@@ -428,9 +605,11 @@ version: 3.0.0pr2
 /* HELP PANEL */
 
 #outspokes #help_content {
+  background-color: #fff;
+  color: #333;
   padding: 15px;
   overflow: scroll;
-  height: 180px;
+  height: 187px;
   line-height: 1.8em;
 }
 
