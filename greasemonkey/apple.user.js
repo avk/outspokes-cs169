@@ -27,5 +27,5 @@
 var headID = document.getElementsByTagName("head")[0];         
 var newScript = document.createElement('script');
 newScript.type = 'text/javascript';
-newScript.src = 'http://localhost:3000/widget/2';
+newScript.src = 'http://localhost:3000/widget/7';
 headID.appendChild(newScript);
