@@ -10,21 +10,29 @@ class UserStyle < Feedback
   end
   
   
-  def json_to_css(jsonStyle)
+  def self.json_to_css(jsonStyle)
     
     jsonStyle.gsub!(/:eq/, "")
-    jsonStyle.gsub!(/[>() ]/, "")
+    jsonStyle.gsub!(/[>()]/, "")
     
     style = JSON.parse jsonStyle
     
     cssStyle = ''
     
     style.each_pair {
-       |k, v| cssStyle += "\n.#{k} \{\n";
-       v.each_pair {|k2, v2| cssStyle += "\t#{k2}: #{v2};\n" };
+       |k, v| 
+       k.gsub(/[ ]/, "_")
+       cssStyle += "\n.#{k.gsub(/[ ]/, "")} \{\n";
+       v.each_pair {|k2, v2| 
+         if v2.include?(' ') then
+           cssStyle += "\t#{k2}: '#{v2}';\n"
+          else
+            cssStyle += "\t#{k2}: #{v2};\n" 
+          end
+          };
        cssStyle +=  "\}";
      }
-    
+    cssStyle
   end
   
 end

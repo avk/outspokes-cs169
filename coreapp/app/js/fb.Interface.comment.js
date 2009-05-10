@@ -253,8 +253,8 @@
       
       // snippet
       var snippet_length = 75;
-      var snippet = c.content;
-      if (c.content.length > snippet_length) { // shorten if needed
+      var snippet = c.content.replace(/<br \/>/g, '&nbsp;&nbsp;');
+      if (snippet.length > snippet_length) { // shorten if needed
         snippet = snippet.substring(0, snippet_length) + '...';
       }
       bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
