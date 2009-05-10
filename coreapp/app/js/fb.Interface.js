@@ -74,7 +74,9 @@
         { duration : length } 
       );
       // should only display the sort menu for the current navigation link
-      this.nav.current.find('select').show();
+      for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
+        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+      }
     };
     
     this.hide_widget = function() {
@@ -92,7 +94,7 @@
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('select').hide();
+        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
       }
     };
     
