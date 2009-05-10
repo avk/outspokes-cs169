@@ -501,7 +501,7 @@ version: 3.0.0pr2
   margin-left: 10px;
 }
 
-#outspokes #topbar #open_admin_panel {
+#outspokes #topbar #open_admin_panel, #outspokes #topbar #logout {
   border: 1px solid transparent;
   border-bottom: none;
   color: #C1272D;
@@ -513,7 +513,7 @@ version: 3.0.0pr2
   position: relative;
   top: 1px;
 }
-#outspokes #topbar #open_admin_panel:hover {
+#outspokes #topbar #open_admin_panel:hover, #outspokes #topbar #logout:hover {
   background-color: #DDD;
   border-color: #FFF;
   color: #C1272D;
