@@ -23,8 +23,7 @@
 <%- end -%>
 
 <fieldset id="invite_commenters">
-  <legend>Invite <%= (@total_commenters == 0) ? 'some' : 'more' %> folks</legend>
-
+<h2>Invite <%= (@total_commenters == 0) ? 'some' : 'more' %> commenters</h2>
   <% form_tag admin_panel_invite_path(@site) do %>
     <%= label_tag 'emails', "Separate each email with commas" %><br />
     <%= text_area_tag :emails %><br />
