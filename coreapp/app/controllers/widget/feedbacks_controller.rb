@@ -19,8 +19,15 @@ class Widget::FeedbacksController < Widget::WidgetController
           if @admin
             feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
           elsif
-            feedback = page.feedbacks.find(:all, :conditions => 
-                       [ "private = ? OR commenter_id = ? OR parent_id = ?", false, @commenter.id, @commenter.id ]).map { |f| f.json_attributes(@commenter) }
+            #feedback = page.feedbacks.find(:all, :conditions => 
+            #           [ "private = ? OR commenter_id = ?", false, @commenter.id]).map { |f| f.json_attributes(@commenter) }
+            fbtemp = []            
+            for fb in page.feedbacks.roots do
+              if !fb.private || fb.commenter == @commenter 
+                fbtemp += fb.self_and_descendants
+              end
+            end
+            feedback = fbtemp.map { |f| f.json_attributes(@commenter) }
           end
         end
       else

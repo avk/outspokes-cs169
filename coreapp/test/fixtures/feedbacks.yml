@@ -16,8 +16,8 @@ two:
   commenter_id: 2
   content: MyText2
   target: html
-  lft: 1
-  rgt: 2
+  lft: 3
+  rgt: 4
   type: Comment
   public: false
   private: false
@@ -27,8 +27,8 @@ three:
   commenter_id: 2
   content: MyText3
   target: html
-  lft: 1
-  rgt: 2
+  lft: 5
+  rgt: 6
   type: Comment
   public: false
   private: true
@@ -38,8 +38,8 @@ four:
   commenter_id: 2
   content: MyText4
   target: html
-  lft: 1
-  rgt: 2
+  lft: 7
+  rgt: 8
   private: false
   type: Comment
 
