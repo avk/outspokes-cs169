@@ -13,7 +13,7 @@ body {
 
 /* navigation */
 #navigation-wrapper {
-  padding: 0 15px;
+  padding: 0 10px;
   margin-top: 10px;
   height: 30px;
 }
@@ -65,11 +65,11 @@ body {
 
 /* pages & commenters */
 
-.even {
+/*.even {
   background-color: white; }
 
 .odd {
-  background-color: #accfcc; }
+  background-color: #accfcc; }*/
   
 #invited_message,
 #pages_message {
@@ -112,7 +112,7 @@ body {
 }
 
 li.invited_commenter, li.site_page {
-  margin-bottom : 10px;
+  padding: 5px;
 }
 .commenter_details {
   padding-left: 10px;

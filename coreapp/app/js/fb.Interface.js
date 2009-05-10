@@ -35,7 +35,7 @@
       },
       non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +
         " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)"),
-    }
+    };
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
@@ -44,11 +44,11 @@
     
     this.is_widget_minimized = function() {
       return (this.main_window.height() === this.dom.widget.topbar_int_height) ? true : false;
-    }
+    };
     
     this.is_widget_maximized = function() {
       return !this.is_widget_minimized();
-    }
+    };
     
     this.toggle_widget = function() {
       if (this.is_widget_minimized()) {
@@ -56,28 +56,42 @@
       } else {
         this.hide_widget();
       }
-    }
+    };
     
     this.show_widget = function() {
+      var length;
+      if (arguments.length == 0) {
+        length = 250;
+      } else if (! arguments[0]) {
+        length = 0;
+      }
+      fb.cookie("outspokes_widget_state", 'up');
       this.main_window.animate( 
         { height : this.dom.widget.height }, 
-        { duration : 250 } 
+        { duration : length } 
       );
       // should only display the sort menu for the current navigation link
       this.nav.current.find('select').show();
-    }
+    };
     
     this.hide_widget = function() {
+      var length;
+      if (arguments.length == 0) {
+        length = 250;
+      } else if (! arguments[0]) {
+        length = 0;
+      }
+      fb.cookie("outspokes_widget_state", 'down');
       this.main_window.animate( 
         { height : this.dom.widget.topbar_height }, 
-        { duration : 250 } 
+        { duration : length } 
       );
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
         this.nav.elements.list[which_element].find('select').hide();
       }
-    }
+    };
     
     
     
@@ -210,7 +224,7 @@
     
     this.set_num_comments = function(num_comments) {
       fb.i.nav.set_label_count(num_comments, 0); // Comments is the first navigation tab
-    }
+    };
     
     
     
@@ -352,6 +366,10 @@
         
         this.main_window.append(intro_bubble);
       }
+    } else if (fb.cookie("outspokes_widget_state") == "down") {
+      this.hide_widget(false);
+    } else if (fb.cookie("outspokes_widget_state") == "up") {
+      this.show_widget(false);
     } else {
       this.show_widget();
     }
