@@ -276,9 +276,9 @@
       if (snippet.length > snippet_length) { // shorten if needed
         snippet = $.trim(snippet.substring(0, snippet_length)).replace(/\n/g, '&nbsp;&nbsp;&nbsp;') + '...';
       }
-      bar.append($('<span></span>').addClass('snippet').append(snippet));
+      bar.append($('<span></span>').addClass('snippet').append(snippet).hide());
       
-      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp)).css('display','none');
+      var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp))
       
       
       if (_fb.admin()) {
@@ -300,7 +300,7 @@
       }
       bar.append(timestamp_close);
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
-      content.css('display','none');
+
       var options = $('<div></div>').addClass('options');
 
       var tmp = this.consensus.build(c, bar);
@@ -459,11 +459,14 @@
         $(".cmt_content").hide();
         $(".cmt_date").hide();
         $(".snippet").show();
+        $(".comment").addClass("collapsed");
     };
+    
     this.uncollapse_all = function() {
         $(".cmt_content").show();
         $(".cmt_date").show();
         $(".snippet").hide();
+        $(".comment").removeClass("collapsed");
     };
     
     this.reset_target = function() {

@@ -346,7 +346,7 @@ version: 3.0.0pr2
   display: inline;
 }
 
-#outspokes #comment_list .reply_to_text, #outspokes #comment_list .collapsed .reply_to_text {
+#outspokes #comment_list  .reply_to_text, #outspokes #comment_list  .collapsed .reply_to_text {
   display: none;
 }
 
