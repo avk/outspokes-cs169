@@ -65,6 +65,7 @@
       this.all[html.attr('title')] = target;
       this.target_list.append(html);
       this.setCurrent(html);
+      return html;
     }
     
     this.setCurrent = function(target_html) {
@@ -96,11 +97,11 @@
     
     this.remove = function(target_selector) {
       var target = this.all[target_selector];
-      target.delete();  // delete the instance of Target
-      delete target;    // delete the reference in list
       if (target.build) {
         target.build.remove(); // delete from the DOM
       }
+      target.delete();  // delete the instance of Target
+      delete target;    // delete the reference in list
     };
     
     this.startOver();
