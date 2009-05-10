@@ -298,7 +298,7 @@
       comment.append(bar).append(content);
       rtn.append(comment).append(replies);
       bar.click(function() {
-        $(this).parent().parent().find('div.cmt_content:eq(0), div.replies:eq(0)').toggle();
+        $(this).parent().parent().find('div.cmt_content:eq(0)').toggle();
         $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
       });
 
@@ -313,7 +313,7 @@
       }
       return rtn;
     };
-    
+        
     this.render = function(c) {
       if (c.isReply()) {
         this.reply.render(c);
@@ -432,6 +432,17 @@
         fn(fb.Comment.all[this_id]);
         parent.visit_all_replies(this, fn);
       });
+    };
+    
+    this.collapse_all = function() {
+        $(".cmt_content").hide();
+        $(".cmt_date").hide();
+        $(".snippet").show();
+    };
+    this.uncollapse_all = function() {
+        $(".cmt_content").show();
+        $(".cmt_date").show();
+        $(".snippet").hide();
     };
     
     this.reset_target = function() {
