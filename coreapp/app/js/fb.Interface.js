@@ -264,12 +264,12 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a href="#">><</a>').attr('id',this.dom.widget.collapse);
-    this.collapse_link.append('<img src="' +  fb.env.collapse_address  + '" title="Collapse all comments"/>');
+    this.collapse_link = $('<a href="#"></a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link.append('<img src="' +  fb.env.collapse_address  + '" alt="Collapse all" title="Collapse all comments"/>');
     this.nav.elements.list[0].append(this.collapse_link);
 
-    this.uncollapse_link = $('<a href="#"><></a>').attr('id',this.dom.widget.uncollapse);
-    this.uncollapse_link.append('<img src="' +  fb.env.uncollapse_address  + '" title="Uncollapse all comments"/>');
+    this.uncollapse_link = $('<a href="#"></a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link.append('<img src="' +  fb.env.uncollapse_address  + '" alt="Uncollapse all" title="Uncollapse all comments"/>');
     this.nav.elements.list[0].append(this.uncollapse_link);
 
 
