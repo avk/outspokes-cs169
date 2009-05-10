@@ -298,6 +298,10 @@ version: 3.0.0pr2
   border: 1px solid #777;
   border-width: 0px 0px 0px 1px;
 }
+#outspokes #comment_list .cmt_bar .private {
+  float: left;
+  color: #335588;
+}
 
 #outspokes #comment_list .cmt_bar.disagreed {
   background: #fff url(/images/disagreed_header.png) repeat-x center -4px;
