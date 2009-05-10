@@ -249,7 +249,11 @@
       var bar = $('<div></div>').addClass('cmt_bar');   // bar
       bar.attr('id', 'bar_' + c_id);
       
-      bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      if (c.isPrivate) {
+        bar.append($('<span></span>').addClass('commenter_name').append('PRIVATE - ' + c.name));
+      } else {
+        bar.append($('<span></span>').addClass('commenter_name').append(c.name));
+      }
       
       // snippet
       var snippet_length = 75;
