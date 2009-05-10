@@ -65,7 +65,7 @@
       } else if (! arguments[0]) {
         length = 0;
       }
-      fb.cookie("outspokes_widget_state", 'up');
+      fb.save_state("widget_position", 'up');
       this.main_window.animate( 
         { height : this.dom.widget.height }, 
         { duration : length } 
@@ -81,7 +81,7 @@
       } else if (! arguments[0]) {
         length = 0;
       }
-      fb.cookie("outspokes_widget_state", 'down');
+      fb.save_state("widget_position", 'down');
       this.main_window.animate( 
         { height : this.dom.widget.topbar_height }, 
         { duration : length } 
@@ -173,6 +173,8 @@
             if (clicked_element === fb.i.nav.elements.list[which_element][0]) {
               fb.i.nav.setCurrent(which_element);
               fb.i.nav.elements.list[which_element].find('select').show();
+              // Save the current tab in widget cookie state
+              fb.save_state("widget_tab", which_element);
               content.show();
             } else {
               content.hide();
@@ -225,7 +227,6 @@
     this.set_num_comments = function(num_comments) {
       fb.i.nav.set_label_count(num_comments, 0); // Comments is the first navigation tab
     };
-    
     
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
@@ -366,14 +367,7 @@
         
         this.main_window.append(intro_bubble);
       }
-    } else if (fb.cookie("outspokes_widget_state") == "down") {
-      this.hide_widget(false);
-    } else if (fb.cookie("outspokes_widget_state") == "up") {
-      this.show_widget(false);
-    } else {
-      this.show_widget();
     }
-    
     
     
     // HELP VIEW //////////////////////////////////////////////////////////////////
