@@ -65,7 +65,7 @@
 
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<a href="#">New Edit &raquo;</a>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link = $('<div>New Edit</div>').attr('id', dom.edits_view.new_edit_link);
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
     });

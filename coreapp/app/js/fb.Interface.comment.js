@@ -275,9 +275,6 @@
           if (answer){
               c.remove();
           }
-          // else{
-          //             alert("That was close!");
-          //           }
         });
         
         timestamp_close.append(deleteCmt);

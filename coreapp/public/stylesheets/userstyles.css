@@ -16,6 +16,10 @@
   float: right;
   font-size: 4em;
   line-height: 100%;
+  margin-right: 2%;
+  width: 26%;
+  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;
+  color: transparent;
 }
 
 #outspokes #edits_list {
@@ -68,6 +72,9 @@
 #outspokes .edit_block .edit_consensus button {margin-top: -2px; font-weight: bold;}
 #outspokes .edit_block .edit_consensus button.agree:hover {color: green;}
 #outspokes .edit_block .edit_consensus button.disagree:hover {color: red;}
+#outspokes .edit_block .edit_consensus .agreed,
+#outspokes .edit_block .edit_consensus .disagreed  
+{margin-right: 5px;}
 #outspokes .edit_block .edit_consensus .agreed {color: green;}
 #outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
