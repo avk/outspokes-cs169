@@ -828,3 +828,45 @@ version: 3.0.0pr2
 /*
 * END PAGE EDIT
 */
+
+/* login panel */
+
+#outspokes_login_panel_wrapper {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  z-index: 100001;
+  }
+  
+#outspokes_login_panel_background {
+  background-color: black;
+  color: transparent;
+  height: 100%;
+  left: 0%;
+  margin: 0;
+  opacity: 0.80;
+  padding: 0;
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  z-index: 100002;
+  }
+
+#outspokes_login_panel_inner {
+  background-color: white;
+  border: 16px solid #eee;
+  color: black;
+  height: 170px;
+  width: 230px;
+  top: 37.5%;
+  left: 36.5%;
+  margin: 0;
+  overflow: auto;
+  padding: 8px;
+  position: fixed;
+  opacity: 1.0;
+  z-index: 100003;
+  font-family:Helvetica,Arial,sans-serif;
+}
