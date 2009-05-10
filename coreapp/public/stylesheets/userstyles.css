@@ -139,6 +139,12 @@
   width: 25%;
 }
 
+#outspokes #outspokes_target_header h1 {
+  font-size: 1.5em;
+  float: left;
+  width: 75%;
+}
+
 #outspokes #outspokes_target_list {
   
 }
