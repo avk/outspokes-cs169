@@ -5,7 +5,7 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
     @commenters = @site.commenters.find(:all, :conditions => ["commenters.id != ?", @site.account_id])
     @commenters_commented = []; @commenters_visited = []; @commenters_not_visited = [];
     @commenters.each do |commenter|
-      if (commenter.last_visited_at)
+      if (Invite.find_by_page_id_and_commenter_id(@site.home_page, commenter).last_visited_at)
         if (commenter.feedbacks) and (not commenter.feedbacks.select { |fb| fb.page.site == @site }.empty? )
           @commenters_commented.push(commenter)
         else
