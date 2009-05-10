@@ -267,8 +267,7 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a href="#" class="hide_when_tab_unselected"></a>').attr('id',this.dom.widget.collapse);
-    //this.collapse_link.append('<img src="' +  fb.env.collapse_address  + '" alt="Collapse all" title="Collapse all comments"/>');
+    this.collapse_link = $('<a href="#" class="hide_when_tab_unselected" title="Collapse all comments"></a>').attr('id',this.dom.widget.collapse);
     this.nav.elements.list[0].append(this.collapse_link);
     this.collapse_link.click(function(e) {
         fb.i.comment.collapse_all();
@@ -279,8 +278,7 @@
         }
     })
 
-    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected"></a>').attr('id',this.dom.widget.uncollapse);
-    //this.uncollapse_link.append('<img src="' +  fb.env.uncollapse_address  + '" alt="Uncollapse all" title="Uncollapse all comments"/>');
+    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected" title="Uncollapse all comments"></a>').attr('id',this.dom.widget.uncollapse);
     this.nav.elements.list[0].append(this.uncollapse_link);
     this.uncollapse_link.click(function(e) {
         fb.i.comment.uncollapse_all();
