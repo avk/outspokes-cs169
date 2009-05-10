@@ -6,7 +6,7 @@ class Mailer < ActionMailer::Base
     sent_on      Time.now
     content_type "text/html"
 
-    url = invite.page.url + '?url_token=' + invite.url_token
+    url = invite.page.url + '#url_token=' + invite.url_token
     page = invite.page
     site = page.site
 

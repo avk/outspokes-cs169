@@ -23,8 +23,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agree_bg_color      : '#33EE44',
-      disagree_bg_color   : '#FF3322',
+      agreed              : 'agreed',
+      disagreed           : 'disagreed',
       comment_form        : "new-comment",
       reply_links         : "comment-reply",
       cform               : "comment_form",
@@ -48,7 +48,7 @@
     	  formHTML += '<label for="fb.name.input">Name:</label>' +
     	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
     	}
-    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><textarea name="content" rows="7" />';
+    	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><div id="outspokes_form_wrapper"><textarea name="content" rows="7" /></div>';
       formHTML += form_header;
       var form_buttons =  '<div id="outspokes_form_buttons">'
       if ( !_fb.admin() ) {
@@ -68,14 +68,20 @@
     };
 
     this.form = this.buildCommentForm(this.dom.comment_form, "html");
-    var target_button = $('<img id="outspokes_target_button" src="' + fb.env.target_address + '" />');
+
+    // TARGETING ///////////////////////
+
+    var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
     target_button.click(function() {
       $(this)[0].value = "Change target";
+      fb.i.comment.reset_target();
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
-        $('#outspokes_target_button').css("background-color", "orange");
+        $('.outspokes_target_button').addClass('target_set');
+        $('#outspokes_form_header').find('span').text('Targeted Comment');
       });
     });
+
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
     this.form.find("a").click(function(){fb.Feedback.get();});
@@ -100,20 +106,20 @@
     
     this.consensus = {
       dom   : this.dom,
-      _opinion: function(c_id, color) {
+      _opinion : function(c_id, consensus_class) {
         var comment = null;
         if (typeof c_id == "string") {
           comment = $('#' + this.dom.comment_id(c_id));
         } else {
           comment = c_id;
         }
-        comment.css({ 'background-color' : color });
+        comment.addClass(consensus_class);
       },
       agree: function(c_id) {
-        this._opinion(c_id, this.dom.agree_bg_color);
+        this._opinion(c_id, this.dom.agreed);
       },
       disagree: function(c_id) {
-        this._opinion(c_id, this.dom.disagree_bg_color);
+        this._opinion(c_id, this.dom.disagreed);
       },
       build : function(c, markup) {
         if (c.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment
@@ -135,7 +141,7 @@
           consensus_div[0].setAttribute("class", 'cns_buttons');
 
           if (_fb.admin()) {
-            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed</span>'));
+            consensus_div.append($('<span class="agreed">' + c.agreed + '&nbsp;agreed,</span>&nbsp;'));
             consensus_div.append($('<span class="disagreed">' + c.disagreed + '&nbsp;disagreed</span>'));
           } else {
             consensus_div.append(agree);
@@ -247,32 +253,45 @@
       
       // snippet
       var snippet_length = 75;
-      var snippet = c.content;
-      if (c.content.length > snippet_length) { // shorten if needed
-        snippet = snippet.substring(0, snippet_length) + '...';
+      var snippet = c.content.replace(/<br \/>/g, '\n');
+      if (snippet.length > snippet_length) { // shorten if needed
+        snippet = $.trim(snippet.substring(0, snippet_length)).replace(/\n/g, '&nbsp;&nbsp;&nbsp;') + '...';
       }
       bar.append($('<span></span>').addClass('snippet').append(snippet).css('display','none'));
       
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp));
+      
+      
       if (_fb.admin()) {
         var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
+
+        deleteCmt.click( function(e) { e.stopPropagation(); } );
+
         deleteCmt.click(function() {
           if (c.__unHover) {
             c.__unHover();
           }
-          c.remove();
+          var answer = confirm("Are you sure you want to delete the comment? All of its replies will also be deleted.");
+          if (answer){
+              c.remove();
+          }
+          // else{
+          //             alert("That was close!");
+          //           }
         });
+        
         timestamp_close.append(deleteCmt);
       }
       bar.append(timestamp_close);
       var content = $('<div></div>').addClass('cmt_content');//.attr('id', c_id);
       var options = $('<div></div>').addClass('options');
-      content.append(options);
+
       var tmp = this.consensus.build(c, bar);
       options.append(tmp);
       options.append(this.reply.buildLink(c_id));
+      
       content.append($('<div></div>').addClass('cmt_text').append(c.content));
-      content.append($('<div></div>').css('clear','both'));
+      content.append(options);
 
       var replies = $('<div></div>').attr('id', this.dom.reply_list(c_id)).addClass('replies');
       var comment = $('<div></div>').addClass('comment');
@@ -416,28 +435,27 @@
     };
     
     this.reset_target = function() {
+      // Stop targetting if currently in process
+      fb.i.dom.non_widget_elements.unbind(".elem_select");
       // Un-highlight element, first get its serialized path out of form
       var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
-      old_element.css('outline', old_element.get(0).__old_style);
-      // delete modification to original element
-      delete old_element.get(0).__old_style;
+      // Remove any classes it may have had
+      old_element.removeClass("outspokes_currently_hovering").removeClass("outspokes_selected_page_element");
       // Reset form target
       fb.i.comment.form.find("input[name='target']").attr("value","html");
-      // Remove orange background on target
-      $('#outspokes_target_button').css("background-color", "");
+      $('.outspokes_target_button').removeClass('target_set');
+      $('#outspokes_form_header').find('span').text('Comment');
     };
     
   };
   
   function highlight_target(el_dom) {
     var el = $(el_dom);
-//    var par = el.wrap("<div></div>").parent();
-    var old_style = el.css('outline');
     var over = function() {
-      el.css('outline','solid 3px');
+      el.addClass("outspokes_currently_hovering")
     };
     var out = function() {
-      el.css('outline-style', old_style);
+      el.removeClass("outspokes_currently_hovering")
     };
     return [over, out];
   }

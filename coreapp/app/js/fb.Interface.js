@@ -33,7 +33,9 @@
         close   : 'close_admin_panel',
         overlay : 'outspokes_overlay',
       },
-    }
+      non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +
+        " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)"),
+    };
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
     
@@ -42,11 +44,11 @@
     
     this.is_widget_minimized = function() {
       return (this.main_window.height() === this.dom.widget.topbar_int_height) ? true : false;
-    }
+    };
     
     this.is_widget_maximized = function() {
       return !this.is_widget_minimized();
-    }
+    };
     
     this.toggle_widget = function() {
       if (this.is_widget_minimized()) {
@@ -54,28 +56,42 @@
       } else {
         this.hide_widget();
       }
-    }
+    };
     
     this.show_widget = function() {
+      var length;
+      if (arguments.length == 0) {
+        length = 250;
+      } else if (! arguments[0]) {
+        length = 0;
+      }
+      fb.cookie("outspokes_widget_state", 'up');
       this.main_window.animate( 
         { height : this.dom.widget.height }, 
-        { duration : 250 } 
+        { duration : length } 
       );
       // should only display the sort menu for the current navigation link
       this.nav.current.find('select').show();
-    }
+    };
     
     this.hide_widget = function() {
+      var length;
+      if (arguments.length == 0) {
+        length = 250;
+      } else if (! arguments[0]) {
+        length = 0;
+      }
+      fb.cookie("outspokes_widget_state", 'down');
       this.main_window.animate( 
         { height : this.dom.widget.topbar_height }, 
-        { duration : 250 } 
+        { duration : length } 
       );
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
         this.nav.elements.list[which_element].find('select').hide();
       }
-    }
+    };
     
     
     
@@ -90,7 +106,7 @@
     // Logo
     var logo = $('<a href="' + fb.env.base_domain + '" target="_blank"></a>');
     logo.append('<img src="' + fb.env.logo_address + '" alt="outspokes" />');
-    logo.attr('id', 'logo');    
+    logo.attr('id', 'outspokes_logo');    
     // clicking on the logo shouldn't toggle the widget:
     logo.click( function(e) { e.stopPropagation(); } );
     topbarLeft.append(logo);
@@ -208,15 +224,15 @@
     
     this.set_num_comments = function(num_comments) {
       fb.i.nav.set_label_count(num_comments, 0); // Comments is the first navigation tab
-    }
+    };
     
     
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter"><option>sort by newest</option><option>sort by oldest</option>' + 
-        '<option>Show popular</option><option>Show unpopular</option><option>Show controversial</option>' +
-        '<option>Show neutral</option>');
+    var sort_dropdown = $('<select id="comments_filter"><option>Newest first</option><option>Oldest first</option>' + 
+        '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
+        '<option>Neutral</option>');
     sort_dropdown.click(function(e) {
       e.stopPropagation(); // Don't trigger outspokes minimize when clicking on dropdown
     });
@@ -350,6 +366,10 @@
         
         this.main_window.append(intro_bubble);
       }
+    } else if (fb.cookie("outspokes_widget_state") == "down") {
+      this.hide_widget(false);
+    } else if (fb.cookie("outspokes_widget_state") == "up") {
+      this.show_widget(false);
     } else {
       this.show_widget();
     }
@@ -406,6 +426,7 @@
 
     this.comment = new fb.Interface.comment(this);
     this.user_style = new fb.Interface.user_style(this);
+    this.target = new fb.Interface.target(this);
 
     fb.Interface.instantiated = true;  
   };

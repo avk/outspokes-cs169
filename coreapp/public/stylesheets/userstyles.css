@@ -23,15 +23,21 @@
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #aaa;
 }
 
 #outspokes .edit_block {
-  padding: 10px;
-  margin-bottom: 5px;
-  background-color: #999;
-  color: black;
-  height: 20px;
+  /*margin-bottom: 5px;*/
+  border-bottom: 1px solid #777;
+  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
+  height:15px;
+  margin-bottom:7px;
+  padding:5px;
+}
+
+#outspokes .edit_block.disabled {
+  background-image: none;
+  background-color: #777;
+
 }
 
 #outspokes .edit_block .toggle_box {
@@ -44,7 +50,15 @@
   float: left;
   margin-right: 20px;
 }
+#outspokes .edit_block .edit_name {
+  width: 200px;
+  font-weight: bold;
+}
+#outspokes .edit_block .edit_timestamp {
+  font-size: 0.8em;
+}
 #outspokes .edit_block .edit_consensus {float: right; font-weight: bold;}
+#outspokes .edit_block .edit_consensus button {margin-top: -2px;}
 #outspokes .edit_block .edit_consensus button.agree:hover {color: green;}
 #outspokes .edit_block .edit_consensus button.disagree:hover {color: red;}
 
@@ -116,4 +130,21 @@
   height: 215px;
   margin-right: 2%;
   width: 25%;
+}
+
+#outspokes #outspokes_target_header h1 {
+  font-size: 1.5em;
+  float: left;
+  width: 75%;
+}
+
+#outspokes #outspokes_target_list {
+  
+}
+#outspokes #outspokes_target_list li { 
+  border: 1px solid blue;
+  margin: 5px 0;
+}
+#outspokes #outspokes_target_list li.outspokes_current_target {
+  border: 1px solid #C1272D;
 }
