@@ -856,10 +856,10 @@ version: 3.0.0pr2
 
 #outspokes_login_panel_inner {
   background-color: white;
-  border: 16px solid #eee;
+  border: 16px solid #CCC;
   color: black;
-  height: 170px;
-  width: 230px;
+  height: 200px;
+  width: 250px;
   top: 37.5%;
   left: 36.5%;
   margin: 0;
@@ -869,4 +869,10 @@ version: 3.0.0pr2
   opacity: 1.0;
   z-index: 100003;
   font-family:Helvetica,Arial,sans-serif;
+  -moz-border-radius: 35px;
+  text-align: center;
 }
+
+#outspokes_login_panel_inner input {width: 77%; margin: 0px 0px 7px 0px;}
+
+#outspokes_email, #outspokes_password {font-weight: bold; font-size: 14px; line-height: 1.2em;}
