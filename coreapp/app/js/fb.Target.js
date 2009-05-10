@@ -15,7 +15,7 @@
 
   fb.Target.prototype.set_style = function (property, value) {
     if (!this.original_styles[property]) {
-      this.original_styles[property] = value;
+      this.original_styles[property] = this.element[0].style.getPropertyValue(property);
     }
     this.new_styles[property] = value;
     this.element.css(property, value);
