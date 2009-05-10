@@ -524,6 +524,7 @@ version: 3.0.0pr2
   padding-bottom: 0;
   position: relative;
   bottom: 1px;
+  height:25px;
 }
 #outspokes #topbar #help:hover {
   background-color: #DDD;
