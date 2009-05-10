@@ -83,6 +83,7 @@
         if (this.checked) {
           $('.toggle_box').each(function(){
             this.disabled = true;
+            // this.parentNode.addClass('disabled');
           });
           this.disabled = false;
         } else {
