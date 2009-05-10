@@ -334,24 +334,23 @@
     
     // Linearizes all comments and replies as children of #comment_list
     this.flatten_comments = function() {
+      var list = $("#comment_list");
       if (this.filtering.flattened) {
-        return $("#comment_list").children();
+        return list.children();
       }
-      var container;
-      if (!arguments[0]) {
-        container = $("#comment_list");
-      } else {
-        container = arguments[0];
-      }
+      this.__flatten_recursive(list);
+      this.filtering.flattened = true;
+      return list.children();
+    };
+    
+    this.__flatten_recursive = function(container) {
       var list = $("#comment_list");
       var parent = this;
       $(container).children().each(function() {
         this.__container = container;
         list.append($(this));
-        parent.flatten_comments($("#" + parent.dom.reply_list(this.id)));
+        parent.__flatten_recursive($("#" + parent.dom.reply_list(this.id)));
       });
-      this.filtering.flattened = true;
-      return list.children();
     };
     
     // Returns comments to original threaded tree form and un-hides any hidden comments
