@@ -13,6 +13,8 @@ function() {
     fb.env.base_domain = "<%= WIDGET_DOMAIN %>";
     fb.env.logo_address = "<%= WIDGET_DOMAIN %>images/widget-logo.png";
     fb.env.help_address = "<%= WIDGET_DOMAIN %>images/help.png";
+    fb.env.collapse_address = "<%= WIDGET_DOMAIN %>images/collapse.png";
+    fb.env.uncollapse_address = "<%= WIDGET_DOMAIN %>images/uncollapse.png";
     fb.env.target_address = "<%= WIDGET_DOMAIN %>images/target-icon.png";
     fb.env.get_address = "<%= WIDGET_DOMAIN %>feedback_for_page.js";
     fb.env.post_address = "<%= WIDGET_DOMAIN %>post_feedback_for_page";
@@ -89,9 +91,24 @@ function() {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
       }
-     // Testing UserStyle data only. Not to be committed
+      
+      // Load in which tab was last used
+      var current_tab = fb.get_state("widget_tab");
+      var widget_position = fb.get_state("widget_position");
+      if (! (current_tab == undefined)) {
+        fb.i.nav.elements.list[current_tab].click();
+      }
+      
+      // Bring widget up or down depending on state
+      if (widget_position == "up") {
+        fb.i.show_widget(false);
+      } else if (widget_position == "down") {
+        fb.i.hide_widget(false);
+      }
 
-/*      var us1 = new fb.UserStyle({
+     // Testing UserStyle data only. Not to be committed
+/*
+      var us1 = new fb.UserStyle({
         feedback_id:12,
         name:"Bob",
         timestamp:131241341,
@@ -133,9 +150,7 @@ function() {
         "css_path":"sfhsdjfhsdfjsdh"
               });
       fb.UserStyle.render();
-
 */
-
       // End test data
       
       // Arthur only:
