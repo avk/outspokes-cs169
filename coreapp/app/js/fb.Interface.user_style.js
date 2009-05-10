@@ -262,8 +262,8 @@
     
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
-    self.edits.append(this.edits_view);
-    self.edits.append(this.new_edit_view);
-    self.edits.append($('<div style="clear:both;"></div>'));
-    // self.edits.append($("<div style='padding: 70px 20px 20px 20px; font-size: 10em; color: #DDD'>Coming Soon</div>"));
+    // self.edits.append(this.edits_view);
+    // self.edits.append(this.new_edit_view);
+    // self.edits.append($('<div style="clear:both;"></div>'));
+    self.edits.append($("<div style='padding: 70px 20px 20px 20px; font-size: 10em; color: #000'>Coming Soon</div>"));
   };
