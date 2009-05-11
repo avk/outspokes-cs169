@@ -352,6 +352,7 @@
     };
         
     this.render = function(c) {
+      c.num_replies = 0;
       if (c.isReply()) {
         this.reply.render(c);
       } else {
