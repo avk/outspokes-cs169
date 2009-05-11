@@ -18,7 +18,7 @@ class Widget::UserStylesController < Widget::WidgetController
         # REFACTOR:
         json.keys.each do |selector|
           # Adapted from UserStyle.json_to_css
-          selectors[selector.to_s] => selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
+          selectors[selector.to_s] = selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
         end
       rescue JSON::ParserError => e
       end
