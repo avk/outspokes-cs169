@@ -342,6 +342,11 @@ version: 3.0.0pr2
   margin-right: 10px;
 }
 
+#outspokes #comment_list .reply_count {
+  float: right;
+  margin-top: -13px;
+}
+
 #outspokes #comment_list .flattened .reply_to_text {
   display: inline;
 }
