@@ -308,15 +308,7 @@
       }
     });
     this.topbar.append(this.help_link);
-    
-   // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
-    this.logout_link = $('<a href="#">(Logout)</a>').attr('id',this.dom.widget.logout);
-    this.logout_link.click(function() {
-      // do logout stuff here
 
-    });
-    this.topbar.append(this.logout_link);    
-    
     // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
     this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
