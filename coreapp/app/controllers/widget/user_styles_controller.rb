@@ -5,9 +5,27 @@ class Widget::UserStylesController < Widget::WidgetController
   
   # GET all the user styles for a given page
   def index
-    if @authorized
-      
+    # if @authorized
+    # end
+    
+    styles, selectors = [], []
+    
+    styles = @invite.page.user_styles
+    styles.each do |style|
+      begin
+        json = JSON.parse(style.changeset)
+        # REFACTOR:
+        json.keys.each do |selector|
+          # Adapted from UserStyle.json_to_css
+          selectors[selector.to_s] => selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
+        end
+      rescue JSON::ParserError => e
+      end
     end
+    
+    styles = styles.map { |style| style.json_attributes(@commenter) }
+    
+    result = {:authorized => @authorized, :admin => @admin, :selectors => selectors, :styles => styles}
     
     respond_to do |wants|
       wants.js
