@@ -1,7 +1,8 @@
 class Widget::UserStylesController < Widget::WidgetController
   
-  #before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page, :destroy]
+  before_filter :validate_callback
   before_filter :authorize
+  
   skip_before_filter :verify_authenticity_token
   
   # GET all the user styles for a given page
