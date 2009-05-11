@@ -78,14 +78,18 @@
     if (_fb.admin()) {
       data.validation_token = _fb.admin();
     }
+    
+    var styles = {};
     $.each(targets, function (selector, target) {
-      data[selector] = "{";
+      styles[selector] = "{";
       $.each(target.new_styles, function (property, value) {
-        data[selector] += "'" + property + "':'" + value.toString() + "',";
+        styles[selector] += "'" + property + "':'" + value.toString() + "',";
       });
-      data[selector] = data[selector].slice(0, -1);
-      data[selector] += "}"
+      styles[selector] = styles[selector].slice(0, -1);
+      styles[selector] += "}"
     });
+    data.styles = styles;
+    
     console.log(data);
     var callback = function(data) {
       if (! data.success) {
