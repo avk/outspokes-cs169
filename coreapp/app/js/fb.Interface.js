@@ -164,6 +164,12 @@
           "widget_content",
           "edits"
         ],
+        // triggered when a navigation element is clicked,
+        // same order as list of elements
+        callbacks : [
+          null,
+          function() { fb.UserStyle.get(); }
+        ],
         /*
         clicking on an element:
           makes it the current element
@@ -181,6 +187,11 @@
               // Save the current tab in widget cookie state
               fb.save_state("widget_tab", which_element);
               content.show();
+              
+              var callback = fb.i.nav.elements.callbacks[which_element];
+              if (callback) {
+                callback();
+              }
             } else {
               content.hide();
               fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
