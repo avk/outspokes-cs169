@@ -89,8 +89,6 @@
       return false;
     }
   };
-
-/*
   
   ///// FOLLOWING ARE HELPER STATE FUNCTIONS THAT USE fb.cookie ////
   
@@ -129,8 +127,6 @@
   };
   
   ////// END HELPER STATE FUNCTIONS //////////////////
-
-*/
 
   fb.find_fb = function() {
     var possible = [];
