@@ -342,6 +342,18 @@ version: 3.0.0pr2
   margin-right: 10px;
 }
 
+#outspokes #comment_list .flattened .reply_to_text {
+  display: inline;
+}
+
+#outspokes #comment_list  .reply_to_text, #outspokes #comment_list  .collapsed .reply_to_text {
+  display: none;
+}
+
+#outspokes #comment_list .reply_to_text a:hover {
+  text-decoration: underline;
+}
+
 #outspokes #comment_list .cmt_date {
   font-size: 0.8em;
   float: right;
@@ -501,7 +513,7 @@ version: 3.0.0pr2
   margin-left: 10px;
 }
 
-#outspokes #topbar #open_admin_panel {
+#outspokes #topbar #open_admin_panel, #outspokes #topbar #logout {
   border: 1px solid transparent;
   border-bottom: none;
   color: #C1272D;
@@ -513,7 +525,7 @@ version: 3.0.0pr2
   position: relative;
   top: 1px;
 }
-#outspokes #topbar #open_admin_panel:hover {
+#outspokes #topbar #open_admin_panel:hover, #outspokes #topbar #logout:hover {
   background-color: #DDD;
   border-color: #FFF;
   color: #C1272D;
@@ -524,6 +536,30 @@ version: 3.0.0pr2
   outline: none;
 }
 
+#outspokes #topbar #outspokes_collapse_all {
+  background: url(/images/collapse.png) center center no-repeat;
+  height: 20px;
+  width: 10px;
+  float: right;
+  margin-top: -20px;
+  margin-right: 15px;
+}
+
+#outspokes #topbar #outspokes_uncollapse_all {
+  background: url(/images/uncollapse.png) center center no-repeat;
+  height: 20px;
+  width: 10px;
+  float: right;
+  margin-top: -20px;
+}
+
+#outspokes #topbar #outspokes_collapse_all:hover {
+  background: url(/images/collapseHover.png) center center no-repeat;
+}
+
+#outspokes #topbar #outspokes_uncollapse_all:hover {
+  background: url(/images/uncollapseHover.png) center center no-repeat;
+}
 
 #outspokes #topbar #help {
   border: 1px solid transparent;
