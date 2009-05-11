@@ -175,6 +175,10 @@
       
       return us_block;
     };
+
+    this.remove = function(user_style) {
+      console.log("Removing from fb.Interface.user_style...");
+    };
     
     this.edits_view.append(this.edit_list);
     this.edits_view.append(this.new_edit_link);
