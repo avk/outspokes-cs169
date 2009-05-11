@@ -6,6 +6,7 @@ class Page < ActiveRecord::Base
   has_many :invites, :dependent => :destroy
   has_many :commenters, :through => :invites
   has_many :feedbacks, :dependent => :destroy
+  has_many :user_styles, :dependent => :destroy
   
   validates_presence_of :url
   validates_format_of :url, :with => URI.regexp(['http', 'https'])
