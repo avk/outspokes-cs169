@@ -66,7 +66,7 @@ class Widget::UserStylesController < Widget::WidgetController
         :authorized => @authorized, 
         :admin => @admin, 
         :success => success, 
-        :user_style => @user_style 
+        :user_style => @user_style.json_attributes(@commenter)
       }
     end
     
