@@ -166,7 +166,7 @@ class Test::Unit::TestCase
   def valid_options_for_user_style
     page = pages(:one)
     commenter = commenters(:one)
-    { :page_id => page.id, :commenter_id => commenter.id, :changeset => {"copy" => {},"styles" => {}}.to_json }
+    { :page_id => page.id, :commenter_id => commenter.id, :changeset => {}.to_json }
   end
   
   def create_user_style(options={})

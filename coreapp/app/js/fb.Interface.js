@@ -68,7 +68,7 @@
       } else if (! arguments[0]) {
         length = 0;
       }
-      fb.save_state("widget_position", 'up');
+      //fb.save_state("widget_position", 'up');
       this.main_window.animate( 
         { height : this.dom.widget.height }, 
         { duration : length } 
@@ -86,7 +86,7 @@
       } else if (! arguments[0]) {
         length = 0;
       }
-      fb.save_state("widget_position", 'down');
+      //fb.save_state("widget_position", 'down');
       this.main_window.animate( 
         { height : this.dom.widget.topbar_height }, 
         { duration : length } 
@@ -179,7 +179,7 @@
               fb.i.nav.setCurrent(which_element);
               fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
               // Save the current tab in widget cookie state
-              fb.save_state("widget_tab", which_element);
+              //fb.save_state("widget_tab", which_element);
               content.show();
             } else {
               content.hide();
@@ -308,20 +308,12 @@
       }
     });
     this.topbar.append(this.help_link);
-    
-   // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
-    this.logout_link = $('<a href="#">(Logout)</a>').attr('id',this.dom.widget.logout);
-    this.logout_link.click(function() {
-      // do logout stuff here
 
-    });
-    this.topbar.append(this.logout_link);    
-    
     // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
     this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
       // do logout stuff here
-      fb.cookie('outspokes_widget_state', null);
+      //fb.cookie('outspokes_widget_state', null);
       fb.cookie('fb_hash_url_token', null);
       fb.cookie('fb_hash_admin_validation_token', null);
       fb.$("#outspokes_admin_panel").remove();
