@@ -19,6 +19,7 @@
         content : 'widget_content',
         edits : 'widget_edits',
         help : 'help',
+        logout: 'logout',
         help_content: 'help_content',
         contact: 'contactus',
         topbar_height : '28px',
@@ -73,7 +74,9 @@
         { duration : length } 
       );
       // should only display the sort menu for the current navigation link
-      this.nav.current.find('select').show();
+      for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
+        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+      }
     };
     
     this.hide_widget = function() {
@@ -91,7 +94,7 @@
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('select').hide();
+        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
       }
     };
     
@@ -236,36 +239,35 @@
     var sort_dropdown = $('<select id="comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
+    
+    this.sorting = {
+      sorting_mode : 0,
+      modes : [ "new", "old", "popular", "unpopular", "controversial", "neutral" ]
+    };
+        
     sort_dropdown.click(function(e) {
       e.stopPropagation(); // Don't trigger outspokes minimize when clicking on dropdown
     });
+    var sorting = this.sorting;
     
-    sort_dropdown.children().eq(0).click(function(e) {
-      fb.i.comment.sort_by_newest();
-    });
-    sort_dropdown.children().eq(1).click(function(e) {
-      fb.i.comment.sort_by_oldest();
-    });
-    
-    sort_dropdown.children().eq(2).click(function(e) {
-      fb.i.comment.filter_by("popular?");
-    });
-    sort_dropdown.children().eq(3).click(function(e) {
-      fb.i.comment.filter_by("unpopular?");
-    });
-    sort_dropdown.children().eq(4).click(function(e) {
-      fb.i.comment.filter_by("controversial?");
-    });
-    sort_dropdown.children().eq(5).click(function(e) {
-      fb.i.comment.filter_by("neutral?");
+    $.each(sorting.modes, function(mode_no, mode) {
+      sort_dropdown.children().eq(mode_no).click(function(e) {
+        sorting.sorting_mode = mode_no;
+        if (mode_no == 0) {
+          fb.i.comment.sort_by_newest();
+        } else if (mode_no == 1) {
+          fb.i.comment.sort_by_oldest();
+        } else {
+          fb.i.comment.filter_by(mode + "?");
+        }
+      });
     });
     
     this.nav.elements.list[0].append(sort_dropdown);
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a href="#"  class="hide_when_tab_unselected">><</a>').attr('id',this.dom.widget.collapse);
-    this.collapse_link.append('<img src="' +  fb.env.collapse_address  + '" title="Collapse all comments"/>');
+    this.collapse_link = $('<a href="#" class="hide_when_tab_unselected" title="Collapse all comments"></a>').attr('id',this.dom.widget.collapse);
     this.nav.elements.list[0].append(this.collapse_link);
     this.collapse_link.click(function(e) {
         fb.i.comment.collapse_all();
@@ -276,8 +278,7 @@
         }
     })
 
-    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected"><></a>').attr('id',this.dom.widget.uncollapse);
-    this.uncollapse_link.append('<img src="' +  fb.env.uncollapse_address  + '" title="Uncollapse all comments"/>');
+    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected" title="Uncollapse all comments"></a>').attr('id',this.dom.widget.uncollapse);
     this.nav.elements.list[0].append(this.uncollapse_link);
     this.uncollapse_link.click(function(e) {
         fb.i.comment.uncollapse_all();
@@ -307,9 +308,21 @@
       }
     });
     this.topbar.append(this.help_link);
-    
-    
-    
+
+    // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
+    this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
+    this.logout_link.click(function() {
+      // do logout stuff here
+      fb.cookie('outspokes_widget_state', null);
+      fb.cookie('fb_hash_url_token', null);
+      fb.cookie('fb_hash_admin_validation_token', null);
+      fb.$("#outspokes_admin_panel").remove();
+      fb.$("#outspokes_overlay").remove();
+      fb.$("#outspokes").remove();
+      return false;
+    });
+    this.topbar.append(this.logout_link);
+
     // ADMIN PANEL //////////////////////////////////////////////////////////////////
     
     this.admin_panel = {
@@ -367,9 +380,7 @@
     if (_fb.admin()) {
       this.topbar.append(this.admin_panel.build());
     }
-    
-    
-    
+  
     // FIRST VISIT //////////////////////////////////////////////////////////////////
     
     if (fb.env.first_visit) {

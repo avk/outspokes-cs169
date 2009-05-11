@@ -10,10 +10,13 @@
     this.parent.call(this, obj);
       fb.assert(fb.hasProp(obj, {
         content:"string",
-        target:"string"}),
+        target:"string",
+        "isPrivate": "boolean"}),
         "Object argument to fb.Comment constructor of wrong form: ");
     this.content = obj.content;
     this.target = obj.target;
+    this.isPrivate = obj.isPrivate;
+    
     this.build = fb.i.comment.build(this);
 
     fb.Comment.all[this.feedback_id] = this;
@@ -78,6 +81,14 @@
 
   fb.Comment.prototype.isReply = function() {
         return fb.i.comment.dom.comment_id_format.test(this.target);
+  };
+  
+  fb.Comment.prototype.parent_comment = function() {
+    if (this.isReply()) {
+      return fb.Feedback.all[fb.i.comment.dom.number_from_id(this.target)];
+    } else {
+      return null;
+    }
   };
 
   // Class variables and static functions

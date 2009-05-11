@@ -13,13 +13,16 @@
         number_from_id            : function(dom_id) {
           return parseInt(dom_id.match(/edit_(\d+)/i)[1]);
         },
+        consensus_block : "edit_consensus", // class
+        consensus_wrapper         : function(id) {
+          return "consensus_on_comment_" + parseInt(id);
+        },
+        agree_with : function(id) { return "agree_with_edit_" + parseInt(id); },
+        disagree_with : function(id) {return "disagree_with_edit_" + parseInt(id); },
+        
         edit_block : "edit_block", // class
         edit_name : "edit_name", // class
         edit_timestamp : "edit_timestamp", // class
-        consensus_block : "edit_consensus", // class
-        agree_with : function() {  },
-        disagree_with : function() { },
-
         edits_list : "edits_list", // id
         new_edit_link : "new_edit_link" // id
       },
@@ -62,10 +65,66 @@
 
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<a href="#">New Edit &raquo;</a>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link = $('<div>New Edit</div>').attr('id', dom.edits_view.new_edit_link);
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
     });
+    
+    // Consensus section
+    this.consensus = {
+      dom   : this.dom,
+      _opinion : function(us_id, consensus_class) {
+        var us = null;
+        if (typeof us_id == "string") {
+          us = $('#' + dom.edit_id(us_id));
+        } else {
+          us = us_id;
+        }
+        us.addClass(consensus_class);
+      },
+      agree: function(us_id) {
+        this._opinion(us_id, 'agreed');
+      },
+      disagree: function(us_id) {
+        this._opinion(us_id, 'disagreed');
+      },
+      build : function(us, markup) {
+        if (us.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment
+          if (us.opinion === 'agreed') {
+            this.agree(markup);
+          } else if (us.opinion == 'disagreed') {
+            this.disagree(markup);
+          }
+        } else { // this invitee should be allowed to vote on this comment
+          var us_consensus = $('<div></div>').addClass(dom.edits_view.consensus_block);
+          us_consensus.attr("id", dom.edits_view.consensus_wrapper(us.feedback_id));
+          var agree = this.button(us, 'agree').addClass('agree');
+          var disagree = this.button(us, 'disagree').addClass('disagree');
+
+          agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+          disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+
+          if (_fb.admin()) {
+            us_consensus.append($('<span class="agreed">' + us.agreed + '&nbsp;agreed,</span>&nbsp;'));
+            us_consensus.append($('<span class="disagreed">' + us.disagreed + '&nbsp;disagreed</span>'));
+          } else {
+            us_consensus.append(agree);
+            us_consensus.append(disagree);
+          }
+
+          return us_consensus;
+        }
+        return "";
+
+      },
+      button : function(us, action) {
+        var button = $('<button type="button">' + action + '</button>');
+        button.attr("id", eval('dom.edits_view.' + action + '_with(us.feedback_id)'));
+        button.click(function() { eval('us.' + action + '()'); });
+        return button;
+      }
+    };
+    // END consensus section
     
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
@@ -87,30 +146,24 @@
           });
           this.disabled = false;
           $(this).parent().removeClass('disabled');
+          // function here to do something to apply the edit
         } else {
           $('.toggle_box').each(function(){
             this.disabled = false;
             $(this).parent().removeClass('disabled');
+            // function here to revert to original design
           });
         }
         
       })
       var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
-      var us_consensus = $('<div></div>').addClass(dom.edits_view.consensus_block);
-      var agree_button = $('<button type="button" class="agree">agree</button>');
-      var disagree_button = $('<button type="button" class="disagree">disagree</button>');
       
       // attach to the container
       us_block.append(us_checkbox);
       us_block.append(us_name);
-      us_block.append(us_timestamp);
-      
-      // Put the consensus buttons in the consensus block
-      us_consensus.append(agree_button);
-      us_consensus.append(disagree_button);
-      
-      us_block.append(us_consensus);
+      us_block.append(us_timestamp);      
+      // us_block.append(this.consensus.build(user_style));
       
       return us_block;
     };

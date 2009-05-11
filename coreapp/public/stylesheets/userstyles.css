@@ -16,6 +16,11 @@
   float: right;
   font-size: 4em;
   line-height: 100%;
+  margin-right: 2%;
+  width: 26%;
+  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;
+  color: transparent;
+  cursor: pointer;
 }
 
 #outspokes #edits_list {
@@ -37,7 +42,14 @@
 #outspokes .edit_block.disabled {
   background-image: none;
   background-color: #777;
+}
 
+#outspokes .edit_block.disagreed {
+  background: #fff url(/images/disagreed_header.png) repeat-x center -4px;
+}
+
+#outspokes .edit_block.agreed {
+  background: #fff url(/images/agreed_header.png) repeat-x center -4px;
 }
 
 #outspokes .edit_block .toggle_box {
@@ -57,10 +69,15 @@
 #outspokes .edit_block .edit_timestamp {
   font-size: 0.8em;
 }
-#outspokes .edit_block .edit_consensus {float: right; font-weight: bold;}
-#outspokes .edit_block .edit_consensus button {margin-top: -2px;}
+#outspokes .edit_block .edit_consensus {float: right;}
+#outspokes .edit_block .edit_consensus button {margin-top: -2px; font-weight: bold;}
 #outspokes .edit_block .edit_consensus button.agree:hover {color: green;}
 #outspokes .edit_block .edit_consensus button.disagree:hover {color: red;}
+#outspokes .edit_block .edit_consensus .agreed,
+#outspokes .edit_block .edit_consensus .disagreed  
+{margin-right: 5px;}
+#outspokes .edit_block .edit_consensus .agreed {color: green;}
+#outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
 /* New edit */
 
