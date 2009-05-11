@@ -129,6 +129,8 @@
             this.disagree(markup);
           } else if (c.opinion == 'mine') {
           }
+        } else if (c.isPrivate){ //comment is private, don't display any of this
+          return "";
         } else { // this invitee should be allowed to vote on this comment
           var consensus_div = $('<div></div>');
           var agree = this.button(c, 'agree').addClass('agree');
