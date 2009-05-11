@@ -37,7 +37,11 @@
       fb.i.target.startOver();
       return false;
     });
-    var save_targets = $('<a href="#" onclick="return false;">Save</a>').css('padding-left','20px');
+    var save_targets = $('<a href="#">Save</a>').css('padding-left','20px');
+    save_targets.click(function(e) {
+      fb.UserStyle.post(fb.i.target.all);
+      return false;
+    });
     
     this.target_footer.append(clear_targets);
     this.target_footer.append(save_targets);

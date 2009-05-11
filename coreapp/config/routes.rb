@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "create", :conditions => { :method => :post }
     widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "delete", :conditions => { :method => :delete }
     widget.resources :user_styles
+    #widget.new_user_style_for_page 'user_styles', :controller => 'user_styles', :action => 'create', :conditions => {:method=>:post}
   end
 
 
