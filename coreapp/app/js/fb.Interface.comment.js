@@ -280,6 +280,12 @@
       }
       bar.append($('<span></span>').addClass('snippet').append(snippet).hide());
       
+      //Number of replies
+      
+      var replies = 0;
+      
+      bar.append($('<span></span>').addClass('reply_count').append(' ' + replies + ' replies'));
+      
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp))
       
       
@@ -321,7 +327,7 @@
           $(this).parent().toggleClass("collapsed");
         }
         $(this).parent().parent().find('div.cmt_content:eq(0)').toggle();
-        $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0)').toggle();
+        $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0), .reply_count:eq(0)').toggle();
       });
 
       // bind the comment to its target
@@ -461,6 +467,7 @@
         $(".cmt_content").hide();
         $(".cmt_date").hide();
         $(".snippet").show();
+        $(".reply_count").show();
         $(".comment").addClass("collapsed");
     };
     
@@ -468,6 +475,7 @@
         $(".cmt_content").show();
         $(".cmt_date").show();
         $(".snippet").hide();
+        $(".reply_count").hide();
         $(".comment").removeClass("collapsed");
     };
     
