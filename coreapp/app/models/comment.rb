@@ -1,4 +1,8 @@
 class Comment < Feedback
+  
+  belongs_to :page
+  belongs_to :commenter
+  
   validates_presence_of :content, :allow_blank => false
   validates_presence_of :target, :allow_blank => false
   

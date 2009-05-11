@@ -4,6 +4,7 @@ class Commenter < ActiveRecord::Base
   has_many :pages, :through => :invites # pages invited to, not pages commented on
   has_many :feedbacks, :dependent => :destroy
   has_many :opinions, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
   has_many :user_styles, :dependent => :destroy
 
   #stolen from the restful_authentication plugin
