@@ -97,6 +97,7 @@
         return;
       }
       new fb.UserStyle(data.user_style);
+      fb.UserStyle.render();
     };
     $.post(fb.env.post_user_style_address, data, callback, "json");
     return true;
