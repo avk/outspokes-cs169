@@ -122,8 +122,13 @@
   
   // Returns the state property for key as saved via save_state
   fb.get_state = function(key) {
-    var state = fb.JSON_parse(fb.cookie("outspokes_widget_state"));
-    return state[key];
+    var json = fb.cookie("outspokes_widget_state");
+    if (json) {
+      var state = fb.JSON_parse(fb.cookie("outspokes_widget_state"));
+      return state[key];
+    } else {
+      return null;
+    }
   };
   
   ////// END HELPER STATE FUNCTIONS //////////////////
