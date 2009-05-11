@@ -29,7 +29,9 @@ class Widget::UserStylesController < Widget::WidgetController
     result = {:authorized => @authorized, :admin => @admin, :selectors => selectors, :styles => styles}
     
     respond_to do |wants|
-      wants.js
+      wants.js do
+        render :json => result, :callback => params[:callback]
+      end
     end
   end
   
