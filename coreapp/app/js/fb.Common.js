@@ -108,7 +108,7 @@
     }
   };
   
-  // Saves some current applicaiton state key in the application state cookie
+  // Saves some current application state key in the application state cookie
   fb.save_state = function(key, value) {
     var state;
     if (state = fb.cookie("outspokes_widget_state")) {
