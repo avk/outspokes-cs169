@@ -345,6 +345,8 @@ version: 3.0.0pr2
 #outspokes #comment_list .reply_count {
   float: right;
   margin-top: -13px;
+  text-align: left;
+  width: 63px;
 }
 
 #outspokes #comment_list .flattened .reply_to_text {

@@ -16,6 +16,7 @@
     this.content = obj.content;
     this.target = obj.target;
     this.isPrivate = obj.isPrivate;
+    this.num_replies = 0;
     
     this.build = fb.i.comment.build(this);
 

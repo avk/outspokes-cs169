@@ -175,6 +175,15 @@
         } else {
           parent_border = 0;
         }
+        var parent_comment = fb.Comment.all[this.dom.number_from_id(c.target)];
+        parent_comment.num_replies++;
+        if (parent_comment.num_replies != 1) {
+          parent_comment.build.find('.reply_count:eq(0)').html(parent_comment.num_replies + " replies");
+        }
+        else {
+          parent_comment.build.find('.reply_count:eq(0)').html(parent_comment.num_replies + " reply")
+        }
+        
         $(this.dom.parent_reply_list(c.target)).append(rtn);
       },
       // constructs a "reply" link
@@ -282,9 +291,7 @@
       
       //Number of replies
       
-      var replies = 0;
-      
-      bar.append($('<span></span>').addClass('reply_count').append(' ' + replies + ' replies'));
+      bar.append($('<span></span>').addClass('reply_count').append('0 replies').hide());
       
       var timestamp_close = $('<span></span>').addClass('cmt_date').append(fb.get_timestamp(c.timestamp))
       
@@ -321,6 +328,7 @@
       var replies = $('<div></div>').attr('id', this.dom.reply_list(c_id)).addClass('replies');
       var comment = $('<div></div>').addClass('comment');
       comment.append(bar).append(content);
+      
       rtn.append(comment).append(replies);
       bar.click(function() {
         if (link_span) {
@@ -339,6 +347,7 @@
         rtn.addClass('targeted');
         rtn.find('.commenter_name').before($('<div></div>').addClass('targeted_icon'));
       }
+      
       return rtn;
     };
         
