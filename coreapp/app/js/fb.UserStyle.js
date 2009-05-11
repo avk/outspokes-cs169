@@ -70,7 +70,6 @@
     if (!_fb.authorized()) {
       return null;
     }
-    console.log(targets);
     var data = {
       url_token: fb.env.url_token,
       current_page: fb.env.current_page
@@ -79,24 +78,25 @@
       data.validation_token = _fb.admin();
     }
     
-    var styles = {};
+    var styles = "{";
+    var properties = {};
     $.each(targets, function (selector, target) {
-      styles[selector] = "{";
-      $.each(target.new_styles, function (property, value) {
-        styles[selector] += "'" + property + "':'" + value.toString() + "',";
+      styles += "'" + selector + "' : {";
+      $.each(target.new_styles, function(property, value) {
+        styles += "'" + property + "':'" + value.toString() + "',";
       });
-      styles[selector] = styles[selector].slice(0, -1);
-      styles[selector] += "}"
+      styles = styles.slice(0,-1); // drop the comma off the last (property, value) pair
+      styles += "}";
     });
+    styles += "}";
     data.styles = styles;
     
-    console.log(data);
     var callback = function(data) {
       if (! data.success) {
         fb.UserStyle.get();
         return;
       }
-      new fb.UserStyle(data.user_style)
+      new fb.UserStyle(data.user_style);
     };
     $.post(fb.env.post_user_style_address, data, callback, "json");
     return true;
