@@ -89,8 +89,6 @@
       return false;
     }
   };
-
-/*
   
   ///// FOLLOWING ARE HELPER STATE FUNCTIONS THAT USE fb.cookie ////
   
@@ -110,7 +108,7 @@
     }
   };
   
-  // Saves some current applicaiton state key in the application state cookie
+  // Saves some current application state key in the application state cookie
   fb.save_state = function(key, value) {
     var state;
     if (state = fb.cookie("outspokes_widget_state")) {
@@ -124,13 +122,16 @@
   
   // Returns the state property for key as saved via save_state
   fb.get_state = function(key) {
-    var state = fb.JSON_parse(fb.cookie("outspokes_widget_state"));
-    return state[key];
+    var json = fb.cookie("outspokes_widget_state");
+    if (json) {
+      var state = fb.JSON_parse(fb.cookie("outspokes_widget_state"));
+      return state[key];
+    } else {
+      return null;
+    }
   };
   
   ////// END HELPER STATE FUNCTIONS //////////////////
-
-*/
 
   fb.find_fb = function() {
     var possible = [];

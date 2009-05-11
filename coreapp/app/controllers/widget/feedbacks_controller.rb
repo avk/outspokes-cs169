@@ -11,27 +11,27 @@ class Widget::FeedbacksController < Widget::WidgetController
   # params[:current_page] => 'http://hi.com/faq'
   # params[:callback] => 'some_function'
   def feedback_for_page
-    feedback = []
+    comments = []
     if @authorized
       if !@public
         site = @invite.page.site
         if page = @invite.page.site.pages.find_by_url(params[:current_page])
           if @admin
-            feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
+            comments = page.comments.map { |f| f.json_attributes(@commenter) }
           elsif
             fbtemp = []            
-            for fb in page.feedbacks.roots do
+            for fb in page.comments.roots do
               if !fb.private || fb.commenter == @commenter 
                 fbtemp += fb.self_and_descendants
               end
             end
-            feedback = fbtemp.map { |f| f.json_attributes(@commenter) }
+            comments = fbtemp.map { |f| f.json_attributes(@commenter) }
           end
         end
       else
         if page = Page.find_public_page_by_url(params[:current_page])
           site = page.site
-          feedback = page.feedbacks.map { |f| f.json_attributes(nil) }
+          comments = page.comments.map { |f| f.json_attributes(nil) }
         end
       end
     end
@@ -40,7 +40,7 @@ class Widget::FeedbacksController < Widget::WidgetController
       site = "null"
     end
 
-    result = {:authorized => @authorized, :admin => @admin, :feedback => feedback}
+    result = {:authorized => @authorized, :admin => @admin, :feedback => comments}
     if @admin and !params[:site_id] and site != "null"
       result.merge!({:site_id => site.id})
       if site.commenters.find(:all, :conditions => ["commenters.id != ?", site.account_id]).empty?
@@ -97,31 +97,31 @@ class Widget::FeedbacksController < Widget::WidgetController
 #        puts parent_private
 #      end
 
-      feedback = Comment.new :commenter => @commenter, :name => name, :content => content,
+      comment = Comment.new :commenter => @commenter, :name => name, :content => content,
                              :target => params[:target], :public => public_comment, 
                              :private => parent_private
-      page.feedbacks << feedback
+      page.comments << comment
 
       if params[:parent_id]
         # since parent_id is based on /comment_\d+/i, we extract the \d+
         parent_id = params[:parent_id].sub(/\D+/, '').to_i
-        if Comment.find_by_id(parent_id).nil? # If feedback doesn't exist, destroy the feedback
-          feedback.destroy
+        if Comment.find_by_id(parent_id).nil? # If comment doesn't exist, destroy the comment
+          comment.destroy
         else
-          feedback.move_to_child_of parent_id
+          comment.move_to_child_of parent_id
         end
       end
-      if !feedback.valid? or feedback.frozen? # feedback will be frozen if destroyed
+      if !comment.valid? or comment.frozen? # comment will be frozen if destroyed
         success = false
-        feedback = [] # OR, to return valid feedback, page.feedbacks.find :all
+        comments = [] # OR, to return valid comments, page.comments.find :all
       else
         success = true
-        feedback = page.feedbacks.map { |f| f.json_attributes(@commenter) }
+        comments = page.comments.map { |f| f.json_attributes(@commenter) }
       end
     end
 
     result = {:authorized => @authorized, :admin => @admin,
-              :success => success, :feedback => feedback}
+              :success => success, :feedback => comments}
 
     respond_to do |wants|
       wants.html do
@@ -142,8 +142,8 @@ class Widget::FeedbacksController < Widget::WidgetController
   def destroy
     result = { :authorized => @authorized, :admin => @admin, :success => false }
     if @admin
-      @feedback = Comment.find(params[:id])
-      result[:success] = @feedback.destroy ? true : false
+      @comment = Comment.find(params[:id])
+      result[:success] = @comment.destroy ? true : false
     end
   
     respond_to do |format|

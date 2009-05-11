@@ -69,6 +69,7 @@
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
     });
+    this.current_edit = null;
     
     // Consensus section
     this.consensus = {
@@ -138,6 +139,7 @@
       // define its contents
       var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
       us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      var current_edit = this.current_edit;
       us_checkbox.click(function() {
         if (this.checked) {
           $('.toggle_box').each(function(){
@@ -146,16 +148,22 @@
           });
           this.disabled = false;
           $(this).parent().removeClass('disabled');
-          // function here to do something to apply the edit
+          if (current_edit) {
+            current_edit.unapply();
+          }
+          current_edit = user_style;
+          fb.UserStyle.all[user_style.feedback_id].apply();
         } else {
           $('.toggle_box').each(function(){
             this.disabled = false;
             $(this).parent().removeClass('disabled');
-            // function here to revert to original design
           });
+          if (current_edit) {
+            current_edit.unapply();
+          }
+          current_edit = null;
         }
-        
-      })
+      });
       var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
@@ -166,6 +174,10 @@
       // us_block.append(this.consensus.build(user_style));
       
       return us_block;
+    };
+
+    this.remove = function(user_style) {
+      console.log("Removing from fb.Interface.user_style...");
     };
     
     this.edits_view.append(this.edit_list);
@@ -294,12 +306,14 @@
     var bgColor = $('<div></div>');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
     bgColor.find('input').blur( function() {
+      if (this.value == "") {return;}
       fb.i.target.current.target.set_style('background-color', '#' + this.value);
     });
     
     var textColor = $('<div></div>');
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />'));
     textColor.find('input').blur( function() {
+      if (this.value == "") {return;}
       fb.i.target.current.target.set_style('color', '#' + this.value);
     });
     
@@ -317,12 +331,14 @@
     var fontFamily = $('<div></div>');
     fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" /><br />'));
     fontFamily.find('input').blur( function() {
+      if (this.value == "") {return;}
       fb.i.target.current.target.set_style('font-family', this.value);
     });
 
     var fontSize = $('<div></div>');
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span><br />'));
     fontSize.find('input').blur( function() {
+      if (this.value == "") {return;}
       fb.i.target.current.target.set_style('font-size', this.value + 'px');
     });
     

@@ -31,7 +31,7 @@
       this["neutral?"] = obj["neutral?"];
       this["controversial?"] = obj["controversial?"];
       this["popular?"] = obj["popular?"];
-      this["unpopular?"] = obj["unpopular?"]
+      this["unpopular?"] = obj["unpopular?"];
       this.build = null;
 
       fb.Feedback.all[this.feedback_id] = this;

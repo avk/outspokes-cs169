@@ -8,10 +8,7 @@
   fb.UserStyle = function (obj) {
     // call to super for properties
     this.parent.call(this, obj);
-    fb.assert(fb.hasProp(obj, {
-        css_path:"string"}),
-        "Object argument to fb.UserStyle constructor of wrong form");
-    this.link = create_link(obj.css_path);
+    this.link = create_link(this.feedback_id);
     this.build = fb.i.user_style.build(this);
 
     fb.UserStyle.all[this.feedback_id] = this;
@@ -69,45 +66,41 @@
   fb.UserStyle.unrendered = {};
   fb.UserStyle.applied = null;
 
-  fb.UserStyle.post = function (content, target, name) {
+  fb.UserStyle.post = function (targets) {
     if (!_fb.authorized()) {
       return null;
     }
     var data = {
       url_token: fb.env.url_token,
-      current_page: fb.env.current_page,
-      content: content,
-      target: target
+      current_page: fb.env.current_page
     };
-    if (fb.i.comment.dom.comment_id_format.test(target)) {
-      data.parent_id = target;
-    }
     if (_fb.admin()) {
       data.validation_token = _fb.admin();
     }
-    if (name) {
-      data["name"] = name;
-      delete data["url_token"];
-    }
+    
+    // Stringify the JSON styles
+    var styles = "{";
+    $.each(targets, function (selector, target) {
+      styles += "'" + selector + "' : {";
+      $.each(target.new_styles, function(property, value) {
+        styles += "'" + property + "':'" + value.toString() + "',";
+      });
+      styles = styles.slice(0,-1); // drop the comma off the last (property, value) pair
+      styles += "}";
+    });
+    styles += "}";
+    data.styles = styles;
+    
     var callback = function(data) {
       if (! data.success) {
-        fb.Feedback.get();
+        fb.UserStyle.get();
         return;
       }
-      var x = fb.Feedback.get_callback(data, "render");
-      for (var i in x) {
-        if (x[i].content == content && x[i].target == target) {
-          return true;
-        }
-      }
-      return fb.Comment.post_failed(content, target);
+      new fb.UserStyle(data.user_style);
+      fb.UserStyle.render();
     };
-    $.post(fb.env.post_address, data, callback, "json");
+    $.post(fb.env.post_user_style_address, data, callback, "json");
     return true;
-  };
-  
-  fb.UserStyle.post_failed = function (content, target) {
-    fb.i.comment.post_failed(content, target);
   };
 
   fb.UserStyle.render = function() {
@@ -154,11 +147,11 @@
 
     params = "?" + $.param(params);
     if (typeof callback === "string") {
-      $.getScript(fb.env.user_style_get_address + params);
+      $.getScript(fb.env.get_user_styles_address + params);
     } else {
       // jQuery.getJSON requires the "?" on callback to be unescaped
       params += "&callback=?";
-      $.getJSON(fb.env.user_style_get_address + params, callback);
+      $.getJSON(fb.env.get_user_styles_address + params, callback);
     }
   };
   
@@ -221,6 +214,6 @@
 
   ////////////////  Private variables/functions
 
-  function create_link(url) {
-    return rtn = $('<link rel="stylesheet" type="text/css" href="' + url + '" media="screen" />');
+  function create_link(id) {
+    return rtn = $('<link rel="stylesheet" type="text/css" href="' + fb.env.user_style_address(id) + '" media="screen" />');
   }
