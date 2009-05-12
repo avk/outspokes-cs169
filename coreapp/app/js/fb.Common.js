@@ -203,6 +203,8 @@
   fb.select_target = function (select_function, mouseover_function, mouseout_function) {
     // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
     var page_elements = fb.i.dom.non_widget_elements;
+    // Store most recently mouseoever'ed-element in case it doesn't get mouseout'ed
+    var prev_element;
     // Mark clicked-on elemement
     page_elements.bind('click.elem_select', function (e) {
       select_function(e);
@@ -212,11 +214,21 @@
     });
     page_elements.bind("mouseenter.elem_select", function (e) {
       mouseover_function(e);
+      if (prev_element) {
+        // Call mouseout_function on the last element to be hovered over in case mouseleave didn't fire
+        var new_event = $.Event(e.type);
+        new_event.data = e.data;
+        new_event.target = prev_element;
+        mouseout_function(new_event);
+      }
+      prev_element = e.target;
       e.stopPropagation();
     });
-
     page_elements.bind("mouseleave.elem_select", function (e) {
-      mouseout_function(e);
+      if (prev_element) {
+        prev_element = null;
+        mouseout_function(e);
+      }
       e.stopPropagation();
     });
   };
