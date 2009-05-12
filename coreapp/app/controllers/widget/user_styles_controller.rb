@@ -10,10 +10,12 @@ class Widget::UserStylesController < Widget::WidgetController
     styles, selectors = [], []
     
     if @authorized
-      styles = @invite.page.user_styles
-      styles.each { |style| selectors += selectors_and_class_names(style) }
-      selectors.uniq!
-      styles = styles.map { |style| style.json_attributes(@commenter) }
+      if page = @invite.page.site.pages.find_by_url(params[:current_page])
+        styles = page.user_styles
+        styles.each { |style| selectors += selectors_and_class_names(style) }
+        selectors.uniq!
+        styles = styles.map { |style| style.json_attributes(@commenter) }
+      end
     end
     
     result = { :authorized => @authorized, :admin => @admin, :selectors => selectors, :styles => styles }
