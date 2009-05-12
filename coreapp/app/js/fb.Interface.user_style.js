@@ -303,21 +303,37 @@
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
     this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
-    var bgColor = $('<div></div>');
+    var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
     bgColor.find('input').blur( function() {
       if (this.value == "") {return;}
       fb.i.target.current.target.set_style('background-color', '#' + this.value);
     });
     
-    var textColor = $('<div></div>');
-    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />'));
+    var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
+    bgColorApply.click( function() {
+      currBgColor = bgColor.find('input');
+      if (currBgColor.value == "") {return;}
+      fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+    });
+    
+    var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
+    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
     textColor.find('input').blur( function() {
       if (this.value == "") {return;}
       fb.i.target.current.target.set_style('color', '#' + this.value);
     });
     
+    var textColorApply = $('<input class="button" type="submit" value="Apply" />');
+    textColorApply.click( function() {
+      currTextColor = textColor.find('input');
+      if (currTextColor.value == "") {return;}
+      fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+    });
+    
+    bgColor.append(bgColorApply);
     this.your_color.append(bgColor);
+    textColor.append(textColorApply);
     this.your_color.append(textColor);
     
     this.your_edits_wrapper.append(this.your_color);
@@ -360,7 +376,6 @@
     this.your_font.append(fontFamily);
     fontSize.append(fontSizeApply);
     this.your_font.append(fontSize);
-    this.your_font.append($('<div class="outspokes_clear"></div>'));
 
     
     this.your_edits_wrapper.append(this.your_font);
