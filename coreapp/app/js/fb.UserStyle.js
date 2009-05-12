@@ -79,34 +79,18 @@
       data.validation_token = _fb.admin();
     }
     
-    // Stringify the JSON styles
-    var styles = "{";
-    var style_tmp = "";
-    var num_new_styles = 0;
+    // create the JSON styles object
+    data.styles = {};
     $.each(targets, function (selector, target) {
-      // separate this target with a comma but
-      // only if this is not the first target (i.e. the last character in styles is a '}' )
-      
-      if (styles.substring(styles.length - 1) === "}") {
-        style_tmp += ",";
-      }
-      
-      style_tmp += "'" + selector + "' : {";
-      num_new_styles = 0;
-      $.each(target.new_styles, function(property, value) {
-        num_new_styles ++;
-        style_tmp += "'" + property + "':'" + value.toString() + "',";
-      });
-      if (num_new_styles === 0) {
+      if (fb.num_keys(target.new_styles) === 0) {
         return true;
       }
-      style_tmp = style_tmp.slice(0,-1); // drop the comma off the last (property, value) pair
-      style_tmp += "}";
-      styles += style_tmp;
-      style_tmp = "";
+      data.styles[selector] = {};
+      $.each(target.new_styles, function (property, value) {
+        data.styles[selector][property] = value;
+      });
     });
-    styles += "}";
-    data.styles = styles;
+    data.styles = fb.JSON.stringify(data.styles);
     
     var callback = function(data) {
       if (! data.success) {

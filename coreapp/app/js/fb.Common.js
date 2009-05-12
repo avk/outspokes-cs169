@@ -112,7 +112,7 @@
   fb.save_state = function(key, value) {
     var state;
     if (state = fb.cookie("outspokes_widget_state")) {
-      state = fb.JSON_parse(state);
+      state = fb.JSON.parse(state);
     } else {
       state = {};
     }
@@ -124,7 +124,7 @@
   fb.get_state = function(key) {
     var json = fb.cookie("outspokes_widget_state");
     if (json) {
-      var state = fb.JSON_parse(fb.cookie("outspokes_widget_state"));
+      var state = fb.JSON.parse(fb.cookie("outspokes_widget_state"));
       return state[key];
     } else {
       return null;
@@ -246,11 +246,15 @@
   };
   
   fb.getProperties = function(obj) {
-    var props = [];
-    for (var x in obj) {
-      props.push(x);
-    }
-    return props;
+    var keys = [];
+    $.each(obj, function (key, value) {
+      keys.push(key);
+    });
+    return keys;
+  };
+
+  fb.num_keys = function (obj) {
+    return fb.getProperties(obj).length;
   };
 
   fb.isString = function (x) {
