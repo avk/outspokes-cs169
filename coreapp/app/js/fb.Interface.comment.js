@@ -331,11 +331,55 @@
       
       rtn.append(comment).append(replies);
       bar.click(function() {
-        if (link_span) {
-          $(this).parent().toggleClass("collapsed");
+        
+        function collapse(cmt) {
+          // console.log("collapsing...");
+          $(cmt).parent().addClass("collapsed");
+          $(cmt).parent().parent().find('div.cmt_content:eq(0)').hide();
+          $(cmt).parent().find('.cmt_date:eq(0)').hide();
+          $(cmt).parent().find('.snippet:eq(0), .reply_count:eq(0)').show();
+        };
+        
+        function uncollapse(cmt) {
+          // console.log("uncollapsing...");
+          $(cmt).parent().removeClass("collapsed");
+          $(cmt).parent().parent().find('div.cmt_content:eq(0)').show();
+          $(cmt).parent().find('.cmt_date:eq(0)').show();
+          $(cmt).parent().find('.snippet:eq(0), .reply_count:eq(0)').hide();
+        };
+        
+        // toggle me
+        if ($(this).parent().hasClass("collapsed")) {
+          uncollapse(this);
+        } else {
+          collapse(this);
         }
-        $(this).parent().parent().find('div.cmt_content:eq(0)').toggle();
-        $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0), .reply_count:eq(0)').toggle();
+        
+        // toggle my replies
+        var p = $(this).parent();
+        var parent = $(this).parent().parent();
+        if (parent.attr("class") === "thread") {
+          var replies = "#" + fb.i.comment.dom.reply_list(c.feedback_id);
+          parent.find(replies).find('.cmt_bar').each(function() {
+            // parent collapsed, i'm not
+            if (p.hasClass("collapsed") && 
+                ! $(this).parent().hasClass("collapsed")) { 
+              collapse(this);
+            }
+            
+            // parent collapsed, i am
+            // do nothing
+            
+            // parent expanded, i'm not
+            if (!p.hasClass("collapsed") &&
+                $(this).parent().hasClass("collapsed")) {
+              uncollapse(this);
+            }
+            
+            // parent expanded, i am
+            // do nothing
+          });
+        }
       });
 
       // bind the comment to its target
