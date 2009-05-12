@@ -325,9 +325,9 @@
     this.logout_link.click(function() {
       // do logout stuff here
       if (_fb.admin()) {
-        var answer = confirm("Are you sure you want to log out? To log back in, please go through outspokes.com.");
+        var answer = confirm("Are you sure you want to log out? To log back in, bookmark this page or visit your Outspokes.com dashboard.");
       } else {
-        var answer = confirm("Are you sure you want to log out? To log back in, please click on the link in the email you received.");
+        var answer = confirm("Are you sure you want to log out? To give more feedback, bookmark this page or click the link in your invite email.");
       }
       if (answer){
         fb.cookie('outspokes_widget_state', null);  
