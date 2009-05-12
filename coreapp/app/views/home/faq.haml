@@ -31,7 +31,7 @@
   %li
     = link_to "Can commenters see each other's comments?", :anchor => "commentersseeothers"
   %li
-    = link_to "Can I agree/disagree with a comment?", :anchor => "adminagree"
+    = link_to "Can I (dis)agree with a comment?", :anchor => "adminagree"
   %li
     = link_to "How can I delete a single page?", :anchor => "deleteasinglepage"
   %li
@@ -54,10 +54,10 @@
 %dl
   %dt 
     %a{:name => "whatneeds" } What do I need to use Outspokes?
-  %dd All you need is a web browser with Javascript enabled. Currently in our alpha phase, we are testing only in Firefox 3, so while other browsers may work with Outspokes, we cannot guarantee it will be perfect.
+  %dd All you need is a web browser with Javascript enabled. We are currently in our alpha phase, and are only testing Firefox 3.  While other browsers may work with Outspokes, we cannot guarantee complete compatibility.
   %dt  
     %a{:name => "whatstargeting" } What is targeting?
-  %dd Targeting is a way to attach your comment to a part of the page you are commenting on.  To target a part of the page, click on red target icon above the commenting area in the widget while you are commenting, and then click on the part of the page you would like the comment to be attached to (an image, piece of text, etc.).
+  %dd Targeting is a way to attach your comment to a part of the page you are commenting on.  To target a part of the page, click on the red target icon above the commenting area in the widget while you are commenting, and then click on the part of the page you would like the comment to be attached to (an image, piece of text, etc.).
 
   %dt   
     %a{:name => "viewtargeted" } How do I view targeted comments?
@@ -71,7 +71,7 @@
 
   %dt   
     %a{:name => "commentforperson" } Can I leave a comment for a specific person (invisible to everyone else)?
-  %dd You can leave a comment that only the admin for the site can see by checking the private box below the comment input form.  Also, replies to private comments will also be private.  All other comments can be seen by everyone else that uses the widget.
+  %dd You can leave a comment that only the admin of the site can see by checking the private box below the comment input form.  However, private comments to any other user are unsupported.  Also, replies to private comments will also be private.  All other comments can be seen by everyone else that uses the widget.
   %dt   
     %a{:name => "editcomments" } Can I edit or delete my own comments?
   %dd We currently do not support those features.
@@ -84,51 +84,51 @@
 %h3 Admin
 %dl
   %dt   
-    %a{:name => "deletesite" } How do I delete my site?
-  %dd To delete your site, log in to outspokes.com.  Once you have logged in, to delete the site, click on the red X to the right of your site name.
+    %a{:name => "deletesite" } How do I delete my site from Outspokes?
+  %dd To delete your site, log in to Outspokes.com.  Once you have logged in, you can delete a site from the Outspokes service by clicking the red "X" to the right of the site's name.
 
   %dt   
     %a{:name => "removecommenters" } How do I remove commenters?
-  %dd To remove a commenter, log in to the admin widget on your site, and click on "Admin Panel".  Within the admin panel, go to the "Commenters" tab, and click the "X" next to the commenter you wish to remove.
+  %dd To remove a commenter, log in to the widget on your site, and click on "Admin Panel."  Within the admin panel, click on the "Commenters" tab and then click the "X" next to the commenter you wish to remove.
 
   %dt   
     %a{:name => "whathappens" } What happens when I remove a commenter?
-  %dd All feedback that the commenter has left will be deleted.  This information includes feedback comments and (dis)agree votes. 
+  %dd All feedback that the commenter left will be deleted.  This includes comments and all votes.
 
   %dt   
     %a{:name => "commentersseeothers" } Can commenters see each other's comments?
-  %dd All commenters can see all comments except for those comments marked as private by commenters and responses to private comments.
+  %dd All commenters can see all comments.  The only exceptions are those comments explicitly marked as private.  These comments, and all of their replies, can only be seen by the original commenter and you, the admin of the site.
   
   %dt   
-    %a{:name => "adminagree" } Can I agree/disagree with a comment?
+    %a{:name => "adminagree" } Can I (dis)agree with a comment?
   %dd No.  We feel that as the person requesting feedback, your opinion (in this respect), doesn't really factor in to the commenters' consensus opinion.  To get your opinion heard, simply reply to the comment.
 
   %dt   
     %a{:name => "deleteasinglepage" } How can I delete a single page?
-  %dd To delete a single page, open up the admin panel on the widget, and click on the "pages" tab at the top.  Then click on the x to the right of whichever page you want to delete.
+  %dd To delete a single page, open up the admin panel on the widget, and click on the "Pages" tab.  Clicking on the "X" to the right of any listed page in this tab will delete the page.
 
   %dt   
     %a{:name => "deleteapage" } What happens when I delete a page?
-  %dd All the feedback and associated information (agree/disagree votes and reply threads) gets deleted.  The page on your site is not directly affected.
+  %dd All of the feedback associated with that page will be deleted.  Your actual page will not be affected by the delete action.
 
   %dt   
     %a{:name => "javascriptinclude" } Why do I need the "script include"?
-  %dd The script include is the piece of code that allows us to run our widget on your site.  The include tag pulls in the javascript code from our site, which allows someone with a valid URL token to see the widget and give feedback to your site.
+  %dd The script include loads our widget on your site.  The HTML tag pulls in Javascript code from our site, which creates our widget, and allows invited commenters to see our widget and give feedback on your site.
 
   %dt   
     %a{:name => "includegoeswhere" } Where should I put the include?
-  %dd We suggest putting it at the bottom of the body page in the site.
+  %dd We suggest putting it at the bottom of the "body" tag of pages on which you would like feedback.  Note that our widget will only be available on pages that have the include.
 
   %dt   
     %a{:name => "facebookp" } Can I use your site on my Facebook profile, Myspace profile, or twitter profile?
-  %dd No. Sites like Facebook and Myspace sanitize the text that you give them to prevent people from running things on your page that you might not expect.  Please note, we will never run any malicious code on your site.
+  %dd No, unless you can modify the source code of these pages.
 
   %dt   
     %a{:name => "crosssite" } What's with this whole cross-site scripting business?
-  %dd In order to transmit people's comments to our site, we transferring information across web domains, which might be considered a no-no by some people.  However, we do not (and will not ever) transmit any information from your web site other than that pertaining to the comments that people are giving.  The only information about a target that we use is the path to the targeted element in the DOM, we do not use any information contained in the element itself.
+  %dd In order to persist feedback, we have to send information from your site to ours, i.e., across web domains.  Some people consider this a major no-no for security reasons.  However, we do not (and will never) transmit any information from your site to ours other than that directly pertaining to our widget.
 
 %h3 About Outspokes
 %dl
   %dt   
     %a{:name => "isitsecure" } Is Outspokes secure?
-  %dd The only information we are retrieving from your site are the comments and replies that are left by you and your commenters. No other information is taken.
+  %dd The only information we retrieve from your site is the feedback left by commenters. No other information is taken.
