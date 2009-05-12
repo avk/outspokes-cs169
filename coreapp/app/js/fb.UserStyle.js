@@ -125,12 +125,7 @@
     for (var i in fb.UserStyle.unrendered) {
       fb.UserStyle.unrendered[i].render();
     }
-    fb.UserStyle.refresh_count();
-  };
-  
-  // This is UI and should be moved to fb.Interface.user_style
-  fb.UserStyle.refresh_count = function() {
-    // fb.i.set_num_comments(fb.getProperties(fb.UserStyle.all).length);
+    fb.i.user_style.refresh_count();
   };
 
 
@@ -221,6 +216,8 @@
     if (render) {
       fb.UserStyle.render();
     }
+    // Update count
+    fb.i.user_style.refresh_count();
     return new_user_styles;
   };
 
@@ -236,6 +233,10 @@
     });
   };
 
+  // Count number of UserStyle posts
+  fb.UserStyle.count = function() {
+    return fb.getProperties(fb.UserStyle.all).length;
+  };
 
   ////////////////  Private variables/functions
 

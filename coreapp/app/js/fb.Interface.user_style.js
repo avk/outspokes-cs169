@@ -59,7 +59,11 @@
           to.css('width', '100%');
         }
       );
-    }
+    };
+    
+    this.refresh_count = function() {
+       fb.i.nav.set_label_count(fb.UserStyle.count(), 1);
+    };
 
     // EDITS_VIEW //////////////////////////////////////////////////////////////////
 
