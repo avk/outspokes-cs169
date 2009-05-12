@@ -184,7 +184,8 @@
       border-bottom:1px solid #FFFFFF;
     }
     
-#outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap {
+#outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
+  margin: 10px;
 }
 
 #outspokes #your_targets {
@@ -244,7 +245,6 @@
   background-color: #DDD;
   border-color: #FFF;
   color: #C1272D;
-  text-decoration: underline;
 }
 
 #outspokes #outspokes_target_list_wrap {
