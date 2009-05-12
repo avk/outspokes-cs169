@@ -84,7 +84,7 @@
 
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
-    this.form.find("a").click(function(){fb.Feedback.get();});
+    this.form.find("a").click(function(){fb.Comment.get();});
     this.form.find("form").submit(function() { 
       var name = null;
       if (fb.env.pub_page) {

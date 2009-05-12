@@ -15,7 +15,7 @@ class UserStyle < Feedback
     jsonStyle.gsub!(/:eq/, "")
     jsonStyle.gsub!(/[>()]/, "")
     
-    style = JSON.parse jsonStyle
+    style = ActiveSupport::JSON.decode jsonStyle 
     
     cssStyle = ''
     

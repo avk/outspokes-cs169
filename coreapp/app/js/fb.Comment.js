@@ -119,10 +119,10 @@
     }
     var callback = function(data) {
       if (! data.success) {
-        fb.Feedback.get();
+        fb.Comment.get();
         return;
       }
-      var x = fb.Feedback.get_callback(data, "render");
+      var x = fb.Comment.get_callback(data, "render");
       for (var i in x) {
         if (x[i].content == content && x[i].target == target) {
           return true;
@@ -150,4 +150,96 @@
   // This is UI and should be moved to fb.Interface.comment
   fb.Comment.refresh_count = function() {
     fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
+  };
+
+
+
+
+
+  fb.Comment.get = function(options, callback) {
+    var params = {
+      'url_token': fb.env.url_token,
+      'current_page': fb.env.current_page
+    };
+    if (typeof options === "object") {
+      $.extend(params, options);
+    } else if (typeof options !== "undefined") {
+      callback = options;
+    }
+    if (_fb.admin()) {
+      params.validation_token = _fb.admin();
+      if (_fb.site_id()) {
+        params.site_id = _fb.site_id();
+      }
+    }
+
+    if (callback) {
+      if (typeof callback === "string") {
+        params.callback = callback;
+      } else if (typeof callback === "function") {
+        // do nothing
+      }
+    } else {
+      callback = function (data) {
+        fb.Comment.get_callback(data, true);
+      };
+    }
+
+    params = "?" + $.param(params);
+    if (typeof callback === "string") {
+      $.getScript(fb.env.get_address + params);
+    } else {
+      // jQuery.getJSON requires the "?" on callback to be unescaped
+      params += "&callback=?";
+      $.getJSON(fb.env.get_address + params, callback);
+    }
+  };
+  
+  /**
+   * Process the data received in response to fb.Comment.get()
+   * @param {Object} data The retrieved JSON
+   * @param {Boolean} render True => render all comments 
+   * @return {Array[Comment]} An array of the new comments
+   */
+  fb.Comment.get_callback = function (data, render) {
+    if (!(_fb.authorized() || data.authorized)) {
+      return null;
+    }
+
+    var found;
+    // Get the new comments
+    var new_comments = $.map(
+      $.grep(data.feedback, function(feedback_obj) {
+        found = false;
+        $.each(fb.Comment.all, function(feedback_id, comment) {
+          if (feedback_obj.feedback_id == feedback_id) {
+            found = true;
+            return false;
+          }
+        });
+        return !found;
+      }),
+      function (feedback_obj) {
+        return (new fb.Comment(feedback_obj));
+      }
+    );
+    // Delete the ones that have been deleted in the backend
+    $.each(fb.Comment.all, function(feedback_id, comment) {
+      found = false;
+      $.each(data.feedback, function() {
+        if (this.feedback_id == feedback_id) {
+          found = true;
+          return false;
+        }
+      });
+      if (!found) {
+        fb.Comment.all[feedback_id].remove();
+      }
+      return true;
+    });
+
+    if (render) {
+      fb.Comment.render();
+    }
+    return new_comments;
   };

@@ -23,7 +23,7 @@ function() {
     fb.env.get_user_styles_address = "<%= WIDGET_DOMAIN %>widget/user_styles";
     fb.env.post_user_style_address = "<%= WIDGET_DOMAIN %>widget/user_styles";
     fb.env.user_style_address = function(id) {
-      return "<%= WIDGET_DOMAIN %>widget/user_styles/" + id;
+      return "<%= WIDGET_DOMAIN %>widget/user_styles/" + id + ".css";
     };
     fb.env.edit_css_address = "<%= WIDGET_DOMAIN %>stylesheets/userstyles.css";
     fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";
@@ -90,7 +90,7 @@ function() {
       fb.cookie("fb_hash_url_token", fb.env.url_token);
 
       fb.i = new fb.Interface();
-      fb.Feedback.get_callback(data, true);
+      fb.Comment.get_callback(data, true);
       if (data.no_commenters) {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
@@ -181,7 +181,7 @@ function() {
           var _email = this.email.value;
           var _password = this.password.value;
           fb.env.login_panel = login_panel;
-          fb.Feedback.get({'email':_email,'password':_password}, login_callback);
+          fb.Comment.get({'email':_email,'password':_password}, login_callback);
           return false;
         });
 
@@ -193,9 +193,9 @@ function() {
     }
 
     if (typeof _admin_validation_token === "string") {
-      fb.Feedback.get({'validation_token':_admin_validation_token}, login_callback);
+      fb.Comment.get({'validation_token':_admin_validation_token}, login_callback);
       return;
     }
 
-    fb.Feedback.get(login_callback);
+    fb.Comment.get(login_callback);
     return;
