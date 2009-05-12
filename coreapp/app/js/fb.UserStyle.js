@@ -113,6 +113,7 @@
         fb.UserStyle.get();
         return;
       }
+      fb.UserStyle.process_selectors(data);
       new fb.UserStyle(data.user_style);
       fb.UserStyle.render();
     };
@@ -215,14 +216,7 @@
       return true;
     });
 
-    var selector, selector_class;
-    $.each(data.selectors, function (index, selector_array) {
-      [selector, selector_class] = selector_array;
-      console.log("selector_array", selector_array);
-      console.log("[selector, selector_class]", [selector, selector_class]);
-      console.log("$(selector)", $(selector));
-      $(selector).addClass(selector_class);
-    });
+    fb.UserStyle.process_selectors(data);
 
     if (render) {
       fb.UserStyle.render();
@@ -230,6 +224,17 @@
     return new_user_styles;
   };
 
+
+  fb.UserStyle.process_selectors = function(data) {
+    var selector, selector_class;
+    $.each(data.selectors, function (index, selector_array) {
+      [selector, selector_class] = selector_array;
+      // console.log("selector_array", selector_array);
+      // console.log("[selector, selector_class]", [selector, selector_class]);
+      // console.log("$(selector)", $(selector));
+      $(selector).addClass(selector_class);
+    });
+  };
 
 
   ////////////////  Private variables/functions
