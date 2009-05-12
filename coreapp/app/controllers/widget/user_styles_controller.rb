@@ -7,28 +7,27 @@ class Widget::UserStylesController < Widget::WidgetController
   
   # GET all the user styles for a given page
   def index
-    # if @authorized
-    # end
-    
     styles, selectors = [], []
     
-    styles = @invite.page.user_styles
-    styles.each do |style|
-      begin
-        json = ActiveSupport::JSON.decode style.changeset
-        # REFACTOR:
-        json.keys.each do |selector|
-          # Adapted from UserStyle.json_to_css
-          css_class_name = selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
-          selectors << [selector.to_s, css_class_name ]
+    if @authorized
+      styles = @invite.page.user_styles
+      styles.each do |style|
+        begin
+          json = ActiveSupport::JSON.decode style.changeset
+          # REFACTOR:
+          json.keys.each do |selector|
+            # Adapted from UserStyle.json_to_css
+            css_class_name = selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
+            selectors << [selector.to_s, css_class_name ]
+          end
+          selectors.uniq!
+        rescue JSON::ParserError => e
+          log.error "could not parse selectors"
         end
-        selectors.uniq!
-      rescue JSON::ParserError => e
-        log.error "could not parse selectors"
       end
-    end
     
-    styles = styles.map { |style| style.json_attributes(@commenter) }
+      styles = styles.map { |style| style.json_attributes(@commenter) }
+    end
     
     result = {:authorized => @authorized, :admin => @admin, :selectors => selectors, :styles => styles}
     
@@ -42,14 +41,14 @@ class Widget::UserStylesController < Widget::WidgetController
   # GET an individual user's changes (represented by CSS) for a given page
   def show
     @css = "" # returned by default
-    # if @authorized
+    if @authorized
       begin
         if @user_style = UserStyle.find( params[:id] )
           @css = UserStyle.json_to_css(@user_style.changeset)
         end
       rescue ActiveRecord::RecordNotFound => e
       end
-    # end
+    end
     
     respond_to do |wants|
       wants.css
