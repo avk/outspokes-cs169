@@ -84,7 +84,14 @@
     var style_tmp = "";
     var num_new_styles = 0;
     $.each(targets, function (selector, target) {
-      style_tmp = "'" + selector + "' : {";
+      // separate this target with a comma but
+      // only if this is not the first target (i.e. the last character in styles is a '}' )
+      
+      if (styles.substring(styles.length - 1) === "}") {
+        style_tmp += ",";
+      }
+      
+      style_tmp += "'" + selector + "' : {";
       num_new_styles = 0;
       $.each(target.new_styles, function(property, value) {
         num_new_styles ++;
@@ -96,6 +103,7 @@
       style_tmp = style_tmp.slice(0,-1); // drop the comma off the last (property, value) pair
       style_tmp += "}";
       styles += style_tmp;
+      style_tmp = "";
     });
     styles += "}";
     data.styles = styles;
