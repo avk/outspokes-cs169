@@ -113,7 +113,7 @@
 
 #outspokes #new_edit_wrap {
 /*  border: 2px dashed orange;*/
-  background-color: white;
+  background-color: #333;
   color: black;
   height: 217px;
   float: right;
@@ -154,6 +154,7 @@
     border: 1px solid #999999;
     margin-top: -1px;
     padding: 10px;
+    background: #FFF;
   }
   
   #outspokes #your_edits .your_edits_nav {
@@ -186,6 +187,16 @@
   height: 215px;
   margin-right: 2%;
   width: 25%;
+  
+  
+  float: right;
+  margin-right: 2%;
+  width: 26%;
+  height: 157px;
+  color: #111;
+  margin-top: 30px;
+  -moz-border-radius-bottomleft:7px;
+  text-align: left;
 }
 
 #outspokes #outspokes_target_header h1 {
