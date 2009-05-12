@@ -303,21 +303,37 @@
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
     this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
-    var bgColor = $('<div></div>');
+    var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
     bgColor.find('input').blur( function() {
       if (this.value == "") {return;}
       fb.i.target.current.target.set_style('background-color', '#' + this.value);
     });
     
-    var textColor = $('<div></div>');
-    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />'));
+    var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
+    // bgColorApply.click( function() {
+    //   currBgColor = bgColor.find('input');
+    //   if (currBgColor.value == "") {return;}
+    //   fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+    // });
+    
+    var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
+    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
     textColor.find('input').blur( function() {
       if (this.value == "") {return;}
       fb.i.target.current.target.set_style('color', '#' + this.value);
     });
     
+     var textColorApply = $('<input class="button" type="submit" value="Apply" />');
+    // textColorApply.click( function() {
+    //   currTextColor = textColor.find('input');
+    //   if (currTextColor.value == "") {return;}
+    //   fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+    // });
+    
+    bgColor.append(bgColorApply);
     this.your_color.append(bgColor);
+    textColor.append(textColorApply);
     this.your_color.append(textColor);
     
     this.your_edits_wrapper.append(this.your_color);
@@ -328,22 +344,39 @@
     this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
     
-    var fontFamily = $('<div></div>');
-    fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" /><br />'));
+    var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
+    fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" />'));
     fontFamily.find('input').blur( function() {
       if (this.value == "") {return;}
       fb.i.target.current.target.set_style('font-family', this.value);
     });
-
-    var fontSize = $('<div></div>');
-    fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span><br />'));
+    
+    var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
+    // fontFamilyApply.click( function() {
+    //   currFontFam = fontFamily.find('input');
+    //   if (currFontFam.value == "") {return;}
+    //   fb.i.target.current.target.set_style('font-family', currFontFam.value);
+    // });
+    
+    var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
+    fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
     fontSize.find('input').blur( function() {
       if (this.value == "") {return;}
       fb.i.target.current.target.set_style('font-size', this.value + 'px');
     });
     
+    var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    // fontSizeApply.click( function() {
+    //   currFontSize = fontSize.find('input');
+    //   if (currFontSize.value == "") {return;}
+    //   fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');
+    // });
+    
+    fontFamily.append(fontFamilyApply);
     this.your_font.append(fontFamily);
+    fontSize.append(fontSizeApply);
     this.your_font.append(fontSize);
+
     
     this.your_edits_wrapper.append(this.your_font);
     
