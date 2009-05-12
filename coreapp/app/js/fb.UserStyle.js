@@ -81,13 +81,21 @@
     
     // Stringify the JSON styles
     var styles = "{";
+    var style_tmp = "";
+    var num_new_styles = 0;
     $.each(targets, function (selector, target) {
-      styles += "'" + selector + "' : {";
+      style_tmp = "'" + selector + "' : {";
+      num_new_styles = 0;
       $.each(target.new_styles, function(property, value) {
-        styles += "'" + property + "':'" + value.toString() + "',";
+        num_new_styles ++;
+        style_tmp += "'" + property + "':'" + value.toString() + "',";
       });
-      styles = styles.slice(0,-1); // drop the comma off the last (property, value) pair
-      styles += "}";
+      if (num_new_styles === 0) {
+        return true;
+      }
+      style_tmp = style_tmp.slice(0,-1); // drop the comma off the last (property, value) pair
+      style_tmp += "}";
+      styles += style_tmp;
     });
     styles += "}";
     data.styles = styles;
@@ -200,8 +208,11 @@
     });
 
     var selector, selector_class;
-    $.each(data.selectors, function (selector_array) {
+    $.each(data.selectors, function (index, selector_array) {
       [selector, selector_class] = selector_array;
+      console.log("selector_array", selector_array);
+      console.log("[selector, selector_class]", [selector, selector_class]);
+      console.log("$(selector)", $(selector));
       $(selector).addClass(selector_class);
     });
 

@@ -17,7 +17,9 @@
     = link_to "Can I leave a comment for a specific person (invisible to everyone else)?", :anchor => "commentforperson"
   %li
     = link_to "Can I edit or delete my own comments?", :anchor => "editcomments"
-  
+  %li
+    = link_to "Can I leave a private comment that is targeted?", :anchor => "privatetargeted"
+
 %h3 Admin
 %ul
   %li
@@ -59,7 +61,7 @@
 
   %dt   
     %a{:name => "viewtargeted" } How do I view targeted comments?
-  %dd To view the target of a comment, hover your mouse over the comment, and a box will appear around the target of the comment on the page.
+  %dd To view the target of a comment, hover your mouse over the comment, and a box will appear around the target of the comment on the page.  If a comment has a target, there will be a target icon in the title bar of the comment.
 
 %h3 Commenters
 %dl
@@ -69,16 +71,21 @@
 
   %dt   
     %a{:name => "commentforperson" } Can I leave a comment for a specific person (invisible to everyone else)?
-  %dd You can leave private comments for the person who posted the site (the admin), and only you and the admin can view those comments. To do so, check the "Private" checkbox below the commenting form. Note that you cannot leave private comments for other commenters.
+  %dd You can leave a comment that only the admin for the site can see by checking the private box below the comment input form.  Also, replies to private comments will also be private.  All other comments can be seen by everyone else that uses the widget.
   %dt   
     %a{:name => "editcomments" } Can I edit or delete my own comments?
   %dd We currently do not support those features.
+
+  %dt
+    %a{:name => "privatetargeted" } Can I leave a private comment that is targeted?
+  %dd Yes.  Just select both a target and the private checkbox.
+
 
 %h3 Admin
 %dl
   %dt   
     %a{:name => "deletesite" } How do I delete my site?
-  %dd To delete your site, log in to outspokes.com.  Once you have logged in, to delete the site, click on the delete link to the right of your site name.
+  %dd To delete your site, log in to outspokes.com.  Once you have logged in, to delete the site, click on the red X to the right of your site name.
 
   %dt   
     %a{:name => "removecommenters" } How do I remove commenters?
@@ -90,12 +97,12 @@
 
   %dt   
     %a{:name => "commentersseeothers" } Can commenters see each other's comments?
-  %dd All commenters can see all comments, except those sent privately to the admin.
+  %dd All commenters can see all comments except for those comments marked as private by commenters and responses to private comments.
   
   %dt   
     %a{:name => "adminagree" } Can I agree/disagree with a comment?
   %dd No.  We feel that as the person requesting feedback, your opinion (in this respect), doesn't really factor in to the commenters' consensus opinion.  To get your opinion heard, simply reply to the comment.
-  
+
   %dt   
     %a{:name => "deleteasinglepage" } How can I delete a single page?
   %dd To delete a single page, open up the admin panel on the widget, and click on the "pages" tab at the top.  Then click on the x to the right of whichever page you want to delete.
@@ -118,7 +125,7 @@
 
   %dt   
     %a{:name => "crosssite" } What's with this whole cross-site scripting business?
-  %dd In order to transmit people's comments to our site, we transferring information across web domains, which is technically considered a no-no by some people.  However, we are not transmitting and will not transmit any information from your domain other than that pertaining to the comments that people are giving.
+  %dd In order to transmit people's comments to our site, we transferring information across web domains, which might be considered a no-no by some people.  However, we do not (and will not ever) transmit any information from your web site other than that pertaining to the comments that people are giving.  The only information about a target that we use is the path to the targeted element in the DOM, we do not use any information contained in the element itself.
 
 %h3 About Outspokes
 %dl
