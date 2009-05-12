@@ -315,11 +315,11 @@
     });
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
-    // bgColorApply.click( function() {
-    //   currBgColor = bgColor.find('input');
-    //   if (currBgColor.value == "") {return;}
-    //   fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
-    // });
+    bgColorApply.click( function() {
+      currBgColor = bgColor.find('input')[0];
+      if (currBgColor.value == "") {return;}
+      fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+    });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
@@ -329,11 +329,11 @@
     });
     
      var textColorApply = $('<input class="button" type="submit" value="Apply" />');
-    // textColorApply.click( function() {
-    //   currTextColor = textColor.find('input');
-    //   if (currTextColor.value == "") {return;}
-    //   fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
-    // });
+    textColorApply.click( function() {
+      currTextColor = textColor.find('input')[0];
+      if (currTextColor.value == "") {return;}
+      fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+    });
     
     bgColor.append(bgColorApply);
     this.your_color.append(bgColor);
@@ -356,11 +356,11 @@
     });
     
     var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
-    // fontFamilyApply.click( function() {
-    //   currFontFam = fontFamily.find('input');
-    //   if (currFontFam.value == "") {return;}
-    //   fb.i.target.current.target.set_style('font-family', currFontFam.value);
-    // });
+    fontFamilyApply.click( function() {
+      currFontFam = fontFamily.find('input')[0];
+      if (currFontFam.value == "") {return;}
+      fb.i.target.current.target.set_style('font-family', currFontFam.value);
+    });
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
@@ -370,11 +370,11 @@
     });
     
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
-    // fontSizeApply.click( function() {
-    //   currFontSize = fontSize.find('input');
-    //   if (currFontSize.value == "") {return;}
-    //   fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');
-    // });
+    fontSizeApply.click( function() {
+      currFontSize = fontSize.find('input')[0];
+      if (currFontSize.value == "") {return;}
+      fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');
+    });
     
     fontFamily.append(fontFamilyApply);
     this.your_font.append(fontFamily);

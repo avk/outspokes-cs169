@@ -34,12 +34,12 @@
     
     
     this.target_footer = $('<div></div>').attr('id','outspokes_target_footer');
-    var clear_targets = $('<a href="#">Clear</a>');
+    var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
       fb.i.target.startOver();
       return false;
     });
-    var save_targets = $('<a href="#">Save</a>').css('padding-left','20px');
+    var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
       fb.UserStyle.post(fb.i.target.all);
       return false;
@@ -57,7 +57,7 @@
       });
       
       if (this.target_list.find('li').length > 0) {
-        var delete_target = $('<a href="#">x</a>');
+        var delete_target = $('<a href="#">x</a>').attr('id', 'outspokes_delete_style_edit');
         delete_target.click(function(e) {
           fb.i.target.remove( $(this).parent('li').attr('title') );
         });
