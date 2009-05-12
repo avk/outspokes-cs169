@@ -20,6 +20,9 @@ class SitesController < ApplicationController
     params[:site][:public] = params[:site][:public] == "1" ? true : false
     pageurl = params[:site][:url]
     if(params[:site][:url][params[:site][:url].length-1, 1]=='/') then params[:site][:url].chop! end
+    
+    # params[:site][:url] = RedirectFollower.new(params[:site][:url]).resolve.url
+    
     @site = Site.new(params[:site])
     @site.account = current_account
 
