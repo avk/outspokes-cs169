@@ -453,6 +453,11 @@
     this.help_content.append(help_copy);
     this.help_content.addClass("hide");
 
+    // JUGGERNAUT
+    this.juggernaut='<iframe src ="http://localhost:3000/juggernaut.html" width="0" height="0">\
+      <p>Your browser does not support iframes.</p>\
+    </iframe>';
+
 
     // WRAPUP //////////////////////////////////////////////////////////////////
 
@@ -464,6 +469,7 @@
     this.main_window.append(this.widget_content);
     this.main_window.append(this.edits);
     this.main_window.append(this.help_content);
+    this.main_window.append(this.juggernaut);
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);

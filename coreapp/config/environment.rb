@@ -97,5 +97,4 @@ Rails::Initializer.run do |config|
     ExceptionNotifier.email_prefix = "[app err] "
   end
 
-
 end
