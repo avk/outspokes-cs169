@@ -23,7 +23,7 @@ function() {
     fb.env.get_user_styles_address = "<%= WIDGET_DOMAIN %>widget/user_styles";
     fb.env.post_user_style_address = "<%= WIDGET_DOMAIN %>widget/user_styles";
     fb.env.user_style_address = function(id) {
-      return "<%= WIDGET_DOMAIN %>widget/user_styles/show/" + id;
+      return "<%= WIDGET_DOMAIN %>widget/user_styles/" + id;
     };
     fb.env.edit_css_address = "<%= WIDGET_DOMAIN %>stylesheets/userstyles.css";
     fb.env.destroy_address = "<%= WIDGET_DOMAIN %>delete_feedback";

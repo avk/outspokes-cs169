@@ -78,8 +78,8 @@
       data.validation_token = _fb.admin();
     }
     
+    // Stringify the JSON styles
     var styles = "{";
-    var properties = {};
     $.each(targets, function (selector, target) {
       styles += "'" + selector + "' : {";
       $.each(target.new_styles, function(property, value) {
