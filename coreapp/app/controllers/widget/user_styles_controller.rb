@@ -41,13 +41,11 @@ class Widget::UserStylesController < Widget::WidgetController
   # GET an individual user's changes (represented by CSS) for a given page
   def show
     @css = "" # returned by default
-    if @authorized
-      begin
-        if @user_style = UserStyle.find( params[:id] )
-          @css = UserStyle.json_to_css(@user_style.changeset)
-        end
-      rescue ActiveRecord::RecordNotFound => e
+    begin
+      if @user_style = UserStyle.find( params[:id] )
+        @css = UserStyle.json_to_css(@user_style.changeset)
       end
+    rescue ActiveRecord::RecordNotFound => e
     end
     
     respond_to do |wants|
