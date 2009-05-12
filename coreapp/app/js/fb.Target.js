@@ -35,6 +35,11 @@
 
   fb.Target.pick = function (callback) {
     fb.select_target(function (e) {
+      $(e.target).removeClass("outspokes_currently_hovering");
       callback(new fb.Target(fb.getPath(e.target)));
+    }, function(e) {
+      $(e.target).addClass("outspokes_currently_hovering");
+    }, function(e) {
+      $(e.target).removeClass("outspokes_currently_hovering");
     });
   };

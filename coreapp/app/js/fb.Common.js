@@ -200,25 +200,23 @@
     };
   })();
 
-  fb.select_target = function (select_function) {
+  fb.select_target = function (select_function, mouseover_function, mouseout_function) {
     // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes
     var page_elements = fb.i.dom.non_widget_elements;
     // Mark clicked-on elemement
     page_elements.bind('click.elem_select', function (e) {
       select_function(e);
       page_elements.unbind(".elem_select");
-      $(e.target).removeClass("outspokes_currently_hovering");
-      $(e.target).addClass("outspokes_selected_page_element");
       e.stopPropagation();
       return false; // Hopefully prevents link from being followed
     });
     page_elements.bind("mouseenter.elem_select", function (e) {
-      $(e.target).addClass("outspokes_currently_hovering");
+      mouseover_function(e);
       e.stopPropagation();
     });
 
     page_elements.bind("mouseleave.elem_select", function (e) {
-      $(e.target).removeClass("outspokes_currently_hovering");
+      mouseout_function(e);
       e.stopPropagation();
     });
   };

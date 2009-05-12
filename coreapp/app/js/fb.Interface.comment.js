@@ -76,9 +76,15 @@
       $(this)[0].value = "Change target";
       fb.i.comment.reset_target();
       fb.select_target(function(e) {
-        fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+        fb.i.comment.form.find("input[name='target']").attr("value", fb.getPath(e.target));
+        $(e.target).removeClass("outspokes_currently_hovering");
+        $(e.target).addClass("outspokes_selected_page_element");
         $('.outspokes_target_button').addClass('target_set');
         $('#outspokes_form_header').find('span').text('Targeted Comment');
+      }, function(e) {
+        $(e.target).addClass("outspokes_currently_hovering");
+      }, function(e) {
+        $(e.target).removeClass("outspokes_currently_hovering");
       });
     });
 
