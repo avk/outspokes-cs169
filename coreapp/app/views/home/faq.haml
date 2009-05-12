@@ -13,6 +13,8 @@
 %br
 = link_to "Can I leave a comment for a specific person (inivisible to everyone else)?", :anchor => "commentforperson"
 %br
+= link_to "Can I leave a private comment that is targeted?", :anchor => "privatetargeted"
+%br
 = link_to "Can I edit my own comments?", :anchor => "editcomments"
 %br
 = link_to "Can I delete my own comments?", :anchor => "deletecomments"
@@ -57,31 +59,35 @@
 
   %dt   
     %a{:name => "viewtargeted" } How do I view targeted comments?
-  %dd To view the target of a comment, hover your mouse over the comment, and a box will appear around the target of the comment on the page.
+  %dd To view the target of a comment, hover your mouse over the comment, and a box will appear around the target of the comment on the page.  If a comment has a target, there will be a target icon in the title bar of the comment.
 
 %h3 Commenters
 %dl
   %dt   
     %a{:name => "changevotes" } Can I change my (dis)agree vote?
-  %dd No.  Please think carefully before voting.  The weight of the world rests on your shoulders.
+  %dd No.  Please think carefully before voting.
 
   %dt   
     %a{:name => "commentforperson" } Can I leave a comment for a specific person (inivisible to everyone else)?
-  %dd No.  Think wisely before leaving feedback.  Don't be a douche.
+  %dd You can leave a comment that only the admin for the site can see by checking the private box below the comment input form.  Also, replies to private comments will also be private.  All other comments can be seen by everyone else that uses the widget.
+
+  %dt
+    %a{:name => "privatetargeted" } Can I leave a private comment that is targeted?
+  %dd Yes.  Just select both a target and the private checkbox.
 
   %dt   
     %a{:name => "editcomments" } Can I edit my own comments?
-  %dd No.  Think carefully before leaving feedback.  Don't be a hoser.
+  %dd No.  Please think carefully before leaving feedback.
 
   %dt   
     %a{:name => "deletecomments" } Can I delete my own comments?
-  %dd No.  Think sagely before leaving feedback.  Don't be a dick.  See the pattern?
+  %dd No.  Please think carefully before leaving feedback.
 
 %h3 Admin
 %dl
   %dt   
     %a{:name => "deletesite" } How do I delete my site?
-  %dd To delete your site, log in to outspokes.com.  Once you have logged in, to delete the site, click on the delete link to the right of your site name.
+  %dd To delete your site, log in to outspokes.com.  Once you have logged in, to delete the site, click on the red X to the right of your site name.
 
   %dt   
     %a{:name => "removecommenters" } How do I remove commenters?
@@ -93,7 +99,7 @@
 
   %dt   
     %a{:name => "commentersseeothers" } Can commenters see each other's comments?
-  %dd All commenters can see all comments.
+  %dd All commenters can see all comments except for those comments marked as private by commenters and responses to private comments.
 
   %dt   
     %a{:name => "deleteasinglepage" } How can I delete a single page?
@@ -104,7 +110,7 @@
   %dd All the feedback and associated information (agree/disagree votes and reply threads) gets deleted.  The page on your site is not directly affected.
 
   %dt   
-    %a{:name => "javascriptinclude" } What the hell is this "javascript include" thing?
+    %a{:name => "javascriptinclude" } What the heck is this "javascript include" thing?
   %dd The javascript include tag is the piece of code that allows us to run our widget on your site.  The include tag pulls in the javascript code from our site, which allows someone with a valid URL token to see the widget and give feedback to your site.
 
   %dt   
@@ -117,11 +123,11 @@
 
   %dt   
     %a{:name => "crosssite" } What's with this whole cross-site scripting business?
-  %dd In order to transmit people's comments to our site, we transferring information across web domains, which is technically considered a no-no by some people.  However, we are not transmitting and will not transmit any information from your domain other than that pertaining to the comments that people are giving.
+  %dd In order to transmit people's comments to our site, we transferring information across web domains, which might be considered a no-no by some people.  However, we do not (and will not ever) transmit any information from your web site other than that pertaining to the comments that people are giving.  The only information about a target that we use is the path to the targeted element in the DOM, we do not use any information contained in the element itself.
 
   %dt   
     %a{:name => "adminagree" } Can I agree/disagree with a comment?
-  %dd No.  We feel that as the person requesting feedback, your opinion (in this respect), doesn't really factor in to the commenters' consensus opinion.  To get your opinion heard, simply reply to the comment.
+  %dd No.  We feel that as the person requesting feedback, your opinion (in this respect), doesn't really factor in to the consensus opinion.  To get your opinion heard, simply reply to the comment.
 
 %h3 About Outspokes
 %dl
