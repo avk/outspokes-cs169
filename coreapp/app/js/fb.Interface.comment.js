@@ -398,7 +398,13 @@
         c.__unHover = tmp[1];
         rtn.hover(tmp[0], tmp[1]);
         rtn.addClass('targeted');
-        rtn.find('.commenter_name').before($('<div></div>').addClass('targeted_icon'));
+        var target_div = $('<div></div>').addClass('targeted_icon');
+        rtn.find('.commenter_name').before(target_div);
+        target_div.click(function (e) {
+          console.log(tmp);
+          $.scrollTo($(c.target), 300, { offset: -100});
+          e.stopPropagation();
+        });
       }
       
       return rtn;
