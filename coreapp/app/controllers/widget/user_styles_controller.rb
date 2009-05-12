@@ -11,25 +11,12 @@ class Widget::UserStylesController < Widget::WidgetController
     
     if @authorized
       styles = @invite.page.user_styles
-      styles.each do |style|
-        begin
-          json = ActiveSupport::JSON.decode style.changeset
-          # REFACTOR:
-          json.keys.each do |selector|
-            # Adapted from UserStyle.json_to_css
-            css_class_name = selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
-            selectors << [selector.to_s, css_class_name ]
-          end
-          selectors.uniq!
-        rescue JSON::ParserError => e
-          log.error "could not parse selectors"
-        end
-      end
-    
+      styles.each { |style| selectors += selectors_and_class_names(style) }
+      selectors.uniq!
       styles = styles.map { |style| style.json_attributes(@commenter) }
     end
     
-    result = {:authorized => @authorized, :admin => @admin, :selectors => selectors, :styles => styles}
+    result = { :authorized => @authorized, :admin => @admin, :selectors => selectors, :styles => styles }
     
     respond_to do |wants|
       wants.js do
@@ -62,11 +49,13 @@ class Widget::UserStylesController < Widget::WidgetController
       @user_style.changeset = params[:styles]
       success = @user_style.save
       
+      
       result = {
         :authorized => @authorized, 
         :admin => @admin, 
         :success => success, 
-        :user_style => @user_style.json_attributes(@commenter)
+        :user_style => @user_style.json_attributes(@commenter),
+        :selectors => selectors_and_class_names(@user_style)
       }
     end
     
@@ -77,5 +66,22 @@ class Widget::UserStylesController < Widget::WidgetController
       end
     end
   end
+
+private
+
+  # returns an array of [selector, css_class_name] pairs for a given UserStyle
+  def selectors_and_class_names(style)
+    selectors = []
+    begin
+      json = ActiveSupport::JSON.decode style.changeset
+      json.keys.each do |selector|
+        selectors << [ selector.to_s, UserStyle.to_css_class(selector.to_s) ]
+      end
+    rescue ActiveSupport::JSON::ParseError => e
+      logger.error "could not parse selectors: #{e}"
+    end
+    selectors
+  end
+  
 
 end
