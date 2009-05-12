@@ -456,6 +456,7 @@
         $(this).appendTo(this.__container);
       });
       this.filtering.flattened = false;
+      fb.i.comment.refresh_count();
     };
     
     // Sorts comment threads based on method
@@ -469,13 +470,16 @@
     // Flattens comments and hides them if method returns true for given comment
     this.filter_comments = function(fn) {
       var posts = this.flatten_comments();
+      var count = 0;
       posts.each(function() {
         if (! fn(this)) {
           $(this).hide(400);
         } else {
+          count++;
           $(this).show(400);
         }
       });
+      fb.i.set_num_comments(count);
     };
     
     // Filters comments based on whether prop is true for each Comment object
@@ -553,6 +557,11 @@
       fb.i.comment.form.find("input[name='target']").attr("value","html");
       $('.outspokes_target_button').removeClass('target_set');
       $('#outspokes_form_header').find('span').text('Comment');
+    };
+    
+    // This is UI and should be moved to fb.Interface.comment
+    this.refresh_count = function() {
+      fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
     };
     
   };
