@@ -188,7 +188,7 @@
 }
 
 #outspokes #your_targets {
-/*  border: 1px solid blue;*/
+/*  border: 1px solid blue;
   background-color: #eee;
   float: right;
   height: 215px;
@@ -203,17 +203,44 @@
   color: #111;
   margin-top: 30px;
   -moz-border-radius-bottomleft:7px;
+  text-align: left;*/
+  margin-right: 2%;
+  float: right;
+  width: 26%;
+  height: 217px;
+}
+
+#outspokes #outspokes_target_header {
+  color:#DDDDDD;
+  height:20px;
+  line-height:200%;
+  margin:5px 0;
+  width: 100%;
+}
+
+#outspokes #outspokes_target_header span {
+  font-size: 14px;
+  font-weight: bold;
+  font-style:italic;
+}
+
+#outspokes #outspokes_target_footer {
+  -moz-border-radius-bottomleft:7px;
+  background-color:#BBBBBB;
+  padding:3px;
+  text-align:right;
+  width: 100%;
+  border-right: 1px solid #BBB;
+}
+
+#outspokes #outspokes_target_list_wrap {
+  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center top;
+  color:#333333;
+  padding:5px;
+  width: 99%;
+  height: 157px;
+  color: #111;
   text-align: left;
-}
-
-#outspokes #outspokes_target_header h1 {
-  font-size: 1.5em;
-  float: left;
-  width: 75%;
-}
-
-#outspokes #outspokes_target_list {
-  
 }
 #outspokes #outspokes_target_list li { 
   border: 1px solid blue;
