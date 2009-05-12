@@ -301,7 +301,7 @@
     
     
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
-    this.your_color = $('<div></div>');
+    this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
     var bgColor = $('<div></div>');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
@@ -325,7 +325,7 @@
     
     
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
-    this.your_font = $('<div></div>');
+    this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
     
     var fontFamily = $('<div></div>');
