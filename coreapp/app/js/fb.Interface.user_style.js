@@ -65,7 +65,7 @@
 
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<div>New Edit</div>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link = $('<div><div>Make your own <span>page edit</span>:<br />Click here! &raquo;</div></div>').attr('id', dom.edits_view.new_edit_link);
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
     });
@@ -194,7 +194,7 @@
     this.new_edit_view.hide();
     
     // back to list
-    this.edit_list_link = $('<a href="#">&laquo; List Edits</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link = $('<a href="#">&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
       fb.i.target.startOver();
@@ -301,7 +301,7 @@
     
     
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
-    this.your_color = $('<div></div>');
+    this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
     var bgColor = $('<div></div>');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
@@ -325,7 +325,7 @@
     
     
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
-    this.your_font = $('<div></div>');
+    this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
     
     var fontFamily = $('<div></div>');

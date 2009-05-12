@@ -22,7 +22,7 @@ class Feedback < ActiveRecord::Base
   @@high_vote_factor = 1.5
   
   def self.json_attribute_names
-    %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular? isPrivate)
+    %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular?)
   end
   
   def abstract?

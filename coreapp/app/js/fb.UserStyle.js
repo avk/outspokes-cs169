@@ -33,6 +33,7 @@
   };
   
   fb.UserStyle.prototype.render = function() {
+    delete fb.UserStyle.unrendered[this.feedback_id];
     fb.i.user_style.render(this);
   };
 

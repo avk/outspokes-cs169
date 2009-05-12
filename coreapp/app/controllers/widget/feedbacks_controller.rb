@@ -19,8 +19,6 @@ class Widget::FeedbacksController < Widget::WidgetController
           if @admin
             comments = page.comments.map { |f| f.json_attributes(@commenter) }
           elsif
-            #comments = page.comments.find(:all, :conditions => 
-            #           [ "private = ? OR commenter_id = ?", false, @commenter.id]).map { |f| f.json_attributes(@commenter) }
             fbtemp = []            
             for fb in page.comments.roots do
               if !fb.private || fb.commenter == @commenter 
@@ -92,12 +90,12 @@ class Widget::FeedbacksController < Widget::WidgetController
       match = params[:target].match(/\Acomment_(\d+)\z/)
       parent_private = params[:isPrivate] 
 
-      if match
-        logger.debug "MATCHMATCHMATCHMATCH********************************************"
-        parent_id = match[1].to_i
-        parent_private = Comment.find(parent_id).private
-        puts parent_private
-      end
+#      if match
+#        logger.debug "MATCHMATCHMATCHMATCH********************************************"
+#        parent_id = match[1].to_i
+#        parent_private = Comment.find(parent_id).private
+#        puts parent_private
+#      end
 
       comment = Comment.new :commenter => @commenter, :name => name, :content => content,
                              :target => params[:target], :public => public_comment, 

@@ -167,7 +167,7 @@
         // triggered when a navigation element is clicked,
         // same order as list of elements
         callbacks : [
-          function() { fb.Feedback.get(); },
+          function() { fb.Comment.get(); },
           function() { fb.UserStyle.get(); }
         ],
         /*
