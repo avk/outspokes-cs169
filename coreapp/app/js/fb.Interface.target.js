@@ -57,7 +57,7 @@
       });
       
       if (this.target_list.find('li').length > 0) {
-        var delete_target = $('<a href="#">x</a>');
+        var delete_target = $('<a href="#">x</a>').attr('id', 'outspokes_delete_style_edit');
         delete_target.click(function(e) {
           fb.i.target.remove( $(this).parent('li').attr('title') );
         });

@@ -244,6 +244,7 @@
   background-color: #DDD;
   border-color: #FFF;
   color: #C1272D;
+  text-decoration: underline;
 }
 
 #outspokes #outspokes_target_list_wrap {
@@ -258,8 +259,10 @@
   overflow-y: scroll;
 }
 #outspokes #outspokes_target_list li { 
-  border: 1px solid blue;
+  border-bottom: 1px dotted #444;
+  padding: 2px;
   margin: 5px 0;
+  -moz-border-radius: 3px;
 }
   #outspokes #outspokes_target_list li.outspokes_current_target {
     border: 1px solid #C1272D;
@@ -268,3 +271,12 @@
     display: block;
     float: right;
   }
+#outspokes #outspokes_target_list #outspokes_delete_style_edit {
+  font-weight: bold;
+  color: #C1272D;
+  font-size: 13px;
+  line-height: 11px;
+}
+#outspokes #outspokes_target_list a#outspokes_delete_style_edit:hover {
+  color: red;
+}
