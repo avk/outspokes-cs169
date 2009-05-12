@@ -164,6 +164,12 @@
           "widget_content",
           "edits"
         ],
+        // triggered when a navigation element is clicked,
+        // same order as list of elements
+        callbacks : [
+          function() { fb.Feedback.get(); },
+          function() { fb.UserStyle.get(); }
+        ],
         /*
         clicking on an element:
           makes it the current element
@@ -176,11 +182,16 @@
           for (var which_element = 0; which_element < fb.i.nav.elements.content.length; which_element++) {
             var content = fb.i[ fb.i.nav.elements.content[which_element] ];
             if (clicked_element === fb.i.nav.elements.list[which_element][0]) {
+              var callback = fb.i.nav.elements.callbacks[which_element];
+              if (callback && fb.i.nav.current[0] !== clicked_element) {
+                callback();
+              }
+              
               fb.i.nav.setCurrent(which_element);
               fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
               // Save the current tab in widget cookie state
               fb.save_state("widget_tab", which_element);
-              content.show();
+              content.show();              
             } else {
               content.hide();
               fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
