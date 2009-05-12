@@ -241,6 +241,8 @@
   height: 157px;
   color: #111;
   text-align: left;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 #outspokes #outspokes_target_list li { 
   border: 1px solid blue;
