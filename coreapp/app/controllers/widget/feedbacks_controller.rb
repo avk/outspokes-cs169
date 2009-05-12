@@ -16,17 +16,7 @@ class Widget::FeedbacksController < Widget::WidgetController
       if !@public
         site = @invite.page.site
         if page = @invite.page.site.pages.find_by_url(params[:current_page])
-          if @admin
-            comments = page.comments.map { |f| f.json_attributes(@commenter) }
-          elsif
-            fbtemp = []            
-            for fb in page.comments.roots do
-              if !fb.private || fb.commenter == @commenter 
-                fbtemp += fb.self_and_descendants
-              end
-            end
-            comments = fbtemp.map { |f| f.json_attributes(@commenter) }
-          end
+          comments = get_comments page
         end
       else
         if page = Page.find_public_page_by_url(params[:current_page])
@@ -90,12 +80,12 @@ class Widget::FeedbacksController < Widget::WidgetController
       match = params[:target].match(/\Acomment_(\d+)\z/)
       parent_private = params[:isPrivate] 
 
-#      if match
+      if match
 #        logger.debug "MATCHMATCHMATCHMATCH********************************************"
-#        parent_id = match[1].to_i
-#        parent_private = Comment.find(parent_id).private
+         parent_id = match[1].to_i
+         parent_private = Comment.find(parent_id).private
 #        puts parent_private
-#      end
+      end
 
       comment = Comment.new :commenter => @commenter, :name => name, :content => content,
                              :target => params[:target], :public => public_comment, 
@@ -116,7 +106,7 @@ class Widget::FeedbacksController < Widget::WidgetController
         comments = [] # OR, to return valid comments, page.comments.find :all
       else
         success = true
-        comments = page.comments.map { |f| f.json_attributes(@commenter) }
+        comments = get_comments page
       end
     end
 
@@ -158,4 +148,22 @@ class Widget::FeedbacksController < Widget::WidgetController
     end
   end
 
+private
+  
+  # returns the appropriate comments for a page and account/commenter
+  def get_comments(page)
+    comments = []
+    if @admin
+      comments = page.comments.map { |f| f.json_attributes(@commenter) }
+    elsif
+      fbtemp = []            
+      for fb in page.comments.roots do
+        if !fb.private || fb.commenter == @commenter 
+          fbtemp += fb.self_and_descendants
+        end
+      end
+      comments = fbtemp.map { |f| f.json_attributes(@commenter) }
+    end
+    return comments
+  end
 end

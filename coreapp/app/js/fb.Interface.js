@@ -75,7 +75,7 @@
       );
       // should only display the sort menu for the current navigation link
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+        this.nav.elements.list[which_element].filter('.outspokes-current').find('.hide_when_tab_unselected').show();
       }
     };
     
