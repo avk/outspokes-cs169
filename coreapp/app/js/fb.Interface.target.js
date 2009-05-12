@@ -34,12 +34,14 @@
     
     
     this.target_footer = $('<div></div>').attr('id','outspokes_target_footer');
-    var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
+    //var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
+    var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
       fb.i.target.startOver();
       return false;
     });
-    var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
+    //var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
+    var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
       fb.UserStyle.post(fb.i.target.all);
       return false;
