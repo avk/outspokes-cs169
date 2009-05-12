@@ -159,6 +159,8 @@
     margin-top: -1px;
     padding: 10px;
     background: #FFF;
+    -moz-border-radius-bottomleft:7px;
+    height: 100px;
   }
   
   #outspokes #your_edits .your_edits_nav {
@@ -186,6 +188,9 @@
     
 #outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
   margin: 10px;
+}
+#your_edits_wrapper label, #your_edits_wrapper input {
+  margin: 5px;
 }
 
 #outspokes #your_targets {
