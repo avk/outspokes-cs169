@@ -324,12 +324,19 @@
     this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
       // do logout stuff here
-      fb.cookie('outspokes_widget_state', null);
-      fb.cookie('fb_hash_url_token', null);
-      fb.cookie('fb_hash_admin_validation_token', null);
-      fb.$("#outspokes_admin_panel").remove();
-      fb.$("#outspokes_overlay").remove();
-      fb.$("#outspokes").remove();
+      if (_fb.admin()) {
+        var answer = confirm("Are you sure you want to log out? To log back in, please go through outspokes.com.");
+      } else {
+        var answer = confirm("Are you sure you want to log out? To log back in, please click on the link in the email you received.");
+      }
+      if (answer){
+        fb.cookie('outspokes_widget_state', null);  
+        fb.cookie('fb_hash_url_token', null);
+        fb.cookie('fb_hash_admin_validation_token', null);
+        fb.$("#outspokes_admin_panel").remove();
+        fb.$("#outspokes_overlay").remove();
+        fb.$("#outspokes").remove();
+      }
       return false;
     });
     this.topbar.append(this.logout_link);
