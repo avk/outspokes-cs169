@@ -11,7 +11,7 @@ class Comment < Feedback
   end
   
   def self.json_attribute_names
-    super + %w(content target)
+    super + %w(content target isPrivate)
   end
   
 end
