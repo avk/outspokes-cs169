@@ -15,13 +15,16 @@ class Widget::UserStylesController < Widget::WidgetController
     styles = @invite.page.user_styles
     styles.each do |style|
       begin
-        json = JSON.parse(style.changeset)
+        json = ActiveSupport::JSON.decode style.changeset
         # REFACTOR:
         json.keys.each do |selector|
           # Adapted from UserStyle.json_to_css
-          selectors[selector.to_s] = selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
+          css_class_name = selector.gsub(/:eq/, "").gsub(/[>()]/, "").gsub(/[ ]/, "")
+          selectors << [selector.to_s, css_class_name ]
         end
+        selectors.uniq!
       rescue JSON::ParserError => e
+        log.error "could not parse selectors"
       end
     end
     
