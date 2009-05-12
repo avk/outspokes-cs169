@@ -273,8 +273,11 @@
         // Go to parent thread when clicking on parent link
         link.click(function(e) {
           $("#comments_filter").val("Newest first");
-          $("#comments_filter").children().eq(0).click();
-          fb.$("#comment_list").scrollTo(c.parent_comment().build, 700);
+          fb.i.comment.sort_by_newest();
+          // THIS IS MAJORLY LAME, BUT I DUNNO HOW TO AVOID IT:
+          setTimeout(function() {
+            fb.$("#comment_list").scrollTo(c.parent_comment().build, 700);
+          }, 300);
           e.stopPropagation();
           return false;
         });
