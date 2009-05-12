@@ -27,7 +27,7 @@
       %tr{:class => cycle('odd','even')}
         %td.site_name= link_to h(site.name), site.admin_url
         %td.jsinclude
-          %a{:href => '#', :onClick => 'expandScript(this)'} Script Include
+          %span{ :onClick => 'expandScript(this)'} Script Include
         %td.delete_link= link_to 'X', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' }
       %tr.jsinclude{:style => "display:none; background-color: #fff"} 
         %td{:colspan => 3} 
