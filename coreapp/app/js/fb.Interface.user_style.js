@@ -331,7 +331,8 @@
     var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
     hide_error(bg_error_message);
     bgColor.append(bg_error_message);
-    bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
+    bgColor.append($('<label for="outspokes_bgColor" title="Enter a valid hex color value">Background</label><span class="pound">#</span>' +
+      '<input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
     bgColor.find('input').blur( function() {
       validate_colorstring(this.value, bg_error_message);
     });
@@ -346,8 +347,8 @@
     var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
     hide_error(textcolor_error_message);
     textColor.append(textcolor_error_message);
-    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
-
+    textColor.append($('<label for="outspokes_textColor" title="Enter a valid hex color value">Text</label>' + 
+      '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
     textColor.find('input').blur( function() {
       validate_colorstring(this.value, textcolor_error_message);
     });
@@ -419,8 +420,8 @@
     var font_error_message = $('<div class="input_error">Invalid font size:</div>');
     hide_error(font_error_message);
     fontSize.append(font_error_message);
-    fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
-    
+    fontSize.append($('<label for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label>' +
+      '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
     var font_size_regex = /^[0-9]{1,3}$/; // precompile this
     // Local helper function for checking font size validity
@@ -435,7 +436,6 @@
     }
     
     fontSize.find('input').blur(function(e) {
-      console.log(this.value);
       validate_font_size(this.value);
     });
     fontSizeApply.click( function() {
