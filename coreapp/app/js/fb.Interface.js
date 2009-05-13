@@ -167,8 +167,13 @@
         // triggered when a navigation element is clicked,
         // same order as list of elements
         callbacks : [
-          function() { fb.Comment.get(); fb.i.target.startOver();},
-          function() { fb.UserStyle.get(); fb.i.target.startOver();}
+          function() {
+            if (fb.i.user_style.new_edit_is_current) {
+              fb.i.user_style.hide_new_edit_view();
+            }
+            fb.Comment.get();
+          },
+          function() {fb.UserStyle.get();}
         ],
         /*
         clicking on an element:
