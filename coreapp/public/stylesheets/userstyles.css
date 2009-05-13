@@ -65,17 +65,17 @@
 }
 
 #outspokes .edit_block {
-  /*margin-bottom: 5px;*/
   border-bottom: 1px solid #777;
-  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
+  background-image: none;
+  background-color: #777;
   height:15px;
   margin-bottom:7px;
   padding:5px;
 }
 
-#outspokes .edit_block.disabled {
-  background-image: none;
-  background-color: #777;
+#outspokes .edit_block.active {
+  /*margin-bottom: 5px;*/
+  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
 }
 
 #outspokes .edit_block.disagreed {
@@ -190,27 +190,20 @@
 #outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
   margin: 10px;
 }
-#your_edits_wrapper label, #your_edits_wrapper input {
+#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
   margin: 5px;
 }
 
+#outspokes #your_edits_wrapper .outspokes_edit_label {
+  border-bottom:1px dotted #DDDDDD;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  line-height:30px;
+  width:90px;
+}
+
 #outspokes #your_targets {
-/*  border: 1px solid blue;
-  background-color: #eee;
-  float: right;
-  height: 215px;
-  margin-right: 2%;
-  width: 25%;
-  
-  
-  float: right;
-  margin-right: 2%;
-  width: 26%;
-  height: 157px;
-  color: #111;
-  margin-top: 30px;
-  -moz-border-radius-bottomleft:7px;
-  text-align: left;*/
   margin-right: 2%;
   float: right;
   width: 26%;
