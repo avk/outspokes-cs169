@@ -51,7 +51,7 @@ protected
     return true if site.home_page and id == site.home_page.id # If this _is_ the home_page, anything goes
     this_host = URI.parse(url).host
     root_host = URI.parse(site.url).host
-    if this_host != root_host
+    unless this_host.match(root_host) or root_host.match(this_host)
       errors.add(:url, "This page's url has a different domain (#{this_host}) than the site's (#{root_host})")
     end
   end
@@ -65,7 +65,7 @@ protected
   
   def page_url_can_not_have_trailing_slashes
     if(url)
-      errors.add(:url, "Url can not have trailing slashes") unless url[url.length-1, 1]!='/'
+      errors.add(:url, "cannot have trailing slashes") unless url[url.length-1, 1]!='/'
     end
   end
 end
