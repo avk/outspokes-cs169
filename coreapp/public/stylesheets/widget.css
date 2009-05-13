@@ -323,10 +323,15 @@ version: 3.0.0pr2
   height: 15px;
   float: left;
   margin-right: 10px;
+  padding: 0 5px;
 }
 
 #outspokes #comment_list .targeted .cmt_bar .targeted_icon {
   background: url(/images/target-icon-small.png) no-repeat center center;
+}
+
+#outspokes #comment_list .targeted .cmt_bar .targeted_icon:hover {
+  background-color: #ccc;
 }
 
 #outspokes #comment_list .missing_target {

@@ -71,7 +71,7 @@
 
     // TARGETING ///////////////////////
 
-    var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
+    var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" title="Target an element" />');
     target_button.click(function() {
       $(this)[0].value = "Change target";
       fb.i.comment.reset_target();
@@ -306,7 +306,7 @@
       
       
       if (_fb.admin()) {
-        var deleteCmt = $('<span>X</span>').addClass('cmt_delete_X');
+        var deleteCmt = $('<span title="Delete this comment">X</span>').addClass('cmt_delete_X');
 
         deleteCmt.click( function(e) { e.stopPropagation(); } );
 
@@ -412,12 +412,12 @@
         }
         rtn.addClass('targeted');
         
-        var target_div = $('<div></div>').addClass('targeted_icon');
+        var target_div = $('<div title="Jump to the target"></div>').addClass('targeted_icon');
         rtn.find('.commenter_name').before(target_div);
         
         target_div.click(function (e) {
           console.log(tmp);
-          $.scrollTo($(c.target), 300, { offset: -100});
+          $.scrollTo($(c.target), 200, { offset: -100});
           e.stopPropagation();
         });
       }
