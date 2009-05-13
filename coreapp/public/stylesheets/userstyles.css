@@ -71,6 +71,7 @@
   height:15px;
   margin-bottom:7px;
   padding:5px;
+  cursor: pointer;
 }
 
 #outspokes .edit_block.active {

@@ -140,25 +140,22 @@
       var us_block = $('<div></div>').attr('id', us_id).addClass(dom.edits_view.edit_block);
       
       // define its contents
-      var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
-      us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
-      us_checkbox.click(function() {
-        if (this.checked) {
-          $('.toggle_box').each(function(){
-            this.checked = false;
-            $(this).parent().removeClass('active');
-
-            var my_id = dom.edits_view.number_from_id( $(this).parent().attr("id") );
+      // var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
+      // us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      us_block.click(function() {
+        if (!$(this).hasClass('active')) { // currently not active
+          $('.' + dom.edits_view.edit_block).each(function(){ // for other edit
+            // this.checked = false;
+            $(this).removeClass('active');
+            var my_id = dom.edits_view.number_from_id( $(this).attr("id") );
             fb.UserStyle.all[my_id].unapply();
           });
-          this.checked = true;
-          $(this).parent().addClass('active');
-
-          current_edit = user_style;
+          // this.checked = true;
+          $(this).addClass('active');
           fb.UserStyle.all[user_style.feedback_id].apply();
         } else {
           fb.UserStyle.all[user_style.feedback_id].unapply();
-          $(this).parent().removeClass('active');
+          $(this).removeClass('active');
         }
       });
 
@@ -166,7 +163,7 @@
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
       // attach to the container
-      us_block.append(us_checkbox);
+      // us_block.append(us_checkbox);
       us_block.append(us_name);
       us_block.append(us_timestamp);      
       // us_block.append(this.consensus.build(user_style));
