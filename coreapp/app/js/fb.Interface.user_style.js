@@ -308,7 +308,7 @@
     this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
-    bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
+    bgColor.append($('<span class="outspokes_edit_label"><label for="bgColor">Background</label></span><span class="pound">#</span><input type="text" name="bgColor" />'));
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
@@ -328,7 +328,7 @@
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
-    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
+    textColor.append($('<span  class="outspokes_edit_label"><label for="textColor">Text</label></span><span class="pound">#</span><input type="text" name="textColor" />'));
     
     var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
@@ -378,7 +378,7 @@
     console.log(fontFamilyOptions);
     
     var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
-    fontFamily.append('<label for="fontFamily">Family</label>');
+    fontFamily.append('<span class="outspokes_edit_label"><label for="fontFamily">Family</label></span>');
     fontFamily.append('<select name="fontFamily"></select>');
     fontFamily.find('select').append('<option value="" selected="true"></option>');
     $.each(fontFamilyOptionObjects, function (i, opt) {
@@ -395,7 +395,7 @@
     
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
-    fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
+    fontSize.append($('<span  class="outspokes_edit_label"><label for="fontSize">Size</label></span><input type="text" name="fontSize" /><span>px</span>'));
     
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" title="Apply font size." />');
     fontSizeApply.click( function() {
