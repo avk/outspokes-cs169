@@ -73,7 +73,6 @@
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
     });
-    this.current_edit = null;
     
     // Consensus section
     this.consensus = {
@@ -143,31 +142,26 @@
       // define its contents
       var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
       us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
-      var current_edit = this.current_edit;
       us_checkbox.click(function() {
         if (this.checked) {
           $('.toggle_box').each(function(){
-            this.disabled = true;
-            $(this).parent().addClass('disabled');
+            this.checked = false;
+            $(this).parent().removeClass('active');
+
+            var my_id = dom.edits_view.number_from_id( $(this).parent().attr("id") );
+            fb.UserStyle.all[my_id].unapply();
           });
-          this.disabled = false;
-          $(this).parent().removeClass('disabled');
-          if (current_edit) {
-            current_edit.unapply();
-          }
+          this.checked = true;
+          $(this).parent().addClass('active');
+
           current_edit = user_style;
           fb.UserStyle.all[user_style.feedback_id].apply();
         } else {
-          $('.toggle_box').each(function(){
-            this.disabled = false;
-            $(this).parent().removeClass('disabled');
-          });
-          if (current_edit) {
-            current_edit.unapply();
-          }
-          current_edit = null;
+          fb.UserStyle.all[user_style.feedback_id].unapply();
+          $(this).parent().removeClass('active');
         }
       });
+
       var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
