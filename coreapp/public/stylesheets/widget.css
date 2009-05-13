@@ -328,6 +328,13 @@ version: 3.0.0pr2
   background: url(/images/target-icon-small.png) no-repeat center center;
 }
 
+#outspokes #comment_list .missing_target {
+  border-bottom: 1px solid #C1272D;
+  color: #C1272D;
+  font-style: italic;
+  margin-bottom: 3px;
+}
+
 #outspokes #comment_list .cmt_content {
   padding:.7em;
   background-color: white;
