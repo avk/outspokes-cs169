@@ -347,12 +347,34 @@
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
     this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
+
+    var fontFamilyOptions = [
+      ['Arial', 'sans-serif'],
+      ['Arial Black', 'sans-serif'],
+      ['Courier New', 'monospace'],
+      ['Georgia', 'serif'],
+      ['Impact', 'sans-serif'],
+      ['Times', 'serif'],
+      ['Verdana', 'sans-serif']];
+    var fontFamilyOptionObjects = $.map(fontFamilyOptions, function (opt_array, i) {
+      var rtn = $('<option></option>');
+      rtn.attr('value', opt_array[0]);
+      rtn.append(opt_array[0]);
+      return rtn;
+    });
+    console.log(fontFamilyOptions);
     
     var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
-    fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" />'));
-    fontFamily.find('input').blur( function() {
+    fontFamily.append('<label for="fontFamily">Family</label>');
+    fontFamily.append('<select name="fontFamily"></select>');
+    fontFamily.find('select').append('<option value="" selected="true"></option>');
+    $.each(fontFamilyOptionObjects, function (i, opt) {
+      fontFamily.find('select').append(opt);
+    });
+    fontFamily.find('select').change( function() {
       if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('font-family', this.value);
+      var fontFamilyArray = fontFamilyOptions[this.selectedIndex - 1];
+      fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
     });
     
     var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
