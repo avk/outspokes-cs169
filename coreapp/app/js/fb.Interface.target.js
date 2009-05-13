@@ -21,7 +21,7 @@
 
     target_button.click(function() {
       fb.Target.pick(function(target) { // callback
-        fb.i.user_style.has_changes = true;
+
       });
     });
     this.target_header.append(target_button);
@@ -34,12 +34,9 @@
     //var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
     var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
-      if (fb.i.user_style.has_changes) {
-        var answer = confirm("This will delete all of your changes.  Are you sure?");
-        if (answer) {
-          fb.i.user_style.has_changes = false;
-          fb.i.target.startOver();
-        }
+      var answer = confirm("This will delete all of your changes.  Are you sure?");
+      if (answer) {
+        fb.i.target.startOver();
       }
       return false;
     });
