@@ -183,6 +183,7 @@
         return;
       }
       current_clicked.click();
+      current_clicked = null;
     };
 
     this.remove = function(user_style) {
