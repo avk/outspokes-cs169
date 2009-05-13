@@ -192,7 +192,7 @@
     this.new_edit_view.hide();
     
     // back to list
-    this.edit_list_link = $('<a href="#">&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link = $('<a href="#"><br />&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
       fb.i.target.startOver();
@@ -303,30 +303,29 @@
     
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
-    bgColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + this.value);
-    });
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
-      if (currBgColor.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+      if (currBgColor.value == "") {
+        fb.i.target.current.target.unset_style('background-color');
+      } 
+      else {
+        fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+      }
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
-    textColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + this.value);
-    });
     
      var textColorApply = $('<input class="button" type="submit" value="Apply" />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
-      if (currTextColor.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+      if (currTextColor.value == "") {
+        fb.i.target.current.target.unset_style('color');
+      } else {
+        fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+      }
     });
     
     bgColor.append(bgColorApply);
@@ -341,36 +340,63 @@
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
     this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
+
+    var fontFamilyOptions = [
+      ['Arial', 'sans-serif'],
+      ['Arial Black', 'sans-serif'],
+      ['Courier New', 'monospace'],
+      ['Georgia', 'serif'],
+      ['Impact', 'sans-serif'],
+      ['Times', 'serif'],
+      ['Verdana', 'sans-serif']];
+    var fontFamilyOptionObjects = $.map(fontFamilyOptions, function (opt_array, i) {
+      var rtn = $('<option></option>');
+      rtn.attr('value', opt_array[0]);
+      rtn.append(opt_array[0]);
+      return rtn;
+    });
+    console.log(fontFamilyOptions);
     
     var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
-    fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" />'));
-    fontFamily.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('font-family', this.value);
+    fontFamily.append('<label for="fontFamily">Family</label>');
+    fontFamily.append('<select name="fontFamily"></select>');
+    fontFamily.find('select').append('<option value="" selected="true"></option>');
+    $.each(fontFamilyOptionObjects, function (i, opt) {
+      fontFamily.find('select').append(opt);
+    });
+    fontFamily.find('select').change( function() {
+      if (this.value == "") {
+        fb.i.target.current.target.unset_style('font-family');        
+      } else {
+        var fontFamilyArray = fontFamilyOptions[this.selectedIndex - 1];
+        fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
+      }
     });
     
-    var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
-    fontFamilyApply.click( function() {
-      currFontFam = fontFamily.find('input')[0];
-      if (currFontFam.value == "") {return;}
-      fb.i.target.current.target.set_style('font-family', currFontFam.value);
-    });
+    // var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
+    // fontFamilyApply.click( function() {
+    //   currFontFam = fontFamily.find('input')[0];
+    //   if (currFontFam.value == "") {
+    //     fb.i.target.current.target.unset_style('font-family');
+    //   } else {
+    //     fb.i.target.current.target.set_style('font-family', currFontFam.value);        
+    //   }
+    // });
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
-    fontSize.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('font-size', this.value + 'px');
-    });
     
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
-      if (currFontSize.value == "") {return;}
-      fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');
+      if (currFontSize.value == "") {
+        fb.i.target.current.target.unset_style('font-size');
+      } else {
+        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
+      }
     });
     
-    fontFamily.append(fontFamilyApply);
+    //fontFamily.append(fontFamilyApply);
     this.your_font.append(fontFamily);
     fontSize.append(fontSizeApply);
     this.your_font.append(fontSize);
