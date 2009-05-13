@@ -116,9 +116,7 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = {:authorized => @authorized, :admin => @admin,
               :success => success, :feedback => comments}
 
-    if success
-      Juggernaut.send_to_channels("parent.location.hash = '#refreshcomments';", page.id.to_s)
-    end
+    if success then push_update_to page end
 
     respond_to do |wants|
       wants.html do
@@ -140,9 +138,12 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = { :authorized => @authorized, :admin => @admin, :success => false }
     if @admin
       @comment = Comment.find(params[:id])
+      page = @comment.page
       result[:success] = @comment.destroy ? true : false
+      if result[:success] then push_update_to page end
     end
-  
+    
+
     respond_to do |format|
       format.html do
           @json_data = result.to_json

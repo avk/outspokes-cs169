@@ -53,4 +53,12 @@ class Widget::WidgetController < ApplicationController
     end
   end
   
+  def push_update_to(page)
+    begin
+      Juggernaut.send_to_channels("parent.location.hash = '#refreshcomments';", page.id.to_s)
+    rescue
+      nil
+    end
+  end
+  
 end
