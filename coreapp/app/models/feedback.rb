@@ -117,6 +117,7 @@ class Feedback < ActiveRecord::Base
   
   def self.avg_num_votes(page_id)
     feedbacks = self.find_all_by_page_id(page_id)
+    return 0 if feedbacks.empty?
     feedbacks.map(&:num_votes).sum / feedbacks.size
   end
   
