@@ -58,10 +58,14 @@
         fb.i.target.setCurrent(this);
       });
       
+      var target_list = this.target_list;
       if (this.target_list.find('li').length > 0) {
         var delete_target = $('<a href="#">x</a>').attr('id', 'outspokes_delete_style_edit');
         delete_target.click(function(e) {
+          // Set current to previous entry in target list
+          var prev = target_list.children().get(target_list.children().index($(this).parent()[0]) - 1);
           fb.i.target.remove( $(this).parent('li').attr('title') );
+          fb.i.target.setCurrent(prev);
         });
         html.append(delete_target);
       }
