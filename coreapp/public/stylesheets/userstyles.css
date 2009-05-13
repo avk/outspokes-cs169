@@ -23,7 +23,7 @@
   margin-right: 2%;
   width: 26%;
   height: 157px;
-  background:#FFFFFF url(/images/new-edit-bg.png) no-repeat scroll center center;
+  background:#FFFFFF url(/images/new-edit-bg.png) no-repeat scroll center right;
   color: #111;
   cursor: pointer;
   margin-top: 30px;
@@ -32,8 +32,6 @@
 }
 
 #outspokes #new_edit_link div {
-  font-size:43px;
-  letter-spacing:-4px;
   line-height:33px;
   margin-top:5px;
   padding:10px;
@@ -44,8 +42,8 @@
   font-weight: bold;
   font-style: italic;
   text-align: left;
-  font-size:43px;
-  letter-spacing:-4px;
+  /*font-size:43px;
+  letter-spacing:-4px;*/
   line-height:33px;
   color: #EEE;
   cursor: pointer;
@@ -154,6 +152,10 @@
     border: 1px solid #CCC;
     margin-bottom: 10px;
     margin-top: 15px;
+  }
+  
+  #outspokes #your_edits_wrapper {
+    min-width: 332px;
   }
   
   #outspokes #your_edits_wrapper #font_edit_wrap, #outspokes #your_edits_wrapper #color_edit_wrap{
@@ -275,6 +277,7 @@
   padding: 2px;
   margin: 5px 0;
   -moz-border-radius: 3px;
+  display: block;
 }
   #outspokes #outspokes_target_list li.outspokes_current_target {
     border: 1px solid #C1272D;
