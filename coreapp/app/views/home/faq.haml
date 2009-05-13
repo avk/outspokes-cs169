@@ -21,6 +21,21 @@
   %li
     = link_to "Can I leave a private comment that is targeted?", :anchor => "privatetargeted"
 
+%h3 Dynamic Edits
+%ul
+  %li
+    = link_to "What are dynamic edits?", :anchor => "dynamicedits"
+  %li
+    = link_to "How do I see a dynamic edit?", :anchor => "seedynamicedits"
+  %li
+    = link_to "How do I make a dynamic edit?", :anchor => "makedynamicedits"
+  %li
+    = link_to "What can I edit?", :anchor => "whatcaniedit"
+  %li
+    = link_to "Can I make private edits?", :anchor => "privateedits"
+  %li
+    = link_to "Can I have multiple edits showing at the same time?", :anchor => "multipleedits"
+
 %h3 Admin
 %ul
   %li
@@ -45,19 +60,6 @@
     = link_to "Can I use your site on my Facebook profile, Myspace profile, or twitter profile?", :anchor => "facebookp"
   %li
     = link_to "What's with this whole cross-site scripting business?", :anchor => "crosssite"
-
-%h3 Dynamic Edits
-%ul
-  %li
-    = link_to "What are dynamic edits?", :anchor => "dynamicedits"
-  %li
-    = link_to "How do I see a dynamic edit?", :anchor => "seedynamicedits"
-  %li
-    = link_to "How do I make a dynamic edit?", :anchor => "makedynamicedits"
-  %li
-    = link_to "What can I edit?", :anchor => "whatcaniedit"
-  %li
-    = link_to "Can I make private edits?", :anchor => "privateedits"
 
 %h3 About Outspokes 
 %ul
@@ -96,6 +98,31 @@
     %a{:name => "privatetargeted" } Can I leave a private comment that is targeted?
   %dd Yes.  Just select both a target and the private checkbox.
 
+%h3 Dynamic Edits
+%dl
+  %dt
+    %a{:name => "dynamicedits" } What are dynamic edits?
+  %dd Dynamic edits are a way for commenters on a site to make CSS changes to elements on a page.  
+
+  %dt
+    %a{:name => "seedynamicedits" } How do I see a dynamic edit?
+  %dd Each one of the bars on the left side of the widget under the edits tab is a dynamic edit.  To view one, click on the checkbox on the left side of each bar.  The dynamic edit that you are viewing will be highlighted.  You can only view one edit at a time.  To deselect a dynamic edit, uncheck the box.
+
+  %dt
+    %a{:name => "makedynamicedits" } How do I make a dynamic edit?
+  %dd To make a dynamic edit, in the edits tab in the widget, click on the "Make your own page edit" button on the right side of the pane.  To get back to the view to see other edits, click on the "Edits" button on the left side of that panel. 
+
+  %dt
+    %a{:name => "whatcaniedit" } What can I edit?
+  %dd Currently, you can change font color, background color, font family, and font size.
+
+  %dt
+    %a{:name => "privateedits" } Can I make private edits?
+  %dd No.
+
+  %dt
+    %a{:name => "multipleedits" } Can I have multiple edits showing at the same time?"
+  %dd No, we feel that it is more important to see each edit on its own as the creator envisioned it.  To see what multiple edits would look like at the same time, create a new edit that includes all of the changes that you want to see.
 
 %h3 Admin
 %dl
@@ -142,28 +169,6 @@
   %dt   
     %a{:name => "crosssite" } What's with this whole cross-site scripting business?
   %dd In order to persist feedback, we have to send information from your site to ours, i.e., across web domains.  Some people consider this a major no-no for security reasons.  However, we do not (and will never) transmit any information from your site to ours other than that directly pertaining to our widget.
-
-%h3 Dynamic Edits
-%dl
-  %dt
-    %a{:name => "dynamicedits" } What are dynamic edits?
-  %dd Dynamic edits are a way for commenters on a site to make changes to elements on a page.
-
-  %dt
-    %a{:name => "seedynamicedits" } How do I see a dynamic edit?
-  %dd Each one of the bars on the left side of the widget under the edits tab is a dynamic edit.  To view one, click on the checkbox on the left side of each bar.  You can only view one edit at a time.  To deselect a dynamic edit, uncheck the box of the edit.
-
-  %dt
-    %a{:name => "makedynamicedits" } How do I make a dynamic edit?
-  %dd To make a dynamic edit, in the edits tab in the widget, click on the "Make your own page edit" button on the right side of the pane.  To get back to the view to see other edits, click on the "Edits" button on the left side of that panel. 
-
-  %dt
-    %a{:name => "whatcaniedit" } What can I edit?
-  %dd Currently, you can change font color, background color, font family, and font size.
-
-  %dt
-    %a{:name => "privateedits" } Can I make private edits?
-  %dd No.
 
 %h3 About Outspokes
 %dl
