@@ -71,8 +71,10 @@
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
     this.new_edit_link = $('<div>Make your own <span>page edit</span>:<br />Click here! &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
+
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view);
+      fb.i.user_style.unapply_current_edit();
       fb.i.user_style.new_edit_is_current = true;
     });
     
@@ -135,7 +137,8 @@
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
     };
-    
+
+    var current_clicked = null;
     this.build = function(user_style) {
       // build up the container for a user style item
       var us_id = dom.edits_view.edit_id(user_style.feedback_id);
@@ -154,10 +157,13 @@
           });
           // this.checked = true;
           $(this).addClass('active');
+
           fb.UserStyle.all[user_style.feedback_id].apply();
+          current_clicked = $(this);
         } else {
           fb.UserStyle.all[user_style.feedback_id].unapply();
           $(this).removeClass('active');
+          current_checked = null;
         }
       });
 
@@ -171,6 +177,14 @@
       // us_block.append(this.consensus.build(user_style));
       
       return us_block;
+    };
+
+    this.unapply_current_edit = function () {
+      if (current_clicked === null) {
+        return;
+      }
+      current_clicked.click();
+      current_clicked = null;
     };
 
     this.remove = function(user_style) {
@@ -199,7 +213,7 @@
     };
     
     // back to list
-    this.edit_list_link = $('<a href="#"><br />&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link = $('<a href="#"><br />&laquo;<br />&laquo;<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(this.hide_new_edit_view);
     
     
@@ -405,7 +419,6 @@
       rtn.append(opt_array[0]);
       return rtn;
     });
-    console.log(fontFamilyOptions);
     
     var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
     fontFamily.append('<span class="outspokes_edit_label"><label for="fontFamily">Family</label></span>');
