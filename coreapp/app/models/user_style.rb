@@ -26,6 +26,8 @@ class UserStyle < Feedback
             value.split(",").each do |font|
               css += "'#{font}'"
             end
+          else
+            css += value
           end
           css += ";\n"
         end
