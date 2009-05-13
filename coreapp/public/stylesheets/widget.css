@@ -26,9 +26,9 @@ version: 3.0.0pr2
   Default values for ALL CSS 2.1 properties http://www.w3.org/TR/CSS2/propidx.html
 */
 #outspokes, #outspokes_overlay, #outspokes_admin_panel,
-#outspokes a, #outspokes ul, #outspokes li, #outspokes ol, #outspokes p, #outspokes form,
-#outspokes_overlay a, #outspokes_overlay ul, #outspokes_overlay li, #outspokes_overlay ol, #outspokes_overlay p, #outspokes_overlay form,
-#outspokes_admin_panel a, #outspokes_admin_panel ul, #outspokes_admin_panel li, #outspokes_admin_panel ol, #outspokes_admin_panel p, #outspokes_admin_panel form {
+#outspokes a, #outspokes ul, #outspokes li, #outspokes ol, #outspokes p, #outspokes form, #outspokes textarea,
+#outspokes_overlay a, #outspokes_overlay ul, #outspokes_overlay li, #outspokes_overlay ol, #outspokes_overlay p, #outspokes_overlay form, #outspokes_overlay textarea,
+#outspokes_admin_panel a, #outspokes_admin_panel ul, #outspokes_admin_panel li, #outspokes_admin_panel ol, #outspokes_admin_panel p, #outspokes_admin_panel form, #outspokes_admin_panel textarea {
   azimuth : center;
   background-attachment : scroll;
   background-color : transparent;
