@@ -78,6 +78,7 @@ function() {
           fb.cookie('fb_hash_admin_validation_token', _fb.admin());
         }
         _fb.site_id.set(data.site_id);
+        _fb.page_id.set(data.page_id);
         fb.env.admin_panel_address = {};
         fb.env.admin_panel_address.pages = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/pages";
         fb.env.admin_panel_address.commenters = "<%= WIDGET_DOMAIN %>admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/commenters";

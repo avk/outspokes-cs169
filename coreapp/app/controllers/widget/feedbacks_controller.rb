@@ -12,10 +12,12 @@ class Widget::FeedbacksController < Widget::WidgetController
   # params[:callback] => 'some_function'
   def feedback_for_page
     comments = []
+    page_id = nil
     if @authorized
       if !@public
         site = @invite.page.site
         if page = @invite.page.site.pages.find_by_url(params[:current_page])
+          page_id = page.id
           if @admin
             comments = page.comments.map { |f| f.json_attributes(@commenter) }
           elsif
@@ -30,6 +32,7 @@ class Widget::FeedbacksController < Widget::WidgetController
         end
       else
         if page = Page.find_public_page_by_url(params[:current_page])
+          page_id = page.id
           site = page.site
           comments = page.comments.map { |f| f.json_attributes(nil) }
         end
@@ -40,7 +43,7 @@ class Widget::FeedbacksController < Widget::WidgetController
       site = "null"
     end
 
-    result = {:authorized => @authorized, :admin => @admin, :feedback => comments}
+    result = {:authorized => @authorized, :admin => @admin, :feedback => comments, :page_id => page_id}
     if @admin and !params[:site_id] and site != "null"
       result.merge!({:site_id => site.id})
       if site.commenters.find(:all, :conditions => ["commenters.id != ?", site.account_id]).empty?
