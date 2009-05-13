@@ -322,38 +322,40 @@
     var apply_color = function(value, key, error_span) {
       if (validate_colorstring(value, error_span) && value.length > 0) {
         fb.i.target.current.target.set_style(key, '#' + value);
+      } else if (value.length == 0) {
+        fb.i.target.current.target.unset_style(key);
       }
     };
     
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
-    var bg_error_span = $('<div class="input_error">Invalid background color:</div>');
-    hide_error(bg_error_span);
-    bgColor.append(bg_error_span);
+    var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
+    hide_error(bg_error_message);
+    bgColor.append(bg_error_message);
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
     bgColor.find('input').blur( function() {
-      validate_colorstring(this.value, bg_error_span);
+      validate_colorstring(this.value, bg_error_message);
     });
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
-      apply_color(currBgColor.value, 'background-color', bg_error_span);
+      apply_color(currBgColor.value, 'background-color', bg_error_message);
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
-    var textcolor_error_span = $('<div class="input_error">Invalid text color:</div>');
-    hide_error(textcolor_error_span);
-    textColor.append(textcolor_error_span);
+    var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
+    hide_error(textcolor_error_message);
+    textColor.append(textcolor_error_message);
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
 
     textColor.find('input').blur( function() {
-      validate_colorstring(this.value, textcolor_error_span);
+      validate_colorstring(this.value, textcolor_error_message);
     });
     
      var textColorApply = $('<input class="button" type="submit" value="Apply" />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
-      apply_color(currTextColor.value, 'color', textcolor_error_span);
+      apply_color(currTextColor.value, 'color', textcolor_error_message);
     });
     
     bgColor.append(bgColorApply);
@@ -366,6 +368,7 @@
     
     
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
+    
     this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
 
@@ -411,15 +414,35 @@
     //   }
     // });
     
+    
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
+    var font_error_message = $('<div class="input_error">Invalid font size:</div>');
+    hide_error(font_error_message);
+    fontSize.append(font_error_message);
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
     
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    var font_size_regex = /^[0-9]{1,3}$/; // precompile this
+    // Local helper function for checking font size validity
+    function validate_font_size(value) {
+      if (value.length > 0 && (! value.match(font_size_regex))) {
+        show_error(font_error_message);
+        return false;
+      } else {
+        hide_error(font_error_message);
+        return true;
+      }
+    }
+    
+    fontSize.find('input').blur(function(e) {
+      console.log(this.value);
+      validate_font_size(this.value);
+    });
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
       if (currFontSize.value == "") {
         fb.i.target.current.target.unset_style('font-size');
-      } else {
+      } else if (validate_font_size(currFontSize.value)) {
         fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
       }
     });
