@@ -480,6 +480,9 @@
     this.help_content.append(help_copy);
     this.help_content.addClass("hide");
 
+    // JUGGERNAUT
+    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'"  width="0" height="0"></iframe>';
+
 
     // WRAPUP //////////////////////////////////////////////////////////////////
 
@@ -491,12 +494,23 @@
     this.main_window.append(this.widget_content);
     this.main_window.append(this.edits);
     this.main_window.append(this.help_content);
+    this.main_window.append(this.juggernaut);
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
     this.user_style = new fb.Interface.user_style(this);
     this.target = new fb.Interface.target(this);
-
+    
+    fb.Interface.feedback_last_updated_at=new Date;
+    fb.Interface.feedback_last_updated_at.setDate(0);
+    setInterval(function() {
+        if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
+            fb.Interface.feedback_last_updated_at=new Date;
+            fb.Comment.get();
+            history.go(-1);
+        }
+    }, 2000)
+    
     fb.Interface.instantiated = true;  
   };
 

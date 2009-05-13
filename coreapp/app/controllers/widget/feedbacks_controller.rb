@@ -12,14 +12,17 @@ class Widget::FeedbacksController < Widget::WidgetController
   # params[:callback] => 'some_function'
   def feedback_for_page
     comments = []
+    page_id = nil
     if @authorized
       if !@public
         site = @invite.page.site
         if page = @invite.page.site.pages.find_by_url(params[:current_page])
+          page_id = page.id
           comments = get_comments page
         end
       else
         if page = Page.find_public_page_by_url(params[:current_page])
+          page_id = page.id
           site = page.site
           comments = page.comments.map { |f| f.json_attributes(nil) }
         end
@@ -30,7 +33,7 @@ class Widget::FeedbacksController < Widget::WidgetController
       site = "null"
     end
 
-    result = {:authorized => @authorized, :admin => @admin, :feedback => comments}
+    result = {:authorized => @authorized, :admin => @admin, :feedback => comments, :page_id => page_id}
     if @admin and !params[:site_id] and site != "null"
       result.merge!({:site_id => site.id})
       if site.commenters.find(:all, :conditions => ["commenters.id != ?", site.account_id]).empty?
@@ -113,6 +116,8 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = {:authorized => @authorized, :admin => @admin,
               :success => success, :feedback => comments}
 
+    if success then push_update_to page end
+
     respond_to do |wants|
       wants.html do
           @json_data = result.to_json
@@ -133,9 +138,12 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = { :authorized => @authorized, :admin => @admin, :success => false }
     if @admin
       @comment = Comment.find(params[:id])
+      page = @comment.page
       result[:success] = @comment.destroy ? true : false
+      if result[:success] then push_update_to page end
     end
-  
+    
+
     respond_to do |format|
       format.html do
           @json_data = result.to_json
