@@ -13,7 +13,7 @@
         number_from_id            : function(dom_id) {
           return parseInt(dom_id.match(/edit_(\d+)/i)[1]);
         },
-        consensus_block : "edit_consensus", // class
+        consensus_block : "edit_consensuss", // class
         consensus_wrapper         : function(id) {
           return "consensus_on_comment_" + parseInt(id);
         },
@@ -203,11 +203,16 @@
     this.new_edit_view.css('width','0%'); 
     this.new_edit_view.hide();
 
+    this.has_changes = false;
+
     this.hide_new_edit_view = function () {
-      var answer = confirm("This will delete all of your changes.  Are you sure?");
-      if (!answer) {return;}
+      if (has_changes) {
+        var answer = confirm("This will delete all of your changes.  Are you sure?");
+        if (!answer) {return;}
+      }
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
       fb.i.user_style.new_edit_is_current = false;
+      has_changes = false;
       fb.i.target.startOver();
     };
     
@@ -338,6 +343,7 @@
     
     var apply_color = function(value, key, error_span) {
       if (validate_colorstring(value, error_span) && value.length > 0) {
+        has_changes = true;
         fb.i.target.current.target.set_style(key, '#' + value);
       } else if (value.length == 0) {
         fb.i.target.current.target.unset_style(key);
@@ -463,7 +469,8 @@
       if (currFontSize.value == "") {
         fb.i.target.current.target.unset_style('font-size');
       } else if (validate_font_size(currFontSize.value)) {
-        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
+        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');     
+        has_changes = true;   
       }
     });
     
