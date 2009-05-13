@@ -313,8 +313,12 @@
     var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
-      if (currBgColor.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+      if (currBgColor.value == "") {
+        fb.i.target.current.target.unset_style('background-color');
+      } 
+      else {
+        fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+      }
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
@@ -323,8 +327,11 @@
      var textColorApply = $('<input class="button" type="submit" value="Apply" />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
-      if (currTextColor.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+      if (currTextColor.value == "") {
+        fb.i.target.current.target.unset_style('color');
+      } else {
+        fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+      }
     });
     
     bgColor.append(bgColorApply);
@@ -364,17 +371,23 @@
       fontFamily.find('select').append(opt);
     });
     fontFamily.find('select').change( function() {
-      if (this.value == "") {return;}
-      var fontFamilyArray = fontFamilyOptions[this.selectedIndex - 1];
-      fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
+      if (this.value == "") {
+        fb.i.target.current.target.unset_style('font-family');        
+      } else {
+        var fontFamilyArray = fontFamilyOptions[this.selectedIndex - 1];
+        fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
+      }
     });
     
-    var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
-    fontFamilyApply.click( function() {
-      currFontFam = fontFamily.find('input')[0];
-      if (currFontFam.value == "") {return;}
-      fb.i.target.current.target.set_style('font-family', currFontFam.value);
-    });
+    // var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
+    // fontFamilyApply.click( function() {
+    //   currFontFam = fontFamily.find('input')[0];
+    //   if (currFontFam.value == "") {
+    //     fb.i.target.current.target.unset_style('font-family');
+    //   } else {
+    //     fb.i.target.current.target.set_style('font-family', currFontFam.value);        
+    //   }
+    // });
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
@@ -382,11 +395,14 @@
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
-      if (currFontSize.value == "") {return;}
-      fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');
+      if (currFontSize.value == "") {
+        fb.i.target.current.target.unset_style('font-size');
+      } else {
+        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
+      }
     });
     
-    fontFamily.append(fontFamilyApply);
+    //fontFamily.append(fontFamilyApply);
     this.your_font.append(fontFamily);
     fontSize.append(fontSizeApply);
     this.your_font.append(fontSize);
