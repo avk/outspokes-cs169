@@ -471,9 +471,7 @@
     this.help_content.addClass("hide");
 
     // JUGGERNAUT
-    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" align="top" width="0" height="0" id="outspokesjuggernaut" name="outspokesjuggernaut">\
-      <p>Your browser does not support iframes.</p>\
-    </iframe>';
+    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'"  width="0" height="0"></iframe>';
 
 
     // WRAPUP //////////////////////////////////////////////////////////////////

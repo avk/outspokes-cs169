@@ -146,12 +146,6 @@
     fb.i.comment.refresh_count();
     fb.$("#comments_filter :selected").click(); // Re-sort comments based on sort/filter dropdown
   };
-  
-  // This is UI and should be moved to fb.Interface.comment
-  fb.Comment.refresh_count = function() {
-    fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
-  };
-
 
   fb.Comment.get = function(options, callback) {
     var params = {
