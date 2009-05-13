@@ -310,7 +310,7 @@
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
     
-    var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
+    var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
       if (currBgColor.value == "") {
@@ -321,10 +321,16 @@
       }
     });
     
+    var bgColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original background color." />');
+    bgColorRevert.click( function() {
+      bgColor.find('input')[0].value = "";
+      fb.i.target.current.target.unset_style('background-color');
+    });
+    
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
     
-     var textColorApply = $('<input class="button" type="submit" value="Apply" />');
+    var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
       if (currTextColor.value == "") {
@@ -334,9 +340,17 @@
       }
     });
     
+    var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
+    textColorRevert.click( function() {
+      textColor.find('input')[0].value = "";
+      fb.i.target.current.target.unset_style('color');
+    });
+    
     bgColor.append(bgColorApply);
+    bgColor.append(bgColorRevert);
     this.your_color.append(bgColor);
     textColor.append(textColorApply);
+    textColor.append(textColorRevert);
     this.your_color.append(textColor);
     
     this.your_edits_wrapper.append(this.your_color);
@@ -379,20 +393,11 @@
       }
     });
     
-    // var fontFamilyApply = $('<input class="button" type="submit" value="Apply" />');
-    // fontFamilyApply.click( function() {
-    //   currFontFam = fontFamily.find('input')[0];
-    //   if (currFontFam.value == "") {
-    //     fb.i.target.current.target.unset_style('font-family');
-    //   } else {
-    //     fb.i.target.current.target.set_style('font-family', currFontFam.value);        
-    //   }
-    // });
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
     
-    var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    var fontSizeApply = $('<input class="button" type="submit" value="Apply" title="Apply font size." />');
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
       if (currFontSize.value == "") {
@@ -402,9 +407,15 @@
       }
     });
     
-    //fontFamily.append(fontFamilyApply);
+    var fontSizeRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original font size." />');
+    fontSizeRevert.click( function() {
+      fontSize.find('input')[0].value = "";
+      fb.i.target.current.target.unset_style('font-size');
+    });
+
     this.your_font.append(fontFamily);
     fontSize.append(fontSizeApply);
+    fontSize.append(fontSizeRevert);
     this.your_font.append(fontSize);
 
     
