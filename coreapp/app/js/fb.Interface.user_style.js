@@ -13,7 +13,7 @@
         number_from_id            : function(dom_id) {
           return parseInt(dom_id.match(/edit_(\d+)/i)[1]);
         },
-        consensus_block : "edit_consensuss", // class
+        consensus_block : "edit_consensus", // class
         consensus_wrapper         : function(id) {
           return "consensus_on_comment_" + parseInt(id);
         },
