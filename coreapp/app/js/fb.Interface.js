@@ -350,10 +350,13 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         
-        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);        
+        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
+        var widget_location; // State accessed via closure by close_link.click and open_link.click
         close_link.click(function(e) {
           fb.i.admin_panel.hide();
-          fb.i.show_widget();
+          if (widget_location != "down") {
+            fb.i.show_widget();
+          }
         });        
         admin_panel.append(close_link);
         
@@ -376,6 +379,7 @@
         open_link.click(function(e) {
           // don't toggle the widget if I'm opening the admin panel, just hide it
           e.stopPropagation();
+          widget_location = fb.get_state("widget_position");
           fb.i.hide_widget();
           
           fb.i.admin_panel.show();
