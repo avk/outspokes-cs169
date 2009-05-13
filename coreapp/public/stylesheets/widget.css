@@ -150,7 +150,7 @@ version: 3.0.0pr2
   background-color: #333;
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
-  line-height: 120%;
+  line-height: 100%;
   z-index: 999999;
   z-index: 999;
   width: 100%;
@@ -336,6 +336,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_content {
+  line-height: 120%;
   padding:.7em;
   background-color: white;
   -moz-border-radius-bottomleft:7px;
@@ -390,7 +391,6 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-  line-height: 1.3em;
   padding: 0 3px;
   width: 100%;
 }
