@@ -35,7 +35,10 @@
     //var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
     var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
-      fb.i.target.startOver();
+      var answer = confirm("This will delete all of your changes.  Are you sure?");
+      if (answer) {
+        fb.i.target.startOver();
+      }
       return false;
     });
     //var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
@@ -44,6 +47,7 @@
       fb.UserStyle.post(fb.i.target.all);
       fb.i.target.startOver();
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+      fb.i.user_style.new_edit_is_current = false;
       return false;
     });
     

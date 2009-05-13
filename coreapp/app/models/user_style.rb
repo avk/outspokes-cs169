@@ -22,7 +22,13 @@ class UserStyle < Feedback
         properties.each_pair do |property, value|
           #   property: value;
           css += "\t#{property}: "
-          css += value.include?(' ') ? "'#{value}'" : value
+          if property == "font-family"
+            value.split(",").each do |font|
+              css += "'#{font}'"
+            end
+          else
+            css += value
+          end
           css += ";\n"
         end
         
