@@ -46,7 +46,8 @@ class Widget::UserStylesController < Widget::WidgetController
   def create
     if @authorized
       @user_style = UserStyle.new
-      @user_style.page = @invite.page.site.pages.find_by_url(params[:current_page])
+      @user_style.page = @invite.page.site.pages.find_or_create_by_url(params[:current_page])
+      
       @user_style.commenter = @commenter
       @user_style.changeset = params[:styles]
       success = @user_style.save
