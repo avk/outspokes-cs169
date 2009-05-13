@@ -366,6 +366,10 @@ version: 3.0.0pr2
   display: none;
 }
 
+#outspokes #comment_list  .collapsed .cmt_bar {
+  -moz-border-radius-bottomleft: 7px;
+}
+
 #outspokes #comment_list .reply_to_text a:hover {
   text-decoration: underline;
 }
