@@ -150,8 +150,6 @@ version: 3.0.0pr2
   background-color: #333;
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
-  line-height: 120%;
-  z-index: 999999;
   z-index: 999;
   width: 100%;
   position: fixed;
@@ -297,6 +295,7 @@ version: 3.0.0pr2
   cursor: pointer;
   border: 1px solid #777;
   border-width: 0px 0px 0px 1px;
+  overflow: hidden;
 }
 #outspokes #comment_list .cmt_bar .private {
   float: left;
@@ -336,6 +335,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_content {
+  line-height: 120%;
   padding:.7em;
   background-color: white;
   -moz-border-radius-bottomleft:7px;
@@ -390,7 +390,6 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-  line-height: 1.3em;
   padding: 0 3px;
   width: 100%;
 }

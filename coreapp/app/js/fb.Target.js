@@ -23,6 +23,8 @@
   
   fb.Target.prototype.unset_style = function (property) {
     this.element.css(property, this.original_styles[property]);
+    delete this.original_styles[property];
+    delete this.new_styles[property];
   };
 
   fb.Target.prototype.delete = function () {
