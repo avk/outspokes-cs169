@@ -28,7 +28,7 @@
     delete fb.UserStyle.unrendered[this.feedback_id];
     // super.remove:
     this.parent.prototype.remove.call(this, arguments[0]);
-    fb.UserStyle.refresh_count();
+    fb.i.user_style.refresh_count();
     return true;
   };
   

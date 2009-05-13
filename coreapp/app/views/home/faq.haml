@@ -9,12 +9,13 @@
     = link_to "What is targeting?", :anchor => "whatstargeting"
   %li
     = link_to "How do I view targeted comments?", :anchor => "viewtargeted"
+
 %h3 Commenters
 %ul
   %li
     = link_to "Can I change my (dis)agree vote?", :anchor => "changevotes"
   %li
-    = link_to "Can I leave a comment for a specific person (invisible to everyone else)?", :anchor => "commentforperson"
+    = link_to "Can I leave a comment for a specific person that is invisible to everyone else?", :anchor => "commentforperson"
   %li
     = link_to "Can I edit or delete my own comments?", :anchor => "editcomments"
   %li
@@ -45,6 +46,19 @@
   %li
     = link_to "What's with this whole cross-site scripting business?", :anchor => "crosssite"
 
+%h3 Dynamic Edits
+%ul
+  %li
+    = link_to "What are dynamic edits?", :anchor => "dynamicedits"
+  %li
+    = link_to "How do I see a dynamic edit?", :anchor => "seedynamicedits"
+  %li
+    = link_to "How do I make a dynamic edit?", :anchor => "makedynamicedits"
+  %li
+    = link_to "What can I edit?", :anchor => "whatcaniedit"
+  %li
+    = link_to "Can I make private edits?", :anchor => "privateedits"
+
 %h3 About Outspokes 
 %ul
   %li
@@ -54,7 +68,8 @@
 %dl
   %dt 
     %a{:name => "whatneeds" } What do I need to use Outspokes?
-  %dd All you need is a web browser with Javascript enabled. We are currently in our alpha phase, and are only testing Firefox 3.  While other browsers may work with Outspokes, we cannot guarantee complete compatibility.
+  %dd We are currently in our alpha phase, and are only testing functionality using Firefox 3.  While other browsers may work with Outspokes, we cannot guarantee complete compatibility.  You must have javascript enabled in your browser.
+
   %dt  
     %a{:name => "whatstargeting" } What is targeting?
   %dd Targeting is a way to attach your comment to a part of the page you are commenting on.  To target a part of the page, click on the red target icon above the commenting area in the widget while you are commenting, and then click on the part of the page you would like the comment to be attached to (an image, piece of text, etc.).
@@ -70,11 +85,12 @@
   %dd Unfortunately, at this time we are not supporting changing votes.
 
   %dt   
-    %a{:name => "commentforperson" } Can I leave a comment for a specific person (invisible to everyone else)?
+    %a{:name => "commentforperson" } Can I leave a comment for a specific person that is invisible to everyone else?
   %dd You can leave a comment that only the admin of the site can see by checking the private box below the comment input form.  However, private comments to any other user are unsupported.  Also, replies to private comments will also be private.  All other comments can be seen by everyone else that uses the widget.
+
   %dt   
     %a{:name => "editcomments" } Can I edit or delete my own comments?
-  %dd We currently do not support those features.
+  %dd No.  We believe that you should think carefully before posting comments, so editing or removing your comments is not necessary.
 
   %dt
     %a{:name => "privatetargeted" } Can I leave a private comment that is targeted?
@@ -126,6 +142,28 @@
   %dt   
     %a{:name => "crosssite" } What's with this whole cross-site scripting business?
   %dd In order to persist feedback, we have to send information from your site to ours, i.e., across web domains.  Some people consider this a major no-no for security reasons.  However, we do not (and will never) transmit any information from your site to ours other than that directly pertaining to our widget.
+
+%h3 Dynamic Edits
+%dl
+  %dt
+    %a{:name => "dynamicedits" } What are dynamic edits?
+  %dd Dynamic edits are a way for commenters on a site to make changes to elements on a page.
+
+  %dt
+    %a{:name => "seedynamicedits" } How do I see a dynamic edit?
+  %dd Each one of the bars on the left side of the widget under the edits tab is a dynamic edit.  To view one, click on the checkbox on the left side of each bar.  You can only view one edit at a time.  To deselect a dynamic edit, uncheck the box of the edit.
+
+  %dt
+    %a{:name => "makedynamicedits" } How do I make a dynamic edit?
+  %dd To make a dynamic edit, in the edits tab in the widget, click on the "Make your own page edit" button on the right side of the pane.  To get back to the view to see other edits, click on the "Edits" button on the left side of that panel. 
+
+  %dt
+    %a{:name => "whatcaniedit" } What can I edit?
+  %dd Currently, you can change font color, background color, font family, and font size.
+
+  %dt
+    %a{:name => "privateedits" } Can I make private edits?
+  %dd No.
 
 %h3 About Outspokes
 %dl
