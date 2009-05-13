@@ -205,10 +205,11 @@
 
     this.hide_new_edit_view = function () {
       var answer = confirm("This will delete all of your changes.  Are you sure?");
-      if (!answer) {return;}
+      if (!answer) {return false;}
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
       fb.i.user_style.new_edit_is_current = false;
       fb.i.target.startOver();
+      return true;
     };
     
     // back to list
