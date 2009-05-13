@@ -171,6 +171,7 @@
             if (fb.i.user_style.new_edit_is_current) {
               fb.i.user_style.hide_new_edit_view();
             }
+            fb.i.user_style.unapply_current_edit();
             fb.Comment.get();
           },
           function() {fb.UserStyle.get();}
@@ -335,6 +336,7 @@
         var answer = confirm("Are you sure you want to log out? To give more feedback, bookmark this page or click the link in your invite email.");
       }
       if (answer){
+        fb.i.user_style.unapply_current_edit();
         fb.i.target.startOver();
         fb.cookie('outspokes_widget_state', null);  
         fb.cookie('fb_hash_url_token', null);
