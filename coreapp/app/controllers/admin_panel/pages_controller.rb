@@ -17,20 +17,19 @@ class AdminPanel::PagesController < AdminPanel::AdminController
   end
   
   def search
-    @search_feedbacks = {}
+    @search_comments = {}
     @pages = @site.pages_with_latest_feedback
     unless params[:search].empty? or params[:search] == "Search Feedback"
       terms = params[:search].split( / *"(.*?)" *| / )
       @pages.each do |page|
-        @search_feedbacks[page.id] = Feedback.find_all_by_page_id(page.id)
-        @search_feedbacks[page.id].sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
-        @search_feedbacks[page.id] = @search_feedbacks[page.id].find_all{|item| item.search_score(terms) > 0 }
+        @search_comments[page.id] = Comment.find_all_by_page_id(page.id)
+        @search_comments[page.id].sort! {|x,y| y.search_score(terms) <=> x.search_score(terms) }
+        @search_comments[page.id] = @search_comments[page.id].find_all{|item| item.search_score(terms) > 0 }
         
-        @search_feedbacks.delete(page.id) if @search_feedbacks[page.id].empty?
+        @search_comments.delete(page.id) if @search_comments[page.id].empty?
       end
-      flash[:warning] = "No search results found for '#{terms}'" if @search_feedbacks.empty?
+      flash[:warning] = "No search results found for '#{terms}'" if @search_comments.empty?
     end
-    # redirect_to admin_panel_site_pages_path(@site), :locals => {:search_feedbacks => @search_feedbacks}
     render :action => :index
   end
 end
