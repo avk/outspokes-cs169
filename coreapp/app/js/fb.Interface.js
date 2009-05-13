@@ -484,7 +484,7 @@
             fb.Comment.get();
             history.go(-1);
         }
-    }, 1000)
+    }, 2000)
     
     fb.Interface.instantiated = true;  
   };
