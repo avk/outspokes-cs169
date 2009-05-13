@@ -189,8 +189,23 @@
     }
     
 #outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
-  margin: 10px;
+  margin-left: 10px;
 }
+
+#outspokes #your_edits_wrapper .input_error {
+  color: red;
+  font-weight: bold;
+  margin: 0 0 3px 5px;
+}
+
+#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
+  margin: 5px;
+}
+
+#outspokes #your_edits_wrapper input {
+  width: 5em;
+}
+
 #outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
   margin: 5px;
 }

@@ -199,6 +199,20 @@
       return rtn;
     };
   })();
+  
+  // Match case-insensitive a-f 0-9 repeated 1 to 6 times
+  fb.__hexstring_regex = /^[A-F0-9]+$/i;
+  
+  // Returns true if string is a valid hex color string, false otherwise
+  fb.valid_hexstring = function(str) {
+    if (str.length != 3 && str.length != 6) {
+      return false
+    } else if (str.match(fb.__hexstring_regex)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   fb.select_target = function (select_function, mouseover_function, mouseout_function) {
     // Attach to every element _inside_ of body and filter out all elements that are part of Outspokes

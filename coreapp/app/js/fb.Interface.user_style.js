@@ -298,18 +298,46 @@
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
     this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
+    var hide_error = function(elem) {
+      elem.css('visibility', 'hidden');
+    }
+    
+    var show_error = function(elem) {
+     elem.css('visibility', 'visible');
+    }
+    
+    var validate_colorstring = function(str, error_span) {
+      if ((str.length > 0) && (! fb.valid_hexstring(str))) {
+        show_error(error_span);
+        return false;
+      } else {
+        hide_error(error_span);
+        return true;
+      }
+    };
+    
+    var apply_color = function(value, key, error_span) {
+      if (validate_colorstring(value, error_span) && value.length > 0) {
+        fb.i.target.current.target.set_style(key, '#' + value);
+      } else if (value.length == 0) {
+        fb.i.target.current.target.unset_style(key);
+      }
+    };
+    
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
-    bgColor.append($('<span class="outspokes_edit_label"><label for="bgColor">Background</label></span><span class="pound">#</span><input type="text" name="bgColor" />'));
+    var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
+    hide_error(bg_error_message);
+    bgColor.append(bg_error_message);
+    bgColor.append($('<span class="outspokes_edit_label"><label for="outspokes_bgColor" title="Enter a valid hex color value">Background</label></span>' +
+      '<span class="pound">#</span><input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
+    bgColor.find('input').blur( function() {
+      validate_colorstring(this.value, bg_error_message);
+    });
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
-      if (currBgColor.value == "") {
-        fb.i.target.current.target.unset_style('background-color');
-      } 
-      else {
-        fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
-      }
+      apply_color(currBgColor.value, 'background-color', bg_error_message);
     });
     
     var bgColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original background color." />');
@@ -319,16 +347,19 @@
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
-    textColor.append($('<span  class="outspokes_edit_label"><label for="textColor">Text</label></span><span class="pound">#</span><input type="text" name="textColor" />'));
+    var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
+    hide_error(textcolor_error_message);
+    textColor.append(textcolor_error_message);
+    textColor.append($('<span  class="outspokes_edit_label"><label for="outspokes_textColor" title="Enter a valid hex color value">Text</label></span>' + 
+      '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
+    textColor.find('input').blur( function() {
+      validate_colorstring(this.value, textcolor_error_message);
+    });
     
     var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
-      if (currTextColor.value == "") {
-        fb.i.target.current.target.unset_style('color');
-      } else {
-        fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
-      }
+      apply_color(currTextColor.value, 'color', textcolor_error_message);
     });
     
     var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
@@ -349,6 +380,7 @@
     
     
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
+    
     this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
 
@@ -386,14 +418,32 @@
     
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
-    fontSize.append($('<span  class="outspokes_edit_label"><label for="fontSize">Size</label></span><input type="text" name="fontSize" /><span>px</span>'));
+    var font_error_message = $('<div class="input_error">Invalid font size:</div>');
+    hide_error(font_error_message);
+    fontSize.append(font_error_message);
+    fontSize.append($('<span  class="outspokes_edit_label"><label for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label></span>' +
+      '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
+    var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    var font_size_regex = /^[0-9]{1,3}$/; // precompile this
+    // Local helper function for checking font size validity
+    function validate_font_size(value) {
+      if (value.length > 0 && (! value.match(font_size_regex))) {
+        show_error(font_error_message);
+        return false;
+      } else {
+        hide_error(font_error_message);
+        return true;
+      }
+    }
     
-    var fontSizeApply = $('<input class="button" type="submit" value="Apply" title="Apply font size." />');
+    fontSize.find('input').blur(function(e) {
+      validate_font_size(this.value);
+    });
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
       if (currFontSize.value == "") {
         fb.i.target.current.target.unset_style('font-size');
-      } else {
+      } else if (validate_font_size(currFontSize.value)) {
         fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
       }
     });
