@@ -1,7 +1,7 @@
 class Widget::UserStylesController < Widget::WidgetController
   
-  before_filter :validate_callback
-  before_filter :authorize
+  before_filter :validate_callback, :except => [ :show ]
+  before_filter :authorize, :except => [ :show ]
   
   skip_before_filter :verify_authenticity_token
   
@@ -46,7 +46,7 @@ class Widget::UserStylesController < Widget::WidgetController
   def create
     if @authorized
       @user_style = UserStyle.new
-      @user_style.page = @invite.page
+      @user_style.page = @invite.page.site.pages.find_by_url(params[:current_page])
       @user_style.commenter = @commenter
       @user_style.changeset = params[:styles]
       success = @user_style.save
