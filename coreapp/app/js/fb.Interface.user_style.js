@@ -307,32 +307,65 @@
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
     this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
+    var hide_error = function(elem) {
+      elem.css('visibility', 'hidden');
+    }
+    
+    var show_error = function(elem) {
+     elem.css('visibility', 'visible');
+    }
+    
+    var validate_colorstring = function(str, error_span) {
+      if ((str.length > 0) && (! fb.valid_hexstring(str))) {
+        show_error(error_span);
+        return false;
+      } else {
+        hide_error(error_span);
+        return true;
+      }
+    };
+    
+    var apply_color = function(value, key, error_span) {
+      if (value == "") {
+        return;
+      }
+      if (! fb.valid_hexstring(value)) {
+        show_error(error_span);
+        return;
+      } else {
+        fb.i.target.current.target.set_style(key, '#' + value);
+      }
+      hide_error(error_span);
+    };
+    
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
+    var bg_error_span = $('<div class="input_error">Invalid background color:</div>');
+    hide_error(bg_error_span);
+    bgColor.append(bg_error_span);
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
     bgColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + this.value);
+      validate_colorstring(this.value, bg_error_span);
     });
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
-      if (currBgColor.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + currBgColor.value);
+      apply_color(currBgColor.value, 'background-color', bg_error_span);
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
+    var textcolor_error_span = $('<div class="input_error">Invalid text color:</div>');
+    hide_error(textcolor_error_span);
+    textColor.append(textcolor_error_span);
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
     textColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + this.value);
+      validate_colorstring(this.value, textcolor_error_span);
     });
     
      var textColorApply = $('<input class="button" type="submit" value="Apply" />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
-      if (currTextColor.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + currTextColor.value);
+      apply_color(currTextColor.value, 'color', textcolor_error_span);
     });
     
     bgColor.append(bgColorApply);
