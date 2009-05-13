@@ -390,16 +390,31 @@
           });
         }
       });
-
+      
+      // Returns a DOM element with a missing target message
+      this.missing_target = function() {
+        return $('<div></div>').addClass('missing_target').text("This comment refers to an element that no longer exists on this page.");
+      }
+      
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         tmp = $(c.target);
-        tmp = highlight_target(tmp.get(0));
-        c.__unHover = tmp[1];
-        rtn.hover(tmp[0], tmp[1]);
+        if (tmp.size() === 0) {
+          rtn.find('.cmt_text').before( this.missing_target() );
+        } else {
+          // Render missing_target message when targeted element is removed
+          tmp[0].addEventListener("DOMNodeRemoved", function(e) {
+            rtn.find('.cmt_text').before( fb.i.comment.missing_target() );
+          }, true);
+          tmp = highlight_target(tmp.get(0));
+          c.__unHover = tmp[1];
+          rtn.hover(tmp[0], tmp[1]);
+        }
         rtn.addClass('targeted');
+        
         var target_div = $('<div></div>').addClass('targeted_icon');
         rtn.find('.commenter_name').before(target_div);
+        
         target_div.click(function (e) {
           console.log(tmp);
           $.scrollTo($(c.target), 300, { offset: -100});
