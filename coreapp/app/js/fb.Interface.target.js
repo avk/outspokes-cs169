@@ -27,8 +27,6 @@
     });
     this.target_header.append(target_button);
     this.target_header.append($('<span>Targeting</span>'));
-   // this.target_header.append($('<div style="clear:both;"></div>'));
-    
     
     this.target_list = $('<ul></ul>').attr('id','outspokes_target_list');
     
