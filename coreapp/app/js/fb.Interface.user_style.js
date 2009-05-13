@@ -309,10 +309,6 @@
     
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
-    bgColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + this.value);
-    });
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" />');
     bgColorApply.click( function() {
@@ -323,10 +319,6 @@
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
     textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" />'));
-    textColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + this.value);
-    });
     
      var textColorApply = $('<input class="button" type="submit" value="Apply" />');
     textColorApply.click( function() {
@@ -386,10 +378,6 @@
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
     fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span>'));
-    fontSize.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('font-size', this.value + 'px');
-    });
     
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
     fontSizeApply.click( function() {
