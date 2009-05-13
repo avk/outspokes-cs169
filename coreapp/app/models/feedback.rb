@@ -146,12 +146,6 @@ class Feedback < ActiveRecord::Base
 
   end
   
-  def search_score(terms) 
-    score = 0
-    terms.map{|term| if(self.content.downcase.include? term.downcase) then score += term.length; end}
-    score
-  end
-  
   protected
   def has_valid_parent
     if ! parent_id.nil?
