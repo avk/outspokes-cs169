@@ -14,11 +14,15 @@
   };
 
   fb.Target.prototype.set_style = function (property, value) {
-    if (!this.original_styles[property]) {
+    if (typeof this.original_styles[property] === "undefined") {
       this.original_styles[property] = this.element[0].style.getPropertyValue(property);
     }
     this.new_styles[property] = value;
     this.element.css(property, value);
+  };
+  
+  fb.Target.prototype.unset_style = function (property) {
+    this.element.css(property, this.original_styles[property]);
   };
 
   fb.Target.prototype.delete = function () {

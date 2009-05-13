@@ -27,8 +27,6 @@
     });
     this.target_header.append(target_button);
     this.target_header.append($('<span>Targeting</span>'));
-   // this.target_header.append($('<div style="clear:both;"></div>'));
-    
     
     this.target_list = $('<ul></ul>').attr('id','outspokes_target_list');
     
@@ -44,6 +42,8 @@
     var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
       fb.UserStyle.post(fb.i.target.all);
+      fb.i.target.startOver();
+      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
       return false;
     });
     
