@@ -153,9 +153,6 @@
   };
 
 
-
-
-
   fb.Comment.get = function(options, callback) {
     var params = {
       'url_token': fb.env.url_token,
