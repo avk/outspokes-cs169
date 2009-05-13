@@ -181,7 +181,7 @@
     };
 
     this.remove = function(user_style) {
-      console.log("Removing from fb.Interface.user_style...");
+      // console.log("Removing from fb.Interface.user_style...");
     };
     
     this.edits_view.append(this.edit_list);
@@ -198,7 +198,7 @@
     this.new_edit_view.hide();
     
     // back to list
-    this.edit_list_link = $('<a href="#">&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link = $('<a href="#"><br />&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
       fb.i.target.startOver();
