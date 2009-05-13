@@ -201,6 +201,10 @@
   margin: 5px;
 }
 
+#your_edits_wrapper input {
+  width: 5em;
+}
+
 #outspokes #your_targets {
 /*  border: 1px solid blue;
   background-color: #eee;
