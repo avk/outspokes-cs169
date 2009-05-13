@@ -150,8 +150,6 @@ version: 3.0.0pr2
   background-color: #333;
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
-  line-height: 100%;
-  z-index: 999999;
   z-index: 999;
   width: 100%;
   position: fixed;
