@@ -75,7 +75,7 @@
       );
       // should only display the sort menu for the current navigation link
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+        this.nav.elements.list[which_element].filter('.outspokes-current').find('.hide_when_tab_unselected').show();
       }
     };
     
@@ -167,8 +167,13 @@
         // triggered when a navigation element is clicked,
         // same order as list of elements
         callbacks : [
-          function() { fb.Comment.get(); },
-          function() { fb.UserStyle.get(); }
+          function() {
+            if (fb.i.user_style.new_edit_is_current) {
+              fb.i.user_style.hide_new_edit_view();
+            }
+            fb.Comment.get();
+          },
+          function() {fb.UserStyle.get();}
         ],
         /*
         clicking on an element:
@@ -324,12 +329,20 @@
     this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
       // do logout stuff here
-      fb.cookie('outspokes_widget_state', null);
-      fb.cookie('fb_hash_url_token', null);
-      fb.cookie('fb_hash_admin_validation_token', null);
-      fb.$("#outspokes_admin_panel").remove();
-      fb.$("#outspokes_overlay").remove();
-      fb.$("#outspokes").remove();
+      if (_fb.admin()) {
+        var answer = confirm("Are you sure you want to log out? To log back in, bookmark this page or visit your Outspokes.com dashboard.");
+      } else {
+        var answer = confirm("Are you sure you want to log out? To give more feedback, bookmark this page or click the link in your invite email.");
+      }
+      if (answer){
+        fb.i.target.startOver();
+        fb.cookie('outspokes_widget_state', null);  
+        fb.cookie('fb_hash_url_token', null);
+        fb.cookie('fb_hash_admin_validation_token', null);
+        fb.$("#outspokes_admin_panel").remove();
+        fb.$("#outspokes_overlay").remove();
+        fb.$("#outspokes").remove();
+      }
       return false;
     });
     this.topbar.append(this.logout_link);
@@ -342,10 +355,13 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         
-        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);        
+        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
+        var widget_location; // State accessed via closure by close_link.click and open_link.click
         close_link.click(function(e) {
           fb.i.admin_panel.hide();
-          fb.i.show_widget();
+          if (widget_location != "down") {
+            fb.i.show_widget();
+          }
         });        
         admin_panel.append(close_link);
         
@@ -368,6 +384,7 @@
         open_link.click(function(e) {
           // don't toggle the widget if I'm opening the admin panel, just hide it
           e.stopPropagation();
+          widget_location = fb.get_state("widget_position");
           fb.i.hide_widget();
           
           fb.i.admin_panel.show();

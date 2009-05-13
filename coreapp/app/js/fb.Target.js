@@ -14,11 +14,15 @@
   };
 
   fb.Target.prototype.set_style = function (property, value) {
-    if (!this.original_styles[property]) {
+    if (typeof this.original_styles[property] === "undefined") {
       this.original_styles[property] = this.element[0].style.getPropertyValue(property);
     }
     this.new_styles[property] = value;
     this.element.css(property, value);
+  };
+  
+  fb.Target.prototype.unset_style = function (property) {
+    this.element.css(property, this.original_styles[property]);
   };
 
   fb.Target.prototype.delete = function () {
@@ -35,6 +39,11 @@
 
   fb.Target.pick = function (callback) {
     fb.select_target(function (e) {
+      $(e.target).removeClass("outspokes_currently_hovering");
       callback(new fb.Target(fb.getPath(e.target)));
+    }, function(e) {
+      $(e.target).addClass("outspokes_currently_hovering");
+    }, function(e) {
+      $(e.target).removeClass("outspokes_currently_hovering");
     });
   };

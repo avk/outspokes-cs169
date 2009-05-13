@@ -76,9 +76,15 @@
       $(this)[0].value = "Change target";
       fb.i.comment.reset_target();
       fb.select_target(function(e) {
-        fb.i.comment.form.find("input[name='target']").attr("value",fb.getPath(e.target));
+        fb.i.comment.form.find("input[name='target']").attr("value", fb.getPath(e.target));
+        $(e.target).removeClass("outspokes_currently_hovering");
+        $(e.target).addClass("outspokes_selected_page_element");
         $('.outspokes_target_button').addClass('target_set');
         $('#outspokes_form_header').find('span').text('Targeted Comment');
+      }, function(e) {
+        $(e.target).addClass("outspokes_currently_hovering");
+      }, function(e) {
+        $(e.target).removeClass("outspokes_currently_hovering");
       });
     });
 
@@ -273,8 +279,11 @@
         // Go to parent thread when clicking on parent link
         link.click(function(e) {
           $("#comments_filter").val("Newest first");
-          $("#comments_filter").children().eq(0).click();
-          fb.$("#comment_list").scrollTo(c.parent_comment().build, 700);
+          fb.i.comment.sort_by_newest();
+          // THIS IS MAJORLY LAME, BUT I DUNNO HOW TO AVOID IT:
+          setTimeout(function() {
+            fb.$("#comment_list").scrollTo(c.parent_comment().build, 700);
+          }, 300);
           e.stopPropagation();
           return false;
         });
@@ -331,21 +340,86 @@
       
       rtn.append(comment).append(replies);
       bar.click(function() {
-        if (link_span) {
-          $(this).parent().toggleClass("collapsed");
+        
+        function collapse(cmt) {
+          // console.log("collapsing...");
+          $(cmt).parent().addClass("collapsed");
+          $(cmt).parent().parent().find('div.cmt_content:eq(0)').hide();
+          $(cmt).parent().find('.cmt_date:eq(0)').hide();
+          $(cmt).parent().find('.snippet:eq(0), .reply_count:eq(0)').show();
+        };
+        
+        function uncollapse(cmt) {
+          // console.log("uncollapsing...");
+          $(cmt).parent().removeClass("collapsed");
+          $(cmt).parent().parent().find('div.cmt_content:eq(0)').show();
+          $(cmt).parent().find('.cmt_date:eq(0)').show();
+          $(cmt).parent().find('.snippet:eq(0), .reply_count:eq(0)').hide();
+        };
+        
+        // toggle me
+        if ($(this).parent().hasClass("collapsed")) {
+          uncollapse(this);
+        } else {
+          collapse(this);
         }
-        $(this).parent().parent().find('div.cmt_content:eq(0)').toggle();
-        $(this).parent().find('.cmt_date:eq(0), .snippet:eq(0), .reply_count:eq(0)').toggle();
+        
+        // toggle my replies
+        var p = $(this).parent();
+        var parent = $(this).parent().parent();
+        if (parent.attr("class") === "thread") {
+          var replies = "#" + fb.i.comment.dom.reply_list(c.feedback_id);
+          parent.find(replies).find('.cmt_bar').each(function() {
+            // parent collapsed, i'm not
+            if (p.hasClass("collapsed") && 
+                ! $(this).parent().hasClass("collapsed")) { 
+              collapse(this);
+            }
+            
+            // parent collapsed, i am
+            // do nothing
+            
+            // parent expanded, i'm not
+            if (!p.hasClass("collapsed") &&
+                $(this).parent().hasClass("collapsed")) {
+              uncollapse(this);
+            }
+            
+            // parent expanded, i am
+            // do nothing
+          });
+        }
       });
-
+      
+      // Returns a DOM element with a missing target message
+      this.missing_target = function() {
+        return $('<div></div>').addClass('missing_target').text("This comment refers to an element that no longer exists on this page.");
+      }
+      
       // bind the comment to its target
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         tmp = $(c.target);
-        tmp = highlight_target(tmp.get(0));
-        c.__unHover = tmp[1];
-        rtn.hover(tmp[0], tmp[1]);
+        if (tmp.size() === 0) {
+          rtn.find('.cmt_text').before( this.missing_target() );
+        } else {
+          // Render missing_target message when targeted element is removed
+          tmp[0].addEventListener("DOMNodeRemoved", function(e) {
+            rtn.find('.cmt_text').before( fb.i.comment.missing_target() );
+          }, true);
+          tmp = highlight_target(tmp.get(0));
+          c.__unHover = tmp[1];
+          rtn.hover(tmp[0], tmp[1]);
+        }
         rtn.addClass('targeted');
-        rtn.find('.commenter_name').before($('<div></div>').addClass('targeted_icon'));
+        
+        var target_div = $('<div></div>').addClass('targeted_icon');
+        rtn.find('.commenter_name').before(target_div);
+        
+        target_div.click(function (e) {
+          console.log(tmp);
+          $.scrollTo($(c.target), 300, { offset: -100});
+          e.stopPropagation();
+        });
       }
       
       return rtn;
@@ -403,6 +477,7 @@
         $(this).appendTo(this.__container);
       });
       this.filtering.flattened = false;
+      fb.i.comment.refresh_count();
     };
     
     // Sorts comment threads based on method
@@ -416,13 +491,16 @@
     // Flattens comments and hides them if method returns true for given comment
     this.filter_comments = function(fn) {
       var posts = this.flatten_comments();
+      var count = 0;
       posts.each(function() {
         if (! fn(this)) {
           $(this).hide(400);
         } else {
+          count++;
           $(this).show(400);
         }
       });
+      fb.i.set_num_comments(count);
     };
     
     // Filters comments based on whether prop is true for each Comment object
@@ -500,6 +578,11 @@
       fb.i.comment.form.find("input[name='target']").attr("value","html");
       $('.outspokes_target_button').removeClass('target_set');
       $('#outspokes_form_header').find('span').text('Comment');
+    };
+    
+    // This is UI and should be moved to fb.Interface.comment
+    this.refresh_count = function() {
+      fb.i.set_num_comments(fb.getProperties(fb.Comment.all).length);
     };
     
   };

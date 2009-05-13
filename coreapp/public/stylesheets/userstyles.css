@@ -1,5 +1,9 @@
 /* General */
 
+#outspokes .outspokes_clear {
+  clear: both;
+}
+
 #outspokes #widget_edits {
 }
 
@@ -43,7 +47,7 @@
   font-size:43px;
   letter-spacing:-4px;
   line-height:33px;
-  color: #111;
+  color: #EEE;
   cursor: pointer;
 }
 
@@ -61,17 +65,18 @@
 }
 
 #outspokes .edit_block {
-  /*margin-bottom: 5px;*/
   border-bottom: 1px solid #777;
-  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
+  background-image: none;
+  background-color: #777;
   height:15px;
   margin-bottom:7px;
   padding:5px;
+  cursor: pointer;
 }
 
-#outspokes .edit_block.disabled {
-  background-image: none;
-  background-color: #777;
+#outspokes .edit_block.active {
+  /*margin-bottom: 5px;*/
+  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
 }
 
 #outspokes .edit_block.disagreed {
@@ -133,6 +138,7 @@
   line-height: 100%;
   height: 40px;
   width: 120px;
+  padding-left: 3px;
 }
 #outspokes #your_edits {
 /*  border: 1px solid red;*/
@@ -155,6 +161,8 @@
     margin-top: -1px;
     padding: 10px;
     background: #FFF;
+    -moz-border-radius-bottomleft:7px;
+    height: 100px;
   }
   
   #outspokes #your_edits .your_edits_nav {
@@ -179,38 +187,94 @@
       text-decoration: underline;
       border-bottom:1px solid #FFFFFF;
     }
+    
+#outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
+  margin-left: 10px;
+}
+
+#outspokes #your_edits_wrapper .input_error {
+  color: red;
+  font-weight: bold;
+  margin: 0 0 3px 5px;
+}
+
+#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
+  margin: 5px;
+}
+
+#outspokes #your_edits_wrapper input {
+  width: 5em;
+}
+
+#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
+  margin: 5px;
+}
+
+#outspokes #your_edits_wrapper .outspokes_edit_label {
+  border-bottom:1px dotted #DDDDDD;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  line-height:30px;
+  width:90px;
+}
 
 #outspokes #your_targets {
-/*  border: 1px solid blue;*/
-  background-color: #eee;
-  float: right;
-  height: 215px;
   margin-right: 2%;
-  width: 25%;
-  
-  
   float: right;
-  margin-right: 2%;
   width: 26%;
-  height: 157px;
-  color: #111;
-  margin-top: 30px;
+  height: 217px;
+}
+
+#outspokes #outspokes_target_header {
+  color:#DDDDDD;
+  height:20px;
+  line-height:200%;
+  margin:5px 0;
+  width: 100%;
+}
+
+#outspokes #outspokes_target_header span {
+  font-size: 14px;
+  font-weight: bold;
+  font-style:italic;
+}
+
+#outspokes #outspokes_target_footer {
   -moz-border-radius-bottomleft:7px;
+  background-color:#BBBBBB;
+  text-align:right;
+  height: 20px;
+  padding:3px;
+}
+
+
+#outspokes #outspokes_target_footer #outspokes_save_edit, #outspokes #outspokes_target_footer #outspokes_clear_styles {
+  font-weight: bold;
+  margin-left: 2%;
+}
+
+#outspokes #outspokes_target_footer #outspokes_save_edit {
+ /* margin-right: 14px;*/
+}
+
+#outspokes #outspokes_target_list_wrap {
+  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center top;
+  color:#333333;
+  padding:5px;
+  width: 96%;
+  height: 128px;
+  color: #111;
   text-align: left;
-}
-
-#outspokes #outspokes_target_header h1 {
-  font-size: 1.5em;
-  float: left;
-  width: 75%;
-}
-
-#outspokes #outspokes_target_list {
-  
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border-right: 1px solid #BBB;
 }
 #outspokes #outspokes_target_list li { 
-  border: 1px solid blue;
+  border-bottom: 1px dotted #444;
+  padding: 2px;
   margin: 5px 0;
+  -moz-border-radius: 3px;
 }
   #outspokes #outspokes_target_list li.outspokes_current_target {
     border: 1px solid #C1272D;
@@ -219,3 +283,12 @@
     display: block;
     float: right;
   }
+#outspokes #outspokes_target_list #outspokes_delete_style_edit {
+  font-weight: bold;
+  color: #C1272D;
+  font-size: 13px;
+  line-height: 11px;
+}
+#outspokes #outspokes_target_list a#outspokes_delete_style_edit:hover {
+  color: red;
+}

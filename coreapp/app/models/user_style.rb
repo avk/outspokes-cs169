@@ -11,28 +11,41 @@ class UserStyle < Feedback
   
   
   def self.json_to_css(jsonStyle)
+    css = ''
     
-    jsonStyle.gsub!(/:eq/, "")
-    jsonStyle.gsub!(/[>()]/, "")
-    
-    style = JSON.parse jsonStyle
-    
-    cssStyle = ''
-    
-    style.each_pair {
-       |k, v| 
-       k.gsub(/[ ]/, "_")
-       cssStyle += "\n.#{k.gsub(/[ ]/, "")} \{\n";
-       v.each_pair {|k2, v2| 
-         if v2.include?(' ') then
-           cssStyle += "\t#{k2}: '#{v2}';\n"
+    begin
+      style = ActiveSupport::JSON.decode jsonStyle
+      style.each_pair do |selector, properties|
+        # .classname {
+        css += "\n." + self.to_css_class(selector) + " \{\n"
+        
+        properties.each_pair do |property, value|
+          #   property: value;
+          css += "\t#{property}: "
+          if property == "font-family"
+            value.split(",").each do |font|
+              css += "'#{font}'"
+            end
           else
-            cssStyle += "\t#{k2}: #{v2};\n" 
+            css += value
           end
-          };
-       cssStyle +=  "\}";
-     }
-    cssStyle
+          css += ";\n"
+        end
+        
+        css += "\}\n"
+        # }
+      end
+    rescue ActiveSupport::JSON::ParseError => e
+      logger.error "could not parse UserStyle: #{e}"
+    end
+    
+    css
   end
+  
+  def self.to_css_class(str)
+    # http://www.w3.org/TR/CSS21/syndata.html#characters
+    str.gsub /[^a-zA-Z0-9\-\_]/, ''
+  end
+  
   
 end

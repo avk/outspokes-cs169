@@ -59,17 +59,23 @@
           to.css('width', '100%');
         }
       );
-    }
+    };
+    
+    this.refresh_count = function() {
+       fb.i.nav.set_label_count(fb.UserStyle.count(), 1);
+    };
 
     // EDITS_VIEW //////////////////////////////////////////////////////////////////
 
+    this.new_edit_is_current = false;
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
     this.new_edit_link = $('<div><div>Make your own <span>page edit</span>:<br />Click here! &raquo;</div></div>').attr('id', dom.edits_view.new_edit_link);
     this.new_edit_link.click(function() { 
-      fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
+      fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view);
+      fb.i.user_style.unapply_current_edit();
+      fb.i.user_style.new_edit_is_current = true;
     });
-    this.current_edit = null;
     
     // Consensus section
     this.consensus = {
@@ -130,45 +136,41 @@
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
     };
-    
+
+    var current_clicked = null;
     this.build = function(user_style) {
       // build up the container for a user style item
       var us_id = dom.edits_view.edit_id(user_style.feedback_id);
       var us_block = $('<div></div>').attr('id', us_id).addClass(dom.edits_view.edit_block);
       
       // define its contents
-      var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
-      us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
-      var current_edit = this.current_edit;
-      us_checkbox.click(function() {
-        if (this.checked) {
-          $('.toggle_box').each(function(){
-            this.disabled = true;
-            $(this).parent().addClass('disabled');
+      // var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
+      // us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      us_block.click(function() {
+        if (!$(this).hasClass('active')) { // currently not active
+          $('.' + dom.edits_view.edit_block).each(function(){ // for other edit
+            // this.checked = false;
+            $(this).removeClass('active');
+            var my_id = dom.edits_view.number_from_id( $(this).attr("id") );
+            fb.UserStyle.all[my_id].unapply();
           });
-          this.disabled = false;
-          $(this).parent().removeClass('disabled');
-          if (current_edit) {
-            current_edit.unapply();
-          }
-          current_edit = user_style;
+          // this.checked = true;
+          $(this).addClass('active');
+
           fb.UserStyle.all[user_style.feedback_id].apply();
+          current_clicked = $(this);
         } else {
-          $('.toggle_box').each(function(){
-            this.disabled = false;
-            $(this).parent().removeClass('disabled');
-          });
-          if (current_edit) {
-            current_edit.unapply();
-          }
-          current_edit = null;
+          fb.UserStyle.all[user_style.feedback_id].unapply();
+          $(this).removeClass('active');
+          current_checked = null;
         }
       });
+
       var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
       // attach to the container
-      us_block.append(us_checkbox);
+      // us_block.append(us_checkbox);
       us_block.append(us_name);
       us_block.append(us_timestamp);      
       // us_block.append(this.consensus.build(user_style));
@@ -176,8 +178,15 @@
       return us_block;
     };
 
+    this.unapply_current_edit = function () {
+      if (current_clicked === null) {
+        return;
+      }
+      current_clicked.click();
+    };
+
     this.remove = function(user_style) {
-      console.log("Removing from fb.Interface.user_style...");
+      // console.log("Removing from fb.Interface.user_style...");
     };
     
     this.edits_view.append(this.edit_list);
@@ -192,13 +201,18 @@
     // must start out collapsed and hidden for the slide transitions to work
     this.new_edit_view.css('width','0%'); 
     this.new_edit_view.hide();
+
+    this.hide_new_edit_view = function () {
+      var answer = confirm("This will delete all of your changes.  Are you sure?");
+      if (!answer) {return;}
+      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+      fb.i.user_style.new_edit_is_current = false;
+      fb.i.target.startOver();
+    };
     
     // back to list
-    this.edit_list_link = $('<a href="#">&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
-    this.edit_list_link.click(function() { 
-      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
-      fb.i.target.startOver();
-    });
+    this.edit_list_link = $('<a href="#"><br />&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link.click(this.hide_new_edit_view);
     
     
     
@@ -303,21 +317,81 @@
     // NEW EDIT: Color //////////////////////////////////////////////////////////////////
     this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
     
-    var bgColor = $('<div></div>');
-    bgColor.append($('<label for="bgColor">Background</label><span class="pound">#</span><input type="text" name="bgColor" />'));
+    var hide_error = function(elem) {
+      elem.css('visibility', 'hidden');
+    }
+    
+    var show_error = function(elem) {
+     elem.css('visibility', 'visible');
+    }
+    
+    var validate_colorstring = function(str, error_span) {
+      if ((str.length > 0) && (! fb.valid_hexstring(str))) {
+        show_error(error_span);
+        return false;
+      } else {
+        hide_error(error_span);
+        return true;
+      }
+    };
+    
+    var apply_color = function(value, key, error_span) {
+      if (validate_colorstring(value, error_span) && value.length > 0) {
+        fb.i.target.current.target.set_style(key, '#' + value);
+      } else if (value.length == 0) {
+        fb.i.target.current.target.unset_style(key);
+      }
+    };
+    
+    var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
+    var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
+    hide_error(bg_error_message);
+    bgColor.append(bg_error_message);
+    bgColor.append($('<span class="outspokes_edit_label"><label for="outspokes_bgColor" title="Enter a valid hex color value">Background</label></span>' +
+      '<span class="pound">#</span><input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
     bgColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('background-color', '#' + this.value);
+      validate_colorstring(this.value, bg_error_message);
     });
     
-    var textColor = $('<div></div>');
-    textColor.append($('<label for="textColor">Text</label><span class="pound">#</span><input type="text" name="textColor" /><br />'));
+    var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
+    bgColorApply.click( function() {
+      currBgColor = bgColor.find('input')[0];
+      apply_color(currBgColor.value, 'background-color', bg_error_message);
+    });
+    
+    var bgColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original background color." />');
+    bgColorRevert.click( function() {
+      bgColor.find('input')[0].value = "";
+      fb.i.target.current.target.unset_style('background-color');
+    });
+    
+    var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
+    var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
+    hide_error(textcolor_error_message);
+    textColor.append(textcolor_error_message);
+    textColor.append($('<span  class="outspokes_edit_label"><label for="outspokes_textColor" title="Enter a valid hex color value">Text</label></span>' + 
+      '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
     textColor.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('color', '#' + this.value);
+      validate_colorstring(this.value, textcolor_error_message);
     });
     
+    var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
+    textColorApply.click( function() {
+      currTextColor = textColor.find('input')[0];
+      apply_color(currTextColor.value, 'color', textcolor_error_message);
+    });
+    
+    var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
+    textColorRevert.click( function() {
+      textColor.find('input')[0].value = "";
+      fb.i.target.current.target.unset_style('color');
+    });
+    
+    bgColor.append(bgColorApply);
+    bgColor.append(bgColorRevert);
     this.your_color.append(bgColor);
+    textColor.append(textColorApply);
+    textColor.append(textColorRevert);
     this.your_color.append(textColor);
     
     this.your_edits_wrapper.append(this.your_color);
@@ -325,25 +399,84 @@
     
     
     // NEW EDIT: Font //////////////////////////////////////////////////////////////////
+    
     this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
     this.your_font.hide(); // because it's not the default view
+
+    var fontFamilyOptions = [
+      ['Arial', 'sans-serif'],
+      ['Arial Black', 'sans-serif'],
+      ['Courier New', 'monospace'],
+      ['Georgia', 'serif'],
+      ['Impact', 'sans-serif'],
+      ['Times', 'serif'],
+      ['Verdana', 'sans-serif']];
+    var fontFamilyOptionObjects = $.map(fontFamilyOptions, function (opt_array, i) {
+      var rtn = $('<option></option>');
+      rtn.attr('value', opt_array[0]);
+      rtn.append(opt_array[0]);
+      return rtn;
+    });
     
-    var fontFamily = $('<div></div>');
-    fontFamily.append($('<label for="fontFamily">Family</label><input type="text" name="fontFamily" /><br />'));
-    fontFamily.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('font-family', this.value);
+    var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
+    fontFamily.append('<span class="outspokes_edit_label"><label for="fontFamily">Family</label></span>');
+    fontFamily.append('<select name="fontFamily"></select>');
+    fontFamily.find('select').append('<option value="" selected="true"></option>');
+    $.each(fontFamilyOptionObjects, function (i, opt) {
+      fontFamily.find('select').append(opt);
+    });
+    fontFamily.find('select').change( function() {
+      if (this.value == "") {
+        fb.i.target.current.target.unset_style('font-family');        
+      } else {
+        var fontFamilyArray = fontFamilyOptions[this.selectedIndex - 1];
+        fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
+      }
+    });
+    
+    
+    var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
+    var font_error_message = $('<div class="input_error">Invalid font size:</div>');
+    hide_error(font_error_message);
+    fontSize.append(font_error_message);
+    fontSize.append($('<span  class="outspokes_edit_label"><label for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label></span>' +
+      '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
+    var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    var font_size_regex = /^[0-9]{1,3}$/; // precompile this
+    // Local helper function for checking font size validity
+    function validate_font_size(value) {
+      if (value.length > 0 && (! value.match(font_size_regex))) {
+        show_error(font_error_message);
+        return false;
+      } else {
+        hide_error(font_error_message);
+        return true;
+      }
+    }
+    
+    fontSize.find('input').blur(function(e) {
+      validate_font_size(this.value);
+    });
+    fontSizeApply.click( function() {
+      currFontSize = fontSize.find('input')[0];
+      if (currFontSize.value == "") {
+        fb.i.target.current.target.unset_style('font-size');
+      } else if (validate_font_size(currFontSize.value)) {
+        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
+      }
+    });
+    
+    var fontSizeRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original font size." />');
+    fontSizeRevert.click( function() {
+      fontSize.find('input')[0].value = "";
+      fb.i.target.current.target.unset_style('font-size');
     });
 
-    var fontSize = $('<div></div>');
-    fontSize.append($('<label for="fontSize">Size</label><input type="text" name="fontSize" /><span>px</span><br />'));
-    fontSize.find('input').blur( function() {
-      if (this.value == "") {return;}
-      fb.i.target.current.target.set_style('font-size', this.value + 'px');
-    });
-    
     this.your_font.append(fontFamily);
+    fontSize.append(fontSizeApply);
+    fontSize.append(fontSizeRevert);
     this.your_font.append(fontSize);
+
     
     this.your_edits_wrapper.append(this.your_font);
     

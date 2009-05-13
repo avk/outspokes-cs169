@@ -72,6 +72,20 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     end
   end
 
+
+  test "should list all feedback for admin" do
+    invite = invites(:one)
+    callback = 'jsfeed'
+    feedback = invite.page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
+    
+    assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
+    get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url,
+        :callback => callback, :email => "quentin@example.com", :password => "monkey"
+    
+    validate_json :callback => callback, :authorized => true,
+                  :admin => invite.page.site.validation_token, :feedback => feedback
+  end
+
   test "should list feedback for page for user" do
     invite = invites(:two)
     callback = 'jsfeed'
@@ -92,19 +106,6 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     
     validate_json :callback => callback, :authorized => true, :feedback => feedback
   end
-
-  test "should list all feedback for admin" do
-    invite = invites(:one)
-    callback = 'jsfeed'
-    feedback = invite.page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
-    
-    assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
-    get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url,
-        :callback => callback, :email => "quentin@example.com", :password => "monkey"
-    
-    validate_json :callback => callback, :authorized => true,
-                  :admin => invite.page.site.validation_token, :feedback => feedback
-  end
   
   test "should add new feedback for page" do
     invite = invites(:one)
@@ -119,6 +120,29 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     end
 
     validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => true
+  end
+
+  test "should return appropriate comments after feedback is given" do
+    invite = invites(:two)
+    callback = 'jsfeed'
+    page = invite.page
+    content = "HUH THIS SITE IS LAME YO"
+
+    assert_difference "page.feedbacks.count" do
+      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+           :current_page => page.url, :callback => callback, :content => content, :target => "html",
+           :isPrivate => false
+    end
+
+    feedback = []
+    for fb in page.feedbacks.roots do
+      if !fb.private || fb.commenter == invite.commenter
+        feedback += fb.self_and_descendants
+      end
+    end
+    feedback = feedback.map { |f| f.json_attributes(invite.commenter) }
+
+    validate_json :callback => callback, :authorized => true, :success => true, :feedback => feedback
   end
   
   test "should create new page when adding feedback for new url" do

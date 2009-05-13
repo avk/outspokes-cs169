@@ -28,7 +28,7 @@
     delete fb.UserStyle.unrendered[this.feedback_id];
     // super.remove:
     this.parent.prototype.remove.call(this, arguments[0]);
-    fb.UserStyle.refresh_count();
+    fb.i.user_style.refresh_count();
     return true;
   };
   
@@ -79,24 +79,25 @@
       data.validation_token = _fb.admin();
     }
     
-    // Stringify the JSON styles
-    var styles = "{";
+    // create the JSON styles object
+    data.styles = {};
     $.each(targets, function (selector, target) {
-      styles += "'" + selector + "' : {";
-      $.each(target.new_styles, function(property, value) {
-        styles += "'" + property + "':'" + value.toString() + "',";
+      if (fb.num_keys(target.new_styles) === 0) {
+        return true;
+      }
+      data.styles[selector] = {};
+      $.each(target.new_styles, function (property, value) {
+        data.styles[selector][property] = value;
       });
-      styles = styles.slice(0,-1); // drop the comma off the last (property, value) pair
-      styles += "}";
     });
-    styles += "}";
-    data.styles = styles;
+    data.styles = fb.JSON.stringify(data.styles);
     
     var callback = function(data) {
       if (! data.success) {
         fb.UserStyle.get();
         return;
       }
+      fb.UserStyle.process_selectors(data);
       new fb.UserStyle(data.user_style);
       fb.UserStyle.render();
     };
@@ -108,12 +109,7 @@
     for (var i in fb.UserStyle.unrendered) {
       fb.UserStyle.unrendered[i].render();
     }
-    fb.UserStyle.refresh_count();
-  };
-  
-  // This is UI and should be moved to fb.Interface.user_style
-  fb.UserStyle.refresh_count = function() {
-    // fb.i.set_num_comments(fb.getProperties(fb.UserStyle.all).length);
+    fb.i.user_style.refresh_count();
   };
 
 
@@ -199,19 +195,32 @@
       return true;
     });
 
-    var selector, selector_class;
-    $.each(data.selectors, function (selector_array) {
-      [selector, selector_class] = selector_array;
-      $(selector).addClass(selector_class);
-    });
+    fb.UserStyle.process_selectors(data);
 
     if (render) {
       fb.UserStyle.render();
     }
+    // Update count
+    fb.i.user_style.refresh_count();
     return new_user_styles;
   };
 
 
+  fb.UserStyle.process_selectors = function(data) {
+    var selector, selector_class;
+    $.each(data.selectors, function (index, selector_array) {
+      [selector, selector_class] = selector_array;
+      // console.log("selector_array", selector_array);
+      // console.log("[selector, selector_class]", [selector, selector_class]);
+      // console.log("$(selector)", $(selector));
+      $(selector).addClass(selector_class);
+    });
+  };
+
+  // Count number of UserStyle posts
+  fb.UserStyle.count = function() {
+    return fb.getProperties(fb.UserStyle.all).length;
+  };
 
   ////////////////  Private variables/functions
 

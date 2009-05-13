@@ -17,29 +17,37 @@
     }; // if changed, also change in clearAll()
     
     this.target_header = $('<div></div>').attr('id', 'outspokes_target_header');
-    this.target_header.append($('<h1>Targeting</h1>'));
     var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
+
+
     target_button.click(function() {
       fb.Target.pick(function(target) { // callback
         
       });
     });
     this.target_header.append(target_button);
-    this.target_header.append($('<div style="clear:both;"></div>'));
-    
+    this.target_header.append($('<span>Targeting</span>'));
     
     this.target_list = $('<ul></ul>').attr('id','outspokes_target_list');
     
     
     this.target_footer = $('<div></div>').attr('id','outspokes_target_footer');
-    var clear_targets = $('<a href="#">Clear</a>');
+    //var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
+    var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
-      fb.i.target.startOver();
+      var answer = confirm("This will delete all of your changes.  Are you sure?");
+      if (answer) {
+        fb.i.target.startOver();
+      }
       return false;
     });
-    var save_targets = $('<a href="#">Save</a>').css('padding-left','20px');
+    //var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
+    var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
       fb.UserStyle.post(fb.i.target.all);
+      fb.i.target.startOver();
+      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+      fb.i.user_style.new_edit_is_current = false;
       return false;
     });
     
@@ -55,7 +63,7 @@
       });
       
       if (this.target_list.find('li').length > 0) {
-        var delete_target = $('<a href="#">x</a>');
+        var delete_target = $('<a href="#">x</a>').attr('id', 'outspokes_delete_style_edit');
         delete_target.click(function(e) {
           fb.i.target.remove( $(this).parent('li').attr('title') );
         });
@@ -109,8 +117,9 @@
     };
     
     this.startOver();
+    
     self.user_style.your_targets.append(this.target_header);
-    self.user_style.your_targets.append(this.target_list);
+    self.user_style.your_targets.append($('<div id="outspokes_target_list_wrap"></div>').append(this.target_list));
     self.user_style.your_targets.append(this.target_footer);
     
   };

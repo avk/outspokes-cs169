@@ -117,6 +117,7 @@ class Feedback < ActiveRecord::Base
   
   def self.avg_num_votes(page_id)
     feedbacks = self.find_all_by_page_id(page_id)
+    return 0 if feedbacks.empty?
     feedbacks.map(&:num_votes).sum / feedbacks.size
   end
   
@@ -144,12 +145,6 @@ class Feedback < ActiveRecord::Base
   def self.neutral(page_id)
     self.find_all_by_page_id(page_id).select {|fb| fb.neutral? }
 
-  end
-  
-  def search_score(terms) 
-    score = 0
-    terms.map{|term| if(self.content.downcase.include? term.downcase) then score += term.length; end}
-    score
   end
   
   protected

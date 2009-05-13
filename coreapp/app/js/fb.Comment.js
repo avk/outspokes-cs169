@@ -42,7 +42,7 @@
     delete fb.Comment.unrendered[this.feedback_id];
     // super.remove:
     this.parent.prototype.remove.call(this, arguments[0]);
-    fb.Comment.refresh_count();
+    fb.i.comment.refresh_count();
     return true;
   };
   
@@ -143,7 +143,7 @@
       fb.Comment.unrendered[i].render();
     }
     // The following is UI and should be moved to fb.Interface.comment
-    fb.Comment.refresh_count();
+    fb.i.comment.refresh_count();
     fb.$("#comments_filter :selected").click(); // Re-sort comments based on sort/filter dropdown
   };
   
