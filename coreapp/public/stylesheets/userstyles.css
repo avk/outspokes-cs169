@@ -32,8 +32,6 @@
 }
 
 #outspokes #new_edit_link div {
-  font-size:43px;
-  letter-spacing:-4px;
   line-height:33px;
   margin-top:5px;
   padding:10px;
@@ -44,8 +42,8 @@
   font-weight: bold;
   font-style: italic;
   text-align: left;
-  font-size:43px;
-  letter-spacing:-4px;
+  /*font-size:43px;
+  letter-spacing:-4px;*/
   line-height:33px;
   color: #EEE;
   cursor: pointer;
