@@ -126,6 +126,10 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = {:authorized => @authorized, :admin => @admin,
               :success => success, :feedback => comments}
 
+    if success
+      Juggernaut.send_to_channels("parent.location.hash = '#refreshcomments';", page.id.to_s)
+    end
+
     respond_to do |wants|
       wants.html do
           @json_data = result.to_json

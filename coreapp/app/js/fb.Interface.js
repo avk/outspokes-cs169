@@ -454,7 +454,7 @@
     this.help_content.addClass("hide");
 
     // JUGGERNAUT
-    this.juggernaut='<iframe src ="http://localhost:3000/juggernaut.html?'+'123'+'" align="top" width="0" height="0" id="outspokesjuggernaut" name="outspokesjuggernaut">\
+    this.juggernaut='<iframe src ="http://localhost:3000/juggernaut.html?'+_fb.page_id()+'" align="top" width="0" height="0" id="outspokesjuggernaut" name="outspokesjuggernaut">\
       <p>Your browser does not support iframes.</p>\
     </iframe>';
 
@@ -476,13 +476,14 @@
     this.user_style = new fb.Interface.user_style(this);
     this.target = new fb.Interface.target(this);
     
+    fb.Interface.feedback_last_updated_at=new Date;
+    fb.Interface.feedback_last_updated_at.setDate(0);
     setInterval(function() {
-        if(window.location.hash === "#refreshcomments") {
+        if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
+            fb.Interface.feedback_last_updated_at=new Date;
             fb.Comment.get();
             history.go(-1);
         }
-            
-
     }, 1000)
     
     fb.Interface.instantiated = true;  
