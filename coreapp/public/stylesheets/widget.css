@@ -260,6 +260,8 @@ version: 3.0.0pr2
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #333;
+  line-height: 120%;
+  
 }
 
 #outspokes #comment_list .options {
@@ -379,9 +381,13 @@ version: 3.0.0pr2
 
 #outspokes #comment_list .cmt_delete_X {
   color: #C1272D;
-  margin-left: 10px;
+  margin-left: 5px;
+  padding: 5px;
   font-weight: bold;
+}
 
+#outspokes #comment_list .cmt_delete_X:hover {
+  background-color: #ccc;
 }
 
 #outspokes #comment_list .cns_buttons {
