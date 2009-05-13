@@ -167,8 +167,8 @@
         // triggered when a navigation element is clicked,
         // same order as list of elements
         callbacks : [
-          function() { fb.Comment.get(); },
-          function() { fb.UserStyle.get(); }
+          function() { fb.Comment.get(); fb.i.target.startOver();},
+          function() { fb.UserStyle.get(); fb.i.target.startOver();}
         ],
         /*
         clicking on an element:
@@ -330,6 +330,7 @@
         var answer = confirm("Are you sure you want to log out? To give more feedback, bookmark this page or click the link in your invite email.");
       }
       if (answer){
+        fb.i.target.startOver();
         fb.cookie('outspokes_widget_state', null);  
         fb.cookie('fb_hash_url_token', null);
         fb.cookie('fb_hash_admin_validation_token', null);
