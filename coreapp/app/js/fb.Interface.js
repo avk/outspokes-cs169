@@ -359,7 +359,7 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         
-        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
+        var close_link = $("<a></a>").attr('id',this.dom.admin.close);
         var widget_location; // State accessed via closure by close_link.click and open_link.click
         close_link.click(function(e) {
           fb.i.admin_panel.hide();
