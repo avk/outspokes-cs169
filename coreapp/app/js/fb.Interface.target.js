@@ -88,8 +88,8 @@
     }
     
     this.setCurrent = function(target) {
-      if (this.current.build) { // unset current target's styles
-        this.current.build.removeClass('outspokes_current_target');
+      if (this.current.html) { // unset current target's styles
+        this.current.html.removeClass('outspokes_current_target');
       }
       
       this.current.html = target.build;
