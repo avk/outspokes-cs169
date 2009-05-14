@@ -226,7 +226,7 @@
     };
     
     // back to list
-    this.edit_list_link = $('<a href="#"><br />&laquo;<br />&laquo;<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link = $('<a><br />&laquo;<br />&laquo;<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(this.hide_new_edit_view);
     
     

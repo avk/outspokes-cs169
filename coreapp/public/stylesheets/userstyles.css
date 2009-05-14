@@ -12,16 +12,14 @@
 #outspokes {
   
 }
-#outspokes #edits_list { 
-  height: 217px; 
-}
-
 
 #outspokes #edits_list {
   float: left;
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 217px; 
+  
 }
 
 #outspokes .edit_block {
@@ -81,12 +79,12 @@
   font-size: 28px;
   font-weight: bold;
   font-style: italic;
-  margin-right: 2%;
-  width: 26%;
+/*  margin-right: 2%;*/
+  width: 30%;
 /*  height: 157px;*/
   color: white;
   cursor: pointer;
-  margin-top: 30px;
+/*  margin-top: 30px;*/
   -moz-border-radius-bottomleft:7px;
   text-align: center;
 }

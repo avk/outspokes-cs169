@@ -236,6 +236,7 @@ version: 3.0.0pr2
 
 #outspokes a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 /*
@@ -480,6 +481,7 @@ version: 3.0.0pr2
   background-color: #bbb;
   padding: 3px;
   text-align: right;
+  font-size: 10px;
 }
 
 #outspokes #outspokes_form_buttons #private_wrapper {
@@ -610,9 +612,10 @@ version: 3.0.0pr2
     float : left;
     padding : 2px 10px 0 10px;
     border-bottom: none;
-    color: #C1272D;
     margin: 0 2px;
     height:25px;
+    color: #333;
+    
   }
   #outspokes #topbarLeft ul.navigation li:hover {
     background-color: #DDD;
@@ -624,7 +627,8 @@ version: 3.0.0pr2
     background-color: #ccc;
     border-color: #999;
     border-bottom: none;
-    color: #333;
+    color: #C1272D;
+    
     padding-bottom: 7px;
   }
   #outspokes #topbarLeft ul.navigation li.outspokes-current * {
