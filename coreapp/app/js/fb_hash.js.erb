@@ -136,12 +136,14 @@ function() {
       // Load in which tab was last used
       var current_tab = fb.get_state("widget_tab");
       var widget_position = fb.get_state("widget_position");
-      if (! (current_tab == undefined)) {
+      if (typeof current_tab !== 'undefined') {
         fb.i.nav.elements.list[current_tab].click();
         
         if (current_tab !== 1) {
           fb.UserStyle.get();
         }
+      } else {
+        fb.UserStyle.get();
       }
       
       // Bring widget up or down depending on state
@@ -185,23 +187,5 @@ function() {
       return;
     }
     
-    $(function() {
-      // Animated graphic showing that our widget is loading
-      var loading_wrapper = $('<div></div>').attr('id','outspokes_loading_wrapper');
-      var loading_img = null;
-
-      // shows a different version based on if the widget was previously collapsed or expanded
-      if (fb.get_state("widget_position") === "up") {
-        loading_wrapper.addClass("outspokes_widget_up");
-        loading_img = $('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
-      } else {
-        loading_wrapper.addClass("outspokes_widget_down");
-        loading_img = $('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
-      }
-      // Adding the animated graphic to the page (before fb.Interface is added)
-      loading_wrapper.append(loading_img);
-      $('body').append(loading_wrapper);
-    });
-
     fb.Comment.get(login_callback);
     return;
