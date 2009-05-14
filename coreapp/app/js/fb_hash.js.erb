@@ -39,10 +39,14 @@ function() {
 
     // Animated graphic showing that our widget is loading
     fb.loading_wrapper = fb.$('<div></div>').attr('id','outspokes_loading_wrapper');
-
+    fb.done_loading = false;
+    
     $(function() {
+      // callback which is supposed to remove what this creates has already executed
+      if (fb.done_loading) {
+        return;
+      }
       var loading_img = null;
-
       // shows a different version based on if the widget was previously collapsed or expanded
       if (fb.get_state("widget_position") === "up") {
         fb.loading_wrapper.addClass("outspokes_widget_up");
@@ -70,6 +74,7 @@ function() {
     var method = fb.rand_string(50);
     var login_callback = fb.find_fb() + "." + method;
     fb[method] = function (data) {
+      fb.done_loading = true;
       // remove the loading graphic because the data and interface are ready to be loaded
       fb.loading_wrapper.remove();
 

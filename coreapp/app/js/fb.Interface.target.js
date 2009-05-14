@@ -104,8 +104,37 @@
         html.append(delete_target);
       }
       
+      // onclick handler for target names
+      function rename(e, self) {
+        var selector = target.name || target_readable;
+        var new_name = $('<input type="text" value="' + selector + '"/>');
+        var old_name = $(self).replaceWith(new_name); // important: removes any event handlers
+        new_name[0].select();
+        
+        // Set this target's name when you press enter
+        new_name.keydown(function(e) {
+          if (e.keyCode === 13) { // enter
+            $(this).blur();
+          }
+        });
+        
+        // Removes the text input and reinserts the paragraph with the new value
+        new_name.blur(function(e) {
+          if (this.value === "") { 
+            // revert to the default
+            this.value = target_readable;
+          }
+          old_name.text(this.value);
+          target.name = this.value; // save it, so that you can keep renaming
+          var replaced = $(this).replaceWith(old_name);
+          // reattach the click handler because it got removed during replaceWith
+          old_name.click( function(e) { rename(e, this) });
+        });
+      }
+      
       var inner = $('<p></p>');
       inner.append(target_readable);
+      inner.click( function(e) { rename(e, this) });
       html.append(inner);
       
       this.all[html.attr('title')] = target;
