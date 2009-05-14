@@ -5,7 +5,7 @@ function() {
     if (fb.env && fb.env.init) {
       return true;
     }
-
+    
     fb.env = {};
     fb.env.current_page = window.location.href.split("?")[0].split("#")[0].replace(/(\/)$/, "");
     fb.env.url_token = fb.getParams('url_token') || fb.cookie('fb_hash_url_token') || "";
@@ -37,6 +37,29 @@ function() {
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.edit_css_address + '" />');
 
+    // Animated graphic showing that our widget is loading
+    fb.loading_wrapper = fb.$('<div></div>').attr('id','outspokes_loading_wrapper');
+
+    $(function() {
+      var loading_img = null;
+
+      // shows a different version based on if the widget was previously collapsed or expanded
+      if (fb.get_state("widget_position") === "up") {
+        fb.loading_wrapper.addClass("outspokes_widget_up");
+        loading_img = fb.$('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+      } else {
+        fb.loading_wrapper.addClass("outspokes_widget_down");
+        loading_img = fb.$('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+      }
+
+      // Adding the animated graphic to the page (before fb.Interface is added)
+      fb.loading_wrapper.append(loading_img);
+      if (fb.env.url_token !== "") {
+        fb.$('body').append(fb.loading_wrapper);
+      }
+    });
+
+
     // DO NOT USE THIS!!!!!
     // This is only for convenience in testing, and should never be
     // using in the JS
@@ -47,6 +70,9 @@ function() {
     var method = fb.rand_string(50);
     var login_callback = fb.find_fb() + "." + method;
     fb[method] = function (data) {
+      // remove the loading graphic because the data and interface are ready to be loaded
+      fb.loading_wrapper.remove();
+
       fb[method] = null;
       delete fb[method];
       if (!data) {
@@ -94,9 +120,6 @@ function() {
       fb.cookie("fb_hash_url_token", fb.env.url_token);
 
       fb.i = new fb.Interface();
-      // remove the loading graphic because the interface is ready now
-      $('#outspokes_loading_wrapper').remove(); 
-      
       fb.Comment.get_callback(data, true);
       if (data.no_commenters) {
         fb.i.admin_panel.set_to_commenters();
@@ -110,6 +133,10 @@ function() {
       var widget_position = fb.get_state("widget_position");
       if (! (current_tab == undefined)) {
         fb.i.nav.elements.list[current_tab].click();
+        
+        if (current_tab !== 1) {
+          fb.UserStyle.get();
+        }
       }
       
       // Bring widget up or down depending on state
@@ -118,8 +145,7 @@ function() {
       } else if (widget_position == "down") {
         fb.i.hide_widget(false);
       }
-
-      fb.UserStyle.get();
+      
       return true;
     };
 
@@ -171,6 +197,6 @@ function() {
       loading_wrapper.append(loading_img);
       $('body').append(loading_wrapper);
     });
-    
+
     fb.Comment.get(login_callback);
     return;
