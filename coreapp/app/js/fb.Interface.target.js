@@ -56,7 +56,13 @@
     
     this.build = function(target) {
       var html = $('<li></li>');
-      html.attr('title', target.selector);
+      
+      var target_readable = target.selector.replace(/eq\(/g, "");
+      target_readable = target_readable.replace(/\)/g, "");
+      target_readable = target_readable.replace(/html > /g, "");
+      target_readable = target_readable.replace(/body:0/g, "body");
+      
+      html.attr('title', target_readable);
       html.click( function(e) {
         fb.i.target.setCurrent(this);
       });
@@ -70,7 +76,7 @@
       }
       
       var inner = $('<p></p>');
-      inner.append(target.selector);
+      inner.append(target_readable);
       html.append(inner);
       
       this.all[html.attr('title')] = target;
