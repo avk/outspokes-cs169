@@ -398,8 +398,8 @@
     
     var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
     textColorRevert.click( function() {
-      textColor.find('input')[0].value = "";
       fb.i.target.current.target.unset_style('color');
+      textColor.find('input')[0].value = rgb_to_hash(fb.i.target.current.target.current_style('color'));
     });
     
     bgColor.append(bgColorApply);
@@ -487,8 +487,8 @@
     
     var fontSizeRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original font size." />');
     fontSizeRevert.click( function() {
-      fontSize.find('input')[0].value = "";
       fb.i.target.current.target.unset_style('font-size');
+      fontSize.find('input')[0].value = parseInt(fb.i.target.current.target.current_style('font-size'), 10).toString(10);;
     });
 
     this.your_font.append(fontFamily);
