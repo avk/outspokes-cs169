@@ -679,7 +679,7 @@ version: 3.0.0pr2
   position: absolute;
   right: 50px;
   top: -134px;
-  background-image: url(/images/intro-bubble.png);
+  background-image: url(/images/intro-bubble-shadow.png);
   background-repeat: no-repeat;
   padding: 10px;
 }
