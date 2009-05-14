@@ -254,6 +254,7 @@
 #outspokes #outspokes_target_list li { 
   border: 1px solid transparent;
   border-left: none;
+  border-top: none;
   background: #BBB;
   padding: 2px 4px;
   display: block;
