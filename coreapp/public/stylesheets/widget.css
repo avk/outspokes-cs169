@@ -146,6 +146,7 @@ version: 3.0.0pr2
 }
 
 /* outermost wrapper for our widget */
+#outspokes_loading_wrapper,
 #outspokes {
   background-color: #333;
   font-family: Verdana, Helvetica, sans-serif;
@@ -155,6 +156,28 @@ version: 3.0.0pr2
   position: fixed;
   bottom: 0px;
   left: 0px;
+}
+
+#outspokes_loading_wrapper {
+  opacity: 0.5;
+}
+
+#outspokes_loading_wrapper.outspokes_widget_up {
+  height: 250px;
+}
+#outspokes_loading_wrapper.outspokes_widget_down {
+  height: 28px;
+}
+
+#outspokes_loading_wrapper.outspokes_widget_up #outspokes_loading {
+  left: 47%;
+  position: absolute;
+  top: 25%;
+}
+
+#outspokes_loading_wrapper.outspokes_widget_down #outspokes_loading {
+  left: 47%;
+  position: absolute;
 }
 
 /* admin panel, excluded from the wrapper because it overlays everything */

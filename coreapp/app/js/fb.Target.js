@@ -10,7 +10,11 @@
     this.element = $(path);
     this.original_styles = {};
     this.new_styles = {};
-    this.build = (fb.i) ? fb.i.target.build(this) : null;
+    if (fb.i) {
+      fb.i.target.build(this);
+    } else {
+      this.build = null;
+    }
   };
 
   fb.Target.prototype.set_style = function (property, value) {
@@ -25,6 +29,10 @@
     this.element.css(property, this.original_styles[property]);
     delete this.original_styles[property];
     delete this.new_styles[property];
+  };
+
+  fb.Target.prototype.current_style = function (property) {
+    return window.getComputedStyle(this.element[0], null).getPropertyValue(property);
   };
 
   fb.Target.prototype.delete = function () {
