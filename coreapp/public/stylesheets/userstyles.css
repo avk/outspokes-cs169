@@ -23,6 +23,7 @@
 }
 
 #outspokes .edit_block {
+  -moz-border-radius-bottomleft: 5px;
   border-bottom: 1px solid #777;
   background-image: none;
   background-color: #777;
@@ -30,8 +31,12 @@
   margin-bottom:7px;
   padding:5px;
   padding-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
+  color: #333;
 }
+
+#outspokes .edit_block:hover {background-color: #999; color: black;}
 
 #outspokes .edit_block.active {
   /*margin-bottom: 5px;*/
@@ -144,7 +149,7 @@
   #outspokes #your_edits .your_edits_nav {
     display: block;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     margin-bottom: 9px;
   }
     #outspokes #your_edits .your_edits_nav li {
@@ -152,7 +157,7 @@
       border-bottom : none;
       display : block;
       float : left;
-      padding: 1px 15px 1px 15px;
+      padding: 1px 15px 2px;
       margin-right: 3px;
       background: #EEE;
       border-bottom: none;
@@ -164,7 +169,7 @@
     #outspokes #your_edits .your_edits_nav li.outspokes-current-edit {
       background-color: #FFF;
       color: #C1272D;
-      border-bottom:1px solid #FFFFFF;
+      padding-bottom: 3px;
     }
     
     #outspokes #font_family_edit_wrap {
@@ -172,12 +177,14 @@
     }
 #outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
   margin-left: 10px;
+  height: 30px;
 }
 
 #outspokes #your_edits_wrapper .input_error {
   color: red;
   font-weight: bold;
-  margin: 0 0 3px 5px;
+  margin: 0 0 5px 5px;
+  height: 15px;
 }
 
 #outspokes #outspokes_target_header .outspokes_target_button {
@@ -185,10 +192,8 @@
 }
 #outspokes #your_edits_wrapper input {
   width: 5em;
-}
-
-#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
   margin: 5px;
+  margin-left: 0;
 }
 
 #outspokes #your_edits_wrapper .outspokes_edit_label {
@@ -196,9 +201,12 @@
   float:left;
   font-size:12px;
   font-weight:bold;
-  line-height:30px;
+  padding: 5px;
   width:90px;
+  margin-right: 5px;
 }
+
+#outspokes #your_edits_wrapper .pound {margin-left: 5px;}
 
 #outspokes #your_targets {
   margin-right: 2%;
@@ -249,6 +257,8 @@
   overflow-x: hidden;
   overflow-y: scroll;
   border-top: 1px solid #999;
+  position: relative;
+  top: 1px;
 }
 
 #outspokes #outspokes_target_list li { 
