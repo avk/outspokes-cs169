@@ -539,6 +539,7 @@ version: 3.0.0pr2
 
 #outspokes #topbar select#comments_filter {
   margin-left: 10px;
+  margin-right: -20px;
   font-size: .8em;
 }
 
