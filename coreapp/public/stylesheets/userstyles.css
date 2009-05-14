@@ -31,6 +31,7 @@
   height:15px;
   margin-bottom:7px;
   padding:5px;
+  padding-left: 10px;
   cursor: pointer;
 }
 
@@ -75,21 +76,20 @@
 #outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
 #outspokes #new_edit_link {
-  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;
+/*  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;*/
   float: right;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
   font-style: italic;
   margin-right: 2%;
   width: 26%;
-  height: 157px;
-  color: transparent;
+/*  height: 157px;*/
+  color: white;
   cursor: pointer;
   margin-top: 30px;
   -moz-border-radius-bottomleft:7px;
   text-align: center;
 }
-
 
 /* END EDITS_LIST VIEW */
 
