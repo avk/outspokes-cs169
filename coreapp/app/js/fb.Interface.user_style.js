@@ -163,7 +163,7 @@
         } else {
           fb.UserStyle.all[user_style.feedback_id].unapply();
           $(this).removeClass('active');
-          current_checked = null;
+          current_clicked = null;
         }
       });
 
