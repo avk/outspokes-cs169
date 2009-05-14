@@ -501,8 +501,12 @@
         if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
             fb.Interface.feedback_last_updated_at=new Date;
             fb.Comment.get();
-            while(window.location.hash === "#refreshcomments") {
+            var go_back_tries=0;
+            while(window.location.hash === "#refreshcomments" && go_back_tries++ < 10) {
                 history.go(-1);
+            }
+            if(window.location.hash === "#refreshcomments") {
+                window.location.hash="#";
             }
         }
     }, 2000)
