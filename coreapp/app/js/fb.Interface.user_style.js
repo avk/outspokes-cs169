@@ -203,7 +203,7 @@
 
     this.hide_new_edit_view = function () {
       if (fb.i.target.changes_to_targets(true)) {
-        var answer = confirm("This will undo all of your changes.  Are you sure?");
+        var answer = confirm("This will undo all of your changes and clear all your selected targets.  Are you sure?");
         if (!answer) {return;}
       }
       
