@@ -19,10 +19,9 @@
     this.target_header = $('<div></div>').attr('id', 'outspokes_target_header');
     var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
 
-
     target_button.click(function() {
       fb.Target.pick(function(target) { // callback
-        
+
       });
     });
     this.target_header.append(target_button);

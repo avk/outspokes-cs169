@@ -150,8 +150,6 @@ version: 3.0.0pr2
   background-color: #333;
   font-family: Verdana, Helvetica, sans-serif;
   font-size: 11px;
-  line-height: 120%;
-  z-index: 999999;
   z-index: 999;
   width: 100%;
   position: fixed;
@@ -297,6 +295,7 @@ version: 3.0.0pr2
   cursor: pointer;
   border: 1px solid #777;
   border-width: 0px 0px 0px 1px;
+  overflow: hidden;
 }
 #outspokes #comment_list .cmt_bar .private {
   float: left;
@@ -336,6 +335,7 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cmt_content {
+  line-height: 120%;
   padding:.7em;
   background-color: white;
   -moz-border-radius-bottomleft:7px;
@@ -390,7 +390,6 @@ version: 3.0.0pr2
 }
 
 #outspokes #comment_list .cns_buttons span{
-  line-height: 1.3em;
   padding: 0 3px;
   width: 100%;
 }
@@ -523,6 +522,7 @@ version: 3.0.0pr2
   color: #666;
   padding-top: 5px;
   border-bottom: 1px solid #AAA;
+  overflow: hidden;
 }
 
 #outspokes #topbar select#comments_filter {
@@ -592,7 +592,11 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbarLeft ul.navigation {
-  display : inline;
+/*  display : inline;*/
+  float: left;
+  padding-top: 5px;
+  position: relative;
+  top: -5px;
 }
   #outspokes #topbarLeft ul.navigation li {
     border : 1px solid #999;
@@ -612,8 +616,13 @@ version: 3.0.0pr2
   #outspokes #topbarLeft ul.navigation li.outspokes-current:hover {
     background-color: #ccc;
     border-color: #999;
+    border-bottom: none;
     color: #333;
     padding-bottom: 7px;
+  }
+  #outspokes #topbarLeft ul.navigation li.outspokes-current * {
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 
 #outspokes #topbarLeft ul.navigation li.outspokes-current span {

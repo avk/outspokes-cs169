@@ -42,5 +42,7 @@
   _fb.admin = _setter(false);
   // Holds the side_id, null until set.
   _fb.site_id = _setter(null);
+  // Holds the page_id, null until set.
+  _fb.page_id = _setter(null);
 
 

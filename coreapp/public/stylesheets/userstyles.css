@@ -7,7 +7,7 @@
 #outspokes #widget_edits {
 }
 
-/* List of edits view */
+/* EDITS_LIST VIEW*/
 
 #outspokes {
   
@@ -15,6 +15,7 @@
 #outspokes #edits_list { 
   height: 217px; 
 }
+
 #outspokes #new_edit_link {
   float: right;
   font-size: 32px;
@@ -31,7 +32,7 @@
   text-align: center;
 }
 
-#outspokes #new_edit_link div {
+#outspokes #new_edit_link {
   line-height:33px;
   margin-top:5px;
   padding:10px;
@@ -49,7 +50,7 @@
   cursor: pointer;
 }
 
-#outspokes #new_edit_link div span {
+#outspokes #new_edit_link span {
   color: #C1272D;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -112,7 +113,51 @@
 #outspokes .edit_block .edit_consensus .agreed {color: green;}
 #outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
-/* New edit */
+#outspokes #new_edit_link {
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 2%;
+  width: 26%;
+  height: 157px;
+  background:#FFFFFF url(/images/new-edit-bg.png) no-repeat scroll center center;
+  color: #111;
+  cursor: pointer;
+  margin-top: 30px;
+  -moz-border-radius-bottomleft:7px;
+  text-align: center;
+}
+
+#outspokes #new_edit_link div {
+  font-size:43px;
+  letter-spacing:-4px;
+  line-height:33px;
+  margin-top:5px;
+  padding:10px;
+  text-align:right;
+}
+
+#outspokes #new_edit_link span {
+  color: #C1272D;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#outspokes #back_to_edits_list {
+  font-weight: bold;
+  font-style: italic;
+  text-align: left;
+  font-size:43px;
+  letter-spacing:-4px;
+  line-height:33px;
+  color: #EEE;
+  cursor: pointer;
+}
+
+/* END EDITS_LIST VIEW */
+
+/* NEW_EDIT VIEW */
 
 #outspokes #new_edit_wrap {
 /*  border: 2px dashed orange;*/
@@ -299,3 +344,4 @@
 #outspokes #outspokes_target_list a#outspokes_delete_style_edit:hover {
   color: red;
 }
+/* END NEW_EDIT VIEW */
