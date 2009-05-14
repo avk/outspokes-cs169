@@ -426,9 +426,8 @@
         close_bubble_link.click( close_bubble );
         intro_bubble.append(close_bubble_link);
         
-        intro_bubble.append("<p id='bubble_content'>Welcome to the Outspokes feedback widget!" + 
-          "<br />To start giving feedback, click somewhere on the bar, and you'll be able to see comments" + 
-          " that other people have left and leave your own!<br />Happy commenting!</p>");
+        intro_bubble.append("<p id='bubble_content'>Welcome to <strong>Outspokes</strong>." + 
+          "<br /><br />Start giving feedback by clicking on the bar.</p>");
         
         // the bubble should be closed when clicking on the following:
         this.topbar.click( close_bubble );

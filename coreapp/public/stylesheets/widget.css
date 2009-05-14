@@ -695,8 +695,9 @@ version: 3.0.0pr2
 
 #outspokes #bubble_content {
   float:left;
-  line-height: 14px;
-  width: 200px;
+  font-size:14px;
+  padding:17px;
+  width:200px;
 }
 
 /* END FIRST TIME BUBBLE */
