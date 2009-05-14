@@ -81,16 +81,11 @@
 #outspokes #new_edit_link {
 /*  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;*/
   float: right;
-  font-size: 28px;
-  font-weight: bold;
-  font-style: italic;
-/*  margin-right: 2%;*/
+  font-size: 3em;
   width: 30%;
-/*  height: 157px;*/
   color: white;
   cursor: pointer;
-/*  margin-top: 30px;*/
-  -moz-border-radius-bottomleft:7px;
+  margin-top: 80px;
   text-align: center;
 }
 
@@ -112,13 +107,14 @@
 }
 #outspokes #back_to_edits_list {
 /*  border: 1px solid black;*/
+  color: white;
   display: block;
   float: left;
-  font-size: 4em;
-  line-height: 100%;
+  font-size: 3em;
   height: 40px;
   width: 120px;
   padding-left: 3px;
+  margin-top: 80px;
 }
 #outspokes #your_edits {
 /*  border: 1px solid red;*/
@@ -147,10 +143,14 @@
     height: 130px;
     border-right: none;
     margin-top: -10px;
+    -moz-border-radius-bottomleft: 7px;
   }
   
   #outspokes #your_edits .your_edits_nav {
+    display: block;
+    height: 100%;
     overflow: hidden;
+    margin-bottom: 9px;
   }
     #outspokes #your_edits .your_edits_nav li {
       border : 1px solid #999;
@@ -257,6 +257,8 @@
   overflow-x: hidden;
   overflow-y: scroll;
   border-top: 1px solid #999;
+  position: relative;
+  top: 1px;
 }
 
 #outspokes #outspokes_target_list li { 
