@@ -152,9 +152,10 @@
       border-bottom : none;
       display : block;
       float : left;
-      padding: 1px 5px 3px 5px;
+      padding: 1px 15px 1px 15px;
       margin-right: 3px;
       background: #EEE;
+      border-bottom: none;
     }
     #outspokes #your_edits .your_edits_nav li:hover {
       background-color: #EEE;
@@ -163,7 +164,6 @@
     #outspokes #your_edits .your_edits_nav li.outspokes-current-edit {
       background-color: #FFF;
       color: #C1272D;
-      text-decoration: underline;
       border-bottom:1px solid #FFFFFF;
     }
     
@@ -241,8 +241,8 @@
 }
 
 #outspokes #outspokes_target_list_wrap {
-  background:#999 url(/images/unopinionated_header.png) repeat-x scroll center top;
-  color:#333333;
+  background: #555 url(/images/unopinionated_header.png) repeat-x scroll center top;
+  color:#222;
   height: 150px;
   color: #111;
   text-align: left;
@@ -252,20 +252,25 @@
 }
 
 #outspokes #outspokes_target_list li { 
-  border: 1px solid transparent;
-  border-left: none;
-  background: #BBB;
+  border-right: 1px solid transparent;
+  background-color: #999;
   padding: 2px 4px;
   display: block;
   margin-bottom: 2px;
 }
   #outspokes #outspokes_target_list li.outspokes_current_target {
-    border: 1px solid #999;
-    -moz-border-radius-bottomright: 3px;
-    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-topright: 5px;
     background: #FFF;
-    border-left: none;
-    border-top: none;
+  }
+  #outspokes #outspokes_target_list li p {
+    color: #555;
+  }
+  #outspokes #outspokes_target_list li p:hover {
+    color: #333;
+  }
+  #outspokes #outspokes_target_list li.outspokes_current_target p {
+    color: #000;
   }
   #outspokes #outspokes_target_list li a {
     display: block;
