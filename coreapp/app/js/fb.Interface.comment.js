@@ -406,7 +406,7 @@
           tmp[0].addEventListener("DOMNodeRemoved", function(e) {
             rtn.find('.cmt_text').before( fb.i.comment.missing_target() );
           }, true);
-          tmp = highlight_target(tmp.get(0));
+          tmp = fb.highlight_target(tmp.get(0));
           c.__unHover = tmp[1];
           rtn.hover(tmp[0], tmp[1]);
         }
@@ -586,14 +586,3 @@
     };
     
   };
-  
-  function highlight_target(el_dom) {
-    var el = $(el_dom);
-    var over = function() {
-      el.addClass("outspokes_currently_hovering")
-    };
-    var out = function() {
-      el.removeClass("outspokes_currently_hovering")
-    };
-    return [over, out];
-  }
