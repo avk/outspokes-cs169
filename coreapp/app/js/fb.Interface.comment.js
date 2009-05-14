@@ -416,7 +416,7 @@
         rtn.find('.commenter_name').before(target_div);
         
         target_div.click(function (e) {
-          console.log(tmp);
+          // console.log(tmp);
           $.scrollTo($(c.target), 200, { offset: -100});
           e.stopPropagation();
         });
