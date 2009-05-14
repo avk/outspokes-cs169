@@ -57,12 +57,13 @@
     this.build = function(target) {
       var html = $('<li></li>');
       
-      var target_readable = target.selector.replace(/eq\(/g, "");
+      var target_readable = target.selector;
+      target_readable = target_readable.replace(/eq\(/g, "");
       target_readable = target_readable.replace(/\)/g, "");
       target_readable = target_readable.replace(/html > /g, "");
       target_readable = target_readable.replace(/body:0/g, "body");
       
-      html.attr('title', target_readable);
+      html.attr('title', target.selector);
       html.click( function(e) {
         fb.i.target.setCurrent(this);
       });
