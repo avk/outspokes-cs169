@@ -345,6 +345,17 @@
         fb.i.target.current.target.unset_style(key);
       }
     };
+
+    // And array of tuples, the first element being the DOM elements of every
+    // input field (needed for propagation/reset), and the second being the
+    // names of the CSS properties they are associated with.
+    var edit_fields = [];
+    var value_type = {
+      'background-color': 'hash_color',
+      'color': 'hash_color',
+      'font-family': 'string',
+      'font-size': 'number'
+    };
     
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
@@ -355,6 +366,7 @@
     bgColor.find('input').blur( function() {
       validate_colorstring(this.value, bg_error_message);
     });
+    edit_fields.push([bgColor.find('input')[0], 'background-color']);
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
@@ -377,6 +389,7 @@
     textColor.find('input').blur( function() {
       validate_colorstring(this.value, textcolor_error_message);
     });
+    edit_fields.push([textColor.find('input')[0], 'color']);
     
     var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
@@ -436,6 +449,7 @@
         fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
       }
     });
+    edit_fields.push([fontFamily.find('select')[0], 'font-family']);
     
     
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
@@ -460,6 +474,7 @@
     fontSize.find('input').blur(function(e) {
       validate_font_size(this.value);
     });
+    edit_fields.push([fontSize.find('input')[0], 'font-size']);
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
       if (currFontSize.value == "") {
@@ -480,11 +495,53 @@
     fontSize.append(fontSizeRevert);
     this.your_font.append(fontSize);
 
-    
     this.your_edits_wrapper.append(this.your_font);
-    
-    
-    
+
+    this.populate_fields = function (target) {
+      var element, property;
+      var val, wanted_type;
+      $.each(edit_fields, function (i, tuple) {
+        [element, property] = tuple;
+        val = target.current_style(property);
+        wanted_type = value_type[property];
+        switch (wanted_type) {
+          case 'hash_color':
+            val = rgb_to_hash(val);
+            break;
+          case 'string':
+            break;
+          case 'number':
+            val = parseInt(val, 10).toString(10);
+            break;
+          default:
+        }
+        element.value = "";
+        element.value = val;
+      });
+    };
+
+    function rgb_to_hash(str) {
+      if (!/rgb/.test(str)) {
+        return "";
+      }
+      var rgb = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/.exec(str).slice(1, 4);
+      var rtn = "";
+      $.each(rgb, function (i, val) {
+        rtn += pad_to_length_2(parseInt(val, 10).toString(16));
+      });
+      return rtn;
+    }
+
+    function pad_to_length_2 (str) {
+      if (str.length > 2) {
+        return str.slice(0, 2);
+      }
+      while (str.length < 2) {
+        str = "0" + str;
+      }
+      return str;
+    }
+
     // NEW EDIT: targeting sidebar  //////////////////////////////////////////////////////////////////
     this.your_targets = $('<div></div>').attr('id', dom.new_edit.your_targets);
     
