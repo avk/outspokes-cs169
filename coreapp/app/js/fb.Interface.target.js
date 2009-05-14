@@ -17,6 +17,22 @@
     }; // if changed, also change in clearAll()
     this.default_target = null;
     
+    // returns true if there have been any edits or new targets and false otherwise
+    this.changes_to_targets = function() {
+      var changes = false;
+      if (fb.getProperties(fb.i.target.all).length > 1) { // there's more than one target
+        changes = true;
+      } else {
+        $.each(fb.i.target.all, function(selector, target) {
+          if (fb.getProperties(target.new_styles).length > 0) { // target has edits
+            changes = true;
+            return false;
+          }
+        });
+      }
+      return changes;
+    };
+    
     this.target_header = $('<div></div>').attr('id', 'outspokes_target_header');
     var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
 
@@ -44,10 +60,14 @@
     //var save_targets = $('<a>Save</a>').attr('id', 'outspokes_save_edit');
     var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
-      fb.UserStyle.post(fb.i.target.all);
-      fb.i.target.startOver();
-      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
-      fb.i.user_style.new_edit_is_current = false;
+      if (fb.i.target.changes_to_targets()) {
+        fb.UserStyle.post(fb.i.target.all);
+        fb.i.target.startOver();
+        fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+        fb.i.user_style.new_edit_is_current = false;
+      } else {
+        alert("You must make some changes before saving.");
+      }
       return false;
     });
     
