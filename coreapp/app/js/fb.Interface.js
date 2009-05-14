@@ -481,7 +481,7 @@
     this.help_content.addClass("hide");
 
     // JUGGERNAUT
-    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'"  width="0" height="0"></iframe>';
+    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'"></iframe>';
 
 
     // WRAPUP //////////////////////////////////////////////////////////////////
