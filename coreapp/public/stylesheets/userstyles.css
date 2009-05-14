@@ -80,13 +80,20 @@
 
 #outspokes #new_edit_link {
 /*  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;*/
+  border: 2px solid transparent;
   float: right;
   font-size: 3em;
-  width: 30%;
+  width: 20%;
   color: white;
   cursor: pointer;
-  margin-top: 80px;
+  margin: 70px 4.8% 0;
   text-align: center;
+  padding: 10px 0;
+}
+#outspokes #new_edit_link:hover {
+  -moz-border-radius: 15px;
+  border-color: #666;
+  background-color: #3f3f3f;
 }
 
 /* END EDITS_LIST VIEW */
@@ -115,6 +122,12 @@
   width: 120px;
   padding-left: 3px;
   margin-top: 80px;
+}
+
+#outspokes #back_to_edits_list:hover {
+  -moz-border-radius: 15px;
+  border-color: #666;
+  background-color: #3f3f3f;
 }
 #outspokes #your_edits {
 /*  border: 1px solid red;*/
