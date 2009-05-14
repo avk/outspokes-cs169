@@ -23,6 +23,7 @@
 }
 
 #outspokes .edit_block {
+  -moz-border-radius-bottomleft: 5px;
   border-bottom: 1px solid #777;
   background-image: none;
   background-color: #777;
@@ -30,8 +31,12 @@
   margin-bottom:7px;
   padding:5px;
   padding-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
+  color: #333;
 }
+
+#outspokes .edit_block:hover {background-color: #999; color: black;}
 
 #outspokes .edit_block.active {
   /*margin-bottom: 5px;*/
@@ -164,7 +169,7 @@
     #outspokes #your_edits .your_edits_nav li.outspokes-current-edit {
       background-color: #FFF;
       color: #C1272D;
-      border-bottom:1px solid #FFFFFF;
+      padding-bottom: 3px;
     }
     
     #outspokes #font_family_edit_wrap {
