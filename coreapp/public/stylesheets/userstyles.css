@@ -154,9 +154,10 @@
       border-bottom : none;
       display : block;
       float : left;
-      padding: 1px 5px 3px 5px;
+      padding: 1px 15px 1px 15px;
       margin-right: 3px;
       background: #EEE;
+      border-bottom: none;
     }
     #outspokes #your_edits .your_edits_nav li:hover {
       background-color: #EEE;
@@ -165,7 +166,6 @@
     #outspokes #your_edits .your_edits_nav li.outspokes-current-edit {
       background-color: #FFF;
       color: #C1272D;
-      text-decoration: underline;
       border-bottom:1px solid #FFFFFF;
     }
     
