@@ -67,11 +67,15 @@
 
     // EDITS_VIEW //////////////////////////////////////////////////////////////////
 
+    this.new_edit_is_current = false;
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<div><div>Make your own <span>page edit</span>:<br />Click here! &raquo;</div></div>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link = $('<div>Make new edit &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
+
     this.new_edit_link.click(function() { 
-      fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view); 
+      fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view);
+      fb.i.user_style.unapply_current_edit();
+      fb.i.user_style.new_edit_is_current = true;
     });
     
     // Consensus section
@@ -133,32 +137,33 @@
     this.render = function(user_style) {
       this.edit_list.append(this.build(user_style));
     };
-    
+
+    var current_clicked = null;
     this.build = function(user_style) {
       // build up the container for a user style item
       var us_id = dom.edits_view.edit_id(user_style.feedback_id);
       var us_block = $('<div></div>').attr('id', us_id).addClass(dom.edits_view.edit_block);
       
       // define its contents
-      var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
-      us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
-      us_checkbox.click(function() {
-        if (this.checked) {
-          $('.toggle_box').each(function(){
-            this.checked = false;
-            $(this).parent().removeClass('active');
-
-            var my_id = dom.edits_view.number_from_id( $(this).parent().attr("id") );
+      // var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
+      // us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      us_block.click(function() {
+        if (!$(this).hasClass('active')) { // currently not active
+          $('.' + dom.edits_view.edit_block).each(function(){ // for other edit
+            // this.checked = false;
+            $(this).removeClass('active');
+            var my_id = dom.edits_view.number_from_id( $(this).attr("id") );
             fb.UserStyle.all[my_id].unapply();
           });
-          this.checked = true;
-          $(this).parent().addClass('active');
+          // this.checked = true;
+          $(this).addClass('active');
 
-          current_edit = user_style;
           fb.UserStyle.all[user_style.feedback_id].apply();
+          current_clicked = $(this);
         } else {
           fb.UserStyle.all[user_style.feedback_id].unapply();
-          $(this).parent().removeClass('active');
+          $(this).removeClass('active');
+          current_checked = null;
         }
       });
 
@@ -166,7 +171,7 @@
       var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
       // attach to the container
-      us_block.append(us_checkbox);
+      // us_block.append(us_checkbox);
       us_block.append(us_name);
       us_block.append(us_timestamp);      
       // us_block.append(this.consensus.build(user_style));
@@ -174,15 +179,20 @@
       return us_block;
     };
 
+    this.unapply_current_edit = function () {
+      if (current_clicked === null) {
+        return;
+      }
+      current_clicked.click();
+      current_clicked = null;
+    };
+
     this.remove = function(user_style) {
       // console.log("Removing from fb.Interface.user_style...");
     };
     
     this.edits_view.append(this.edit_list);
-    this.edits_view.append(this.new_edit_link);
-    this.edits_view.append($('<div style="clear:both;"></div>'));
-    
-    
+    this.edits_view.append(this.new_edit_link);    
     
     // NEW EDIT //////////////////////////////////////////////////////////////////
     
@@ -190,20 +200,41 @@
     // must start out collapsed and hidden for the slide transitions to work
     this.new_edit_view.css('width','0%'); 
     this.new_edit_view.hide();
+
+    this.hide_new_edit_view = function () {
+      var changes_to_targets = false;
+      if (fb.getProperties(fb.i.target.all).length > 1) { // there's more than one target
+        changes_to_targets = true;
+      } else {
+        $.each(fb.i.target.all, function(selector, target) {
+          if (fb.getProperties(target.new_styles).length > 0) { // target has edits
+            changes_to_targets = true;
+            return false;
+          }
+        });
+      }
+      
+      if (changes_to_targets) {
+        var answer = confirm("This will delete all of your changes.  Are you sure?");
+        if (!answer) {return;}
+      }
+      
+      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+      fb.i.user_style.new_edit_is_current = false;
+      fb.i.target.startOver();
+      return true;
+    };
     
     // back to list
-    this.edit_list_link = $('<a href="#"><br />&laquo;<br />Edits<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
-    this.edit_list_link.click(function() { 
-      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
-      fb.i.target.startOver();
-    });
+    this.edit_list_link = $('<a><br />&laquo;<br />&laquo;<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link.click(this.hide_new_edit_view);
     
     
     
     // NEW_EDIT: YOUR EDITS  //////////////////////////////////////////////////////////////////
     // pane where you pick a style category and set individual properties
     this.your_edits = $('<div></div>').attr('id', dom.new_edit.your_edits);
-    this.your_edits.append($('<h1>Your Edits</h1>'));
+    //this.your_edits.append($('<h1>Your Edits</h1>'));
     this.your_edits_wrapper = $('<div></div>').attr('id', dom.new_edit.your_edits_wrapper);
     this.your_edits.append(this.your_edits_wrapper);
     
@@ -401,7 +432,6 @@
       rtn.append(opt_array[0]);
       return rtn;
     });
-    console.log(fontFamilyOptions);
     
     var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
     fontFamily.append('<span class="outspokes_edit_label"><label for="fontFamily">Family</label></span>');
@@ -447,7 +477,7 @@
       if (currFontSize.value == "") {
         fb.i.target.current.target.unset_style('font-size');
       } else if (validate_font_size(currFontSize.value)) {
-        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');        
+        fb.i.target.current.target.set_style('font-size', currFontSize.value + 'px');     
       }
     });
     
@@ -475,9 +505,9 @@
     var your_edits_left_wrapper = $('<div></div>').attr('id', 'your_edits_left_wrapper');
     your_edits_left_wrapper.append(this.edit_list_link);
     your_edits_left_wrapper.append(this.your_edits);
-    
+    this.new_edit_view.append(this.your_targets);   
     this.new_edit_view.append(your_edits_left_wrapper);
-    this.new_edit_view.append(this.your_targets);
+
     
     
     

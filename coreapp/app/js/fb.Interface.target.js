@@ -19,10 +19,9 @@
     this.target_header = $('<div></div>').attr('id', 'outspokes_target_header');
     var target_button = $('<img class="outspokes_target_button" src="' + fb.env.target_address + '" />');
 
-
     target_button.click(function() {
       fb.Target.pick(function(target) { // callback
-        
+
       });
     });
     this.target_header.append(target_button);
@@ -32,18 +31,22 @@
     
     
     this.target_footer = $('<div></div>').attr('id','outspokes_target_footer');
-    //var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
+    //var clear_targets = $('<a>Clear</a>').attr('id', 'outspokes_clear_styles');
     var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
-      fb.i.target.startOver();
+      var answer = confirm("This will delete all of your changes.  Are you sure?");
+      if (answer) {
+        fb.i.target.startOver();
+      }
       return false;
     });
-    //var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
+    //var save_targets = $('<a>Save</a>').attr('id', 'outspokes_save_edit');
     var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
       fb.UserStyle.post(fb.i.target.all);
       fb.i.target.startOver();
       fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
+      fb.i.user_style.new_edit_is_current = false;
       return false;
     });
     
@@ -53,13 +56,20 @@
     
     this.build = function(target) {
       var html = $('<li></li>');
+      
+      var target_readable = target.selector;
+      target_readable = target_readable.replace(/eq\(/g, "");
+      target_readable = target_readable.replace(/\)/g, "");
+      target_readable = target_readable.replace(/html > /g, "");
+      target_readable = target_readable.replace(/body:0/g, "body");
+      
       html.attr('title', target.selector);
       html.click( function(e) {
         fb.i.target.setCurrent(this);
       });
       
       if (this.target_list.find('li').length > 0) {
-        var delete_target = $('<a href="#">x</a>').attr('id', 'outspokes_delete_style_edit');
+        var delete_target = $('<a>x</a>').attr('id', 'outspokes_delete_style_edit');
         delete_target.click(function(e) {
           fb.i.target.remove( $(this).parent('li').attr('title') );
         });
@@ -67,7 +77,7 @@
       }
       
       var inner = $('<p></p>');
-      inner.append(target.selector);
+      inner.append(target_readable);
       html.append(inner);
       
       this.all[html.attr('title')] = target;

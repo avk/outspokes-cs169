@@ -29,7 +29,7 @@ class UserStyle < Feedback
           else
             css += value
           end
-          css += ";\n"
+          css += " !important;\n"
         end
         
         css += "\}\n"
