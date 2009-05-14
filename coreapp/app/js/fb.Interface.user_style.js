@@ -202,8 +202,8 @@
     this.new_edit_view.hide();
 
     this.hide_new_edit_view = function () {
-      if (fb.i.target.changes_to_targets()) {
-        var answer = confirm("This will delete all of your changes.  Are you sure?");
+      if (fb.i.target.changes_to_targets(true)) {
+        var answer = confirm("This will undo all of your changes.  Are you sure?");
         if (!answer) {return;}
       }
       

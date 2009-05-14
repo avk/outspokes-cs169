@@ -17,10 +17,13 @@
     }; // if changed, also change in clearAll()
     this.default_target = null;
     
-    // returns true if there have been any edits or new targets and false otherwise
-    this.changes_to_targets = function() {
+    // returns true if there have been any edits and false otherwise
+    this.changes_to_targets = function(cares_about_new_targets) {
+      if (typeof cares_about_new_targets === "undefined") {
+        cares_about_new_targets = false;
+      }
       var changes = false;
-      if (fb.getProperties(fb.i.target.all).length > 1) { // there's more than one target
+      if (fb.getProperties(fb.i.target.all).length > 1 && cares_about_new_targets) { // there's more than one target
         changes = true;
       } else {
         $.each(fb.i.target.all, function(selector, target) {
