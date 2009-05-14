@@ -142,6 +142,7 @@
     height: 130px;
     border-right: none;
     margin-top: -10px;
+    -moz-border-radius-bottomleft: 7px;
   }
   
   #outspokes #your_edits .your_edits_nav {
