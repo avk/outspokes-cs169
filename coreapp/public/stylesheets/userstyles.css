@@ -12,16 +12,14 @@
 #outspokes {
   
 }
-#outspokes #edits_list { 
-  height: 217px; 
-}
-
 
 #outspokes #edits_list {
   float: left;
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 217px; 
+  
 }
 
 #outspokes .edit_block {
