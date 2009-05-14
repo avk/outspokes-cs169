@@ -1,5 +1,7 @@
 function() {
+  
   return (function(fb){
+    var $ = fb.$;
     if (fb.env && fb.env.init) {
       return true;
     }
@@ -30,6 +32,7 @@ function() {
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;
+    fb.env.juggernaut_iframe_address = "<%= WIDGET_DOMAIN %>juggernaut.html?"
     
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.edit_css_address + '" />');
@@ -66,6 +69,7 @@ function() {
         return false;
       }
       _fb.authorized.set(data.authorized);
+      _fb.page_id.set(data.page_id);
 
       if (fb.env.login_panel) {
         fb.env.login_panel.remove();
@@ -90,6 +94,9 @@ function() {
       fb.cookie("fb_hash_url_token", fb.env.url_token);
 
       fb.i = new fb.Interface();
+      // remove the loading graphic because the interface is ready now
+      $('#outspokes_loading_wrapper').remove(); 
+      
       fb.Comment.get_callback(data, true);
       if (data.no_commenters) {
         fb.i.admin_panel.set_to_commenters();
@@ -147,6 +154,26 @@ function() {
       fb.Comment.get({'validation_token':_admin_validation_token}, login_callback);
       return;
     }
+    
+    
+    $(function() {
+      // Animated graphic showing that our widget is loading
+      var loading_wrapper = $('<div></div>').attr('id','outspokes_loading_wrapper');
+      var loading_img = null;
 
+      // shows a different version based on if the widget was previously collapsed or expanded
+      if (fb.get_state("widget_position") === "up") {
+        loading_wrapper.addClass("outspokes_widget_up");
+        loading_img = $('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+      } else {
+        loading_wrapper.addClass("outspokes_widget_down");
+        loading_img = $('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+      }
+
+      // Adding the animated graphic to the page (before fb.Interface is added)
+      loading_wrapper.append(loading_img);
+      $('body').append(loading_wrapper);
+    });
+    
     fb.Comment.get(login_callback);
     return;

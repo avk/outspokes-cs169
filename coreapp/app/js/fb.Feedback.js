@@ -41,10 +41,6 @@
   fb.Feedback.all = {};
   
   fb.Feedback.prototype.remove = function() {
-    if(! arguments[0]) {
-      if (! fb.Feedback.destroy(this.feedback_id))
-        return false;
-    }
     delete fb.Feedback.all[this.feedback_id];
     this.feedback_id = null;
     this.content = null;
@@ -55,7 +51,7 @@
   };
   fb.Feedback.prototype.render = function() {};
   
-  fb.Feedback.destroy = function(id) {
+  fb.Feedback.prototype.destroy = function() {
     if (!_fb.admin()) {
       return false;
     }
@@ -63,13 +59,15 @@
       url_token: fb.env.url_token,
       current_page: fb.env.current_page,
       validation_token: _fb.admin(),
-      id: id
+      id: this.feedback_id
     };
+    var self = this;
     var callback = function(data) {
       if (!data.success) {
 //        console.log("delete fail!");
       } else {
 //        console.log("delete win!");
+          self.remove();
       }
     };
     $.post(fb.env.destroy_address, data, callback, "json")

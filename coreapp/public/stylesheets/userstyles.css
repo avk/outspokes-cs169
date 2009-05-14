@@ -12,66 +12,31 @@
 #outspokes {
   
 }
-#outspokes #edits_list { 
-  height: 217px; 
-}
-
-#outspokes #new_edit_link {
-  float: right;
-  font-size: 32px;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 2%;
-  width: 26%;
-  height: 157px;
-  background:#FFFFFF url(/images/new-edit-bg.png) no-repeat scroll center right;
-  color: #111;
-  cursor: pointer;
-  margin-top: 30px;
-  -moz-border-radius-bottomleft:7px;
-  text-align: center;
-}
-
-#outspokes #new_edit_link {
-  line-height:33px;
-  margin-top:5px;
-  padding:10px;
-  text-align:right;
-}
-
-#outspokes #back_to_edits_list {
-  font-weight: bold;
-  font-style: italic;
-  text-align: left;
-  /*font-size:43px;
-  letter-spacing:-4px;*/
-  line-height:33px;
-  color: #EEE;
-  cursor: pointer;
-}
-
-#outspokes #new_edit_link span {
-  color: #C1272D;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
 
 #outspokes #edits_list {
   float: left;
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 217px; 
+  
 }
 
 #outspokes .edit_block {
+  -moz-border-radius-bottomleft: 5px;
   border-bottom: 1px solid #777;
   background-image: none;
   background-color: #777;
   height:15px;
   margin-bottom:7px;
   padding:5px;
+  padding-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
+  color: #333;
 }
+
+#outspokes .edit_block:hover {background-color: #999; color: black;}
 
 #outspokes .edit_block.active {
   /*margin-bottom: 5px;*/
@@ -114,45 +79,14 @@
 #outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
 #outspokes #new_edit_link {
+/*  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;*/
   float: right;
-  font-size: 32px;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 2%;
-  width: 26%;
-  height: 157px;
-  background:#FFFFFF url(/images/new-edit-bg.png) no-repeat scroll center center;
-  color: #111;
+  font-size: 3em;
+  width: 30%;
+  color: white;
   cursor: pointer;
-  margin-top: 30px;
-  -moz-border-radius-bottomleft:7px;
+  margin-top: 80px;
   text-align: center;
-}
-
-#outspokes #new_edit_link div {
-  font-size:43px;
-  letter-spacing:-4px;
-  line-height:33px;
-  margin-top:5px;
-  padding:10px;
-  text-align:right;
-}
-
-#outspokes #new_edit_link span {
-  color: #C1272D;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-#outspokes #back_to_edits_list {
-  font-weight: bold;
-  font-style: italic;
-  text-align: left;
-  font-size:43px;
-  letter-spacing:-4px;
-  line-height:33px;
-  color: #EEE;
-  cursor: pointer;
 }
 
 /* END EDITS_LIST VIEW */
@@ -168,61 +102,65 @@
   overflow: auto;
 }
 #outspokes #your_edits_left_wrapper {
-  float: left;
+  float: right;
   width: 70%;
-/*overflow-y: scroll;
-  overflow-x: hidden;*/
 }
 #outspokes #back_to_edits_list {
 /*  border: 1px solid black;*/
+  color: white;
   display: block;
   float: left;
-  font-size: 4em;
-  line-height: 100%;
+  font-size: 3em;
   height: 40px;
   width: 120px;
   padding-left: 3px;
+  margin-top: 80px;
 }
 #outspokes #your_edits {
 /*  border: 1px solid red;*/
   padding-left: 123px;
+  padding-top: 10px;
 }
   #outspokes #your_edits h1 {
-    background:#EEEEEE;
-    color:#666666;
+    font-size:14px;
+    font-style:italic;
     font-weight:bold;
-    padding:5px;
-    text-transform:uppercase;
-    font-size: 14px;
-    border: 1px solid #CCC;
-    margin-bottom: 10px;
-    margin-top: 15px;
+    color:#DDDDDD;
+    height:20px;
+    line-height:200%;
+    margin-top:2px;
+    margin-bottom: 8px;
   }
   
   #outspokes #your_edits_wrapper {
-    min-width: 332px;
+    min-width: 325px;
   }
   
   #outspokes #your_edits_wrapper #font_edit_wrap, #outspokes #your_edits_wrapper #color_edit_wrap{
     border: 1px solid #999999;
-    margin-top: -1px;
-    padding: 10px;
+    padding: 10px 0;
     background: #FFF;
-    -moz-border-radius-bottomleft:7px;
-    height: 100px;
+    height: 130px;
+    border-right: none;
+    margin-top: -10px;
+    -moz-border-radius-bottomleft: 7px;
   }
   
   #outspokes #your_edits .your_edits_nav {
-    display: inline;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    margin-bottom: 9px;
   }
     #outspokes #your_edits .your_edits_nav li {
       border : 1px solid #999;
       border-bottom : none;
       display : block;
       float : left;
-      padding : 2px 10px 7px 10px;
-      margin : -2px 2px 0 2px;
+      padding: 1px 15px 2px;
+      margin-right: 3px;
       background: #EEE;
+      border-bottom: none;
     }
     #outspokes #your_edits .your_edits_nav li:hover {
       background-color: #EEE;
@@ -231,30 +169,31 @@
     #outspokes #your_edits .your_edits_nav li.outspokes-current-edit {
       background-color: #FFF;
       color: #C1272D;
-      text-decoration: underline;
-      border-bottom:1px solid #FFFFFF;
+      padding-bottom: 3px;
     }
     
+    #outspokes #font_family_edit_wrap {
+      margin-top: 20px;
+    }
 #outspokes #font_family_edit_wrap, #outspokes #font_size_edit_wrap,#outspokes #color_bg_edit_wrap,#outspokes #color_text_edit_wrap {
   margin-left: 10px;
+  height: 30px;
 }
 
 #outspokes #your_edits_wrapper .input_error {
   color: red;
   font-weight: bold;
-  margin: 0 0 3px 5px;
+  margin: 0 0 5px 10px;
+  height: 15px;
 }
 
-#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
-  margin: 5px;
+#outspokes #outspokes_target_header .outspokes_target_button {
+  left: 10px;
 }
-
 #outspokes #your_edits_wrapper input {
   width: 5em;
-}
-
-#outspokes #your_edits_wrapper label, #outspokes #your_edits_wrapper input {
   margin: 5px;
+  margin-left: 0;
 }
 
 #outspokes #your_edits_wrapper .outspokes_edit_label {
@@ -262,9 +201,12 @@
   float:left;
   font-size:12px;
   font-weight:bold;
-  line-height:30px;
+  padding: 5px;
   width:90px;
+  margin-right: 5px;
 }
+
+#outspokes #your_edits_wrapper .pound {margin-left: 5px;}
 
 #outspokes #your_targets {
   margin-right: 2%;
@@ -293,6 +235,7 @@
   text-align:right;
   height: 20px;
   padding:3px;
+  border-top: 1px solid #999;
 }
 
 
@@ -306,26 +249,38 @@
 }
 
 #outspokes #outspokes_target_list_wrap {
-  background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center top;
-  color:#333333;
-  padding:5px;
-  width: 96%;
-  height: 128px;
+  background: #555 url(/images/unopinionated_header.png) repeat-x scroll center top;
+  color:#222;
+  height: 150px;
   color: #111;
   text-align: left;
   overflow-x: hidden;
   overflow-y: scroll;
-  border-right: 1px solid #BBB;
+  border-top: 1px solid #999;
+  position: relative;
+  top: 1px;
 }
+
 #outspokes #outspokes_target_list li { 
-  border-bottom: 1px dotted #444;
-  padding: 2px;
-  margin: 5px 0;
-  -moz-border-radius: 3px;
+  border-right: 1px solid transparent;
+  background-color: #999;
+  padding: 2px 4px;
   display: block;
+  margin-bottom: 2px;
 }
   #outspokes #outspokes_target_list li.outspokes_current_target {
-    border: 1px solid #C1272D;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-topright: 5px;
+    background: #FFF;
+  }
+  #outspokes #outspokes_target_list li p {
+    color: #555;
+  }
+  #outspokes #outspokes_target_list li p:hover {
+    color: #333;
+  }
+  #outspokes #outspokes_target_list li.outspokes_current_target p {
+    color: #000;
   }
   #outspokes #outspokes_target_list li a {
     display: block;

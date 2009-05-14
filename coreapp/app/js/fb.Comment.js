@@ -33,7 +33,7 @@
   fb.Comment.prototype.remove = function() {
     // remove remaining children
     fb.i.comment.visit_all_replies(this.build, function(c) {
-      c.remove(true);
+      c.remove();
     })
     // remove the comment from the interface
     // must be first
@@ -41,7 +41,7 @@
     delete fb.Comment.all[this.feedback_id];
     delete fb.Comment.unrendered[this.feedback_id];
     // super.remove:
-    this.parent.prototype.remove.call(this, arguments[0]);
+    this.parent.prototype.remove.call(this);
     fb.i.comment.refresh_count();
     return true;
   };

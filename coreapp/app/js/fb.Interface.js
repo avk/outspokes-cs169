@@ -168,12 +168,6 @@
         // same order as list of elements
         callbacks : [
           function() {
-            if (fb.i.user_style.new_edit_is_current) {
-              if (!fb.i.user_style.hide_new_edit_view()) {
-                return false;
-              }
-            }
-            fb.i.user_style.unapply_current_edit();
             fb.Comment.get();
             return true;
           },
@@ -292,7 +286,7 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a href="#" class="hide_when_tab_unselected" title="Collapse all comments"></a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link = $('<a class="hide_when_tab_unselected" title="Collapse all comments"></a>').attr('id',this.dom.widget.collapse);
     this.nav.elements.list[0].append(this.collapse_link);
     this.collapse_link.click(function(e) {
         fb.i.comment.collapse_all();
@@ -303,7 +297,7 @@
         }
     })
 
-    this.uncollapse_link = $('<a href="#" class="hide_when_tab_unselected" title="Uncollapse all comments"></a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link = $('<a class="hide_when_tab_unselected" title="Uncollapse all comments"></a>').attr('id',this.dom.widget.uncollapse);
     this.nav.elements.list[0].append(this.uncollapse_link);
     this.uncollapse_link.click(function(e) {
         fb.i.comment.uncollapse_all();
@@ -316,7 +310,7 @@
 
     // HELP LINK //////////////////////////////////////////////////////////////////
 
-    this.help_link = $('<a href="#"></a>').attr('id',this.dom.widget.help);
+    this.help_link = $('<a></a>').attr('id',this.dom.widget.help);
     this.help_link.append('<img src="' +  fb.env.help_address  + '" alt="Outspokes Help" title="Outspokes Help"/>');
     
     // the help link will behave like the other navigation links (part 1):
@@ -335,7 +329,7 @@
     this.topbar.append(this.help_link);
 
     // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
-    this.logout_link = $('<a href="#">Logout</a>').attr('id',this.dom.widget.logout);
+    this.logout_link = $('<a>Logout</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
       // do logout stuff here
       if (_fb.admin()) {
@@ -365,7 +359,7 @@
         // the actual panel
         var admin_panel = $('<div></div>').attr('id',this.dom.admin.panel);
         
-        var close_link = $("<a href='#'></a>").attr('id',this.dom.admin.close);
+        var close_link = $("<a></a>").attr('id',this.dom.admin.close);
         var widget_location; // State accessed via closure by close_link.click and open_link.click
         close_link.click(function(e) {
           fb.i.admin_panel.hide();
@@ -390,7 +384,7 @@
         $('<div></div>').attr('id',this.dom.admin.overlay).appendTo($('body'));
 
         // to open the panel from the widget
-        var open_link = $('<a href="#">Admin Panel</a>').attr('id',this.dom.admin.open);
+        var open_link = $('<a>Admin Panel</a>').attr('id',this.dom.admin.open);
         open_link.click(function(e) {
           // don't toggle the widget if I'm opening the admin panel, just hide it
           e.stopPropagation();
@@ -428,7 +422,7 @@
         var intro_bubble = $('<div></div>').attr('id','bubble');
         
         var close_bubble = function() { $("#bubble").hide(); }
-        var close_bubble_link = $('<a href="#">X</a>').attr('id','close_intro');
+        var close_bubble_link = $('<a>X</a>').attr('id','close_intro');
         close_bubble_link.click( close_bubble );
         intro_bubble.append(close_bubble_link);
         
@@ -480,6 +474,9 @@
     this.help_content.append(help_copy);
     this.help_content.addClass("hide");
 
+    // JUGGERNAUT
+    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="display:none;"></iframe>';
+
 
     // WRAPUP //////////////////////////////////////////////////////////////////
 
@@ -491,12 +488,23 @@
     this.main_window.append(this.widget_content);
     this.main_window.append(this.edits);
     this.main_window.append(this.help_content);
+    this.main_window.append(this.juggernaut);
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
     this.user_style = new fb.Interface.user_style(this);
     this.target = new fb.Interface.target(this);
-
+    
+    fb.Interface.feedback_last_updated_at=new Date;
+    fb.Interface.feedback_last_updated_at.setDate(0);
+    setInterval(function() {
+        if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
+            fb.Interface.feedback_last_updated_at=new Date;
+            fb.Comment.get();
+            history.go(-1);
+        }
+    }, 2000)
+    
     fb.Interface.instantiated = true;  
   };
 
