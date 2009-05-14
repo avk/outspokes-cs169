@@ -507,7 +507,9 @@
         if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
             fb.Interface.feedback_last_updated_at=new Date;
             fb.Comment.get();
-            history.go(-1);
+            while(window.location.hash === "#refreshcomments") {
+                history.go(-1);
+            }
         }
     }, 2000)
     
