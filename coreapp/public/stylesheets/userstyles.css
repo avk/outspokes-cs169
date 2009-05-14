@@ -156,7 +156,6 @@
       float : left;
       padding: 1px 5px 3px 5px;
       margin-right: 3px;
-      
       background: #EEE;
     }
     #outspokes #your_edits .your_edits_nav li:hover {
@@ -183,7 +182,9 @@
   margin: 0 0 3px 5px;
 }
 
-
+#outspokes #outspokes_target_header .outspokes_target_button {
+  left: 10px;
+}
 #outspokes #your_edits_wrapper input {
   width: 5em;
 }
@@ -256,7 +257,7 @@
   border: 1px solid transparent;
   border-left: none;
   background: #BBB;
-  padding: 2px;
+  padding: 2px 4px;
   display: block;
   margin-bottom: 2px;
 }
@@ -266,6 +267,7 @@
     -moz-border-radius-topright: 3px;
     background: #FFF;
     border-left: none;
+    border-top: none;
   }
   #outspokes #outspokes_target_list li a {
     display: block;
