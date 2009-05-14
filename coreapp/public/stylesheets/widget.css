@@ -543,6 +543,7 @@ version: 3.0.0pr2
 
 #outspokes #topbar select#comments_filter {
   margin-left: 10px;
+  margin-right: -20px;
   font-size: .8em;
 }
 
@@ -628,7 +629,7 @@ version: 3.0.0pr2
   }
   #outspokes #topbarLeft ul.navigation li.outspokes-current, 
   #outspokes #topbarLeft ul.navigation li.outspokes-current:hover {
-    background-color: #ccc;
+    background-color: #FFF;
     border-color: #999;
     border-bottom: none;
     color: #C1272D;
