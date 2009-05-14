@@ -361,8 +361,8 @@
     var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
     var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
     hide_error(bg_error_message);
-    bgColor.append(bg_error_message);
-    bgColor.append($('<span class="outspokes_edit_label"><label for="outspokes_bgColor" title="Enter a valid hex color value">Background</label></span>' +
+    // bgColor.append(bg_error_message);
+    bgColor.append($('<label class="outspokes_edit_label" for="outspokes_bgColor" title="Enter a valid hex color value">Background</label>' +
       '<span class="pound">#</span><input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
     bgColor.find('input').blur( function() {
       validate_colorstring(this.value, bg_error_message);
@@ -383,8 +383,8 @@
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
     var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
     hide_error(textcolor_error_message);
-    textColor.append(textcolor_error_message);
-    textColor.append($('<span  class="outspokes_edit_label"><label for="outspokes_textColor" title="Enter a valid hex color value">Text</label></span>' + 
+    // textColor.append(textcolor_error_message);
+    textColor.append($('<label class="outspokes_edit_label" for="outspokes_textColor" title="Enter a valid hex color value">Text</label>' + 
       '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
     textColor.find('input').blur( function() {
       validate_colorstring(this.value, textcolor_error_message);
@@ -404,9 +404,11 @@
     
     bgColor.append(bgColorApply);
     bgColor.append(bgColorRevert);
+    this.your_color.append(bg_error_message);
     this.your_color.append(bgColor);
     textColor.append(textColorApply);
     textColor.append(textColorRevert);
+    this.your_color.append(textcolor_error_message);
     this.your_color.append(textColor);
     
     this.your_edits_wrapper.append(this.your_color);
@@ -434,7 +436,7 @@
     });
     
     var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
-    fontFamily.append('<span class="outspokes_edit_label"><label for="fontFamily">Family</label></span>');
+    fontFamily.append('<label class="outspokes_edit_label" for="fontFamily">Family</label>');
     fontFamily.append('<select name="fontFamily"></select>');
     fontFamily.find('select').append('<option value="" selected="true"></option>');
     $.each(fontFamilyOptionObjects, function (i, opt) {
@@ -453,8 +455,8 @@
     var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
     var font_error_message = $('<div class="input_error">Invalid font size:</div>');
     hide_error(font_error_message);
-    fontSize.append(font_error_message);
-    fontSize.append($('<span  class="outspokes_edit_label"><label for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label></span>' +
+    // fontSize.append(font_error_message);
+    fontSize.append($('<label class="outspokes_edit_label" for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label>' +
       '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
     var font_size_regex = /^[0-9]{1,3}$/; // precompile this
@@ -490,6 +492,7 @@
     this.your_font.append(fontFamily);
     fontSize.append(fontSizeApply);
     fontSize.append(fontSizeRevert);
+    this.your_font.append(font_error_message);
     this.your_font.append(fontSize);
 
     
