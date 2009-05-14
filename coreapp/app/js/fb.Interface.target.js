@@ -85,7 +85,7 @@
       this.target_list.append(html);
       target.build = html;
       this.setCurrent(target);
-    }
+    };
     
     this.setCurrent = function(target) {
       if (this.current.html) { // unset current target's styles
@@ -96,7 +96,7 @@
       this.current.target = this.all[target.build.attr('title')];
       this.current.html.addClass('outspokes_current_target');
       self.user_style.populate_fields(target);
-    }
+    };
     
     this.startOver = function() {
       for (var which_target in this.all) {
@@ -112,13 +112,15 @@
       if (typeof fb.i === "undefined") {
         this.build(this.default_target);
       }
-    }
+    };
     
     this.remove = function(target_selector, do_not_go_back_to_whole_page) {
       var target = this.all[target_selector];
       if (!do_not_go_back_to_whole_page) {
-        fb.i.user_style.populate_fields(this.default_target);
-        this.setCurrent(this.default_target);
+        if (this.current.html == target.build) {
+          fb.i.user_style.populate_fields(this.default_target);
+          this.setCurrent(this.default_target);
+        }
       }
       if (target.build) {
         target.build.remove(); // delete from the DOM
