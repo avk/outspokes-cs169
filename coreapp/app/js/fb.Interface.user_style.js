@@ -375,8 +375,8 @@
     
     var bgColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original background color." />');
     bgColorRevert.click( function() {
-      bgColor.find('input')[0].value = "";
       fb.i.target.current.target.unset_style('background-color');
+      bgColor.find('input')[0].value = get_background_color(fb.i.target.current.target);
     });
     
     var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
@@ -398,8 +398,8 @@
     
     var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
     textColorRevert.click( function() {
-      textColor.find('input')[0].value = "";
       fb.i.target.current.target.unset_style('color');
+      textColor.find('input')[0].value = rgb_to_hash(fb.i.target.current.target.current_style('color'));
     });
     
     bgColor.append(bgColorApply);
@@ -487,8 +487,8 @@
     
     var fontSizeRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original font size." />');
     fontSizeRevert.click( function() {
-      fontSize.find('input')[0].value = "";
       fb.i.target.current.target.unset_style('font-size');
+      fontSize.find('input')[0].value = parseInt(fb.i.target.current.target.current_style('font-size'), 10).toString(10);;
     });
 
     this.your_font.append(fontFamily);
@@ -506,6 +506,10 @@
         [element, property] = tuple;
         val = target.current_style(property);
         wanted_type = value_type[property];
+        if (property === 'background-color') {
+          val = get_background_color(target);
+          wanted_type = "";
+        }
         switch (wanted_type) {
           case 'hash_color':
             val = rgb_to_hash(val);
@@ -516,11 +520,33 @@
             val = parseInt(val, 10).toString(10);
             break;
           default:
+            break;
         }
         element.value = "";
         element.value = val;
       });
     };
+
+    function get_background_color(target) {
+      var val = target.current_style('background-color');
+      var el = target.element;
+      val = rgb_to_hash(val);
+      while (val === "" && el[0] !== document.documentElement) {
+        el = el.parent();
+        val = rgb_to_hash(get_style(el, 'background-color'));
+      }
+      if (val === "") {
+        val = "ffffff";
+      }
+      return val.toUpperCase();
+    }
+
+    function get_style(element, property) {
+      if (element.jquery !== 'undefined') {
+        element = element[0]; 
+      }
+      return window.getComputedStyle(element, null).getPropertyValue(property);
+    }
 
     function rgb_to_hash(str) {
       if (!/rgb/.test(str)) {
@@ -531,7 +557,7 @@
       $.each(rgb, function (i, val) {
         rtn += pad_to_length_2(parseInt(val, 10).toString(16));
       });
-      return rtn;
+      return rtn.toUpperCase();
     }
 
     function pad_to_length_2 (str) {
