@@ -316,7 +316,7 @@
           }
           var answer = confirm("Are you sure you want to delete the comment? All of its replies will also be deleted.");
           if (answer){
-              c.remove();
+              c.destroy();
           }
         });
         
