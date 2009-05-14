@@ -522,6 +522,7 @@ version: 3.0.0pr2
   color: #666;
   padding-top: 5px;
   border-bottom: 1px solid #AAA;
+  overflow: hidden;
 }
 
 #outspokes #topbar select#comments_filter {
@@ -591,7 +592,11 @@ version: 3.0.0pr2
 }
 
 #outspokes #topbarLeft ul.navigation {
-  display : inline;
+/*  display : inline;*/
+  float: left;
+  padding-top: 5px;
+  position: relative;
+  top: -5px;
 }
   #outspokes #topbarLeft ul.navigation li {
     border : 1px solid #999;
@@ -611,8 +616,13 @@ version: 3.0.0pr2
   #outspokes #topbarLeft ul.navigation li.outspokes-current:hover {
     background-color: #ccc;
     border-color: #999;
+    border-bottom: none;
     color: #333;
     padding-bottom: 7px;
+  }
+  #outspokes #topbarLeft ul.navigation li.outspokes-current * {
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 
 #outspokes #topbarLeft ul.navigation li.outspokes-current span {
