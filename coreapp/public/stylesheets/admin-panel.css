@@ -52,7 +52,7 @@ body {
   height: 100%;
 }
 #search_bar #search {
-  
+  width: 5em;
 }
 
 #search_bar #search_button {
