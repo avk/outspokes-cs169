@@ -475,7 +475,7 @@
     this.help_content.addClass("hide");
 
     // JUGGERNAUT
-    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="display:none;"></iframe>';
+    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="border:0;" height="0" width="0"></iframe>';
 
 
     // WRAPUP //////////////////////////////////////////////////////////////////
@@ -501,7 +501,13 @@
         if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
             fb.Interface.feedback_last_updated_at=new Date;
             fb.Comment.get();
-            history.go(-1);
+            var go_back_tries=0;
+            while(window.location.hash === "#refreshcomments" && go_back_tries++ < 10) {
+                history.go(-1);
+            }
+            if(window.location.hash === "#refreshcomments") {
+                window.location.hash="#";
+            }
         }
     }, 2000)
     
