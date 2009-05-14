@@ -12,16 +12,14 @@
 #outspokes {
   
 }
-#outspokes #edits_list { 
-  height: 217px; 
-}
-
 
 #outspokes #edits_list {
   float: left;
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 217px; 
+  
 }
 
 #outspokes .edit_block {
@@ -76,21 +74,20 @@
 #outspokes .edit_block .edit_consensus .disagreed {color: #C1272D;}
 
 #outspokes #new_edit_link {
-  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;
+/*  background: transparent url(/images/new_edit_link.png) no-repeat scroll center center;*/
   float: right;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
   font-style: italic;
-  margin-right: 2%;
-  width: 26%;
-  height: 157px;
-  color: transparent;
+/*  margin-right: 2%;*/
+  width: 30%;
+/*  height: 157px;*/
+  color: white;
   cursor: pointer;
-  margin-top: 30px;
+/*  margin-top: 30px;*/
   -moz-border-radius-bottomleft:7px;
   text-align: center;
 }
-
 
 /* END EDITS_LIST VIEW */
 
@@ -157,7 +154,6 @@
       float : left;
       padding: 1px 5px 3px 5px;
       margin-right: 3px;
-      
       background: #EEE;
     }
     #outspokes #your_edits .your_edits_nav li:hover {
@@ -184,7 +180,9 @@
   margin: 0 0 3px 5px;
 }
 
-
+#outspokes #outspokes_target_header .outspokes_target_button {
+  left: 10px;
+}
 #outspokes #your_edits_wrapper input {
   width: 5em;
 }
@@ -257,7 +255,7 @@
   border: 1px solid transparent;
   border-left: none;
   background: #BBB;
-  padding: 2px;
+  padding: 2px 4px;
   display: block;
   margin-bottom: 2px;
 }
@@ -267,6 +265,7 @@
     -moz-border-radius-topright: 3px;
     background: #FFF;
     border-left: none;
+    border-top: none;
   }
   #outspokes #outspokes_target_list li a {
     display: block;

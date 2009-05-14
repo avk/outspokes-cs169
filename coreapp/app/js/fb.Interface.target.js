@@ -31,7 +31,7 @@
     
     
     this.target_footer = $('<div></div>').attr('id','outspokes_target_footer');
-    //var clear_targets = $('<a href="#">Clear</a>').attr('id', 'outspokes_clear_styles');
+    //var clear_targets = $('<a>Clear</a>').attr('id', 'outspokes_clear_styles');
     var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
       var answer = confirm("This will delete all of your changes.  Are you sure?");
@@ -40,7 +40,7 @@
       }
       return false;
     });
-    //var save_targets = $('<a href="#">Save</a>').attr('id', 'outspokes_save_edit');
+    //var save_targets = $('<a>Save</a>').attr('id', 'outspokes_save_edit');
     var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
     save_targets.click(function(e) {
       fb.UserStyle.post(fb.i.target.all);
@@ -69,7 +69,7 @@
       });
       
       if (this.target_list.find('li').length > 0) {
-        var delete_target = $('<a href="#">x</a>').attr('id', 'outspokes_delete_style_edit');
+        var delete_target = $('<a>x</a>').attr('id', 'outspokes_delete_style_edit');
         delete_target.click(function(e) {
           fb.i.target.remove( $(this).parent('li').attr('title') );
         });

@@ -70,7 +70,7 @@
     this.new_edit_is_current = false;
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<div>Make a new edit &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
+    this.new_edit_link = $('<div>Make new edit &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
 
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view);
@@ -226,7 +226,7 @@
     };
     
     // back to list
-    this.edit_list_link = $('<a href="#"><br />&laquo;<br />&laquo;<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
+    this.edit_list_link = $('<a><br />&laquo;<br />&laquo;<br />&laquo;</a>').attr('id', dom.new_edit.link_back);
     this.edit_list_link.click(this.hide_new_edit_view);
     
     
