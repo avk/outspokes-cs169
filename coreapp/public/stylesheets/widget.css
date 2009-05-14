@@ -159,7 +159,7 @@ version: 3.0.0pr2
 }
 
 #outspokes_loading_wrapper {
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 #outspokes_loading_wrapper.outspokes_widget_up {
