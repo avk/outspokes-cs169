@@ -118,12 +118,13 @@
       var target = this.all[target_selector];
       if (!do_not_go_back_to_whole_page) {
         fb.i.user_style.populate_fields(this.default_target);
+        this.setCurrent(this.default_target);
       }
       if (target.build) {
         target.build.remove(); // delete from the DOM
       }
       target.delete();  // delete the instance of Target
-      delete target;    // delete the reference in list
+      delete this.all[target_selector];    // delete the reference in list
     };
     
     this.startOver();
