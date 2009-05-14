@@ -137,7 +137,6 @@ function() {
       var current_tab = fb.get_state("widget_tab");
       var widget_position = fb.get_state("widget_position");
       if (typeof current_tab !== 'undefined') {
-        alert(current_tab);
         fb.i.nav.elements.list[current_tab].click();
         
         if (current_tab !== 1) {
