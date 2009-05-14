@@ -220,7 +220,7 @@
     // NEW_EDIT: YOUR EDITS  //////////////////////////////////////////////////////////////////
     // pane where you pick a style category and set individual properties
     this.your_edits = $('<div></div>').attr('id', dom.new_edit.your_edits);
-    this.your_edits.append($('<h1>Your Edits</h1>'));
+    //this.your_edits.append($('<h1>Your Edits</h1>'));
     this.your_edits_wrapper = $('<div></div>').attr('id', dom.new_edit.your_edits_wrapper);
     this.your_edits.append(this.your_edits_wrapper);
     
@@ -491,9 +491,9 @@
     var your_edits_left_wrapper = $('<div></div>').attr('id', 'your_edits_left_wrapper');
     your_edits_left_wrapper.append(this.edit_list_link);
     your_edits_left_wrapper.append(this.your_edits);
-    
+    this.new_edit_view.append(this.your_targets);   
     this.new_edit_view.append(your_edits_left_wrapper);
-    this.new_edit_view.append(this.your_targets);
+
     
     
     
