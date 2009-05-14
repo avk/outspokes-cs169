@@ -202,19 +202,7 @@
     this.new_edit_view.hide();
 
     this.hide_new_edit_view = function () {
-      var changes_to_targets = false;
-      if (fb.getProperties(fb.i.target.all).length > 1) { // there's more than one target
-        changes_to_targets = true;
-      } else {
-        $.each(fb.i.target.all, function(selector, target) {
-          if (fb.getProperties(target.new_styles).length > 0) { // target has edits
-            changes_to_targets = true;
-            return false;
-          }
-        });
-      }
-      
-      if (changes_to_targets) {
+      if (fb.i.target.changes_to_targets()) {
         var answer = confirm("This will delete all of your changes.  Are you sure?");
         if (!answer) {return;}
       }
