@@ -86,11 +86,11 @@
   width: 20%;
   color: white;
   cursor: pointer;
-  margin: 70px 4.8% 0;
+  margin: 40px 4% 0;
   text-align: center;
-  padding: 10px 0;
+  padding: 40px 0;
 }
-#outspokes #new_edit_link:hover {
+#outspokes #new_edit_link:hover, #outspokes #back_to_edits_list:hover {
   -moz-border-radius: 15px;
   border-color: #666;
   background-color: #3f3f3f;
@@ -101,7 +101,6 @@
 /* NEW_EDIT VIEW */
 
 #outspokes #new_edit_wrap {
-/*  border: 2px dashed orange;*/
   background-color: #333;
   color: black;
   height: 217px;
@@ -110,29 +109,23 @@
 }
 #outspokes #your_edits_left_wrapper {
   float: right;
-  width: 70%;
+  width: 56%;
 }
 #outspokes #back_to_edits_list {
-/*  border: 1px solid black;*/
+  border: 2px solid transparent;
   color: white;
   display: block;
   float: left;
   font-size: 3em;
-  height: 40px;
-  width: 120px;
-  padding-left: 3px;
-  padding: 80px 0;
+  margin-top: 40px;
+  margin-left: 1%;
+  width: 10%;
+  padding: 40px 2%;
+
 }
 
-#outspokes #back_to_edits_list:hover {
-  -moz-border-radius: 15px;
-  border-color: #666;
-  background-color: #3f3f3f;
-}
 #outspokes #your_edits {
-/*  border: 1px solid red;*/
-  padding-left: 123px;
-  padding-top: 10px;
+  margin-top: 10px;
 }
   #outspokes #your_edits h1 {
     font-size:14px;

@@ -218,7 +218,6 @@
     this.edit_list_link.click(this.hide_new_edit_view);
     
     
-    
     // NEW_EDIT: YOUR EDITS  //////////////////////////////////////////////////////////////////
     // pane where you pick a style category and set individual properties
     this.your_edits = $('<div></div>').attr('id', dom.new_edit.your_edits);
@@ -576,10 +575,11 @@
     
     // NEW EDIT: finishing up  //////////////////////////////////////////////////////////////////
     var your_edits_left_wrapper = $('<div></div>').attr('id', 'your_edits_left_wrapper');
-    your_edits_left_wrapper.append(this.edit_list_link);
+    // your_edits_left_wrapper.append(this.edit_list_link);
     your_edits_left_wrapper.append(this.your_edits);
     this.new_edit_view.append(this.your_targets);   
     this.new_edit_view.append(your_edits_left_wrapper);
+    this.new_edit_view.append(this.edit_list_link);
 
     
     
