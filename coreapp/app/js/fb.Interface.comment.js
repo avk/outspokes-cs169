@@ -274,7 +274,7 @@
       // Reply link
       if (c.isReply()) {
         link_span = $('<span>in reply to </span>').addClass("reply_to_text");
-        var link = $('<a href="#">comment by ' + c.parent_comment().name + '</a>');
+        var link = $('<a>comment by ' + c.parent_comment().name + '</a>');
         link_span.append(link);
         // Go to parent thread when clicking on parent link
         link.click(function(e) {
@@ -316,7 +316,7 @@
           }
           var answer = confirm("Are you sure you want to delete the comment? All of its replies will also be deleted.");
           if (answer){
-              c.remove();
+              c.destroy();
           }
         });
         

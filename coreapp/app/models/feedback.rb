@@ -20,6 +20,7 @@ class Feedback < ActiveRecord::Base
   @@popular_threshold = 2.0
   @@unpopular_threshold = 1.0 / @@popular_threshold
   @@high_vote_factor = 1.5
+  @@avg_num_votes = {}
   
   def self.json_attribute_names
     %w(feedback_id name timestamp opinion agreed disagreed neutral? controversial? popular? unpopular?)
@@ -115,10 +116,18 @@ class Feedback < ActiveRecord::Base
     agreed + disagreed
   end
   
-  def self.avg_num_votes(page_id)
+  def self.find_avg_num_votes(page_id)
     feedbacks = self.find_all_by_page_id(page_id)
     return 0 if feedbacks.empty?
     feedbacks.map(&:num_votes).sum / feedbacks.size
+  end
+  
+  # HACK TO CACHE CRAP
+  def self.avg_num_votes(page_id)
+    if (! @@avg_num_votes[page_id])
+      @@avg_num_votes[page_id] = Feedback.find_avg_num_votes(page_id)
+    end
+    @@avg_num_votes[page_id]
   end
   
   def many_votes?
