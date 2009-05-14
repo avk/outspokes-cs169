@@ -10,6 +10,7 @@
     this.element = $(path);
     this.original_styles = {};
     this.new_styles = {};
+    this.name = null;
     if (fb.i) {
       fb.i.target.build(this);
     } else {
