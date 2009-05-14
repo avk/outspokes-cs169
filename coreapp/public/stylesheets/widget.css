@@ -480,6 +480,7 @@ version: 3.0.0pr2
   background-color: #bbb;
   padding: 3px;
   text-align: right;
+  font-size: 10px;
 }
 
 #outspokes #outspokes_form_buttons #private_wrapper {
