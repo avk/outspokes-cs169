@@ -168,12 +168,6 @@
         // same order as list of elements
         callbacks : [
           function() {
-            if (fb.i.user_style.new_edit_is_current) {
-              if (!fb.i.user_style.hide_new_edit_view()) {
-                return false;
-              }
-            }
-            fb.i.user_style.unapply_current_edit();
             fb.Comment.get();
             return true;
           },
