@@ -6,25 +6,6 @@ function() {
       return true;
     }
     
-    $(function() {
-      // Animated graphic showing that our widget is loading
-      var loading_wrapper = fb.$('<div></div>').attr('id','outspokes_loading_wrapper');
-      var loading_img = null;
-
-      // shows a different version based on if the widget was previously collapsed or expanded
-      if (fb.get_state("widget_position") === "up") {
-        loading_wrapper.addClass("outspokes_widget_up");
-        loading_img = fb.$('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
-      } else {
-        loading_wrapper.addClass("outspokes_widget_down");
-        loading_img = fb.$('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
-      }
-
-      // Adding the animated graphic to the page (before fb.Interface is added)
-      loading_wrapper.append(loading_img);
-      fb.$('body').append(loading_wrapper);
-    });
-
     fb.env = {};
     fb.env.current_page = window.location.href.split("?")[0].split("#")[0].replace(/(\/)$/, "");
     fb.env.url_token = fb.getParams('url_token') || fb.cookie('fb_hash_url_token') || "";
@@ -55,6 +36,26 @@ function() {
     
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.edit_css_address + '" />');
+
+    $(function() {
+      // Animated graphic showing that our widget is loading
+      var loading_wrapper = fb.$('<div></div>').attr('id','outspokes_loading_wrapper');
+      var loading_img = null;
+
+      // shows a different version based on if the widget was previously collapsed or expanded
+      if (fb.get_state("widget_position") === "up") {
+        loading_wrapper.addClass("outspokes_widget_up");
+        loading_img = fb.$('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+      } else {
+        loading_wrapper.addClass("outspokes_widget_down");
+        loading_img = fb.$('<img src="<%= WIDGET_DOMAIN %>images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+      }
+
+      // Adding the animated graphic to the page (before fb.Interface is added)
+      loading_wrapper.append(loading_img);
+      fb.$('body').append(loading_wrapper);
+    });
+
 
     // DO NOT USE THIS!!!!!
     // This is only for convenience in testing, and should never be
