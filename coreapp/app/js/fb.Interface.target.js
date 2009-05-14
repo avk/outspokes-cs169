@@ -59,6 +59,8 @@
       
       var target_readable = target.selector.replace(/eq\(/g, "");
       target_readable = target_readable.replace(/\)/g, "");
+      target_readable = target_readable.replace(/html > /g, "");
+      target_readable = target_readable.replace(/body:0/g, "body");
       
       html.attr('title', target_readable);
       html.click( function(e) {
