@@ -536,12 +536,12 @@ version: 3.0.0pr2
 /* TARGETING CLASSES */
 
 .outspokes_currently_hovering {
-  outline: green solid 2px;
+  outline: dotted 4px;
   cursor: default;
 }
 
 .outspokes_selected_page_element {
-  outline: red solid 2px;
+  outline: solid 5px;
 }
 
 /*
