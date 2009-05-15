@@ -291,7 +291,7 @@
       }
       
       // snippet
-      var snippet_length = 100;
+      var snippet_length = 80;
       var snippet = c.content.replace(/<br \/>/g, '\n');
       if (snippet.length > snippet_length) { // shorten if needed
         snippet = $.trim(snippet.substring(0, snippet_length)).replace(/\n/g, '&nbsp;&nbsp;&nbsp;') + '...';
