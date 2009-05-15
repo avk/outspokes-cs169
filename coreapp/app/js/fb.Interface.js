@@ -500,7 +500,7 @@
     fb.Interface.feedback_last_updated_at=new Date;
     fb.Interface.feedback_last_updated_at.setDate(0);
     setInterval(function() {
-        if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 15000) {
+        if(window.location.hash === "#refreshcomments" && ((new Date).getTime() - fb.Interface.feedback_last_updated_at.getTime()) > 3000) {
             fb.Interface.feedback_last_updated_at=new Date;
             fb.Comment.get();
             var go_back_tries=0;
