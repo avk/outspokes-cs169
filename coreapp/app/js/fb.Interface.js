@@ -474,8 +474,12 @@
     this.help_content.addClass("hide");
 
     // JUGGERNAUT
-    this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="border:0;" height="0" width="0"></iframe>';
-
+    // was this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="border:0;" height="0" width="0"></iframe>';
+    var juggernaut = $('<iframe><iframe').attr('src', fb.env.juggernaut_iframe_address+_fb.page_id());
+    juggernaut.css("border", 0)
+    juggernaut.attr('height', 0);
+    juggernaut.attr('width',  0);
+    juggernaut.appendTo($('body'))
 
     // WRAPUP //////////////////////////////////////////////////////////////////
 
@@ -487,7 +491,6 @@
     this.main_window.append(this.widget_content);
     this.main_window.append(this.edits);
     this.main_window.append(this.help_content);
-    this.main_window.append(this.juggernaut);
     this.main_window.appendTo($('body'));
 
     this.comment = new fb.Interface.comment(this);
