@@ -360,7 +360,7 @@
     hide_error(bg_error_message);
     // bgColor.append(bg_error_message);
     bgColor.append($('<label class="outspokes_edit_label" for="outspokes_bgColor" title="Enter a valid hex color value">Background</label>' +
-      '<span class="pound">#</span><input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
+      '<span class="outspokes_pound">#</span><input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
     bgColor.find('input').blur( function() {
       validate_colorstring(this.value, bg_error_message);
     });
