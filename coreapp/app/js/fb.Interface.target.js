@@ -151,7 +151,7 @@
       
       this.current.html = target.build;
       this.current.target = this.all[target.build.attr('title')];
-      if (this.current.target !== this.default_target) {
+      if (this.current.target.element[0] !== document.body) {
         this.current.target.element.addClass("outspokes_selected_page_element");
       }
       this.current.html.addClass('outspokes_current_target');
