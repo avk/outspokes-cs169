@@ -246,19 +246,6 @@
       e.stopPropagation();
     });
   };
-
-  fb.highlight_target = function (el) {
-    if (typeof el.jquery === 'undefined') {
-      el = $(el);
-    }
-    var over = function() {
-      el.addClass("outspokes_currently_hovering")
-    };
-    var out = function() {
-      el.removeClass("outspokes_currently_hovering")
-    };
-    return [over, out];
-  };
   
   fb.hasProp = function (obj, propObj) {
     for (var i in propObj) {

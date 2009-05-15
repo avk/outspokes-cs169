@@ -80,10 +80,6 @@
     
     this.build = function(target) {
       var html = $('<li></li>');
-
-      var hover_functions = fb.highlight_target(target.element);
-      html.hover(hover_functions[0], hover_functions[1]);
-      target.__unHover = hover_functions[1];
       
       var target_readable = target.selector;
       target_readable = target_readable.replace(/eq\(/g, "");
@@ -146,14 +142,10 @@
     this.setCurrent = function(target) {
       if (this.current.html) { // unset current target's styles
         this.current.html.removeClass('outspokes_current_target');
-        this.current.target.element.removeClass('outspokes_selected_page_element');
       }
       
       this.current.html = target.build;
       this.current.target = this.all[target.build.attr('title')];
-      if (this.current.target.element[0] !== document.body) {
-        this.current.target.element.addClass("outspokes_selected_page_element");
-      }
       this.current.html.addClass('outspokes_current_target');
       self.user_style.populate_fields(target);
     };
@@ -176,7 +168,6 @@
     
     this.remove = function(target_selector, do_not_go_back_to_whole_page) {
       var target = this.all[target_selector];
-      target.__unHover();
       if (!do_not_go_back_to_whole_page) {
         if (this.current.html == target.build) {
           fb.i.user_style.populate_fields(this.default_target);
