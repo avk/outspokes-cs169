@@ -10,11 +10,28 @@
       new Effect.Fade(jsRow, {duration: .2});
     }
   }
+  function newSite(el) {
+    el.hide();
+    console.log($('new_site_wrapper'));
+    $('new_site_wrapper').show();
+  }
 
 %h1 
-  My Sites (
-  = link_to "add new", new_site_path
-  )
+  My Sites
+
+#new_site_wrapper
+  %h2 To add a new site
+  %ol#new_site_steps
+    %li 
+      = link_to "Tell us the URL", new_site_path
+    %li 
+      %strong Embed 
+      our script
+    %li 
+      Follow the 
+      %br
+      %strong Admin Link 
+      to invite people
 
 %table{:id=>'sites_table'}
   - if @sites.empty?
@@ -23,7 +40,7 @@
         Whoops, you don't have any sites.
   - else
     %tr
-      %th Administrative Link
+      %th Admin Link
       %th Our Script
       %th.centered Delete
     - for site in @sites

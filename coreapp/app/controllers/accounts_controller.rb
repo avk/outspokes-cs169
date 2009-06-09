@@ -69,6 +69,7 @@ class AccountsController < ApplicationController
   
   def dashboard
     @account = Account.find(params[:id])
+    @site = Site.new
     @sites = @account.sites
     @sites_admin_urls = {}
     for site in @sites
