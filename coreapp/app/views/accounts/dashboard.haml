@@ -11,23 +11,26 @@
     }
   }
 
+%h1 
+  My Sites (
+  = link_to "add new", new_site_path
+  )
+
 %table{:id=>'sites_table'}
-  %tr
-    %th{:colspan=>4} 
-      My Sites (
-      = link_to "add new", new_site_path
-      )
-  
   - if @sites.empty?
     %tr
       %td 
         Whoops, you don't have any sites.
   - else
+    %tr
+      %th Administrative Link
+      %th Our Script
+      %th.centered Delete
     - for site in @sites
       %tr{:class => cycle('odd','even')}
         %td.site_name= link_to h(site.name), site.admin_url
         %td.jsinclude
-          %span{ :onClick => 'expandScript(this)'} Script Include
+          %span{ :onClick => 'expandScript(this)'} Embed
         %td.delete_link= link_to 'X', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' }
       %tr.jsinclude{:style => "display:none; background-color: #fff"} 
         %td{:colspan => 3} 
