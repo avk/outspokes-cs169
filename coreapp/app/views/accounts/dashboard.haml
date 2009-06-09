@@ -36,8 +36,8 @@
 %table{:id=>'sites_table'}
   - if @sites.empty?
     %tr
-      %td 
-        Whoops, you don't have any sites.
+      %td{:style => 'height: 150px; vertical-align: top'}
+        No sites yet.
   - else
     %tr
       %th Admin Link
