@@ -1,8 +1,10 @@
 - @title = 'New Site'
 
-%h1 Where's your site?
+%h1 Which site do you want feedback on?
 - form_for(@site) do |f|
   = f.error_messages
   = f.text_field :url, :value => 'http://mysite.com', :id => 'new-site-url', :onfocus => 'this.style.color = "#333"; if(this.value == "http://mysite.com") { this.value = "http://"; };', :onblur => 'if(this.value == "http://") { this.style.color = "#CCC"; this.value = "http://mysite.com"; };'
   %br
-  = f.submit "Create", :style => 'margin-top: 10px', :onclick => 'if(document.getElementById("new-site-url").value == "http://mysite.com") { alert("Please enter a site."); return false; }'
+  = f.submit "&nbsp;&nbsp;Add it&nbsp;&nbsp;", :style => 'margin-top: 10px', :onclick => 'if(document.getElementById("new-site-url").value == "http://mysite.com") { alert("Please enter a site."); return false; }'
+  &nbsp;
+  = link_to "Not now", dashboard_account_path(current_account)
