@@ -1,0 +1,11 @@
+- @title = "Embed out script on your site"
+
+%h1 Embed our script
+
+Insert this at the bottom of 
+%b.tag &lt;body&gt; 
+in your site:
+%br
+= text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{@site.id}' type='text/javascript'></script>", :class => 'code'
+
+= button_to "Done", dashboard_account_path(current_account), :method => :get

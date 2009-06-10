@@ -1,6 +1,6 @@
 - @title = 'New Site'
 
-%h3 Where's your site?
+%h1 Where's your site?
 - form_for(@site) do |f|
   = f.error_messages
   = f.text_field :url, :value => 'http://mysite.com', :id => 'new-site-url', :onfocus => 'this.style.color = "#333"; if(this.value == "http://mysite.com") { this.value = "http://"; };', :onblur => 'if(this.value == "http://") { this.style.color = "#CCC"; this.value = "http://mysite.com"; };'

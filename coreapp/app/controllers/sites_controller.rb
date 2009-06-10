@@ -3,16 +3,15 @@ class SitesController < ApplicationController
   before_filter :login_required, :only => [ :new, :edit, :create, :destroy, :update ]
   
   # GET /sites/new
-  # GET /sites/new.xml
   def new
     @site = Site.new
-
-    # respond_to do |format|
-    #     format.html # new.html.erb
-    #     format.xml  { render :xml => @site }
-    #   end
   end
-
+  
+  # GET /sites/1/embed
+  def embed
+    @site = Site.find(params[:id])
+  end
+  
   # POST /sites
   # POST /sites.xml
   def create
@@ -42,7 +41,7 @@ class SitesController < ApplicationController
           i.save!
         end
         flash[:notice] = 'Site was successfully created.'
-        format.html { redirect_to dashboard_account_path(current_account.id) }
+        format.html { redirect_to embed_site_path(@site) }
       rescue
         flash[:error] = "Could not create site."
         format.html { render :action => "new" }

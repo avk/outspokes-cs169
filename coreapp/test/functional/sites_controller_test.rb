@@ -22,7 +22,7 @@ class SitesControllerTest < ActionController::TestCase
       assert assigns(:site).home_page.invites.first.commenter_id == admin.id, "admin has not been invited to his own site"
     end
 
-    assert_redirected_to dashboard_account_path(admin)
+    assert_redirected_to embed_site_path(assigns(:site)) #dashboard_account_path(admin)
   end
 
   test "not logged in should not create site" do

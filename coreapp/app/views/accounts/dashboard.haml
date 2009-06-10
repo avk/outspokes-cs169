@@ -16,8 +16,7 @@
     $('new_site_wrapper').show();
   }
 
-%h1 
-  My Sites
+%h1 My Sites
 
 #new_site_wrapper
   %h2 To add a new site
@@ -55,7 +54,9 @@
           %b.tag &lt;body&gt; 
           in your site:
           = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{site.id}' type='text/javascript'></script>", :class => 'code'
-      
+
+%div{:style => "clear:both;"}
+
   / %tr
   /   %td{:colspan=>4}
   /     = link_to "Add a site!", new_site_path

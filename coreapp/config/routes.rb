@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :accounts, :member => { :dashboard => :get }
   map.resource :session
-  map.resources :sites
+  map.resources :sites, :member => { :embed => :get }
   
   
   ### admin panel
