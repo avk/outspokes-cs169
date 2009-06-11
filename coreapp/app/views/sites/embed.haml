@@ -8,4 +8,6 @@ in your site:
 %br
 = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{@site.id}' type='text/javascript'></script>", :class => 'code'
 
-= button_to "Done", dashboard_account_path(current_account), :method => :get
+= button_to "&nbsp;Done&nbsp;", dashboard_account_path(current_account), :method => :get
+&nbsp;
+= link_to "I'll add it later", dashboard_account_path(current_account)
