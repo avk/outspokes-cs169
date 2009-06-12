@@ -1,5 +1,12 @@
 - @title = 'New Site'
 
+%p#new_site_breadcrumb
+  %span.now 1. Add URL
+  &nbsp;&raquo;&nbsp;
+  %span.next 2. Install Script
+  &nbsp;&raquo;&nbsp;
+  %span.next 3. Admin Link to Your Site
+
 %h1 Which site do you want feedback on?
 - form_for(@site) do |f|
   = f.error_messages
