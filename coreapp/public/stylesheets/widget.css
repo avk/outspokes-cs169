@@ -235,6 +235,17 @@ version: 3.0.0pr2
 #outspokes_admin_panel a#close_admin_panel:visited {
   color: #333;
 }
+#outspokes_login_panel_inner.first_time_admin {
+  height: 250px;
+}
+#outspokes_login_fields {
+  margin: 0 auto;
+  text-align: left;
+  width: 77%;
+}
+#outspokes_login_fields input {
+  width: 100%;
+}
 
 /*
 *  END ADMIN PANEL
@@ -781,6 +792,6 @@ version: 3.0.0pr2
   text-align: center;
 }
 
-#outspokes_login_panel_inner input {width: 77%; margin: 0px 0px 7px 0px;}
+#outspokes_login_panel_inner input {margin: 0px 0px 7px 0px;}
 
 #outspokes_email, #outspokes_password {font-weight: bold; font-size: 14px; line-height: 1.2em;}
