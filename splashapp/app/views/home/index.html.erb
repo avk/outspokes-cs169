@@ -1,15 +1,25 @@
 <div id="front_poll">
-<p>With <strong>Outspokes</strong> you can get feedback on your site in three easy steps:</p>
+<p>With <strong>Outspokes</strong> you can get feedback from people as they browse your site:</p>
 <ol>
-	<li>Tell us your site</li>
-	<li>Include our script</li>
-	<li>Invite commenters</li>
+	<li>Tell us your URL</li>
+	<li>Embed our widget</li>
+	<li>Invite people to your site</li>
+	<li>Get more relevant, contextual feedback</li>
 </ol>
-<p>We're currently in private alpha.  Enter your email if you'd like to be notified when we launch.</p>
-<p style="color: red"><%= flash[:warning] %></p>
-<% form_for @email_req do |f| %>
-	<%= f.label :email, "Email:" %><br />
-	<%= f.text_field :email, :value => @old_email %><br />
-	<%= f.submit "Lemme know!" %>
-<% end %>
+
+<!-- <hr /> -->
+
+<div style="border: 1px solid #c1272d; background-color: #efefef; padding: 10px">
+  <p>We're currently in <strong>private beta</strong>. Enter your email for more info and to be notified when we launch.</p>
+  <p style="color: red"><%= flash[:warning] %></p>
+  <% form_for @email_req do |f| %>
+  	<%= f.label :email, "Email" %><br />
+  	<%= f.text_field :email, :value => @old_email %><br />
+  	<%= f.submit "Lemme know!" %>
+  <% end %>
+</div>
+
+<br />
+Follow us on <a href="http://twitter.com/outspokes" target="_blank" rel="external">twitter</a>.
+
 </div>

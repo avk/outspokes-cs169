@@ -57,8 +57,11 @@ a:hover { color: #fff; background-color:#000; }
 
 #new_email_req input {
   font-size: 1em;
+  color: #C1272D;
+  width: 95%;
 }
 
 #email_req_submit {
   margin: .5em 0;
 }
+
