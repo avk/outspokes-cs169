@@ -158,7 +158,12 @@ function() {
 
     if (!_admin_validation_token && _wants_admin) {
       fb.$(function() {
-        var first_time_admin = (fb.getParams('admin_intro') === 'true');
+        var first_time_admin = false;
+        if (fb.getParams('admin_intro') === 'true') {
+          first_time_admin = true;
+          // drop what triggers the admin introduction from the URL, so it doesn't get bookmarked
+          window.location = (window.location + "").replace(/&admin_intro=true/, '');
+        }
         
         var login_panel = fb.$('<div></div>').attr('id','outspokes_login_panel_wrapper');
         login_panel.append(fb.$('<div></div>').attr('id','outspokes_login_panel_background'));
@@ -173,7 +178,19 @@ function() {
         form.append('<img src="' + fb.env.logo_address + '" height="20" width="100" alt="Outspokes" style="display:block; margin: 3px auto;">');
         
         if (first_time_admin) {
-          form.append("You've successfully installed the feedback widget! <strong>Bookmark this page</strong> to quickly access your feedback on this site.");
+          form.append("You've installed the feedback widget! <strong style='color:#C1272D'>Bookmark this page</strong></a> to quickly access your feedback.");
+          // form.append("You've successfully installed the feedback widget! ");
+          // var bkmrk = $("<a href='#'><strong>Bookmark this page</strong></a>");
+          // bkmrk.click(function() {
+          //   var title = 'Outspokes admin: ' + document.title;
+          //   var url = (window.location + "").replace(/&admin_intro=true/, ''); // don't save the intro
+          //   
+          //   // FIX: Firefox only
+          //   window.sidebar.addPanel(title, url, "");
+          //   return false;
+          // });
+          // form.append(bkmrk);
+          // form.append(" to quickly access your feedback on this site.");
         }
         form.append('<hr />');
         
