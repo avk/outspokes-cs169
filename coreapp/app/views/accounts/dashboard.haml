@@ -16,27 +16,31 @@
     $('new_site_wrapper').show();
   }
 
-%h1 My Sites
+%h1 
+  My Sites
+  (
+  = link_to "add new", new_site_path, :style => "font-weight: normal"
+  )
+%br
 
 #new_site_wrapper
   %h2 To add a new site
   %ol#new_site_steps
     %li 
-      = link_to "Tell us the URL", new_site_path
+      = link_to "Add the URL", new_site_path
     %li 
-      %strong Embed 
+      %strong Install
       our script
     %li 
       Follow the 
       %br
-      %strong Admin Link 
-      to invite people
+      %strong Admin Link
 
 %table{:id=>'sites_table'}
   - if @sites.empty?
     %tr
       %td
-        No sites yet.
+        None yet.
   - else
     %tr
       %th Admin Link
