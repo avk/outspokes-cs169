@@ -17,4 +17,4 @@ in your site:
 
 = button_to "&nbsp;I've added it&nbsp;", @site.admin_url + "&admin_intro=true", :method => :get
 &nbsp;
-= link_to "I'll add it later", dashboard_account_path(current_account)
+= link_to "I'll add it later", dashboard_account_path(current_account), :onclick => 'return confirm("You won\'t be able to invite people or start getting feedback until you install our widget. Are you sure you want to add it later?");'
