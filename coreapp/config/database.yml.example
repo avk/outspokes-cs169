@@ -1,0 +1,17 @@
+common: &common
+  adapter: mysql
+  username: root
+  password: 
+
+production:
+  <<: *common
+  database: feedback_production
+
+development:
+  <<: *common
+  database: feedback_development
+
+test:
+  <<: *common
+  database: feedback_test
+
