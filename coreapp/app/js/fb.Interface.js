@@ -433,7 +433,7 @@
         this.topbar.click( close_bubble );
         this.help_link.click( close_bubble );
         
-        this.main_window.append(intro_bubble);
+        this.topbar.append(intro_bubble);
       }
     }
     
