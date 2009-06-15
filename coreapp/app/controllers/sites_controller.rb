@@ -40,7 +40,6 @@ class SitesController < ApplicationController
           i = Invite.new(:page => @site.home_page, :commenter => @site.account)
           i.save!
         end
-        flash[:notice] = 'Site was successfully created.'
         format.html { redirect_to embed_site_path(@site) }
       rescue
         flash[:error] = "Could not create site."
