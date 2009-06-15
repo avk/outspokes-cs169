@@ -1,20 +1,27 @@
 - @title = "Feedback Evolved"
 
-%h1#tagline 
-  Get feedback from users 
-  %br
-  as they browse your site!
+.leftpanel
+  %h1#tagline 
+    Get feedback from users 
+    %br
+    as they browse your site!
 
-%ol#steps
-  %li Tell us your site.
+  %ol#steps
+    %li Tell us your site.
 
-  %li Include a lil' Javascript.
+    %li Include a lil' Javascript.
 
-  %li Invite people to give feedback via our widget.
+    %li Invite people to give feedback via our widget.
 
-  %li 
-    See people's feedback right on your site,
-    %br 
-    along with all the relevant context.
+    %li 
+      See people's feedback right on your site,
+      %br 
+      along with all the relevant context.
+
+.rightpanel
+  = render :partial => 'brief_screencast'
+
+%div{:clear => "both"}
+  &nbsp;
 
 = link_to "Sign Up!", signup_path, { :title => "Create an account", :id => 'signup-button' }
