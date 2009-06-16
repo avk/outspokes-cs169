@@ -9,8 +9,6 @@ db/*.sqlite3-journal
 *~
 db/schema.rb
 coverage/*
-doc/guides
-doc/
 public/index2.html
 public/index.html
 public/test/index.html

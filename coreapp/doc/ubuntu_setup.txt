@@ -1,0 +1,53 @@
+### Setting up Ubuntu for hosting Outspokes
+
+### Base system and utils
+sudo aptitude install apache2 mysql-server ruby rubygems screen git git-core emacs
+
+### Adding new users
+sudo adduser deploy
+# add deploy to /etc/sudoers
+
+### Setup your *local* machine to connect to server as 'deploy' user - http://pkeck.myweb.uga.edu/ssh/
+# use blank password unless you want to setup ssh agent: 
+# http://ormset.no/wordpress/2007/10/28/leopard-finally-supporting-ssh-agent-at-login/
+ssh-keygen -b 4096 -C "my_name key for outspokes deploy" -f ~/.ssh/outspokes_deploy
+
+# Add the following to ~/.ssh/config
+Host *.outspokes.com
+     User deploy
+     IdentityFile ~/.ssh/outspokes_deploy
+
+# add public keys to ~deploy/.ssh/authorized_keys
+cat ~/.ssh/outspokes_deploy.pub | ssh outspokes.com 'sh -c "cat - >> ~/.ssh/authorized_keys"'
+
+### Rubygems - http://rubygems.org/read/chapter/3
+sudo gem update --system
+sudo gem sources --add http://gems.github.com
+sudo gem install rails capistrano --no-ri --no-rdoc
+
+### Passenger - http://www.modrails.com/install.html
+sudo gem install passenger
+sudo passenger-install-apache2-module
+
+### Apache config
+sudo mkdir -p /var/www
+sudo chown -R deploy /var/www
+sudo chgrp -R deploy /var/www
+sudo chmod -R 775 /var/www
+
+### Setup app
+# http://www.softiesonrails.com/2007/4/5/the-absolute-moron-s-guide-to-capistrano
+mkdir -p /var/www/beta.outspokes.com/{shared,releases}
+mkdir -p /var/www/beta.outspokes.com/shared/{log,system}
+cap deploy
+
+### Symlink config files
+sudo ln -s /var/www/outspokes/current/config/apache/vhost /etc/apache2/sites-enabled/outspokes.com
+sudo /etc/init.d/apache2 restart
+
+### One time setup notes
+add deploy user to github
+add deploy user's key to account page
+forward DNS to server
+Google apps - http://www.google.com/a/cpanel/domain/new
+
