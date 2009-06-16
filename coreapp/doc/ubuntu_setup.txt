@@ -1,11 +1,12 @@
 ### Setting up Ubuntu for hosting Outspokes
 
 ### Base system and utils
-sudo aptitude install apache2 mysql-server ruby rubygems screen git git-core emacs
+sudo aptitude install apache2 mysql-server screen git git-core emacs ack
 
 ### Adding new users
 sudo adduser deploy
 # add deploy to /etc/sudoers
+# deploy ALL=(ALL) NOPASSWD: ALL
 
 ### Setup your *local* machine to connect to server as 'deploy' user - http://pkeck.myweb.uga.edu/ssh/
 # use blank password unless you want to setup ssh agent: 
@@ -20,14 +21,24 @@ Host *.outspokes.com
 # add public keys to ~deploy/.ssh/authorized_keys
 cat ~/.ssh/outspokes_deploy.pub | ssh outspokes.com 'sh -c "cat - >> ~/.ssh/authorized_keys"'
 
+### Ruby enterprise edition - http://www.rubyenterpriseedition.com/download.html
+* installed to [/opt/ruby-enterprise-1.8.6-20090610]
+* updated passenger to look at REE - /etc/apache2/
+   LoadModule passenger_module /opt/ruby-enterprise/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
+   PassengerRoot /opt/ruby-enterprise/lib/ruby/gems/1.8/gems/passenger-2.2.2
+   PassengerRuby /opt/ruby-enterprise/bin/ruby
+* updated deploy user's path to prefer REE over regular ruby
+### Passenger - http://www.modrails.com/install.html
+# follow REE's instructions
+# sudo gem install passenger
+# sudo passenger-install-apache2-module
+
 ### Rubygems - http://rubygems.org/read/chapter/3
 sudo gem update --system
 sudo gem sources --add http://gems.github.com
 sudo gem install rails capistrano --no-ri --no-rdoc
 
-### Passenger - http://www.modrails.com/install.html
-sudo gem install passenger
-sudo passenger-install-apache2-module
+symlinks /usr/bin to /opt/ruby-enterprise/bin, ugly but makes sudo work
 
 ### Apache config
 sudo mkdir -p /var/www
