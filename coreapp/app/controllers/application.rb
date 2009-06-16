@@ -3,9 +3,6 @@
 
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
-  include ExceptionNotifiable
-  local_addresses.clear
-  
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
