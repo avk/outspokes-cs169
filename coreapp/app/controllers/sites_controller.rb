@@ -57,7 +57,7 @@ class SitesController < ApplicationController
     @site.destroy
 
     respond_to do |format|
-      flash[:notice] = "Site was successfully deleted."
+      flash[:notice] = "Deleted \"#{@site.name}\". You should now remove the Outspokes script from your site."
       format.html { redirect_to(dashboard_account_path(current_account.id)) }
       format.xml  { head :ok }
     end
