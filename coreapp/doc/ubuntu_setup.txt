@@ -56,6 +56,11 @@ cap deploy
 sudo ln -s /var/www/outspokes/current/config/apache/vhost /etc/apache2/sites-enabled/outspokes.com
 sudo /etc/init.d/apache2 restart
 
+### Postfix mail setup
+/etc/postfix/main.cf
+/etc/postfix/virtual -> outspokes.com
+sudo postmap /etc/postfix/virtual
+
 ### One time setup notes
 add deploy user to github
 add deploy user's key to account page

@@ -78,16 +78,17 @@ Rails::Initializer.run do |config|
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
   
+  # See /etc/postfix/main.cf, /etc/postfix/virtual, doc/ubuntu_setup.txt
   # Email config settings for Matthew's dreamhost email account
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address          => 'spunky.mail.dreamhost.com',
-    :port             => 587,
-    :domain           => 'reallycooldomainname.com',
-    :authentication   => :login,
-    :user_name        => 'outspokes@reallycooldomainname.com',
-    :password         => 'inktomi2009'
-  }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :address          => 'spunky.mail.dreamhost.com',
+  #   :port             => 587,
+  #   :domain           => 'reallycooldomainname.com',
+  #   :authentication   => :login,
+  #   :user_name        => 'outspokes@reallycooldomainname.com',
+  #   :password         => 'inktomi2009'
+  # }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_charset = 'utf-8'
