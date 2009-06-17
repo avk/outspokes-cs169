@@ -12,6 +12,11 @@ class Invite < ActiveRecord::Base
   validates_uniqueness_of :page_id, :scope => :commenter_id
   
   before_save :generate_url_token
+  
+  def inviter
+    self.page.site.account
+  end
+  
 
 private
 
