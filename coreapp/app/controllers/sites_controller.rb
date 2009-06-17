@@ -15,21 +15,6 @@ class SitesController < ApplicationController
   # POST /sites
   # POST /sites.xml
   def create
-    # Checkboxes return "0" and "1", not true/false
-    params[:site][:public] = params[:site][:public] == "1" ? true : false
-    pageurl = params[:site][:url]
-    
-    begin
-      # logger.info "unresolved url: #{params[:site][:url]}"
-      resolved_url = RedirectFollower.new(params[:site][:url]).resolve.url
-      # logger.info "resolved #{resolved_url}"
-      params[:site][:url] = resolved_url
-    rescue RedirectFollower::TooManyRedirects => e
-      flash[:error] = "Could not follow all the redirects for #{params[:site][:url]}."
-    rescue
-      # flash[:error] = "Could not find "
-    end
-    
     if(params[:site][:url][params[:site][:url].length-1, 1]=='/') then params[:site][:url].chop! end
     
     @site = Site.new(params[:site])
