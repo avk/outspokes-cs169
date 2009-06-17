@@ -26,6 +26,8 @@ class SitesController < ApplicationController
       params[:site][:url] = resolved_url
     rescue RedirectFollower::TooManyRedirects => e
       flash[:error] = "Could not follow all the redirects for #{params[:site][:url]}."
+    rescue
+      # flash[:error] = "Could not find "
     end
     
     if(params[:site][:url][params[:site][:url].length-1, 1]=='/') then params[:site][:url].chop! end

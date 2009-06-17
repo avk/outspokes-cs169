@@ -64,19 +64,4 @@ class SitesControllerTest < ActionController::TestCase
     assert_redirected_to new_session_path
   end
   
-  test "public-ness of site == home_page.allow_public_comments" do
-    assert sites(:public).public
-    assert !sites(:facebook).public
-  end
-
-  test "can turn non-public site public and vise-versa" do
-    site = sites(:public).public = false
-    sites(:public).pages.each do |page|
-      assert !page.allow_public_comments
-    end
-    site = sites(:facebook).public = true
-    sites(:facebook).pages.each do |page|
-      assert page.allow_public_comments
-    end
-  end
 end
