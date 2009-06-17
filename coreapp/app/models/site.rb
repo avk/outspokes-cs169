@@ -8,6 +8,7 @@ class Site < ActiveRecord::Base
   validates_presence_of :account_id
   validates_associated :account
   
+  before_validation :reformat_url
   after_create :set_home_page!, :set_name!
 
   def initialize(*args, &block)
@@ -120,6 +121,10 @@ class Site < ActiveRecord::Base
 
   # callbacks ###########################################################################################
 
+  def reformat_url
+    url.chop! if url and url[url.length - 1, 1] == '/'
+  end
+  
   def validate
     if self.url.nil?
       errors.add_to_base("URL can't be blank")

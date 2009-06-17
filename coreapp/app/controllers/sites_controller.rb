@@ -15,8 +15,6 @@ class SitesController < ApplicationController
   # POST /sites
   # POST /sites.xml
   def create
-    if(params[:site][:url][params[:site][:url].length-1, 1]=='/') then params[:site][:url].chop! end
-    
     @site = Site.new(params[:site])
     @site.account = current_account
 

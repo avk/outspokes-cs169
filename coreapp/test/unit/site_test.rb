@@ -122,6 +122,18 @@ class SiteTest < ActiveSupport::TestCase
     end
   end
   
+  test "should not save trailing slashes on URLs" do
+    site = nil
+    url = "http://yahoo.com"
+    
+    assert_difference "Site.count", 1 do
+      site = create_site(:url => url + '/')
+      assert !site.new_record?, "#{site.errors.full_messages.to_sentence}"
+    end
+    
+    assert site.url == url
+  end
+  
   test 'should be able to get url via Site#url' do
     url = "http://google.com"
     site = create_site(:url => url)
