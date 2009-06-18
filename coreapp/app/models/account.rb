@@ -18,7 +18,7 @@ class Account < Commenter
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  
+  after_create :deliver_welcome_email
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -47,6 +47,8 @@ class Account < Commenter
 
   protected
     
-
+  def deliver_welcome_email
+    Mailer.deliver_account_signup(self)
+  end
 
 end
