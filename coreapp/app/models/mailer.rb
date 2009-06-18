@@ -3,6 +3,7 @@ class Mailer < ActionMailer::Base
   def commenter_invite(invite)
     from         "outspokes-no-reply@outspokes.com"
     recipients   invite.commenter.email
+    reply_to     invite.inviter.email
     sent_on      Time.now
     content_type "text/html"
 
