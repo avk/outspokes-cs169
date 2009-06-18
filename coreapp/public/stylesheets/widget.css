@@ -274,22 +274,26 @@ version: 3.0.0pr2
   cursor: pointer;
 }
 
-#outspokes #outspokes-no-comments {
+#outspokes #outspokes-no-comments,
+#outspokes #outspokes-no-edits {
   position: relative;
   left: 20px;
   top: 20px;
 }
-#outspokes .outspokes-no-comments-message {
+#outspokes .outspokes-no-comments-message,
+#outspokes .outspokes-no-edits-message {
   color: #888;
   font-size: 2em;
 }
-#outspokes .outspokes-no-comments-action {
+#outspokes .outspokes-no-comments-action,
+#outspokes .outspokes-no-edits-action {
   color: #DDD;
   font-size: 1em;
   position: relative;
   top: 5px;
 }
-#outspokes .outspokes-no-comments-action a {
+#outspokes .outspokes-no-comments-action a,
+#outspokes .outspokes-no-edits-action a {
   color: #C1272D;
   font-size: 1em;
 }

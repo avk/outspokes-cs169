@@ -70,13 +70,42 @@
     this.new_edit_is_current = false;
     this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
     this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
-    this.new_edit_link = $('<div>new edit &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
 
+    this.new_edit_link = $('<div>new edit &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
     this.new_edit_link.click(function() { 
       fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view);
       fb.i.user_style.unapply_current_edit();
       fb.i.user_style.new_edit_is_current = true;
     });
+    
+    // default view for when there are no edits
+    this.no_edits = $('<div id="outspokes-no-edits"></div>');
+    this.no_edits.append('<span class="outspokes-no-edits-message">Nothing yet</span><br />');
+    var call_to_action = $('<span class="outspokes-no-edits-action"></span>');
+    if (_fb.admin()) {
+      call_to_action.append("How about ");
+      invite_link = $('<a href="#">inviting some designers</a>');
+      invite_link.click(function() {
+        // open up the admin panel and go to the commenters tab
+        fb.i.admin_panel.set_to_commenters();
+        fb.i.hide_widget();
+        fb.i.admin_panel.show();
+      });
+      call_to_action.append(invite_link);
+      call_to_action.append('?');
+    } else { // commenter
+      call_to_action.append("How do you ")
+      edit_link = $('<a href="#">want this page to look</a>');
+      edit_link.click(function() {
+        fb.i.user_style.new_edit_link.click();
+      });
+      call_to_action.append(edit_link);
+      call_to_action.append('?');
+    }
+    
+    this.no_edits.append(call_to_action);
+    this.edit_list.append(this.no_edits);
+    
     
     // Consensus section
     this.consensus = {
@@ -135,6 +164,8 @@
     // END consensus section
     
     this.render = function(user_style) {
+      // hide the default no edits message because there's an edit to render
+      this.no_edits.hide();
       this.edit_list.append(this.build(user_style));
     };
 
