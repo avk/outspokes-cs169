@@ -90,6 +90,35 @@
 
     this.form.find("#outspokes_form_header").prepend(target_button);
     this.comments = $('<div id="comment_list"></div>');
+    
+    // default view for when there's no comments
+    this.no_comments = $('<div id="outspokes-no-comments"></div>');
+    this.no_comments.append('<span class="outspokes-no-comments-message">Nothing yet</span><br />');
+    
+    
+    var call_to_action = $('<span class="outspokes-no-comments-action"></span>');
+    if (_fb.admin()) {
+      call_to_action.append("Have you ");
+      invite_link = $('<a href="#">invited folks</a>');
+      invite_link.click(function() {
+        // open up the admin panel and go to the commenters tab
+        fb.i.admin_panel.set_to_commenters();
+        fb.i.hide_widget();
+        fb.i.admin_panel.show();
+      });
+      call_to_action.append(invite_link);
+      call_to_action.append('?');
+    } else { // commenter
+      comment_link = $('<a href="#">Be the first to comment!</a>');
+      comment_link.click(function() {
+        $('#outspokes_form_wrapper textarea').focus();
+      });
+      call_to_action.append(comment_link);
+    }
+    
+    this.no_comments.append(call_to_action);
+    this.comments.append(this.no_comments);
+    
     this.form.find("a").click(function(){fb.Comment.get();});
     this.form.find("form").submit(function() { 
       var name = null;
@@ -426,6 +455,9 @@
     };
         
     this.render = function(c) {
+      // hide the default no comments message because there's a comment to render
+      fb.i.comment.no_comments.hide();
+      
       c.num_replies = 0;
       if (c.isReply()) {
         this.reply.render(c);
