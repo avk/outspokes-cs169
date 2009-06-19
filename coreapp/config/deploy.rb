@@ -9,14 +9,16 @@ set :deploy_via, :remote_cache
 # servers (which is the default), you can specify the actual location
 # via the :deploy_to variable:
 #set :deploy_to, "/var/www/#{application}"
-set :deploy_to, "/var/www/beta.outspokes.com"
+set :deploy_to, "/var/www/outspokes.com"
 
 
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:
 # set :scm, :subversion
 
-set :user, 'outspokes'
+set :user, 'deploy'
+ssh_options[:forward_agent] = true
+
 set :use_sudo, false
 
 role :app, "outspokes.com"
