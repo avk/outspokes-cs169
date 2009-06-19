@@ -1,6 +1,6 @@
 class Mailer < ActionMailer::Base
   include ActionController::UrlWriter
-  default_url_options[:host] = 'beta.outspokes.com'
+  default_url_options[:host] = CONFIG.domain
 
   def commenter_invite(invite)
     setup_email
@@ -19,7 +19,7 @@ class Mailer < ActionMailer::Base
 
   def account_signup(account)
     setup_email
-    from         "support@outspokes.com"
+    from         CONFIG.emails.support
     recipients   account.email
     subject      "Welcome to Outspokes!"
     body         :admin_url => dashboard_account_url(account), :tour_url => faq_url
@@ -28,7 +28,7 @@ class Mailer < ActionMailer::Base
   protected
 
   def setup_email
-    from         "outspokes-no-reply@outspokes.com"
+    from         CONFIG.emails.no_reply
     sent_on      Time.now
     content_type "text/html"    
   end

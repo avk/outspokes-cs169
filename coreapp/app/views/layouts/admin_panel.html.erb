@@ -13,7 +13,7 @@
         <ul id="navigation">
           <% [{ :text => 'Pages', :url => admin_panel_site_pages_path(@site) },
               { :text => 'Commenters', :url => admin_panel_commenters_path(@site) },
-              { :text => 'Outspokes.com', :url => WIDGET_DOMAIN, :html => {:target => '_blank'} }
+              { :text => 'Outspokes.com', :url => CONFIG.url, :html => {:target => '_blank'} }
               ].each do |link| -%>
               <li>
                 <%= link_to_unless_current(link[:text], link[:url], link[:html]) do 

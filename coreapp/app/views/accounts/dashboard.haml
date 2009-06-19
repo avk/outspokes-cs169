@@ -57,7 +57,7 @@
           Insert this at the bottom of 
           %b.tag &lt;body&gt; 
           in your site:
-          = text_field_tag 'jsinclude', "<script src='#{WIDGET_DOMAIN}widget/#{site.id}' type='text/javascript'></script>", :class => 'code'
+          = text_field_tag 'jsinclude', "<script src='#{CONFIG.url}widget/#{site.id}' type='text/javascript'></script>", :class => 'code'
 
 %div{:style => "clear:both;"}
 
