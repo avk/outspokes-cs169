@@ -455,8 +455,8 @@
     };
         
     this.render = function(c) {
-      // hide the default no comments message because there's a comment to render
-      fb.i.comment.no_comments.hide();
+      // remove the default no comments message because there's a comment to render
+      this.no_comments.remove();
       
       c.num_replies = 0;
       if (c.isReply()) {
