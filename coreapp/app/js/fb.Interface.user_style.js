@@ -164,8 +164,8 @@
     // END consensus section
     
     this.render = function(user_style) {
-      // hide the default no edits message because there's an edit to render
-      this.no_edits.hide();
+      // remove the default no edits message because there's an edit to render
+      this.no_edits.remove();
       this.edit_list.append(this.build(user_style));
     };
 
