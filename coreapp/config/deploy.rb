@@ -25,6 +25,9 @@ role :app, "outspokes.com"
 role :web, "outspokes.com"
 role :db,  "outspokes.com", :primary => true
 
+before "deploy:restart", "deploy:remove_cached_assets"
+after  "deploy:restart", "deploy:warm_up_app"
+
 ## from http://www.zorched.net/2008/06/17/capistrano-deploy-with-git-and-passenger/
 namespace :deploy do
   desc "Restarting mod_rails with restart.txt"
@@ -32,13 +35,22 @@ namespace :deploy do
     run "mkdir -p #{current_path}/coreapp/tmp" 
     run "touch #{current_path}/coreapp/tmp/restart.txt"
   end
+
+  desc "Remove cached js and css"
+  task :remove_cached_assets do
+    run "rm -f #{current_path}/coreapp/public/stylesheets/all.css"
+    run "rm -f #{current_path}/coreapp/public/javascripts/all.js"
+  end
+
+  task :warm_up_app do
+    run "curl beta.outspokes.com > /dev/null"
+  end
  
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
   end
 end
-
 
 ### from http://archive.jvoorhis.com/articles/2006/07/07/managing-database-yml-with-capistrano
 ### but modified, because it was from capistrano v1
