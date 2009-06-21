@@ -1,6 +1,7 @@
 SimpleConfig.for :application do
   set :domain, "beta.outspokes.com"
   set :url, "http://#{domain}"
+  set :twitter, "http://twitter.com/outspokes"
 
   group :emails do
     set :admin, "Outspokes <admin@outspokes.com>"

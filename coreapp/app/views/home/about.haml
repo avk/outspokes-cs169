@@ -3,7 +3,7 @@
 -#= javascript_include_tag 'prototype', :juggernaut
 -#= juggernaut(:channels => ['abcdefg'])
 %p
-  %a{ :href=>"http://www.twitter.com/outspokes"} @Outspokes
+  = link_to "@Outspokes", CONFIG.twitter
   is the brainchild of a group of UC Berkeley CS 169 students:
 %ul
   %li
