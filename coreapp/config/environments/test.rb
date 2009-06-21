@@ -22,5 +22,3 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.delivery_method = :test
 
 ENV['BENCHMARK'] ||= 'none'
-
-WIDGET_DOMAIN = "http://localhost:3000/"

@@ -5,6 +5,7 @@ tmp/**/*
 *.cache
 *.pid
 config/database.yml
+config/settings/local.rb
 db/*.sqlite3
 db/*.sqlite3-journal
 *~

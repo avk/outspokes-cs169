@@ -30,8 +30,9 @@ Rails::Initializer.run do |config|
   config.gem "rcov"
   config.gem "json"
   config.gem "ruby-debug"
-  config.gem "haml"
-  # config.gem "juggernaut"
+  config.gem "haml"  
+  config.gem "juggernaut"
+  config.gem 'lukeredpath-simpleconfig', :source => 'http://gems.github.com', :lib => 'simple_config'
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -91,6 +92,5 @@ Rails::Initializer.run do |config|
   # }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_charset = 'utf-8'
-  
+  config.action_mailer.default_charset = 'utf-8'  
 end
