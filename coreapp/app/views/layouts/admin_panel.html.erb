@@ -4,8 +4,7 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Site Admin Panel</title>
-    <%= stylesheet_link_tag 'reset-min', :cache => true %>
-    <%= stylesheet_link_tag 'admin-panel' %>
+    <%= stylesheet_link_tag 'reset-min', 'admin-panel', :cache => 'all' %>
   </head>
   <body id="admin_panel">
     <%- if @no_navigation.nil? -%>
