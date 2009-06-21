@@ -22,7 +22,7 @@ class Mailer < ActionMailer::Base
     from         CONFIG.emails.support
     recipients   account.email
     subject      "Welcome to Outspokes!"
-    body         :admin_url => dashboard_account_url(account), :tour_url => faq_url
+    body         :admin_url => dashboard_account_url(account), :tour_url => root_path
   end
 
   protected
