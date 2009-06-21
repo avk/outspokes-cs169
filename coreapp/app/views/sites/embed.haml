@@ -13,7 +13,7 @@ Insert this script at the bottom of
 %b.tag &lt;body&gt; 
 in your site:
 %br
-= text_field_tag 'jsinclude', "<script src='#{CONFIG.url}widget/#{@site.id}' type='text/javascript'></script>", :class => 'code'
+= text_field_tag 'jsinclude', "<script src='#{CONFIG.url}/widget/#{@site.id}' type='text/javascript'></script>", :class => 'code'
 
 = button_to "&nbsp;I've added it&nbsp;", @site.admin_url + "&admin_intro=true", :method => :get
 &nbsp;

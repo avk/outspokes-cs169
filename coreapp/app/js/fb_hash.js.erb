@@ -12,27 +12,27 @@ function() {
     var _admin_validation_token = fb.cookie('fb_hash_admin_validation_token');
     var _wants_admin = fb.getParams('admin');
     fb.env.pub_page = false;
-    fb.env.base_domain = "<%= CONFIG.url %>";
-    fb.env.logo_address = "<%= CONFIG.url %>images/widget-logo.png";
-    fb.env.help_address = "<%= CONFIG.url %>images/help.png";
-    fb.env.collapse_address = "<%= CONFIG.url %>images/collapse.png";
-    fb.env.uncollapse_address = "<%= CONFIG.url %>images/uncollapse.png";
-    fb.env.target_address = "<%= CONFIG.url %>images/target-icon.png";
-    fb.env.get_address = "<%= CONFIG.url %>feedback_for_page.js";
-    fb.env.post_address = "<%= CONFIG.url %>post_feedback_for_page";
-    fb.env.opinion_address = "<%= CONFIG.url %>opinion_on_feedback";
-    fb.env.css_address = "<%= CONFIG.url %>stylesheets/widget.css";
-    fb.env.get_user_styles_address = "<%= CONFIG.url %>widget/user_styles";
-    fb.env.post_user_style_address = "<%= CONFIG.url %>widget/user_styles";
+    fb.env.base_domain = "<%= CONFIG.url %>/";
+    fb.env.logo_address = "<%= CONFIG.url %>/images/widget-logo.png";
+    fb.env.help_address = "<%= CONFIG.url %>/images/help.png";
+    fb.env.collapse_address = "<%= CONFIG.url %>/images/collapse.png";
+    fb.env.uncollapse_address = "<%= CONFIG.url %>/images/uncollapse.png";
+    fb.env.target_address = "<%= CONFIG.url %>/images/target-icon.png";
+    fb.env.get_address = "<%= CONFIG.url %>/feedback_for_page.js";
+    fb.env.post_address = "<%= CONFIG.url %>/post_feedback_for_page";
+    fb.env.opinion_address = "<%= CONFIG.url %>/opinion_on_feedback";
+    fb.env.css_address = "<%= CONFIG.url %>/stylesheets/widget.css";
+    fb.env.get_user_styles_address = "<%= CONFIG.url %>/widget/user_styles";
+    fb.env.post_user_style_address = "<%= CONFIG.url %>/widget/user_styles";
     fb.env.user_style_address = function(id) {
-      return "<%= CONFIG.url %>widget/user_styles/" + id + ".css";
+      return "<%= CONFIG.url %>/widget/user_styles/" + id + ".css";
     };
-    fb.env.edit_css_address = "<%= CONFIG.url %>stylesheets/userstyles.css";
-    fb.env.destroy_address = "<%= CONFIG.url %>delete_feedback";
+    fb.env.edit_css_address = "<%= CONFIG.url %>/stylesheets/userstyles.css";
+    fb.env.destroy_address = "<%= CONFIG.url %>/delete_feedback";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;
-    fb.env.juggernaut_iframe_address = "<%= CONFIG.url %>juggernaut.html?"
+    fb.env.juggernaut_iframe_address = "<%= CONFIG.url %>/juggernaut.html?"
     
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.css_address + '" />');
     fb.$('head').append('<link rel="stylesheet" type="text/css" href="' + fb.env.edit_css_address + '" />');
@@ -50,10 +50,10 @@ function() {
       // shows a different version based on if the widget was previously collapsed or expanded
       if (fb.get_state("widget_position") === "up") {
         fb.loading_wrapper.addClass("outspokes_widget_up");
-        loading_img = fb.$('<img src="<%= CONFIG.url %>images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+        loading_img = fb.$('<img src="<%= CONFIG.url %>/images/loading.gif" alt="loading Outspokes..." />').attr('id','outspokes_loading');
       } else {
         fb.loading_wrapper.addClass("outspokes_widget_down");
-        loading_img = fb.$('<img src="<%= CONFIG.url %>images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
+        loading_img = fb.$('<img src="<%= CONFIG.url %>/images/loading.gif" height="28" width="28" alt="loading Outspokes..." />').attr('id','outspokes_loading');
       }
 
       // Adding the animated graphic to the page (before fb.Interface is added)
@@ -114,8 +114,8 @@ function() {
         }
         _fb.site_id.set(data.site_id);
         fb.env.admin_panel_address = {};
-        fb.env.admin_panel_address.pages = "<%= CONFIG.url %>admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/pages";
-        fb.env.admin_panel_address.commenters = "<%= CONFIG.url %>admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/commenters";
+        fb.env.admin_panel_address.pages = "<%= CONFIG.url %>/admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/pages";
+        fb.env.admin_panel_address.commenters = "<%= CONFIG.url %>/admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/commenters";
       }
 
       if (fb.env.url_token === "") {
