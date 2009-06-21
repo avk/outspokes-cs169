@@ -4,7 +4,8 @@ SimpleConfig.for :application do
 
   group :emails do
     set :admin, "Outspokes <admin@outspokes.com>"
-    set :support, "Outspokes <support@outspokes.com>"
+    set :support, "support@outspokes.com"
+    set :feedback, "feedback@outspokes.com"
     set :no_reply, "Outspokes <outspokes-no-reply@outspokes.com>"
   end
 end

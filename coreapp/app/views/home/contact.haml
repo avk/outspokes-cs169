@@ -7,9 +7,9 @@
 
 %p
   %h2.contact_email
-    %a{:href => "mailto:feedback@outspokes.com"} feedback@outspokes.com
+    = mail_to CONFIG.emails.feedback
   %h2.contact_email
-    %a{:href => "mailto:support@outspokes.com"} support@outspokes.com
+    = mail_to CONFIG.emails.support
     
 %br
 
