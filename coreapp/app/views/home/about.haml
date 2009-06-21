@@ -1,21 +1,36 @@
 - @title = 'About'
-%h1 About Us
--#= javascript_include_tag 'prototype', :juggernaut
--#= juggernaut(:channels => ['abcdefg'])
-%p
-  = link_to "@Outspokes", CONFIG.twitter
-  is the brainchild of a group of UC Berkeley CS 169 students:
-%ul
-  %li
-    %a{ :href=>"http://www.twitter.com/andrewbernstein"}Andrew Bernstein
-  %li
-    %a{ :href=>"http://curg.us"}Sanja Curgus
-  %li James Duncan
-  %li 
-    %a{ :href=>"http://www.twitter.com/curagea"} Hannah Hu
-  %li
-    %a{ :href=>"http://www.twitter.com/artvankilmer"} Arthur Klepchukov
-  %li Matthew Kocher
-  %li
-    %a{ :href=>"http://alex.turnlav.net"} Alex Pretzlav
 
+%h1 About Us
+
+%p
+  = link_to "Outspokes", CONFIG.twitter
+  began as a class project for UC Berkeley's Software Engineering class, CS 169, taught by 
+  %a{ :href => "http://www.cs.berkeley.edu/~brewer/" } Professor Eric Brewer
+  in Spring 2009. The original team was 
+  %a{ :href => "http://www.twitter.com/artvankilmer" } Arthur Klepchukov
+  ,
+  %a{ :href => "http://www.twitter.com/andrewbernstein" } Andrew Bernstein
+  ,
+  %a{ :href => "http://curg.us" } Sanja Curgus
+  ,
+  James Duncan
+  ,
+  %a{ :href => "http://www.twitter.com/curagea" } Hannah Hu
+  ,
+  Matthew Kocher
+  , and 
+  %a{ :href => "http://alex.turnlav.net" } Alex Pretzlav
+  \.
+  
+%p
+  We are currently in private beta and rapidly evolving thanks to: 
+  %ul.team
+    %li
+      = image_tag "arthur.jpg"
+      %a{ :href => "http://www.twitter.com/artvankilmer" } Arthur Klepchukov
+    %li
+      = image_tag "jerry.jpg"
+      %a{ :href => "http://whatcodecraves.com/" } Jerry Cheung
+    %li
+      = image_tag "arielle.png"
+      %a{ :href => "http://twitter.com/ariellescott" } Arielle Scott
