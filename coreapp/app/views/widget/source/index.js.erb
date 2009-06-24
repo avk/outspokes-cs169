@@ -22,3 +22,7 @@
   <%= 'console.log("' + @fb_hash + '");'  %>
   <%= 'fb = ' + @fb_hash + ';' %>
 <%- end -%>
+
+<%- if RAILS_ENV == "production" -%>
+  <%= render :partial => 'layouts/analytics', :locals => { :var_prefix => @fb_hash } %>
+<%- end -%>
