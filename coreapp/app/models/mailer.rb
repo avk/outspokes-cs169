@@ -1,6 +1,7 @@
 class Mailer < ActionMailer::Base
   include ActionController::UrlWriter
   default_url_options[:host] = CONFIG.domain
+  layout 'email'
 
   def commenter_invite(invite)
     setup_email
