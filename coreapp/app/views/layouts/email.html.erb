@@ -1,25 +1,12 @@
 <html>
   <head>
     <title>Outspokes</title>
-    <style type="text/css">
-      <%# Do not reference external stylesheets from the email template, many mail clients will ignore it %>
-      body {
-        font-family: Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        padding: 16px;
-      }
-
-      p {
-        padding: 0;
-        margin: 1em 0em;
-        line-height: 1.3em;
-      }
-    </style>
+    <%# Do not reference external stylesheets from the email template, many mail clients will ignore it %>
   </head>
-  <body>
+  <body style="font-family: Verdana, Helvetica, Arial, sans-serif; font-size: 16px; padding: 16px;">
     <img src="<%= CONFIG.url %>/images/borderless-logo-beta-with-tagline.png">
 
-    <div style="padding: 16px;">
+    <div style="padding: 16px; line-height: 1.3em;">
       <%= yield %>
 
       <p>
