@@ -533,7 +533,8 @@
       var element, property;
       var val, wanted_type;
       $.each(edit_fields, function (i, tuple) {
-        [element, property] = tuple;
+        element = tuple[0];
+        property = tuple[1];
         val = target.current_style(property);
         wanted_type = value_type[property];
         if (property === 'background-color') {
@@ -582,7 +583,14 @@
       if (!/rgb/.test(str)) {
         return "";
       }
-      var rgb = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/.exec(str).slice(1, 4);
+
+      // Firefox: rgb(0, 0, 0)
+      // Safari:  rgba(0, 0, 0, 0)
+      var rgbStr = /rgba?\((\d{1,3}), (\d{1,3}), (\d{1,3}).*\)/.exec(str);
+      if (!rgbStr) {
+        console.log("ERROR: Unable to match rgbStr for userStyle");
+      }
+      var rgb = rgbStr.slice(1, 4);
       var rtn = "";
       $.each(rgb, function (i, val) {
         rtn += pad_to_length_2(parseInt(val, 10).toString(16));

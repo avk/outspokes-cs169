@@ -177,7 +177,7 @@
       if (target.build) {
         target.build.remove(); // delete from the DOM
       }
-      target.delete();  // delete the instance of Target
+      target.destroy();  // delete the instance of Target
       delete this.all[target_selector];    // delete the reference in list
     };
     

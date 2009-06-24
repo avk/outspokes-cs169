@@ -36,7 +36,7 @@
     return window.getComputedStyle(this.element[0], null).getPropertyValue(property);
   };
 
-  fb.Target.prototype.delete = function () {
+  fb.Target.prototype.destroy = function () {
     this.element.css(this.original_styles);
     this.original_styles = null;
     this.new_styles = null;
