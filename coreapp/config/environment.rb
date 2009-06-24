@@ -31,7 +31,7 @@ Rails::Initializer.run do |config|
   config.gem "json"
   config.gem "ruby-debug"
   config.gem "haml"  
-  config.gem "juggernaut"
+  # config.gem "juggernaut"
   config.gem 'lukeredpath-simpleconfig', :source => 'http://gems.github.com', :lib => 'simple_config'
 
   # Only load the plugins named here, in the order given. By default, all plugins 

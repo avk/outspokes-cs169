@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Outspokes</title>
+    <%# Do not reference external stylesheets from the email template, many mail clients will ignore it %>
+  </head>
+  <body style="font-family: Verdana, Helvetica, Arial, sans-serif; font-size: 16px; padding: 16px;">
+    <img src="<%= CONFIG.url %>/images/borderless-logo-beta-with-tagline.png">
+
+    <div style="padding: 16px; line-height: 1.3em;">
+      <%= yield %>
+
+      <p>
+        Thanks,<br />
+        The Outspokes Team
+      </p>
+    </div>
+  </body>
+</html>
