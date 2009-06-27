@@ -729,10 +729,18 @@ version: 3.0.0pr2
 }
 
 #outspokes #bubble_content {
-  float:left;
-  font-size:14px;
-  padding:17px;
-  width:200px;
+  bottom: 10px;
+  float: left;
+  font-size: 14px;
+  padding: 17px;
+  position: relative;
+  right: 10px;
+  width: 200px;
+}
+#outspokes #bubble_content span {
+  padding-right: 2px;
+  position: relative;
+  top: 10px;
 }
 
 /* END FIRST TIME BUBBLE */

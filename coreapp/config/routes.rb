@@ -4,8 +4,6 @@ ActionController::Routing::Routes.draw do |map|
 
   ### widget
   map.namespace :widget do |widget|
-    widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "create", :conditions => { :method => :post }
-    widget.tag_for_page 'pages/:page_id/feedbacks/:id/tag', :controller => 'tags', :action => "delete", :conditions => { :method => :delete }
     widget.resources :user_styles
   end
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
