@@ -3,10 +3,10 @@ class Opinion < ActiveRecord::Base
   belongs_to :feedback
   belongs_to :commenter
   
-  validates_presence_of :feedback_id
+  validates_presence_of :feedback
   validates_associated :feedback
   
-  validates_presence_of :commenter_id
+  validates_presence_of :commenter
   validates_associated :commenter
   
   validates_uniqueness_of :feedback_id, :scope => :commenter_id

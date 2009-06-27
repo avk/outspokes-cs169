@@ -240,39 +240,6 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     validate_post_fail 
   end
   
-#  test "should add feedback to correct standalone page" do
-#    invite = invites(:page)
-#    callback = 'jsfeed'
-#    page = invite.page
-#    assert page.site.blank?, "We're testing a standalone page here"
-#    content = "HUH THIS SITE IS LAME YO"
-#
-#    assert_difference "page.feedbacks.count" do
-#      assert_no_difference "Page.count" do
-#        post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
-#             :current_page => page.url, :callback => callback, :content => content, :target => "html"
-#      end
-#    end
-#
-#    feedback = page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
-#    validate_json :callback => callback, :authorized => true, :feedback => feedback
-#  end
-  
-  test "should neither add new feedback nor create new Pages when invited to a Page instead of a Site" do
-    invite = invites(:page)
-    callback = 'jsfeed'
-    page = invite.page
-    assert page.site.blank?, "We're testing a standalone page here"
-    content = "derrrrrr"
-    
-    assert_no_difference "page.feedbacks.count", "Page.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html",
-          :current_page => page.url + "/lolololol", :callback => callback, :content => content, :target => "html"
-    end
-    
-    validate_post_fail
-  end
-  
   test "should render an html template when posting and format=html" do
     invite = invites(:one)
     callback = 'jsfeed'
@@ -543,9 +510,11 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     assert !json[:site_id], "site_id should not be present in the returned JSON, received #{json[:site_id].inspect}"
   end
 
-  def test_should_indicate_no_commenters_if_none_have_been_invited
+  def test_should_indicate_one_admin_account_commenter_if_none_have_been_invited
     invite = invites(:aaron_admin)
     assert invite.page.site.commenters.length == 1, "The only commenter on this site should be the admin"
+    assert invite.page.site.account == invite.commenter, "The commenter of the invite should be the admin"
+
     get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "aaron@example.com", :password => "monkey"
     invite.reload

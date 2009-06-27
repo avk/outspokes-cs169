@@ -62,7 +62,7 @@ class AccountsControllerTest < ActionController::TestCase
       assert_response :redirect
 
       commenters(:quentin).reload
-      #debugger      
+
       assert commenters(:quentin).email != oldemail
       assert commenters(:quentin).email == newemail
       assert commenters(:quentin).crypted_password != commenters(:quentin).encrypt(oldpass)
@@ -77,6 +77,16 @@ class AccountsControllerTest < ActionController::TestCase
            :password => 'foobara', :password_confirmation => 'foobar' }
       assert_template 'accounts/edit.haml'
     end
+  end
+
+  def test_should_update_account_preferred_notification
+    login_as :quentin
+    new_preferred_notification = 'TEST_DATA'
+    assert commenters(:quentin).preferred_notification_delivery != new_preferred_notification, "change test data to be different"
+    put :update, :id => commenters(:quentin).id, :account => {
+      :preferred_notification_delivery => new_preferred_notification
+    }
+    assert commenters(:quentin).preferred_notification_delivery == new_preferred_notification
   end
 
   def test_should_not_update_account_not_logged_in

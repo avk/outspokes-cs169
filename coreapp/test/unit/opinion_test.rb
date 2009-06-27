@@ -12,7 +12,7 @@ class OpinionTest < ActiveSupport::TestCase
   test 'should have a feedback' do
     assert_no_difference "Opinion.count" do
       opinion = create_opinion(:feedback => nil)
-      assert opinion.errors.on(:feedback_id)
+      assert opinion.errors.on(:feedback)
     end
   end
   
@@ -26,7 +26,7 @@ class OpinionTest < ActiveSupport::TestCase
   test 'should have a commenter' do
     assert_no_difference "Opinion.count" do
       opinion = create_opinion(:commenter => nil)
-      assert opinion.errors.on(:commenter_id)
+      assert opinion.errors.on(:commenter)
     end
   end
   

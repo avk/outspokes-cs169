@@ -12,7 +12,7 @@ class InviteTest < ActiveSupport::TestCase
   test 'should require a page' do
     assert_no_difference "Invite.count" do
       i = create_invite(:page => nil)
-      assert i.errors.on(:page_id), "allowing invites to be created without pages"
+      assert i.errors.on(:page), "allowing invites to be created without pages"
     end
   end
   
@@ -26,7 +26,7 @@ class InviteTest < ActiveSupport::TestCase
   test 'should require a commenter' do
     assert_no_difference "Invite.count" do
       i = create_invite(:commenter => nil)
-      assert i.errors.on(:commenter_id), "allowing invites to be created without commenters"
+      assert i.errors.on(:commenter), "allowing invites to be created without commenters"
     end
   end
   
@@ -67,19 +67,9 @@ class InviteTest < ActiveSupport::TestCase
     assert i1.url_token != i2.url_token
   end
   
-  test 'should be able to invite an account holder as a commmenter to a page' do
-    inviter = commenters(:quentin)
-    account_holder = commenters(:aaron)
-    
-    assert_difference "Invite.count", 1 do
-      i = create_invite(:commenter => account_holder, :page => account_holder.pages.first)
-      assert !i.new_record?
-    end
-  end
-
   test 'should return account who initiated the invite via inviter' do
     inviter = commenters(:aaron)
-    commenter = commenters(:quentin)
+    commenter = commenters(:opinionated)
     
     assert_difference "Invite.count", 1 do
       i = create_invite(:commenter => commenter, :page => inviter.sites.first.pages.first)

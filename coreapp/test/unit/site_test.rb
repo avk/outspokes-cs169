@@ -13,7 +13,7 @@ class SiteTest < ActiveSupport::TestCase
   test 'should require an account' do
     assert_no_difference "Site.count" do
       site = create_site(:url => "http://google.com", :account => nil)
-      assert site.errors.on(:account_id)
+      assert site.errors.on(:account)
     end
   end
   
@@ -77,61 +77,11 @@ class SiteTest < ActiveSupport::TestCase
   
   test "can't change a site's home_page once created" do 
     site = create_site(:url => "http://google.com")
-    new_page = create_page()
+    new_page = create_page
     site.reload
     site.home_page = new_page
     assert site.errors.on_base
     assert site.home_page != new_page
-  end
-  
-  test "can't create a site with a nil url" do 
-    assert_no_difference "Site.count" do
-      site = create_site(:url => nil)
-    end
-  end
-  
-  # :url => nil and no url specified hit different validations
-  test "can't create a site with no url specified" do
-    assert_no_difference "Site.count" do
-      site = Site.create(:account => commenters(:aaron))
-    end
-  end
-  
-  test 'should not accept invalid URLs' do
-    assert_no_difference "Site.count" do
-      site = create_site(:url => 'abc@#$@#saf432s')
-      assert site.errors.on_base, "allowing site to be created with invalid URLs"
-    end
-  end
-
-  test 'should not accept invalid URL scheme' do
-    %w(ftp ssh git svn).each do |scheme|
-      assert_no_difference "Site.count" do
-        site = create_site(:url => scheme + '://example.com')
-        assert site.errors.on_base, "allowing site with an invalid URL scheme: #{scheme}"
-      end
-    end
-  end
-  
-  test 'should only accept the http and https URL schemes' do
-    %w(http https).each do |scheme|
-      assert_difference "Site.count" do
-        site = create_site(:url => scheme + '://example.com')
-        assert !site.new_record?, "#{site.errors.full_messages.to_sentence}"
-      end
-    end
-  end
-  
-  test "should not save trailing slashes on URLs" do
-    site = nil
-    url = "http://yahoo.com"
-    
-    assert_difference "Site.count", 1 do
-      site = create_site(:url => url + '/')
-      assert !site.new_record?, "#{site.errors.full_messages.to_sentence}"
-    end
-    
-    assert site.url == url
   end
   
   test 'should be able to get url via Site#url' do
@@ -169,14 +119,15 @@ class SiteTest < ActiveSupport::TestCase
     end
   end
   
-  test "should return correct public site" do 
-    site = Site.find_public_site_by_url "http://localhost:3001/asite/"
-    assert_equal sites(:public), site, "Found #{site} for http://localhost:3001/asite/"
-    site = Site.find_public_site_by_url "http://localhost:3001/asite/lol.html"
-    assert_equal sites(:public), site
-    site = Site.find_public_site_by_url "http://localhost:3001/anothersite/cats.html"
-    assert_equal sites(:alt_public), site
-  end
+#  TODO: remove
+#  test "should return correct public site" do 
+#    site = Site.find_public_site_by_url "http://localhost:3001/asite/"
+#    assert_equal sites(:public), site, "Found #{site} for http://localhost:3001/asite/"
+#    site = Site.find_public_site_by_url "http://localhost:3001/asite/lol.html"
+#    assert_equal sites(:public), site
+#    site = Site.find_public_site_by_url "http://localhost:3001/anothersite/cats.html"
+#    assert_equal sites(:alt_public), site
+#  end
 
   def test_should_be_able_to_retrieve_a_sites_pages_with_the_latest_feedback_for_each_page
     site = create_site(:url => 'http://www.google.com')
@@ -254,7 +205,7 @@ class SiteTest < ActiveSupport::TestCase
     site.new_validation_token
     site.reload
     recently = 1.minute.ago..1.minute.from_now
-    assert recently.include? site.validation_timestamp
+    assert recently.include?(site.validation_timestamp)
   end
   
   def test_should_be_able_verify_validation_tokens

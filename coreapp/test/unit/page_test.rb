@@ -16,27 +16,6 @@ class PageTest < ActiveSupport::TestCase
     end
   end
 
-  test 'should also create page with an account' do
-    assert_difference 'Page.count' do
-      page = Page.create(valid_options_for_page_account)
-      assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
-    end
-  end
-
-  test 'cannot create a page with both sites and accounts' do
-    assert_no_difference 'Page.count' do
-      page = create_page(valid_options_for_page_site)
-      assert page.errors.on_base, "allowing pages to be created with an account and a site"
-    end
-  end
-
-  test 'cannot create a page without a site or an account' do
-    assert_no_difference 'Page.count' do
-      page = Page.create(valid_options_for_page_account.merge({ :account => nil }))
-      assert page.errors.on_base, "allowing pages to be created with no account or site"
-    end
-  end
-
   test 'should require a URL' do
     assert_no_difference "Page.count" do
       page = create_page(:url => nil)
@@ -74,20 +53,21 @@ class PageTest < ActiveSupport::TestCase
   test 'should only accept the http and https URL schemes' do
     %w(http https).each do |scheme|
       assert_difference "Page.count" do
-        page = create_page(:url => scheme + '://example.com')
+        page = create_page(:url => scheme + '://msn.com')
         assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
       end
     end
   end
 
-  test 'should have a unique URL for a given account' do
-    assert_difference "Page.count", 1 do
-      page = create_page(valid_options_for_page_account)
-      assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
-      page = create_page(valid_options_for_page_account)
-      assert page.errors.on(:url), "allowing one account to have multiple pages with the same URL"
-    end
-  end
+#  TODO: remove
+#  test 'should have a unique URL for a given account' do
+#    assert_difference "Page.count", 1 do
+#      page = create_page(valid_options_for_page_account)
+#      assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
+#      page = create_page(valid_options_for_page_account)
+#      assert page.errors.on(:url), "allowing one account to have multiple pages with the same URL"
+#    end
+#  end
 
   test 'should have a unique URL for a given site' do
     assert_difference "Page.count", 1 do
@@ -112,7 +92,7 @@ class PageTest < ActiveSupport::TestCase
   end
 
   test 'should respond to commenters' do
-    assert create_page.respond_to? :commenters
+    assert create_page.respond_to?(:commenters)
   end
 
   test 'should delete all associated feedback instances when deleted' do
@@ -139,8 +119,8 @@ class PageTest < ActiveSupport::TestCase
   
   test 'should delete all associated invites when deleted' do
     page = create_page
-    commenters = %w(quentin aaron)
-    
+    commenters = %w(aaron)
+
     assert_difference "Invite.count", commenters.size do
       commenters.each do |name|
         page.invites << Invite.new(:commenter => commenters(name))
@@ -149,7 +129,8 @@ class PageTest < ActiveSupport::TestCase
     end
     
     assert_difference "Page.count", -1 do
-      assert_difference "Invite.count", -(commenters.size) do
+      # 1 commenters, and 1 admin account of the site
+      assert_difference "Invite.count", -(commenters.size + 1) do
         page.destroy
       end
     end

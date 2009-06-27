@@ -3,10 +3,10 @@ class Invite < ActiveRecord::Base
   belongs_to :page
   belongs_to :commenter
 
-  validates_presence_of :page_id
+  validates_presence_of :page
   validates_associated :page
-  
-  validates_presence_of :commenter_id
+
+  validates_presence_of :commenter
   validates_associated :commenter
   
   validates_uniqueness_of :page_id, :scope => :commenter_id
@@ -17,8 +17,7 @@ class Invite < ActiveRecord::Base
     self.page.site.account
   end
   
-
-private
+  private
 
   def generate_url_token
     # a long random string is a good salt: some random text's md5

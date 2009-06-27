@@ -57,10 +57,10 @@ class Test::Unit::TestCase
   
   # Pages
   
-  def valid_options_for_page_account
-    valid_acct = commenters(:quentin)
-    { :url => 'http://runthisby.us', :account => valid_acct }
-  end
+#  def valid_options_for_page_account
+#    valid_acct = commenters(:quentin)
+#    { :url => 'http://runthisby.us', :account => valid_acct }
+#  end
   
   def valid_options_for_page_site
     valid_site = sites(:linkedin)
@@ -69,19 +69,19 @@ class Test::Unit::TestCase
   
   # :url must be nil, PageController supplies account from session state
   def invalid_options_for_page
-    valid = valid_options_for_page_account
+    valid = valid_options_for_page_site
     valid[:url] = nil
     valid
   end
   
   def create_page(options = {})
-    Page.create(valid_options_for_page_account.merge(options))
+    Page.create(valid_options_for_page_site.merge(options))
   end
 
   # Commenters
 
   def valid_options_for_commenters
-	{ :email => "abc@abc.com" }
+    { :email => "abc@abc.com" }
   end
 
   def invalid_options_for_commenters
@@ -115,6 +115,7 @@ class Test::Unit::TestCase
   
   def valid_options_for_private_comment
     page = pages(:one)
+    page.invites << invites(:one)
     commenter = commenters(:one)
     { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html', :public => false }
   end

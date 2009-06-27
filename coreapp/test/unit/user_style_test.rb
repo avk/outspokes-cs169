@@ -16,15 +16,15 @@ class UserStyleTest < ActiveSupport::TestCase
   
   def test_should_require_a_page
     assert_no_difference "UserStyle.count" do
-      user_style = create_user_style(:page_id => nil)
-      assert user_style.errors.on(:page_id), "Allowing nil page_ids"
+      user_style = create_user_style(:page => nil)
+      assert user_style.errors.on(:page), "Allowing nil page"
     end
   end
   
   def test_should_require_a_commenter
     assert_no_difference "UserStyle.count" do
-      user_style = create_user_style(:commenter_id => nil)
-      assert user_style.errors.on(:commenter_id), "Allowing nil commenter_ids"
+      user_style = create_user_style(:commenter => nil)
+      assert user_style.errors.on(:commenter), "Allowing nil commenter"
     end
   end
   

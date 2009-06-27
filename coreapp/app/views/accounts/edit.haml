@@ -15,6 +15,9 @@
   %p
     = label_tag 'password_confirmation', 'Confirm Password', :class => 'wide_left'
     = f.password_field :password_confirmation
+  %p
+    = label_tag 'preferred_notification_delivery', 'Notifications', :class => 'wide_left'
+    = f.select :preferred_notification_delivery, ['all', 'digest', 'none']
   %div{:style=>"clear:both;"}
   %p
     = submit_tag 'Edit', :class => 'submit'

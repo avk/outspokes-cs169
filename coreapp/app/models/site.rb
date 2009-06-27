@@ -5,11 +5,13 @@ class Site < ActiveRecord::Base
 
   attr_protected :validation_token, :validation_timestamp
 
-  validates_presence_of :account_id
-  validates_associated :account
-  
   before_validation :reformat_url
-  after_create :set_home_page!, :set_name!
+
+  validates_presence_of :account
+  validates_associated :account
+  validates_length_of :pages, :minimum => 1
+
+  before_save :default_name_based_on_url_host
 
   def initialize(*args, &block)
     super
@@ -17,21 +19,17 @@ class Site < ActiveRecord::Base
     @is_public = false
   end
 
-
   # url and home_page logic ####################################################################
   def url
-    if (not home_page)
-      @url
-    else
-      home_page.url
-    end
+    home_page && home_page.url
   end
 
   def url=(url)
     if (home_page)
       raise Exception.new("Cannot set a URL for a site that already has a home_page: #{self}")
     else
-      @url = url # used in the after_save :set_home_page! callback
+      @url = url  # for setting name and validation later
+      self.home_page = Page.new(:url => url, :site => self, :allow_public_comments => false)
     end
   end
 
@@ -125,23 +123,7 @@ class Site < ActiveRecord::Base
     url.chop! if url and url[url.length - 1, 1] == '/'
   end
   
-  def validate
-    if self.url.nil?
-      errors.add_to_base("URL can't be blank")
-    else
-      errors.add_to_base("URL is invalid") unless (self.url.match URI.regexp(['http', 'https']))
-    end
+  def default_name_based_on_url_host
+    self.name ||= URI.parse(url).host
   end
-  
-  def set_home_page!
-    self.home_page = Page.new(:url => @url, :site => self, :allow_public_comments => @is_public)
-  end
-
-  def set_name!
-    # agent = WWW::Mechanize.new
-    # self.name = agent.get(self.home_page.url).title
-    self.name = URI.parse(self.url).host
-    self.save
-  end
-
 end

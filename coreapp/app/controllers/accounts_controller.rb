@@ -31,19 +31,12 @@ class AccountsController < ApplicationController
   def update
     @account = Account.find(params[:id])
     respond_to do |format|
-      if ((params[:account][:password] == params[:account][:password_confirmation]) && !params[:account][:password_confirmation].blank?)
-        if @account.update_attributes(params[:account])
-          flash[:notice] = "Account successfully updated"
-          format.html { redirect_to dashboard_account_url(@account.id) }
-          format.xml  { head :ok }
-        else
-          flash[:alert] = "Password not changed"
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
-        end
-               
+      if @account.update_attributes(params[:account])
+        flash[:notice] = "Account successfully updated"
+        format.html { redirect_to dashboard_account_url(@account.id) }
+        format.xml  { head :ok }
       else
-        flash[:alert] = "Password mismatch"
+        flash[:alert] = "Please try again"
         format.html { render :action => "edit" }
         format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
       end

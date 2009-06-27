@@ -67,3 +67,5 @@ add deploy user's key to account page
 forward DNS to server
 Google apps - http://www.google.com/a/cpanel/domain/new
 
+### Cron
+added /etc/cron.daily/outspokes_cron to rake cron every hour

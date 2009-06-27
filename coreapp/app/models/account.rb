@@ -5,8 +5,8 @@ class Account < Commenter
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
-  has_many :pages, :dependent => :destroy
-  has_many :sites, :dependent => :destroy
+  has_many :sites, :dependent => :destroy, :validate => false
+  has_many :pages, :through => :sites
   
   belongs_to :commenter
 
@@ -23,9 +23,8 @@ class Account < Commenter
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible  :email, :name, :password, :password_confirmation, :type
-
-
+  attr_accessible  :email, :name, :password, :password_confirmation, :type,
+    :preferred_notification_delivery
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -49,6 +48,7 @@ class Account < Commenter
     
   def deliver_welcome_email
     Mailer.deliver_account_signup(self)
+    true
   end
 
 end

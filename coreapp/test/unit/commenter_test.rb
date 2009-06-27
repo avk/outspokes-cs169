@@ -49,7 +49,7 @@ class CommenterTest < ActiveSupport::TestCase
   end
 
   test "should respond to pages" do
-    assert create_commenter.respond_to? :pages
+    assert create_commenter.respond_to?(:pages)
   end
 
   test "should, when destroying a commenter, delete all feedback associated with it" do
@@ -164,7 +164,7 @@ class CommenterTest < ActiveSupport::TestCase
   test 'should delete all of a commenter\'s opinions when that commenter is deleted' do
     commenter = create_commenter
     feedbacks = [:one, :two]
-    
+
     assert_difference "commenter.opinions.count", feedbacks.size do
       feedbacks.each do |which|
         commenter.opinions.create(:feedback => feedbacks(which), :agreed => false)

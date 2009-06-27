@@ -19,14 +19,9 @@ class SitesController < ApplicationController
     @site.account = current_account
 
     respond_to do |format|
-      begin
-        Site.transaction do
-          @site.save!
-          i = Invite.new(:page => @site.home_page, :commenter => @site.account)
-          i.save!
-        end
+      if @site.save
         format.html { redirect_to embed_site_path(@site) }
-      rescue
+      else
         flash[:error] = "Could not create site."
         format.html { render :action => "new" }
         format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }

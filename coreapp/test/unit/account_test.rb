@@ -37,6 +37,18 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
+  def test_should_default_preference_notification_delivery_to_all
+    u = create_account
+    assert_equal 'all', u.preferred_notification_delivery
+  end
+
+  def test_should_not_allow_mass_assignment_outside_of_white_list
+    u = create_account
+    assert_no_difference 'u.crypted_password.size' do
+      u.update_attributes(:crypted_password => 'much_longer_hacked_password')
+    end
+  end
+
   def test_should_reset_password
     commenters(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
     assert_equal commenters(:quentin), Account.authenticate('quentin@example.com', 'new password')
@@ -90,7 +102,7 @@ class AccountTest < ActiveSupport::TestCase
     assert commenters(:quentin).remember_token_expires_at.between?(before, after)
   end
 
-  test "should delete all pages and sites associated with it when destroyed" do
+  test "should delete sites associated with it when destroyed" do
     account = nil
     
     assert_difference "Account.count" do
@@ -98,13 +110,6 @@ class AccountTest < ActiveSupport::TestCase
     end
     
     urls = %w(http://www.google.com http://www.yahoo.com http://www.msn.com)
-    assert_difference "Page.count", urls.size do
-      urls.each do |url|
-        account.pages << create_page(:url => url, :account => account)
-      end
-      account.save
-    end
-    
     assert_difference "Site.count", 3 do
       3.times do |url|
         account.sites << create_site(:account => account)
@@ -113,10 +118,8 @@ class AccountTest < ActiveSupport::TestCase
     end
     
     assert_difference "Account.count", -1 do
-      assert_difference "Page.count", -(urls.size + 3) do
-        assert_difference "Site.count", -3 do
-          account.destroy
-        end
+      assert_difference "Site.count", -3 do
+        account.destroy
       end
     end
     

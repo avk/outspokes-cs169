@@ -4,16 +4,18 @@ class Feedback < ActiveRecord::Base
   
   belongs_to :commenter
   belongs_to :page
-  has_many :opinions, :dependent => :destroy
+  has_many :opinions, :dependent => :destroy, :validate => false
   
-  validates_presence_of :page_id
+  validates_presence_of :page
   validates_associated :page
-  validates_presence_of :commenter_id, :unless => :public
+  validates_presence_of :commenter, :unless => :public
   validates_associated :commenter, :unless => :public
   
   validates_inclusion_of :public, :in => [true, false] # must be either public or private  
   validates_presence_of :name, :if => :public
   validate :has_valid_parent
+
+  after_save :deliver_notification
   
   acts_as_nested_set
   
@@ -163,6 +165,14 @@ class Feedback < ActiveRecord::Base
         errors.add(:parent, "Cannot create a feeedback with an invalid parent")
       end
     end
+  end
+
+  def deliver_notification
+    # TODO: remove public pages
+    if !public && page.site.account.preferred_notification_delivery == 'all'
+      Mailer.deliver_feedback_notification(self)
+    end
+    true
   end
   
   
