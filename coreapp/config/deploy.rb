@@ -38,8 +38,8 @@ namespace :deploy do
 
   desc "Remove cached js and css"
   task :remove_cached_assets do
-    run "rm -f #{current_path}/coreapp/public/stylesheets/all.css"
-    run "rm -f #{current_path}/coreapp/public/javascripts/all.js"
+    run "rm -f #{current_path}/coreapp/public/stylesheets/*_cached.css"
+    run "rm -f #{current_path}/coreapp/public/javascripts/*_cached.js"
   end
 
   task :warm_up_app do

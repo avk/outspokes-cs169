@@ -1,10 +1,11 @@
 <%# optional argument 'var_prefix' to namespace the tracker object %>
 <% var_prefix ||= 'outspokes' %>
 <% tracker_obj  = var_prefix + '_gaJsHost' %>
+<% page_tracker = var_prefix + '_pageTracker' %>
 
 var <%= tracker_obj -%> = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + <%= tracker_obj %> + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 try {
-  var pageTracker = _gat._getTracker("UA-9473214-1");
-  pageTracker._trackPageview();
+  var <%= page_tracker -%> = _gat._getTracker("UA-9473214-1");
+  <%= page_tracker -%>._trackPageview();
 } catch(err) {}
