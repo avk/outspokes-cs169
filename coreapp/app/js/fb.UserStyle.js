@@ -209,7 +209,8 @@
   fb.UserStyle.process_selectors = function(data) {
     var selector, selector_class;
     $.each(data.selectors, function (index, selector_array) {
-      [selector, selector_class] = selector_array;
+      selector       = selector_array[0];
+      selector_class = selector_array[1];
       // console.log("selector_array", selector_array);
       // console.log("[selector, selector_class]", [selector, selector_class]);
       // console.log("$(selector)", $(selector));
