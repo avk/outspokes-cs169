@@ -11,7 +11,7 @@ db/*.sqlite3-journal
 *~
 db/schema.rb
 coverage/*
-public/javascripts/all.js
-public/stylesheets/all.css
+public/javascripts/*_cached.js
+public/stylesheets/*_cached.css
 public/stylesheets/main.css
 public/widget/*
