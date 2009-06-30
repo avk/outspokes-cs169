@@ -50,7 +50,6 @@ class Widget::FeedbacksController < Widget::WidgetController
   def new_feedback_for_page
     success = false
     if @authorized
-      name = sanitize(params[:name], false)
       content = sanitize(params[:content], true)
 
       page = @invite.page.site.pages.find_or_create_by_url(params[:current_page])
@@ -63,7 +62,7 @@ class Widget::FeedbacksController < Widget::WidgetController
         parent_private = Comment.find(parent_id).private
       end
 
-      comment = Comment.new :commenter => @commenter, :name => name, :content => content,
+      comment = Comment.new :commenter => @commenter, :content => content,
                              :target => params[:target], :private => parent_private
       page.comments << comment
 

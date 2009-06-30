@@ -11,7 +11,6 @@ function() {
     fb.env.url_token = fb.getParams('url_token') || fb.cookie('fb_hash_url_token') || "";
     var _admin_validation_token = fb.cookie('fb_hash_admin_validation_token');
     var _wants_admin = fb.getParams('admin');
-    fb.env.pub_page = false;
     fb.env.base_domain = "<%= CONFIG.url %>/";
     fb.env.logo_address = "<%= CONFIG.url %>/images/widget-logo.png";
     fb.env.help_address = "<%= CONFIG.url %>/images/help.png";
@@ -116,10 +115,6 @@ function() {
         fb.env.admin_panel_address = {};
         fb.env.admin_panel_address.pages = "<%= CONFIG.url %>/admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/pages";
         fb.env.admin_panel_address.commenters = "<%= CONFIG.url %>/admin_panel/" + _fb.site_id() + '/' +  _fb.admin() + "/commenters";
-      }
-
-      if (fb.env.url_token === "") {
-        fb.env.pub_page = true;
       }
 
       fb.cookie("fb_hash_url_token", fb.env.url_token);

@@ -6,11 +6,9 @@ class Feedback < ActiveRecord::Base
   
   validates_presence_of :page
   validates_associated :page
-  validates_presence_of :commenter, :unless => :public
-  validates_associated :commenter, :unless => :public
+  validates_presence_of :commenter
+  validates_associated :commenter
   
-  validates_inclusion_of :public, :in => [true, false] # must be either public or private  
-  validates_presence_of :name, :if => :public
   validate :has_valid_parent
 
   after_save :deliver_notification
@@ -45,7 +43,7 @@ class Feedback < ActiveRecord::Base
       when 'feedback_id'
         json_atts['feedback_id'] = id
       when 'name'
-        json_atts['name'] = public ? name : commenter.truncated_email
+        json_atts['name'] = commenter.truncated_email
       when 'timestamp'
         json_atts['timestamp'] = created_at.to_i
       when 'opinion'
@@ -166,8 +164,7 @@ class Feedback < ActiveRecord::Base
   end
 
   def deliver_notification
-    # TODO: remove public pages
-    if !public && page.site.account.preferred_notification_delivery == 'all'
+    if page.site.account.preferred_notification_delivery == 'all'
       Mailer.deliver_feedback_notification(self)
     end
     true

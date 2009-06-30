@@ -105,7 +105,7 @@ class PageTest < ActiveSupport::TestCase
     comments = %w(sucks boo yuck)
     assert_difference "Feedback.count", comments.size do
       comments.each do |comment|
-        page.feedbacks << create_private_comment(:content => comment)
+        page.feedbacks << create_comment(:content => comment)
       end
       page.save
     end
@@ -136,24 +136,4 @@ class PageTest < ActiveSupport::TestCase
     end
   end
 
-  test "should find the right public page from fixtures" do
-    page = Page.find_public_page_by_url "http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html"
-    assert_equal pages(:transactions), page
-  end
-  
-  test "should not find non-public pages" do
-    page = Page.find_public_page_by_url "http://www.myspace.com/"
-    assert_nil page
-  end
-  
-  test "cannot add private pages to public sites and vice-versa" do
-    site = sites(:public)
-    page = Page.new(:url => site.home_page.url + "puppies.html", :allow_public_comments => false)
-    site.pages << page
-    assert page.errors.on(:allow_public_comments)
-    site = sites(:facebook)
-    page = Page.new(:url => site.home_page.url + "puppies.html", :allow_public_comments => true)
-    site.pages << page
-    assert page.errors.on(:allow_public_comments)
-  end
 end

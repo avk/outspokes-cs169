@@ -8,7 +8,6 @@ one:
   lft: 1
   rgt: 2
   type: Comment
-  public: false
   private: false
 
 two:
@@ -19,7 +18,6 @@ two:
   lft: 3
   rgt: 4
   type: Comment
-  public: false
   private: false
   
 three:
@@ -30,7 +28,6 @@ three:
   lft: 5
   rgt: 6
   type: Comment
-  public: false
   private: true
   
 four:
@@ -167,25 +164,22 @@ seven:
   content: MyText4
   target: html
   type: Comment
-  public: false
   private: false
 
 five:
   page_id: 3
-  name: Joe Fake
+  commenter_id: 2
   content: I hate this page
   target: html
   type: Comment
-  public: true
   private: false
-    
+  
 six:
   page_id: 3
   commenter_id: 1
   content: I also  hate this page
   target: html
   type: Comment
-  public: false
   private: false
 
 privatecomment:
@@ -194,5 +188,4 @@ privatecomment:
   content: I also  hate this page
   target: html
   type: Comment
-  public: false
   private: true

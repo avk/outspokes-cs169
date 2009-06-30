@@ -96,7 +96,7 @@
   fb.Comment.all = {};
   fb.Comment.unrendered = {};
 
-  fb.Comment.post = function (content, target, name, isPrivate) {
+  fb.Comment.post = function (content, target, isPrivate) {
     if (!_fb.authorized()) {
       return null;
     }
@@ -112,10 +112,6 @@
     }
     if (_fb.admin()) {
       data.validation_token = _fb.admin();
-    }
-    if (name) {
-      data["name"] = name;
-      delete data["url_token"];
     }
     var callback = function(data) {
       if (! data.success) {

@@ -3,45 +3,45 @@ require File.dirname(__FILE__) + '/../test_helper'
 class CommentTest < ActiveSupport::TestCase
   
   def test_must_not_be_abstract
-    c = create_private_comment
+    c = create_comment
     assert !c.abstract?
   end
   
   test "should create feedback" do
     assert_difference 'Comment.count' do
-      feedback = create_private_comment
+      feedback = create_comment
       assert !feedback.new_record?, "#{feedback.errors.full_messages.to_sentence}"
     end
   end
   
   test "should be associated with a commenter" do
-    feedback = create_private_comment(:commenter => nil)
+    feedback = create_comment(:commenter => nil)
     assert !feedback.valid?
     # assert feedback.errors.on(:commenter_id), "allowing feedback to be saved without a commenter"
   end
       
   test "should be associated with a page" do
-    feedback = create_private_comment(:page => nil)
+    feedback = create_comment(:page => nil)
     assert !feedback.valid?
   end
   
   test "should have content" do
-    feedback = create_private_comment(:content => nil)
+    feedback = create_comment(:content => nil)
     assert !feedback.valid?
   end
   
   test "should not have blank content" do
-    feedback = create_private_comment(:content => '')
+    feedback = create_comment(:content => '')
     assert !feedback.valid?
   end
   
   test "should have a target" do
-    feedback = create_private_comment(:target => '')
+    feedback = create_comment(:target => '')
     assert !feedback.valid?
   end
   
   test "should expose certain attributes for json" do
-    feedback = create_private_comment
+    feedback = create_comment
     commenter = create_commenter
     opinion = commenter.opinions.create(:feedback => feedback, :agreed => true)
     
@@ -61,14 +61,16 @@ class CommentTest < ActiveSupport::TestCase
       "isPrivate" => feedback.private
     }
     
-    assert Comment.json_attribute_names.sort == json_atts.keys.sort, "Attributes don't match"
+    expected = json_atts.keys.sort
+    got = Comment.json_attribute_names.sort
+    assert got == expected, "Attributes don't match, expected: #{expected} but got: #{got}"
     feedback.json_attributes(commenter).each do |key, value|
       assert json_atts[key] == value, "for #{key}: expected #{json_atts[key].inspect} got #{value.inspect}"
     end
   end
   
   test 'should delete all opinions when deleted' do
-    feedback = create_private_comment
+    feedback = create_comment
     commenters = Commenter.find(:all, :order => "created_at DESC", :limit => 5)
     num_opinions = commenters.size
 
@@ -84,17 +86,17 @@ class CommentTest < ActiveSupport::TestCase
   end
   
   test "should start with an agreed count of 0" do
-    feedback = create_private_comment
+    feedback = create_comment
     assert feedback.agreed == 0
   end
 
   test "should start with an disagreed count of 0" do
-    feedback = create_private_comment
+    feedback = create_comment
     assert feedback.disagreed == 0
   end
 
   test "should respond to agree_disagree_ratio" do
-    feedback = create_private_comment
+    feedback = create_comment
     assert feedback.agree_disagree_ratio == 0.0
   end
 
@@ -177,7 +179,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test "should respond to neutral?" do
-    feedback = create_private_comment
+    feedback = create_comment
     assert feedback.neutral?
   end
 
@@ -191,65 +193,33 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test "should return score of length of matching search term if it matches" do
-    feedback = create_private_comment(:content => 'Bob is my friend')
+    feedback = create_comment(:content => 'Bob is my friend')
     assert feedback.search_score("my") == 2
   end
 
   test "should return score of 0 if search term doesn't match" do
-    feedback = create_private_comment(:content => 'Bob is my friend')
+    feedback = create_comment(:content => 'Bob is my friend')
     assert feedback.search_score("whale") == 0
   end
 
   test "feedback should have lft" do
-    feedback = create_private_comment
+    feedback = create_comment
     assert !feedback.lft.nil?
   end
 
   test "feedback should have rgt" do
-    feedback = create_private_comment
+    feedback = create_comment
     assert !feedback.rgt.nil?
   end
 
   test "should not be case sensitive when searching" do
-    feedback = create_private_comment(:content => 'Bob is my friend')
+    feedback = create_comment(:content => 'Bob is my friend')
     assert feedback.search_score("MY") == 2
   end
 
   test "should return score of 50 if author contains search term" do
-    feedback = create_private_comment(:content => 'Bob is my friend', :commenter_id => 1)
+    feedback = create_comment(:content => 'Bob is my friend', :commenter_id => 1)
     assert feedback.search_score("MY") == 2
-  end
-  
-  test "can create public feedbacks without an account" do
-    assert_difference "Comment.count" do
-      f = Comment.create(valid_options_for_public_comment)
-      assert_valid f
-    end
-  end
-  
-  test "can't create a public comment without a name" do
-    assert_no_difference "Comment.count" do
-      f = Comment.create(valid_options_for_public_comment.merge(:name => nil))
-      assert !f.valid?
-    end
-  end
-  
-  test "generates proper json for public feedback" do
-    f = Comment.create(valid_options_for_public_comment)
-    commenter = create_commenter
-    assert_valid f
-    json_atts = {
-      "feedback_id" => f.id,
-      "name" => f.name,
-      "timestamp" => f.created_at.to_i,
-      "content" => f.content,
-      "target" => f.target
-    }
-    js = f.json_attributes(commenter).to_json
-    json_obj = ActiveSupport::JSON::decode(js)
-    json_atts.each do |key, val|
-      assert json_obj[key] == val, "Feedback.#{key} should be #{val}. Instead: #{json_obj[key]}"
-    end
   end
   
 end

@@ -44,10 +44,6 @@
     
     this.buildCommentForm = function (id, target) {
       var formHTML = '<form id="comment_form" name="newcomment" onsubmit="return false;">';
-    	if (fb.env.pub_page) {
-    	  formHTML += '<label for="fb.name.input">Name:</label>' +
-    	    '<input id="fb.name.input" type="text" name="name" size="20" /><br />'
-    	}
     	var form_header = '<div id="outspokes_form_header"><span>Comment</span></div><div id="outspokes_form_wrapper"><textarea name="content" rows="7" /></div>';
       formHTML += form_header;
       var form_buttons =  '<div id="outspokes_form_buttons">'
@@ -121,12 +117,7 @@
     
     this.form.find("a").click(function(){fb.Comment.get();});
     this.form.find("form").submit(function() { 
-      var name = null;
-      if (fb.env.pub_page) {
-        name = this.name.value;
-        this.name.value = "";
-      }
-      fb.Comment.post(this.content.value, this.target.value, name, this.isPrivate.checked);
+      fb.Comment.post(this.content.value, this.target.value, this.isPrivate.checked);
       this.content.value = "";
       fb.i.comment.reset_target();
     });
@@ -257,11 +248,7 @@
           '<input class="button" type="submit" value="Reply" />');
         form.attr('class','reply');
         form.submit(function() { 
-          var name = null;
-          if (fb.env.pub_page) {
-            name = this.name.value;
-          }
-          fb.Comment.post(this.content.value, this.target.value, name, false);
+          fb.Comment.post(this.content.value, this.target.value, false);
           fb.i.comment.reply.finish(reply_form);
         });
         var cancel_button = form.find('input[type="reset"]');

@@ -119,16 +119,6 @@ class SiteTest < ActiveSupport::TestCase
     end
   end
   
-#  TODO: remove
-#  test "should return correct public site" do 
-#    site = Site.find_public_site_by_url "http://localhost:3001/asite/"
-#    assert_equal sites(:public), site, "Found #{site} for http://localhost:3001/asite/"
-#    site = Site.find_public_site_by_url "http://localhost:3001/asite/lol.html"
-#    assert_equal sites(:public), site
-#    site = Site.find_public_site_by_url "http://localhost:3001/anothersite/cats.html"
-#    assert_equal sites(:alt_public), site
-#  end
-
   def test_should_be_able_to_retrieve_a_sites_pages_with_the_latest_feedback_for_each_page
     site = create_site(:url => 'http://www.google.com')
     assert_difference "Page.count", 3 do
@@ -143,7 +133,7 @@ class SiteTest < ActiveSupport::TestCase
     assert_difference "Comment.count", (site.pages.size * num_comments) do
       site.pages.each do |p|
         num_comments.times do |i| 
-          c = create_private_comment(:page_id => p.id, :content => i.to_s)
+          c = create_comment(:page_id => p.id, :content => i.to_s)
           timestamps[p.id] = c.created_at.to_s if i == num_comments - 1
         end
       end

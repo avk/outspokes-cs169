@@ -4,55 +4,46 @@ one:
   id: 1
   site_id: 1
   url: http://www.msn.com
-  allow_public_comments: false
 
 two:
   id: 2
   site_id: 2
   url: http://www.myspace.com
-  allow_public_comments: false
   
 transactions:
   id: 3
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
   site_id: 3
-  allow_public_comments: true
 
 from_fb:
   id: 4
   url: http://www.facebook.com
   site_id: 4
-  allow_public_comments: false
 
 from_msn:
   id: 5
   url: http://www.msn.com/home
   site_id: 5
-  allow_public_comments: false
+
+another_page:
+  id: 6
+  url: http://localhost:3000
+  site_id: 6
+
+yet_another_page:
+  id: 7
+  url: http://localhost:3001
+  site_id: 7
 
 fb_profile:
   id: 9
   url: http://www.facebook.com/asfdasdfsad
   site_id: 9
-  allow_public_comments: false
-
-public_site:
-  id: 6
-  url: http://localhost:3001/asite
-  site_id: 6
-  allow_public_comments: true
-
-alt_public_site:
-  id: 7
-  url: http://localhost:3001/anothersite
-  site_id: 7
-  allow_public_comments: true
 
 rails_spikes:
   id: 8
   url: http://railspikes.com/2007/3/28/testing-transactions
   site_id: 8
-  allow_public_comments: false
   
 lone:
   id: 666

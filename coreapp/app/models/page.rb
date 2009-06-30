@@ -19,20 +19,12 @@ class Page < ActiveRecord::Base
  
   validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
   validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
-  validates_inclusion_of :allow_public_comments, :in => [true, false] # must be either public or private  
   validates_length_of :invites, :minimum => 1
   
   validate :has_account_xor_site  # TODO: remove has_account_xor_site
   validate :is_child_of_site
-  validate :publicness_matches_site, :if => :site
   validate :page_url_can_not_have_trailing_slashes
   
-  
-  def self.find_public_page_by_url(url)
-    pages = Page.find_all_by_url url
-    pages.reject! { |p| !p.allow_public_comments }
-    return pages.empty? ? nil : pages[0]
-  end
   
   def url=(url)
     if self.url and !self.site_id.blank?
@@ -79,13 +71,6 @@ class Page < ActiveRecord::Base
       unless this_host.match(root_host) or root_host.match(this_host)
         errors.add(:url, "This page's url has a different domain (#{this_host}) than the site's (#{root_host})")
       end
-    end
-  end
-  
-  def publicness_matches_site
-    return if (!site) || site.home_page.blank?
-    unless allow_public_comments == site.public
-      errors.add :allow_public_comments, "Page's privacy must match site"
     end
   end
   
