@@ -14,21 +14,14 @@ class Widget::FeedbacksController < Widget::WidgetController
     comments = []
     page_id = nil
     if @authorized
-      if !@public
-        site = @invite.page.site
-        if page = @invite.page.site.pages.find_by_url(params[:current_page])
-          page_id = page.id
-          comments = get_comments page
-        end
-      else
-        if page = Page.find_public_page_by_url(params[:current_page])
-          page_id = page.id
-          site = page.site
-          comments = page.comments.map { |f| f.json_attributes(nil) }
-        end
+      site = @invite.page.site
+      if page = @invite.page.site.pages.find_by_url(params[:current_page])
+        page_id = page.id
+        comments = get_comments page
       end
     end
 
+    # FIXME: this feels useless, why not use (@)site from Widget::WidgetController#authorize ?
     if site.nil?
       site = "null"
     end
@@ -59,40 +52,19 @@ class Widget::FeedbacksController < Widget::WidgetController
     if @authorized
       name = sanitize(params[:name], false)
       content = sanitize(params[:content], true)
-      public_comment = @commenter.nil?
 
-      page = nil
-      if @public
-        page = Page.find_public_page_by_url(params[:current_page])
-        if page.nil?
-          if @site
-            page = Page.new(:url => params[:current_page], :allow_public_comments => true)
-            @site.pages << page
-            page = nil if !page.valid?
-          end
-        end
-      else
-        # if invite.page.site.blank?
-        #   page = invite.page if invite.page.url == @current_page
-        # else
-        #   page = invite.page.site.pages.find_or_create_by_url @current_page
-        # end
-        page = @invite.page.site.pages.find_or_create_by_url(params[:current_page])
-      end
+      page = @invite.page.site.pages.find_or_create_by_url(params[:current_page])
 
       match = params[:target].match(/\Acomment_(\d+)\z/)
       parent_private = params[:isPrivate] 
 
       if match
-#        logger.debug "MATCHMATCHMATCHMATCH********************************************"
-         parent_id = match[1].to_i
-         parent_private = Comment.find(parent_id).private
-#        puts parent_private
+        parent_id = match[1].to_i
+        parent_private = Comment.find(parent_id).private
       end
 
       comment = Comment.new :commenter => @commenter, :name => name, :content => content,
-                             :target => params[:target], :public => public_comment, 
-                             :private => parent_private
+                             :target => params[:target], :private => parent_private
       page.comments << comment
 
       if params[:parent_id]
@@ -116,7 +88,7 @@ class Widget::FeedbacksController < Widget::WidgetController
     result = {:authorized => @authorized, :admin => @admin,
               :success => success, :feedback => comments}
 
-    if success then push_update_to page end
+    push_update_to page if success
 
     respond_to do |wants|
       wants.html do
@@ -143,16 +115,11 @@ class Widget::FeedbacksController < Widget::WidgetController
       if result[:success] then push_update_to page end
     end
     
-
     respond_to do |format|
       format.html do
           @json_data = result.to_json
           render :action => :new_feedback_for_page
       end
-      # format.js do
-      #   render :json => result,
-      #          :callback => @callback
-      # end
     end
   end
 
@@ -164,7 +131,7 @@ private
     if @admin
       comments = page.comments.map { |f| f.json_attributes(@commenter) }
     elsif
-      fbtemp = []            
+      fbtemp = []
       for fb in page.comments.roots do
         if !fb.private || fb.commenter == @commenter 
           fbtemp += fb.self_and_descendants

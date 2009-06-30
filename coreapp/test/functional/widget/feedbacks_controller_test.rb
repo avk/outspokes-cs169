@@ -308,77 +308,6 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => false
   end
   
-  test "should be able to post public comments" do
-    page = pages(:transactions)
-    content = "HUH THIS SITE IS LAME YO"
-    
-    assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
-           :content => content, :target => "html", :windowname => "true", :format => "html" 
-    end
-    assert_template "new_feedback_for_page"
-    validate_windowname :authorized => true, :admin => false, :success => true
-  end
-  
-  test "can't post public comments without a name" do
-    page = pages(:transactions)
-    content = "HUH THIS SITE IS LAME YO"
-    
-    assert_no_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :current_page => page.url,
-           :content => content, :target => "html", :windowname => "true", :format => "html" 
-    end
-    validate_post_fail
-  end
-
-  test "should not post public comments to pages with public comments disabled" do
-    page = pages(:one)
-    content = "HUH THIS SITE IS LAME YO"
-    
-    assert_no_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :current_page => page.url, :name => "Joe Schmoe",
-           :content => content, :target => "html", :windowname => "true", :format => "html" 
-    end
-    validate_post_fail
-  end
-  
-  test "can post to a new page in a public site" do 
-    page_url = "http://localhost:3001/asite/puppies.html"
-    content = "I like puppies"
-    assert_difference "Page.count" do
-      post :new_feedback_for_page, :current_page => page_url, :name => "Joe Schmoe",
-           :content => content, :target => "html", :windowname => "true", :format => "html" 
-    end
-    assert_template "new_feedback_for_page"
-  end
-  
-  test "can get feedback for public page without url_token" do 
-    page = pages(:transactions)
-    callback = "calljs"
-    assert page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
-    get :feedback_for_page, :current_page => page.url, :callback => callback
-    feedback = page.feedbacks.map { |f| f.json_attributes(nil) }
-
-    validate_json :callback => callback, :authorized => true, :admin => false, :feedback => feedback
-  end
-  
-  test "authorized for feedback from page in public site even if no feedback on page" do 
-    page = pages(:public_site)
-    callback = "calljs"
-    get :feedback_for_page, :current_page => page.url + "lolcats.html", :callback => callback
-    feedback = []
-    validate_json :callback => callback, :authorized => true, :admin => false, :feedback => feedback
-  end
-  
-  test "not authorized for public site with bad url token" do 
-    page = pages(:public_site)
-    callback = "calljs"
-    get :feedback_for_page, :current_page => page.url + "lolcats.html", 
-        :callback => callback, :url_token => "lolcats"
-    feedback = []
-    validate_json :callback => callback, :authorized => false, :admin => false
-  end
-
   test "login flows" do
     commenter = commenters(:one)
     admin = create_account({:email => '1@ex.com', :password => 'test123', :password_confirmation => 'test123'})
@@ -386,12 +315,6 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     site = Site.find(site.id)
     site.save
     page = site.home_page
-    public_site = create_site({:account => admin, :url => "http://www.xkcd.com"})
-    public_page = Page.create({:site_id => public_site.id, :url => "http://www.xkcd.com/blah.html"})
-    public_page.site.public = true
-    public_site = public_page.site
-    public_page.allow_public_comments = true
-    public_page.save!
     create_invite({:commenter => commenter, :page => page})
     create_invite({:commenter => admin, :page => page})
     commenter_url_token = Invite.find_by_commenter_id(commenter.id).url_token
@@ -401,16 +324,6 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     assert_nil site.validation_token
     current_validation_token = site.validation_token
     last_validation_token = nil
-
-    # no url_token, page not public
-    get :feedback_for_page, :current_page => page.url, :callback => callback
-    site.reload
-    validate_json :callback => callback, :authorized => false, :admin => false
-
-    # no url_token, page public
-    get :feedback_for_page, :current_page => public_page.url, :callback => callback
-    public_site.reload
-    validate_json :callback => callback, :authorized => true, :admin => false
 
     # url_token, url_token not valid, commenter url_token
     get :feedback_for_page, :current_page => page.url, :callback => callback,

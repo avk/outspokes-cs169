@@ -5,7 +5,6 @@ class Widget::WidgetController < ApplicationController
   def authorize
     @authorized = false
     @admin = false
-    @public = false
     @invite = nil
     @commenter = nil
     @site = nil
@@ -15,9 +14,10 @@ class Widget::WidgetController < ApplicationController
 
       site = @invite.page.site
       return if site.nil?
+      
       @authorized = true
-      @public = site.public
       @commenter = @invite.commenter
+      # OPTIMIZE: we only care about the first visit, not any subsequent ones
       @invite.last_visited_at = Time.now
       @invite.save!
 
@@ -37,18 +37,6 @@ class Widget::WidgetController < ApplicationController
         @authorized = false
         return
       else
-        return
-      end
-    else
-      @site = Site.find_public_site_by_url(params[:current_page])
-      if @site.nil?
-        if Page.find_public_page_by_url(params[:current_page])
-          @public = true
-          @authorized = true
-        end
-      else
-        @public = true
-        @authorized = true
         return
       end
     end
