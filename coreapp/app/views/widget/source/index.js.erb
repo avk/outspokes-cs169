@@ -23,6 +23,7 @@
   <%= 'fb = ' + @fb_hash + ';' %>
 <%- end -%>
 
+<%# FIXME: getting a recursion error and a permission denied for Location.toString -%>
 <%- if RAILS_ENV == "production" -%>
-  <%= render :partial => 'layouts/analytics', :locals => { :var_prefix => @fb_hash } %>
+  <%# render :partial => 'layouts/analytics', :locals => { :var_prefix => @fb_hash } %>
 <%- end -%>
