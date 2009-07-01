@@ -1,0 +1,5 @@
+test:
+  adapter: mysql
+  username: integrity
+  password: )5';8>(92
+  database: feedback_test
