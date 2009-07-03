@@ -37,11 +37,6 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
-  def test_should_default_preference_notification_delivery_to_all
-    u = create_account
-    assert_equal 'all', u.preferred_notification_delivery
-  end
-
   def test_should_not_allow_mass_assignment_outside_of_white_list
     u = create_account
     assert_no_difference 'u.crypted_password.size' do

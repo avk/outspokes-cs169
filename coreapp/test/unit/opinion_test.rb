@@ -8,6 +8,12 @@ class OpinionTest < ActiveSupport::TestCase
       assert !opinion.new_record?, "#{opinion.errors.full_messages.to_sentence}"
     end
   end
+
+  test "should put a notification after save" do
+    assert_difference 'Notification.count' do
+      create_opinion
+    end
+  end
   
   test 'should have a feedback' do
     assert_no_difference "Opinion.count" do

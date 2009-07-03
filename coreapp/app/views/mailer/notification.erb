@@ -1,0 +1,13 @@
+<h3><%= link_to(@notification.site.url, @notification.site.url) %></h3>
+
+<% unless @notification.feedbacks.empty? %>
+  <p>
+    <%= @notification.feedbacks.size %> new feedbacks.
+  </p><br/>
+<% end %>
+
+<% unless @notification.opinions.empty? %>
+  <p>
+    <%= @notification.opinions.size %> new opinions.
+  </p><br/>
+<% end %>
