@@ -8,6 +8,7 @@ class Widget::SourceController < Widget::WidgetController
       @ordered_files = %w(
         pre.js
         fb_hash.js.erb
+        fb.json.js
         fb.jQuery.js
         fb.Common.js
         fb.Interface.js
