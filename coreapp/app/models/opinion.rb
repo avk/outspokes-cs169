@@ -12,6 +12,8 @@ class Opinion < ActiveRecord::Base
   validates_uniqueness_of :feedback_id, :scope => :commenter_id
   
   validates_inclusion_of :agreed, :in => [ true, false ]
+
+  after_save :deliver_notification
   
 protected
 
@@ -22,6 +24,11 @@ protected
         errors.add_to_base "You cannot agree or disagree with your own feedback."
       end
     end
+  end
+
+  def deliver_notification
+    Notification.put(self)
+    true    
   end
   
 end

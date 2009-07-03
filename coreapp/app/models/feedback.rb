@@ -166,10 +166,7 @@ class Feedback < ActiveRecord::Base
   end
 
   def deliver_notification
-    # TODO: remove public pages
-    if !public && page.site.account.preferred_notification_delivery == 'all'
-      Mailer.deliver_feedback_notification(self)
-    end
+    Notification.put(self)
     true
   end
   

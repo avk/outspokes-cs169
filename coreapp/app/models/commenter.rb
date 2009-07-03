@@ -7,9 +7,6 @@ class Commenter < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :user_styles, :dependent => :destroy
 
-  # pluginaweek/preferences
-  preference :notification_delivery, :string, :default => 'all'
-
   #stolen from the restful_authentication plugin
   @@email_name_regex  = '[\w\.%\+\-]+'.freeze
   @@domain_head_regex = '(?:[A-Z0-9\-]+\.)+'.freeze
@@ -20,6 +17,9 @@ class Commenter < ActiveRecord::Base
   validates_presence_of :email, :allow_blank => false
   validates_format_of :email, :with => @@email_regex  
   validates_uniqueness_of :email
+
+  # pluginaweek/preferences
+  preference :deliver_notifications, :default => true
 
   def self.parse_email_addresses(emails)
     separated = emails.split(',')

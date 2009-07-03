@@ -190,4 +190,9 @@ class CommenterTest < ActiveSupport::TestCase
     commenter = commenters(:aaron)
     assert [] == commenter.feedbacks_for_site(-987234)
   end
+
+  test 'should default preference deliver notification to true' do
+    commenter = create_commenter
+    assert commenter.preferred_deliver_notifications
+  end
 end
