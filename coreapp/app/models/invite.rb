@@ -14,7 +14,7 @@ class Invite < ActiveRecord::Base
   before_save :generate_url_token
   
   def inviter
-    self.page.site.account
+    self.page.account
   end
   
   private

@@ -164,7 +164,7 @@ class Feedback < ActiveRecord::Base
   end
 
   def deliver_notification
-    if page.site.account.preferred_notification_delivery == 'all'
+    if page.account.preferred_notification_delivery == 'all'
       Mailer.deliver_feedback_notification(self)
     end
     true

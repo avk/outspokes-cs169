@@ -32,7 +32,7 @@ class Mailer < ActionMailer::Base
     setup_email
     feedbacks = [ feedbacks ] unless feedbacks.is_a? Array
     
-    account = feedbacks.first.page.site.account
+    account = feedbacks.first.page.account
     recipients   account.email
     subject      "You have new feedback on your site"
     body         :feedbacks => feedbacks

@@ -417,7 +417,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   def test_dont_return_site_id_if_not_admin
     invite = invites(:two)
     page = invite.page
-    assert page.site.account != invite.commenter
+    assert page.account != invite.commenter
     get :feedback_for_page, :current_page => page.url, :callback => "callback", :url_token => invite.url_token
     json = get_json("callback")
     assert !json[:site_id], "site_id should not be present in the returned JSON, received #{json[:site_id].inspect}"
@@ -426,7 +426,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   def test_should_indicate_one_admin_account_commenter_if_none_have_been_invited
     invite = invites(:aaron_admin)
     assert invite.page.site.commenters.length == 1, "The only commenter on this site should be the admin"
-    assert invite.page.site.account == invite.commenter, "The commenter of the invite should be the admin"
+    assert invite.page.account == invite.commenter, "The commenter of the invite should be the admin"
 
     get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "aaron@example.com", :password => "monkey"

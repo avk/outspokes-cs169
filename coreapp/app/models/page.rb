@@ -1,7 +1,6 @@
 class Page < ActiveRecord::Base
 
   belongs_to :site
-  # TODO: delegate account do site's account
 
   has_many :invites, :dependent => :destroy, :validate => false
   has_many :commenters, :through => :invites
@@ -10,6 +9,7 @@ class Page < ActiveRecord::Base
   has_many :user_styles, :dependent => :destroy
 
   delegate :admin_url, :to => :site
+  delegate :account, :to => :site
 
   before_validation :create_invite_for_account
   

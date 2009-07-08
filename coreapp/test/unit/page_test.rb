@@ -125,5 +125,10 @@ class PageTest < ActiveSupport::TestCase
       end
     end
   end
+  
+  test 'should delegate it\'s account to it\'s site' do
+    page = Page.first
+    assert page.account == page.site.account
+  end
 
 end

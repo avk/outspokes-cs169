@@ -19,7 +19,7 @@ class MailerTest < ActionMailer::TestCase
     body = mail.body
     url = invite.page.url + '?url_token=' + invite.url_token
     name = invite.page.site.name
-    account_email = invite.page.site.account.email
+    account_email = invite.inviter.email
 
     assert body.scan(account_email.to_s + " has invited you to")
     assert body.scan("give feedback on " + name.to_s)
