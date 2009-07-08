@@ -34,6 +34,7 @@ class Widget::WidgetController < ApplicationController
             return
           end
         end
+        # TODO: figure out if the line below is necessary
         @authorized = false
         return
       else

@@ -12,8 +12,8 @@ class Mailer < ActionMailer::Base
     page = invite.page
     site = page.site
 
-    name = (!site.nil?) ? site.name : URI.parse(page.url).host
-    account_email = (!site.nil?) ? site.account.email : page.account.email
+    name = site.name
+    account_email = site.account.email
     subject      account_email + " has invited you to give feedback via Outspokes"
     body         :url => url, :name => name, :account_email => account_email 
   end

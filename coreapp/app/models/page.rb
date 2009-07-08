@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
 
   belongs_to :site
-  belongs_to :account  # TODO: delegate account do site's account
+  # TODO: delegate account do site's account
 
   has_many :invites, :dependent => :destroy, :validate => false
   has_many :commenters, :through => :invites
@@ -17,11 +17,9 @@ class Page < ActiveRecord::Base
   validates_presence_of :url
   validate :validate_format_of_url
  
-  validates_uniqueness_of :url, :scope => :account_id, :unless => Proc.new { |page| page.account_id.blank? }
   validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
   validates_length_of :invites, :minimum => 1
   
-  validate :has_account_xor_site  # TODO: remove has_account_xor_site
   validate :is_child_of_site
   validate :page_url_can_not_have_trailing_slashes
   
@@ -34,7 +32,7 @@ class Page < ActiveRecord::Base
     end
   end
 
-  protected
+protected
   def create_invite_for_account
     if invites.empty?
       self.invites.build(:commenter => site.account)
@@ -53,17 +51,10 @@ class Page < ActiveRecord::Base
     end    
   end
 
-  # A page can (and must!) have a site or an account, but not both
-  def has_account_xor_site
-    unless (account.blank? ^ site.blank?)
-      errors.add_to_base 'Either an account or a site is required, but not both'
-    end
-  end
-  
   # Verify that this url has the same domain as the associated Site's home_page's url
   def is_child_of_site
     return true if url.nil?
-    return true if site.nil? || site.home_page === self # I am the homepage
+    return true if site.home_page === self # I am the homepage
 
     if errors.on(:url).blank?
       this_host = URI.parse(url).host
