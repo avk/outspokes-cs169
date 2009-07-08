@@ -57,11 +57,6 @@ class Test::Unit::TestCase
   
   # Pages
   
-#  def valid_options_for_page_account
-#    valid_acct = commenters(:quentin)
-#    { :url => 'http://runthisby.us', :account => valid_acct }
-#  end
-  
   def valid_options_for_page_site
     valid_site = sites(:linkedin)
     { :url => valid_site.url + "/index.html", :site => valid_site }

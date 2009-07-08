@@ -59,16 +59,6 @@ class PageTest < ActiveSupport::TestCase
     end
   end
 
-#  TODO: remove
-#  test 'should have a unique URL for a given account' do
-#    assert_difference "Page.count", 1 do
-#      page = create_page(valid_options_for_page_account)
-#      assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
-#      page = create_page(valid_options_for_page_account)
-#      assert page.errors.on(:url), "allowing one account to have multiple pages with the same URL"
-#    end
-#  end
-
   test 'should have a unique URL for a given site' do
     assert_difference "Page.count", 1 do
       page = Page.create(valid_options_for_page_site)
