@@ -48,7 +48,7 @@
   <%- # @fb_hash is our namespacing variable. It is a function that
       # kicks off the initialization when called. -%>
   
-  <%= @fb_hash %> = <%= render :file => "#{RAILS_ROOT}/app/js/fb_hash.js.erb" -%>
+  <%= render :file => "#{RAILS_ROOT}/app/js/fb_hash.js.erb" -%>
   
   <%- # decorate @fb_hash with behavior described in js files -%>
   <% @ordered_files.each do |file| %>
