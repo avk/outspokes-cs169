@@ -6,8 +6,6 @@ class Widget::SourceController < Widget::WidgetController
       @site = Site.find(params[:id])
       @fb_hash = "fb_" + generate_hash
       @ordered_files = %w(
-        pre.js
-        fb_hash.js.erb
         fb.json.js
         fb.jQuery.js
         fb.Common.js

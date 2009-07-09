@@ -1,5 +1,5 @@
 function() {
-  
+
   return (function(fb){
     var $ = fb.$;
     if (fb.env && fb.env.init) {
@@ -221,3 +221,5 @@ function() {
     
     fb.Comment.get(login_callback);
     return;
+  })(<%= @fb_hash %>);
+};
