@@ -1,0 +1,9 @@
+<% content_for(:document_ready) do %>
+  <%= render_fb_hash(@fb_hash) %>
+  (function(fb) {
+    <%= render :file => @file %>
+  })(<%= @fb_hash %>);
+  test("fb_hash can parse json", function() {
+    ok(<%= @fb_hash %>.JSON.parse, "parse available");
+  });
+<% end %>
