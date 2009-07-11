@@ -286,7 +286,7 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a class="hide_when_tab_unselected" title="Collapse all comments"></a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link = $('<a class="hide_when_tab_unselected" title="Collapse all comments">&nbsp;</a>').attr('id',this.dom.widget.collapse);
     this.nav.elements.list[0].append(this.collapse_link);
     this.collapse_link.click(function(e) {
         fb.i.comment.collapse_all();
@@ -297,7 +297,7 @@
         }
     })
 
-    this.uncollapse_link = $('<a class="hide_when_tab_unselected" title="Uncollapse all comments"></a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link = $('<a class="hide_when_tab_unselected" title="Uncollapse all comments">&nbsp;</a>').attr('id',this.dom.widget.uncollapse);
     this.nav.elements.list[0].append(this.uncollapse_link);
     this.uncollapse_link.click(function(e) {
         fb.i.comment.uncollapse_all();
