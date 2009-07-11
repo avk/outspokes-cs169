@@ -6,7 +6,7 @@ task :cron => :environment do
   end
 
   puts "Running hourly tasks..."
-  Notification.pending.each do |notification|
+  (Notification.pending + Notification.errored).each do |notification|
     notification.deliver!
   end
 end

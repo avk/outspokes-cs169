@@ -10,15 +10,9 @@ class CreateNotifications < ActiveRecord::Migration
       t.references :feedback
       t.references :notification
     end
-
-    create_table :notifications_opinions, :id => false do |t|
-      t.references :opinion
-      t.references :notification
-    end
   end
 
   def self.down
-    drop_table :opinions_notifications
     drop_table :feedbacks_notifications
     drop_table :notifications
   end
