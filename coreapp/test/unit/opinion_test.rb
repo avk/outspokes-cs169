@@ -9,12 +9,6 @@ class OpinionTest < ActiveSupport::TestCase
     end
   end
 
-  test "should put a notification after save" do
-    assert_difference 'Notification.count' do
-      create_opinion
-    end
-  end
-  
   test 'should have a feedback' do
     assert_no_difference "Opinion.count" do
       opinion = create_opinion(:feedback => nil)

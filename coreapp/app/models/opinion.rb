@@ -13,9 +13,7 @@ class Opinion < ActiveRecord::Base
   
   validates_inclusion_of :agreed, :in => [ true, false ]
 
-  after_save :deliver_notification
-  
-protected
+  protected
 
   def validate
     if commenter_id
@@ -26,9 +24,4 @@ protected
     end
   end
 
-  def deliver_notification
-    Notification.put(self)
-    true    
-  end
-  
 end

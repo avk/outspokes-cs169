@@ -19,12 +19,6 @@ class NotificationTest < ActiveSupport::TestCase
     assert_equal 'pending', create_notification.aasm_state
   end
 
-  test "put should raise error when argument is not feedback or opinion" do
-    assert_raises ArgumentError do
-      Notification.put("BAD_ARGUMENT")
-    end
-  end
-
   test "put should find an existing pending notification for a site" do
     notification = create_notification
     site = notification.site
@@ -39,20 +33,6 @@ class NotificationTest < ActiveSupport::TestCase
     assert_difference "Notification.count", 1 do
       Notification.put(feedbacks(:one))
       assert_equal 1, Notification.first.feedbacks.size
-    end
-  end
-
-  test "put should add feedback" do
-    notification = create_notification
-    assert_difference "notification.feedbacks.size", 1 do
-      notification.put(feedbacks(:one))
-    end
-  end
-
-  test "put should add opinion" do
-    notification = create_notification
-    assert_difference "notification.opinions.size", 1 do
-      notification.put(opinions(:popular1_agreed_1))
     end
   end
 
