@@ -383,7 +383,7 @@
         // toggle my replies
         var p = $(this).parent();
         var parent = $(this).parent().parent();
-        if (parent.attr("class") === "thread") {
+        if (parent.hasClass("thread")) {
           var replies = "#" + fb.i.comment.dom.reply_list(c.feedback_id);
           parent.find(replies).find('.cmt_bar').each(function() {
             // parent collapsed, i'm not
