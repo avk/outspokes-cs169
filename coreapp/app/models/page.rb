@@ -32,6 +32,12 @@ class Page < ActiveRecord::Base
     end
   end
 
+  # converts "http://www.apple.com/itunes/" to "http://www.apple.com"
+  def self.domainize(url)
+    base_domain = /^(https?:\/\/(www\.)?.*\.\w{2,})/i
+    (url.match base_domain) ? $1 : nil
+  end
+
 protected
   def create_invite_for_account
     if invites.empty?

@@ -131,4 +131,29 @@ class PageTest < ActiveSupport::TestCase
     assert page.account == page.site.account
   end
 
+  test "should be able to convert a URL string with extra parameters to it's base domain" do
+    url = "http://www.pt.com/stories/9342"
+    assert Page.domainize(url) == "http://www.pt.com"
+  end
+    
+  test "should be able to convert a URL string without 'www' to it's base domain" do
+    url = "http://ruby.com/"
+    assert Page.domainize(url) == "http://ruby.com"
+  end
+  
+  test "should be able to convert a URL string with 'www' to it's base domain" do
+    url = "http://www.rails.com"
+    assert Page.domainize(url) == "http://www.rails.com"
+  end
+    
+  test "should be able to convert an https URL string to it's base domain" do
+    url = "https://www.java.com"
+    assert Page.domainize(url) == "https://www.java.com"
+  end
+    
+  test "should be able to convert a URL string with a non-.com TLD to it's base domain" do
+    url = "http://cpp.gd"
+    assert Page.domainize(url) == "http://cpp.gd"
+  end
+
 end
