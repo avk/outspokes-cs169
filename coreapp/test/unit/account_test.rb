@@ -125,4 +125,13 @@ class AccountTest < ActiveSupport::TestCase
     
   end
 
+  def test_should_be_able_to_identify_sites_that_belong_to_it_by_url
+    account = commenters(:aaron)
+    site = account.sites.first
+    
+    assert account.your_site? site.url
+    assert ! account.your_site?("http://nowayisthisactuallyaURLofyours.com/")
+  end
+  
+
 end

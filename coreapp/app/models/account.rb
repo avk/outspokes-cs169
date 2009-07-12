@@ -43,6 +43,30 @@ class Account < Commenter
     write_attribute :email, (value ? value.downcase : nil)
   end
 
+  def your_site?(url_to_test)
+    mine = false
+    urls = sites.map(&:url)
+    
+    begin
+      # strip down to domain (e.g. www.example.com)
+      urls.map! { |url| URI.parse(url).host }
+      host_to_test = URI.parse(url_to_test).host
+      
+      urls.each do |url|
+        # strip out www.
+        www = /^www\./i
+        url.sub! www, ''
+        host_to_test.sub! www, ''
+        
+        mine = true if url.match /^#{host_to_test}$/i
+      end
+    rescue URI::InvalidURIError
+    end    
+    
+    return mine
+  end
+  
+
 
   protected
     
