@@ -89,6 +89,15 @@ class AccountsControllerTest < ActionController::TestCase
     assert commenters(:quentin).preferred_notification_delivery == new_preferred_notification
   end
 
+  def test_should_update_account_preferred_timezone
+    login_as :quentin
+    new_preferred_timezone = 'TEST_DATA'
+    put :update, :id => commenters(:quentin).id, :account => {
+      :preferred_timezone => new_preferred_timezone
+    }
+    assert commenters(:quentin).preferred_timezone == new_preferred_timezone
+  end
+
   def test_should_not_update_account_not_logged_in
     assert_no_difference 'Account.count' do
       put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',

@@ -16,6 +16,9 @@
     = label_tag 'password_confirmation', 'Confirm Password', :class => 'wide_left'
     = f.password_field :password_confirmation
   %p
+    = label_tag 'preferred_timezone', 'Timezone', :class => 'wide_left'
+    = f.time_zone_select :preferred_timezone, ActiveSupport::TimeZone.us_zones
+  %p
     = label_tag 'preferred_notification_delivery', 'Notifications', :class => 'wide_left'
     = f.select :preferred_notification_delivery, ['all', 'digest', 'none']
   %div{:style=>"clear:both;"}

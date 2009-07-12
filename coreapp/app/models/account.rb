@@ -20,7 +20,7 @@ class Account < Commenter
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible  :email, :name, :password, :password_confirmation, :type,
-    :preferred_notification_delivery
+    :preferred_notification_delivery, :preferred_timezone
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #

@@ -8,10 +8,18 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  # test "should be able to log in" do
-  #     login_as(:quentin)
-  #     get :dashboard, :controller => :accounts
-  #     assert_response :success
-  #     assert assigns(:sites), commenters(:quentin).sites
-  #   end
+  test "should set timezone if account is logged in" do
+    login_as :quentin
+
+    assert_equal 'UTC', Time.zone
+    get :index
+    assert_equal 'Pacific Time (US & Canada)', Time.zone
+  end
+
+  test "should not set timezone if not logged in" do
+    assert_equal 'UTC', Time.zone
+    get :index
+    assert_equal nil, Time.zone
+  end
+
 end

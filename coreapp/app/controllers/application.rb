@@ -92,5 +92,10 @@ class ApplicationController < ActionController::Base
     value.gsub!(/[\r\n]/, replace_val)
     return value
   end
-  
+
+  protected
+  def set_time_zone
+    Time.zone = current_account.preferred_timezone if logged_in?
+  end
+
 end

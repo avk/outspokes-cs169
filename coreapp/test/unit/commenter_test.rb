@@ -8,6 +8,10 @@ class CommenterTest < ActiveSupport::TestCase
 	  assert !commenter.new_record?, "#{commenter.errors.full_messages.to_sentence}"
     end
   end
+
+  test "should default timezone to PST" do
+    assert_equal 'Pacific Time (US & Canada)', Commenter.new.preferred_timezone
+  end 
   
   test "has an email address" do
     assert_no_difference 'Commenter.count' do
