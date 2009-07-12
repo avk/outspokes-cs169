@@ -13,6 +13,19 @@ class CommentTest < ActiveSupport::TestCase
       assert !feedback.new_record?, "#{feedback.errors.full_messages.to_sentence}"
     end
   end
+
+  test "it should create a notification" do
+    assert_difference 'Notification.count' do
+      create_comment
+    end
+  end
+
+  test "it should not create a notification if commenter is account holder" do
+    page = pages(:one)
+    assert_no_difference 'Notification.count' do
+      create_comment(:page => page, :commenter => page.account)
+    end
+  end
   
   test "should be associated with a commenter" do
     feedback = create_comment(:commenter => nil)

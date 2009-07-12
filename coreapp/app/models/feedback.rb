@@ -164,7 +164,7 @@ class Feedback < ActiveRecord::Base
   end
 
   def deliver_notification
-    Notification.put(self)
+    Notification.put(self) unless commenter == page.account
     true
   end
   
