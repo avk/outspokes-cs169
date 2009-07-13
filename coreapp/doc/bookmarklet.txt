@@ -1,0 +1,5 @@
+# Assumes you're logged into Outspokes (will prompt otherwise)
+# Assumes you're running on localhost:3000
+# Make a new bookmark, make sure it shows up in your toolbar, and copy & paste the following into it's location
+
+javascript:(function(){var%20newScript=document.createElement('script');newScript.type='text/javascript';newScript.src='http://localhost:3000/widget/bookmarklet.js';document.getElementsByTagName("head")[0].appendChild(newScript);})();
