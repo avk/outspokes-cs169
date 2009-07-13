@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   ### widget
   map.namespace :widget do |widget|
     widget.resources :user_styles
+    widget.resources :bookmarklet
   end
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }

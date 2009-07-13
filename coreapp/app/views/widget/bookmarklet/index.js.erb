@@ -1,0 +1,6 @@
+// alert("sup from the 'Spokes");
+
+document.location.hash = "url_token=<%= @url_token %>&admin=true";
+var newScript = document.createElement('script');
+newScript.type = 'text/javascript'; newScript.src = 'http://localhost:3000/widget/<%= @site.id %>';
+document.getElementsByTagName("head")[0].appendChild(newScript);

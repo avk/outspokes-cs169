@@ -9,6 +9,11 @@ two:
   id: 2
   site_id: 2
   url: http://www.myspace.com
+
+myspace_tour:
+  id: 38
+  site_id: 2
+  url: http://www.myspace.com/index.cfm?fuseaction=userTour.home
   
 transactions:
   id: 3
