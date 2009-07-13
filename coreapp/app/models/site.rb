@@ -70,8 +70,12 @@ class Site < ActiveRecord::Base
     home_page.commenters
   end
 
+  def admin_url_token
+    home_page.invites.find_by_commenter_id(account).url_token
+  end
+
   def admin_url
-    home_page.url.sub(/\/$/i, '') + '#url_token=' + home_page.invites.find_by_commenter_id(account).url_token + '&admin=true'
+    home_page.url.sub(/\/$/i, '') + '#url_token=' + admin_url_token + '&admin=true'
   end
 
   def pages_with_latest_feedback
