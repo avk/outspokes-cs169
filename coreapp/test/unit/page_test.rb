@@ -133,27 +133,44 @@ class PageTest < ActiveSupport::TestCase
 
   test "should be able to convert a URL string with extra parameters to it's base domain" do
     url = "http://www.pt.com/stories/9342"
-    assert Page.domainize(url) == "http://www.pt.com"
+    got = Page.domainize(url) 
+    expected = "http://www.pt.com"
+    assert got == expected, "got #{got} but expected #{expected}"
   end
     
   test "should be able to convert a URL string without 'www' to it's base domain" do
     url = "http://ruby.com/"
-    assert Page.domainize(url) == "http://ruby.com"
+    got = Page.domainize(url) 
+    expected = "http://ruby.com"
+    assert got == expected, "got #{got} but expected #{expected}"
   end
   
   test "should be able to convert a URL string with 'www' to it's base domain" do
     url = "http://www.rails.com"
-    assert Page.domainize(url) == "http://www.rails.com"
+    got = Page.domainize(url)
+    expected = "http://www.rails.com"
+    assert got == expected, "got #{got} but expected #{expected}"
   end
     
   test "should be able to convert an https URL string to it's base domain" do
     url = "https://www.java.com"
-    assert Page.domainize(url) == "https://www.java.com"
+    got = Page.domainize(url) 
+    expected = "https://www.java.com"
+    assert got == expected, "got #{got} but expected #{expected}"
   end
     
   test "should be able to convert a URL string with a non-.com TLD to it's base domain" do
     url = "http://cpp.gd"
-    assert Page.domainize(url) == "http://cpp.gd"
+    got = Page.domainize(url)
+    expected = "http://cpp.gd"
+    assert got == expected, "got #{got} but expected #{expected}"
+  end
+  
+  test "should be able to convert a URL string pointing to a .html document to it's base domain" do
+    url = "http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html"
+    got = Page.domainize(url)
+    expected = "http://api.rubyonrails.org"
+    assert got == expected, "got #{got} but expected #{expected}"
   end
 
 end

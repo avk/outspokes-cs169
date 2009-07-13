@@ -34,7 +34,7 @@ class Page < ActiveRecord::Base
 
   # converts "http://www.apple.com/itunes/" to "http://www.apple.com"
   def self.domainize(url)
-    base_domain = /^(https?:\/\/(www\.)?.*\.\w{2,})/i
+    base_domain = /^(https?:\/\/[\w\d\-\.]*)/i
     (url.match base_domain) ? $1 : nil
   end
 
