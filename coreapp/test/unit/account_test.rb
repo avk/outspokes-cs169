@@ -133,5 +133,11 @@ class AccountTest < ActiveSupport::TestCase
     assert ! account.your_site?("http://nowayisthisactuallyaURLofyours.com/")
   end
   
+  def test_should_be_able_to_find_a_site_by_its_domain
+    account = commenters(:aaron)
+    site = account.sites.first
+    
+    assert account.find_site_by_url(site.url) == site
+  end
 
 end
