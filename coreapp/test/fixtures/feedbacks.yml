@@ -196,3 +196,11 @@ notification:
   content: testing notifications
   target: html
   type: Comment
+
+user_style1:
+  page_id: 5
+  commenter_id: 2
+  content: testing notifications
+  target: html
+  type: UserStyle
+  changeset: foobar

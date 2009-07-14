@@ -28,7 +28,7 @@ class Mailer < ActionMailer::Base
 
   def notification(to_users, notification)
     recipients   to_users.map(&:email)
-    subject      "Recent feedbacks and opinions to your site"
+    subject      "Recent feedback left on your site"
     body         :notification => notification
   end
 

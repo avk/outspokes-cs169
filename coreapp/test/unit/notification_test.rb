@@ -44,6 +44,15 @@ class NotificationTest < ActiveSupport::TestCase
     assert_equal 'delivered', notification.aasm_state
   end
 
+  test "feedbacks_by_page should sort feedbacks by page, and feedback type" do
+    comment = feedbacks(:notification)
+    user_style = feedbacks(:user_style1)
+
+    notification = create_notification(:feedbacks => [comment, user_style])
+    assert [ comment ], notification.feedbacks_by_page[comment.page][:comments]
+    assert [ user_style ], notification.feedbacks_by_page[user_style.page][:user_styles]
+  end
+
   # don't know how to simulate an error in Test::Unit
   # test "deliver! should go to errored state on error"
 end

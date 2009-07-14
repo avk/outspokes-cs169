@@ -1,7 +1,16 @@
 <h3><%= link_to(@notification.site.url, @notification.site.url) %></h3>
 
-<% unless @notification.feedbacks.empty? %>
-  <p>
-    <%= @notification.feedbacks.size %> new feedbacks.
-  </p><br/>
+<% @notification.feedbacks_by_page.each_pair do |page, feedbacks| %>
+  <h4><%= link_to(page.url, page.admin_url) %></h4>
+  <ul>
+    <li><%= pluralize feedbacks[:comments].size, 'new comment' %></li>
+    <li><%= pluralize feedbacks[:user_styles].size, 'new design' %></li>
+  </ul>
+  <br/>
 <% end %>
+
+<p>
+  To unsubscribe from notifications, <%= link_to('click here.',
+  edit_account_url(@notification.site.account)) %>
+</p>
+<br/>

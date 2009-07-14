@@ -7,7 +7,7 @@ class VerifyFixturesTest < ActionController::IntegrationTest
     classes = [Commenter, Feedback, Invite, Page, Site, Notification]
     classes.each do |cls|
       cls.find(:all).each do |fixture|
-        assert fixture.valid?, "The object #{fixture.inspect} is invalid. Errors: #{fixture.errors.inspect}"
+        assert fixture.valid?, "The object #{fixture.inspect} is invalid. Errors: #{fixture.errors.full_messages.to_sentence}"
       end
     end
   end

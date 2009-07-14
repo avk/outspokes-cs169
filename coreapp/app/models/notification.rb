@@ -9,7 +9,7 @@ class Notification < ActiveRecord::Base
   include AASM
 
   belongs_to :site
-  has_and_belongs_to_many :feedbacks
+  has_and_belongs_to_many :feedbacks, :include => [ :commenter, :page ]
 
   validates_presence_of :site
 
@@ -35,6 +35,34 @@ class Notification < ActiveRecord::Base
     notification.feedbacks << feedback
     notification.save
     notification
+  end
+
+  # returns a hash keyed by page objects, and value hash keyed by
+  # :comments, and :user_styles
+  #
+  #  pageObj => {
+  #   :comments    => [ comment1,...,commentN ],
+  #   :user_styles => [ style1,...,styleN ]
+  #  }
+  def feedbacks_by_page
+    returning({}) do |h|
+      feedbacks.each do |feedback|
+        h[feedback.page] ||= { :comments => [], :user_styles => [] }
+        h[feedback.page][feedback.type.underscore.pluralize.to_sym] << feedback
+      end
+    end
+  end
+
+  def pages
+    feedbacks.map(&:page).flatten.uniq
+  end
+
+  def comments
+    feedbacks.select { |f| f.is_a? Comment }
+  end
+
+  def user_styles
+    feedbacks.select { |f| f.is_a? UserStyle }
   end
 
   protected
