@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :widget do |widget|
     widget.resources :user_styles
   end
+  map.widget '/widget/:id.js', :controller => 'widget/source', :action => 'index'
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
