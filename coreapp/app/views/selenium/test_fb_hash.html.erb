@@ -1,5 +1,5 @@
 <% content_for(:document_ready) do %>
-  <%= render :file => @file %>
+  <%= render_fb_hash(@fb_hash) %>
   test("fb_hash successfully defined", function() {
     ok(<%= @fb_hash %>, "all pass");
   });

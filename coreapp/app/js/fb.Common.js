@@ -92,22 +92,6 @@
   
   ///// FOLLOWING ARE HELPER STATE FUNCTIONS THAT USE fb.cookie ////
   
-  // Really crappy json stringifier for basic key-value relationships
-  fb.make_json = function(object) {
-    if (typeof object == 'string') {
-      return '"' + object + '"';
-    } else if (typeof object == 'number') {
-      return object.toString();
-    } else {
-      var output = "{";
-      for (var key in object) {
-        output += '"' + key + '"' + ': ' + fb.make_json(object[key]) + ', ';
-      }
-      output += "}";
-      return output;
-    }
-  };
-  
   // Saves some current application state key in the application state cookie
   fb.save_state = function(key, value) {
     var state;
@@ -117,7 +101,7 @@
       state = {};
     }
     state[key] = value;
-    fb.cookie("outspokes_widget_state", fb.make_json(state));
+    fb.cookie("outspokes_widget_state", fb.JSON.stringify(state));
   };
   
   // Returns the state property for key as saved via save_state
