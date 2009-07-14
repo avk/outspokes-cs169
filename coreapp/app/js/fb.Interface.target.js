@@ -17,7 +17,7 @@
     }; // if changed, also change in clearAll()
     this.default_target = null;
     
-    // returns true if there have been any edits and false otherwise
+    // returns true if there have been any designs and false otherwise
     this.changes_to_targets = function(cares_about_new_targets) {
       if (typeof cares_about_new_targets === "undefined") {
         cares_about_new_targets = false;
@@ -27,7 +27,7 @@
         changes = true;
       } else {
         $.each(fb.i.target.all, function(selector, target) {
-          if (fb.getProperties(target.new_styles).length > 0) { // target has edits
+          if (fb.getProperties(target.new_styles).length > 0) { // target has designs
             changes = true;
             return false;
           }
@@ -60,14 +60,14 @@
       }
       return false;
     });
-    //var save_targets = $('<a>Save</a>').attr('id', 'outspokes_save_edit');
-    var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_edit');
+    //var save_targets = $('<a>Save</a>').attr('id', 'outspokes_save_design');
+    var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_design');
     save_targets.click(function(e) {
       if (fb.i.target.changes_to_targets()) {
         fb.UserStyle.post(fb.i.target.all);
         fb.i.target.startOver();
-        fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
-        fb.i.user_style.new_edit_is_current = false;
+        fb.i.user_style.slide(fb.i.user_style.new_design_view, fb.i.user_style.designs_view);
+        fb.i.user_style.new_design_is_current = false;
       } else {
         alert("You must make some changes before saving.");
       }
@@ -93,7 +93,7 @@
       });
       
       if (this.target_list.find('li').length > 0) {
-        var delete_target = $('<a>x</a>').attr('id', 'outspokes_delete_style_edit');
+        var delete_target = $('<a>x</a>').attr('id', 'outspokes_delete_style_design');
         delete_target.click(function(e) {
           fb.i.target.remove( $(this).parent('li').attr('title') );
         });

@@ -17,7 +17,7 @@
         header  : 'topbar',
         headerLeft : 'topbarLeft',
         content : 'widget_content',
-        edits : 'widget_edits',
+        designs : 'widget_designs',
         help : 'help',
         logout: 'logout',
         help_content: 'help_content',
@@ -149,7 +149,7 @@
         // same order as list of elements
         labels : [
           'Comment',
-          'Edit'
+          'Design'
         ],
         // the number of feebdacks under this navigation element
         // same order as list of elements
@@ -162,7 +162,7 @@
         // same order as list of elements
         content : [
           "widget_content",
-          "edits"
+          "designs"
         ],
         // triggered when a navigation element is clicked,
         // same order as list of elements
@@ -338,7 +338,7 @@
         var answer = confirm("Are you sure you want to log out? To give more feedback, bookmark this page or click the link in your invite email.");
       }
       if (answer){
-        fb.i.user_style.unapply_current_edit();
+        fb.i.user_style.unapply_current_design();
         fb.i.target.startOver();
         fb.cookie('outspokes_widget_state', null);  
         fb.cookie('fb_hash_url_token', null);
@@ -484,12 +484,12 @@
     // WRAPUP //////////////////////////////////////////////////////////////////
 
     this.widget_content = $('<div></div>').attr('id',this.dom.widget.content);
-    this.edits = $('<div></div>').attr('id',this.dom.widget.edits).hide();
+    this.designs = $('<div></div>').attr('id',this.dom.widget.designs).hide();
 
     this.main_window.append(this.topbar);
     this.main_window.append($('<div style="clear:both;"></div>'));
     this.main_window.append(this.widget_content);
-    this.main_window.append(this.edits);
+    this.main_window.append(this.designs);
     this.main_window.append(this.help_content);
     this.main_window.appendTo($('body'));
 

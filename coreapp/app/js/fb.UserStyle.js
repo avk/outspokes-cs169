@@ -1,6 +1,6 @@
   var $ = fb.$;
   /**
-   * fb.UserStyle class to represent a page edit.
+   * fb.UserStyle class to represent a page design.
    * @classDescription Creates a new fb.UserStyle object
    * @param {Object} obj An object of parameters
    * @constructor

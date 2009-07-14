@@ -4,35 +4,35 @@
     
     // Common identifiers used in this interface
     this.dom = {
-      edits_view : {
-        wrapper : "edits_wrap", // id
-        edit_id_format   : /edit_\d+/i,
-        edit_id          : function(id) {
-          return (this.edit_id_format.test(id)) ? id : 'edit_' + parseInt(id);
+      designs_view : {
+        wrapper : "designs_wrap", // id
+        design_id_format   : /design_\d+/i,
+        design_id          : function(id) {
+          return (this.design_id_format.test(id)) ? id : 'design_' + parseInt(id);
         },
         number_from_id            : function(dom_id) {
-          return parseInt(dom_id.match(/edit_(\d+)/i)[1]);
+          return parseInt(dom_id.match(/design_(\d+)/i)[1]);
         },
-        consensus_block : "edit_consensus", // class
+        consensus_block : "design_consensus", // class
         consensus_wrapper         : function(id) {
           return "consensus_on_comment_" + parseInt(id);
         },
-        agree_with : function(id) { return "agree_with_edit_" + parseInt(id); },
-        disagree_with : function(id) {return "disagree_with_edit_" + parseInt(id); },
+        agree_with : function(id) { return "agree_with_design_" + parseInt(id); },
+        disagree_with : function(id) {return "disagree_with_design_" + parseInt(id); },
         
-        edit_block : "edit_block", // class
-        edit_name : "edit_name", // class
-        edit_timestamp : "edit_timestamp", // class
-        edits_list : "edits_list", // id
-        new_edit_link : "new_edit_link" // id
+        design_block : "design_block", // class
+        design_name : "design_name", // class
+        design_timestamp : "design_timestamp", // class
+        designs_list : "designs_list", // id
+        new_design_link : "new_design_link" // id
       },
       
-      new_edit : {
-        wrapper : "new_edit_wrap",
-        link_back : "back_to_edits_list",
-        your_edits : "your_edits",
-        your_edits_wrapper : "your_edits_wrapper",
-        navigation : "your_edits_nav",
+      new_design : {
+        wrapper : "new_design_wrap",
+        link_back : "back_to_designs_list",
+        your_designs : "your_designs",
+        your_designs_wrapper : "your_designs_wrapper",
+        navigation : "your_designs_nav",
         your_targets : "your_targets"
       }
     };
@@ -65,23 +65,23 @@
        fb.i.nav.set_label_count(fb.UserStyle.count(), 1);
     };
 
-    // EDITS_VIEW //////////////////////////////////////////////////////////////////
+    // DESIGNS_VIEW //////////////////////////////////////////////////////////////////
 
-    this.new_edit_is_current = false;
-    this.edits_view = $('<div></div>').attr('id', dom.edits_view.wrapper);
-    this.edit_list = $('<div></div>').attr('id', dom.edits_view.edits_list);
+    this.new_design_is_current = false;
+    this.designs_view = $('<div></div>').attr('id', dom.designs_view.wrapper);
+    this.design_list = $('<div></div>').attr('id', dom.designs_view.designs_list);
 
-    this.new_edit_link = $('<div>new edit &raquo;</div>').attr('id', dom.edits_view.new_edit_link);
-    this.new_edit_link.click(function() { 
-      fb.i.user_style.slide(fb.i.user_style.edits_view, fb.i.user_style.new_edit_view);
-      fb.i.user_style.unapply_current_edit();
-      fb.i.user_style.new_edit_is_current = true;
+    this.new_design_link = $('<div>new design &raquo;</div>').attr('id', dom.designs_view.new_design_link);
+    this.new_design_link.click(function() { 
+      fb.i.user_style.slide(fb.i.user_style.designs_view, fb.i.user_style.new_design_view);
+      fb.i.user_style.unapply_current_design();
+      fb.i.user_style.new_design_is_current = true;
     });
     
-    // default view for when there are no edits
-    this.no_edits = $('<div id="outspokes-no-edits"></div>');
-    this.no_edits.append('<span class="outspokes-no-edits-message">Nothing yet</span><br />');
-    var call_to_action = $('<span class="outspokes-no-edits-action"></span>');
+    // default view for when there are no designs
+    this.no_designs = $('<div id="outspokes-no-designs"></div>');
+    this.no_designs.append('<span class="outspokes-no-designs-message">Nothing yet</span><br />');
+    var call_to_action = $('<span class="outspokes-no-designs-action"></span>');
     if (_fb.admin()) {
       call_to_action.append("How about ");
       invite_link = $('<a href="#">inviting some designers</a>');
@@ -95,16 +95,16 @@
       call_to_action.append('?');
     } else { // commenter
       call_to_action.append("How do you ")
-      edit_link = $('<a href="#">want this page to look</a>');
-      edit_link.click(function() {
-        fb.i.user_style.new_edit_link.click();
+      design_link = $('<a href="#">want this page to look</a>');
+      design_link.click(function() {
+        fb.i.user_style.new_design_link.click();
       });
-      call_to_action.append(edit_link);
+      call_to_action.append(design_link);
       call_to_action.append('?');
     }
     
-    this.no_edits.append(call_to_action);
-    this.edit_list.append(this.no_edits);
+    this.no_designs.append(call_to_action);
+    this.design_list.append(this.no_designs);
     
     
     // Consensus section
@@ -113,7 +113,7 @@
       _opinion : function(us_id, consensus_class) {
         var us = null;
         if (typeof us_id == "string") {
-          us = $('#' + dom.edit_id(us_id));
+          us = $('#' + dom.design_id(us_id));
         } else {
           us = us_id;
         }
@@ -133,8 +133,8 @@
             this.disagree(markup);
           }
         } else { // this invitee should be allowed to vote on this comment
-          var us_consensus = $('<div></div>').addClass(dom.edits_view.consensus_block);
-          us_consensus.attr("id", dom.edits_view.consensus_wrapper(us.feedback_id));
+          var us_consensus = $('<div></div>').addClass(dom.designs_view.consensus_block);
+          us_consensus.attr("id", dom.designs_view.consensus_wrapper(us.feedback_id));
           var agree = this.button(us, 'agree').addClass('agree');
           var disagree = this.button(us, 'disagree').addClass('disagree');
 
@@ -156,7 +156,7 @@
       },
       button : function(us, action) {
         var button = $('<button type="button">' + action + '</button>');
-        button.attr("id", eval('dom.edits_view.' + action + '_with(us.feedback_id)'));
+        button.attr("id", eval('dom.designs_view.' + action + '_with(us.feedback_id)'));
         button.click(function() { eval('us.' + action + '()'); });
         return button;
       }
@@ -164,26 +164,26 @@
     // END consensus section
     
     this.render = function(user_style) {
-      // remove the default no edits message because there's an edit to render
-      this.no_edits.remove();
-      this.edit_list.append(this.build(user_style));
+      // remove the default no designs message because there's an design to render
+      this.no_designs.remove();
+      this.design_list.append(this.build(user_style));
     };
 
     var current_clicked = null;
     this.build = function(user_style) {
       // build up the container for a user style item
-      var us_id = dom.edits_view.edit_id(user_style.feedback_id);
-      var us_block = $('<div></div>').attr('id', us_id).addClass(dom.edits_view.edit_block);
+      var us_id = dom.designs_view.design_id(user_style.feedback_id);
+      var us_block = $('<div></div>').attr('id', us_id).addClass(dom.designs_view.design_block);
       
       // define its contents
       // var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
-      // us_checkbox.attr('name', 'edit_toggle').attr('value', user_style.feedback_id);
+      // us_checkbox.attr('name', 'design_toggle').attr('value', user_style.feedback_id);
       us_block.click(function() {
         if (!$(this).hasClass('active')) { // currently not active
-          $('.' + dom.edits_view.edit_block).each(function(){ // for other edit
+          $('.' + dom.designs_view.design_block).each(function(){ // for other design
             // this.checked = false;
             $(this).removeClass('active');
-            var my_id = dom.edits_view.number_from_id( $(this).attr("id") );
+            var my_id = dom.designs_view.number_from_id( $(this).attr("id") );
             fb.UserStyle.all[my_id].unapply();
           });
           // this.checked = true;
@@ -198,8 +198,8 @@
         }
       });
 
-      var us_name = $('<span></span>').addClass(dom.edits_view.edit_name).append(user_style.name);
-      var us_timestamp = $('<span></span>').addClass(dom.edits_view.edit_timestamp).append(fb.get_timestamp(user_style.timestamp));
+      var us_name = $('<span></span>').addClass(dom.designs_view.design_name).append(user_style.name);
+      var us_timestamp = $('<span></span>').addClass(dom.designs_view.design_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
       // attach to the container
       // us_block.append(us_checkbox);
@@ -210,7 +210,7 @@
       return us_block;
     };
 
-    this.unapply_current_edit = function () {
+    this.unapply_current_design = function () {
       if (current_clicked === null) {
         return;
       }
@@ -222,44 +222,44 @@
       // console.log("Removing from fb.Interface.user_style...");
     };
     
-    this.edits_view.append(this.edit_list);
-    this.edits_view.append(this.new_edit_link);    
+    this.designs_view.append(this.design_list);
+    this.designs_view.append(this.new_design_link);    
     
-    // NEW EDIT //////////////////////////////////////////////////////////////////
+    // NEW DESIGN //////////////////////////////////////////////////////////////////
     
-    this.new_edit_view = $('<div></div>').attr('id', dom.new_edit.wrapper);
+    this.new_design_view = $('<div></div>').attr('id', dom.new_design.wrapper);
     // must start out collapsed and hidden for the slide transitions to work
-    this.new_edit_view.css('width','0%'); 
-    this.new_edit_view.hide();
+    this.new_design_view.css('width','0%'); 
+    this.new_design_view.hide();
 
-    this.hide_new_edit_view = function () {
+    this.hide_new_design_view = function () {
       if (fb.i.target.changes_to_targets(true)) {
         var answer = confirm("This will undo all of your changes and clear all your selected targets.  Are you sure?");
         if (!answer) {return;}
       }
       
-      fb.i.user_style.slide(fb.i.user_style.new_edit_view, fb.i.user_style.edits_view);
-      fb.i.user_style.new_edit_is_current = false;
+      fb.i.user_style.slide(fb.i.user_style.new_design_view, fb.i.user_style.designs_view);
+      fb.i.user_style.new_design_is_current = false;
       fb.i.target.startOver();
       return true;
     };
     
     // back to list
-    this.edit_list_link = $('<a>&laquo; list</a>').attr('id', dom.new_edit.link_back);
-    this.edit_list_link.click(this.hide_new_edit_view);
+    this.design_list_link = $('<a>&laquo; list</a>').attr('id', dom.new_design.link_back);
+    this.design_list_link.click(this.hide_new_design_view);
     
     
-    // NEW_EDIT: YOUR EDITS  //////////////////////////////////////////////////////////////////
+    // NEW_DESIGN: YOUR DESIGNS  //////////////////////////////////////////////////////////////////
     // pane where you pick a style category and set individual properties
-    this.your_edits = $('<div></div>').attr('id', dom.new_edit.your_edits);
-    //this.your_edits.append($('<h1>Your Edits</h1>'));
-    this.your_edits_wrapper = $('<div></div>').attr('id', dom.new_edit.your_edits_wrapper);
-    this.your_edits.append(this.your_edits_wrapper);
+    this.your_designs = $('<div></div>').attr('id', dom.new_design.your_designs);
+    //this.your_designs.append($('<h1>Your designs</h1>'));
+    this.your_designs_wrapper = $('<div></div>').attr('id', dom.new_design.your_designs_wrapper);
+    this.your_designs.append(this.your_designs_wrapper);
     
     
     
     
-    // NEW EDIT: NAVIGATION //////////////////////////////////////////////////////////////////
+    // NEW DESIGN: NAVIGATION //////////////////////////////////////////////////////////////////
     
     this.nav = {
       /*
@@ -276,10 +276,10 @@
       // equivalent to navigating to a specific element:
       setCurrent : function(which_element) {
         if (this.current) {
-          this.current.removeClass('outspokes-current-edit');
+          this.current.removeClass('outspokes-current-design');
         }
         this.current = this.elements.list[which_element];
-        this.current.addClass('outspokes-current-edit');
+        this.current.addClass('outspokes-current-design');
       },
       
       // ordered set of navigation elements:
@@ -321,7 +321,7 @@
       // creates the bar and returns it
       build : function() {
         this.bar = $('<ul></ul>');
-        this.bar.addClass(this.dom.new_edit.navigation);
+        this.bar.addClass(this.dom.new_design.navigation);
         
         // builds each element, labels it, and attaches a uniform onclick handler
         for (var which_element = 0; which_element < this.elements.labels.length; which_element++) {
@@ -342,12 +342,12 @@
         return this.bar;
       },
     }
-    this.your_edits_wrapper.append(this.nav.build());
+    this.your_designs_wrapper.append(this.nav.build());
     
     
     
-    // NEW EDIT: Color //////////////////////////////////////////////////////////////////
-    this.your_color = $('<div></div>').attr('id', 'color_edit_wrap');
+    // NEW DESIGN: Color //////////////////////////////////////////////////////////////////
+    this.your_color = $('<div></div>').attr('id', 'color_design_wrap');
     
     var hide_error = function(elem) {
       elem.css('visibility', 'hidden');
@@ -378,7 +378,7 @@
     // And array of tuples, the first element being the DOM elements of every
     // input field (needed for propagation/reset), and the second being the
     // names of the CSS properties they are associated with.
-    var edit_fields = [];
+    var design_fields = [];
     var value_type = {
       'background-color': 'hash_color',
       'color': 'hash_color',
@@ -386,16 +386,16 @@
       'font-size': 'number'
     };
     
-    var bgColor = $('<div></div>').attr('id', 'color_bg_edit_wrap');
+    var bgColor = $('<div></div>').attr('id', 'color_bg_design_wrap');
     var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
     hide_error(bg_error_message);
     // bgColor.append(bg_error_message);
-    bgColor.append($('<label class="outspokes_edit_label" for="outspokes_bgColor" title="Enter a valid hex color value">Background</label>' +
+    bgColor.append($('<label class="outspokes_design_label" for="outspokes_bgColor" title="Enter a valid hex color value">Background</label>' +
       '<span class="outspokes_pound">#</span><input type="text" id="outspokes_bgColor" name="outspokes_bgColor" />'));
     bgColor.find('input').blur( function() {
       validate_colorstring(this.value, bg_error_message);
     });
-    edit_fields.push([bgColor.find('input')[0], 'background-color']);
+    design_fields.push([bgColor.find('input')[0], 'background-color']);
     
     var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
@@ -409,16 +409,16 @@
       bgColor.find('input')[0].value = get_background_color(fb.i.target.current.target);
     });
     
-    var textColor = $('<div></div>').attr('id', 'color_text_edit_wrap');
+    var textColor = $('<div></div>').attr('id', 'color_text_design_wrap');
     var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
     hide_error(textcolor_error_message);
     // textColor.append(textcolor_error_message);
-    textColor.append($('<label class="outspokes_edit_label" for="outspokes_textColor" title="Enter a valid hex color value">Text</label>' + 
+    textColor.append($('<label class="outspokes_design_label" for="outspokes_textColor" title="Enter a valid hex color value">Text</label>' + 
       '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
     textColor.find('input').blur( function() {
       validate_colorstring(this.value, textcolor_error_message);
     });
-    edit_fields.push([textColor.find('input')[0], 'color']);
+    design_fields.push([textColor.find('input')[0], 'color']);
     
     var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
@@ -441,13 +441,13 @@
     this.your_color.append(textcolor_error_message);
     this.your_color.append(textColor);
     
-    this.your_edits_wrapper.append(this.your_color);
+    this.your_designs_wrapper.append(this.your_color);
     
     
     
-    // NEW EDIT: Font //////////////////////////////////////////////////////////////////
+    // NEW DESIGN: Font //////////////////////////////////////////////////////////////////
     
-    this.your_font = $('<div></div>').attr('id', 'font_edit_wrap');
+    this.your_font = $('<div></div>').attr('id', 'font_design_wrap');
     this.your_font.hide(); // because it's not the default view
 
     var fontFamilyOptions = [
@@ -465,8 +465,8 @@
       return rtn;
     });
     
-    var fontFamily = $('<div></div>').attr('id', 'font_family_edit_wrap');
-    fontFamily.append('<label class="outspokes_edit_label" for="fontFamily">Family</label>');
+    var fontFamily = $('<div></div>').attr('id', 'font_family_design_wrap');
+    fontFamily.append('<label class="outspokes_design_label" for="fontFamily">Family</label>');
     fontFamily.append('<select name="fontFamily"></select>');
     fontFamily.find('select').append('<option value="" selected="true"></option>');
     $.each(fontFamilyOptionObjects, function (i, opt) {
@@ -480,14 +480,14 @@
         fb.i.target.current.target.set_style('font-family', fontFamilyArray[0] + ", " + fontFamilyArray[1]);
       }
     });
-    edit_fields.push([fontFamily.find('select')[0], 'font-family']);
+    design_fields.push([fontFamily.find('select')[0], 'font-family']);
     
     
-    var fontSize = $('<div></div>').attr('id', 'font_size_edit_wrap');
+    var fontSize = $('<div></div>').attr('id', 'font_size_design_wrap');
     var font_error_message = $('<div class="input_error">Invalid font size:</div>');
     hide_error(font_error_message);
     // fontSize.append(font_error_message);
-    fontSize.append($('<label class="outspokes_edit_label" for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label>' +
+    fontSize.append($('<label class="outspokes_design_label" for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label>' +
       '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
     var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
     var font_size_regex = /^[0-9]{1,3}$/; // precompile this
@@ -505,7 +505,7 @@
     fontSize.find('input').blur(function(e) {
       validate_font_size(this.value);
     });
-    edit_fields.push([fontSize.find('input')[0], 'font-size']);
+    design_fields.push([fontSize.find('input')[0], 'font-size']);
     fontSizeApply.click( function() {
       currFontSize = fontSize.find('input')[0];
       if (currFontSize.value == "") {
@@ -527,12 +527,12 @@
     this.your_font.append(font_error_message);
     this.your_font.append(fontSize);
 
-    this.your_edits_wrapper.append(this.your_font);
+    this.your_designs_wrapper.append(this.your_font);
 
     this.populate_fields = function (target) {
       var element, property;
       var val, wanted_type;
-      $.each(edit_fields, function (i, tuple) {
+      $.each(design_fields, function (i, tuple) {
         element = tuple[0];
         property = tuple[1];
         val = target.current_style(property);
@@ -608,25 +608,25 @@
       return str;
     }
 
-    // NEW EDIT: targeting sidebar  //////////////////////////////////////////////////////////////////
-    this.your_targets = $('<div></div>').attr('id', dom.new_edit.your_targets);
+    // NEW DESIGN: targeting sidebar  //////////////////////////////////////////////////////////////////
+    this.your_targets = $('<div></div>').attr('id', dom.new_design.your_targets);
     
     
-    // NEW EDIT: finishing up  //////////////////////////////////////////////////////////////////
-    var your_edits_left_wrapper = $('<div></div>').attr('id', 'your_edits_left_wrapper');
-    // your_edits_left_wrapper.append(this.edit_list_link);
-    your_edits_left_wrapper.append(this.your_edits);
-    this.new_edit_view.append(this.your_targets);   
-    this.new_edit_view.append(your_edits_left_wrapper);
-    this.new_edit_view.append(this.edit_list_link);
+    // NEW DESIGN: finishing up  //////////////////////////////////////////////////////////////////
+    var your_designs_left_wrapper = $('<div></div>').attr('id', 'your_designs_left_wrapper');
+    // your_designs_left_wrapper.append(this.design_list_link);
+    your_designs_left_wrapper.append(this.your_designs);
+    this.new_design_view.append(this.your_targets);   
+    this.new_design_view.append(your_designs_left_wrapper);
+    this.new_design_view.append(this.design_list_link);
 
     
     
     
     // APPEND TO GENERAL INTERFACE  //////////////////////////////////////////////////////////////////
     
-    self.edits.append(this.edits_view);
-    self.edits.append(this.new_edit_view);
-    self.edits.append($('<div style="clear:both;"></div>'));
-    // self.edits.append($("<div style='padding: 70px 20px 20px 20px; font-size: 10em; color: #DDD'>Coming Soon</div>"));
+    self.designs.append(this.designs_view);
+    self.designs.append(this.new_design_view);
+    self.designs.append($('<div style="clear:both;"></div>'));
+    // self.designs.append($("<div style='padding: 70px 20px 20px 20px; font-size: 10em; color: #DDD'>Coming Soon</div>"));
   };
