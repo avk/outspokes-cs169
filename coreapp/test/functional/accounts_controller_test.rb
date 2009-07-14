@@ -75,7 +75,7 @@ class AccountsControllerTest < ActionController::TestCase
     assert_no_difference 'Account.count' do
       put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
            :password => 'foobara', :password_confirmation => 'foobar' }
-      assert_template 'accounts/edit.haml'
+      assert_template 'accounts/edit.html.erb'
     end
   end
 
@@ -93,7 +93,7 @@ class AccountsControllerTest < ActionController::TestCase
     assert_no_difference 'Account.count' do
       put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
            :password => 'foobara', :password_confirmation => 'foobar' }
-      assert_template 'accounts/edit.haml'
+      assert_template 'accounts/edit.html.erb'
     end
   end
 

@@ -25,6 +25,7 @@ class AccountsController < ApplicationController
   end
 
   def edit
+    @title = 'Edit Account'
     @account = Account.find(params[:id])
   end
 
