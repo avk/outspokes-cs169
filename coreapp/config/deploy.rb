@@ -25,8 +25,14 @@ role :app, "outspokes.com"
 role :web, "outspokes.com"
 role :db,  "outspokes.com", :primary => true
 
+before "deploy", "backup"
 before "deploy:restart", "deploy:remove_cached_assets"
 after  "deploy:restart", "deploy:warm_up_app"
+
+desc "Backup the database"
+task :backup do
+  run "cd #{current_path}/coreapp && rake backup"
+end
 
 ## from http://www.zorched.net/2008/06/17/capistrano-deploy-with-git-and-passenger/
 namespace :deploy do
