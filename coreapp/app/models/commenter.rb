@@ -7,8 +7,12 @@ class Commenter < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :user_styles, :dependent => :destroy
 
-  # pluginaweek/preferences
-  preference :notification_delivery, :string, :default => 'all'
+  #stolen from the restful_authentication plugin
+  @@email_name_regex  = '[\w\.%\+\-]+'.freeze
+  @@domain_head_regex = '(?:[A-Z0-9\-]+\.)+'.freeze
+  @@domain_tld_regex  = '(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|jobs|museum)'.freeze
+  @@email_regex       = /\A#{@@email_name_regex}@#{@@domain_head_regex}#{@@domain_tld_regex}\z/i
+  @@bad_email_message = "should look like an email address.".freeze
 
   validates_presence_of :email, :allow_blank => false
   validates_length_of   :email, :within => 6..100 #r@a.wk
@@ -16,6 +20,9 @@ class Commenter < ActiveRecord::Base
 
   # FIXME: efficient way to check email is unique across Sites.
   validates_uniqueness_of :email
+
+  # pluginaweek/preferences
+  preference :deliver_notifications, :default => true
 
   def self.parse_email_addresses(emails)
     separated = emails.split(',')

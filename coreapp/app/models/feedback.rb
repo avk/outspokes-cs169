@@ -164,9 +164,7 @@ class Feedback < ActiveRecord::Base
   end
 
   def deliver_notification
-    if page.account.preferred_notification_delivery == 'all'
-      Mailer.deliver_feedback_notification(self)
-    end
+    Notification.put(self) unless commenter == page.account
     true
   end
   

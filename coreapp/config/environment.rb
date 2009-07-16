@@ -33,6 +33,7 @@ Rails::Initializer.run do |config|
   config.gem "haml"  
   # config.gem "juggernaut"
   config.gem 'lukeredpath-simpleconfig', :source => 'http://gems.github.com', :lib => 'simple_config'
+  config.gem 'rubyist-aasm', :source => 'http://gems.github.com', :lib => 'aasm'
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

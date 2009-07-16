@@ -26,16 +26,10 @@ class Mailer < ActionMailer::Base
     body         :admin_url => dashboard_account_url(account), :tour_url => root_path
   end
 
-  def feedback_notification(feedbacks)
-    return if feedbacks.blank?
-
-    setup_email
-    feedbacks = [ feedbacks ] unless feedbacks.is_a? Array
-    
-    account = feedbacks.first.page.account
-    recipients   account.email
-    subject      "You have new feedback on your site"
-    body         :feedbacks => feedbacks
+  def notification(to_users, notification)
+    recipients   to_users.map(&:email)
+    subject      "Recent feedback left on your site"
+    body         :notification => notification
   end
 
   protected

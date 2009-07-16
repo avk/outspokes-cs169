@@ -12,8 +12,8 @@ class Opinion < ActiveRecord::Base
   validates_uniqueness_of :feedback_id, :scope => :commenter_id
   
   validates_inclusion_of :agreed, :in => [ true, false ]
-  
-protected
+
+  protected
 
   def validate
     if commenter_id
@@ -23,5 +23,5 @@ protected
       end
     end
   end
-  
+
 end
