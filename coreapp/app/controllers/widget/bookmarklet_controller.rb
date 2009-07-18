@@ -4,13 +4,16 @@ class Widget::BookmarkletController < ApplicationController
 
   def index
     from_url = request.env['HTTP_REFERER']
-    
-    unless @site = current_account.find_site_by_url(from_url)
-      @site = Site.new(:url => from_url)
-      current_account.sites << @site
+    if params[:has_frames]
+      @frames = true
+    else
+      unless @site = current_account.find_site_by_url(from_url)
+        @site = Site.new(:url => from_url)
+        current_account.sites << @site
+      end
+      
+      @url_token = @site.admin_url_token
     end
-    
-    @url_token = @site.admin_url_token
     
     respond_to do |wants|
       wants.js # index.js.erb

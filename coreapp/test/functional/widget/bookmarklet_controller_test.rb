@@ -30,6 +30,20 @@ class Widget::BookmarkletControllerTest < ActionController::TestCase
     assert assigns(:url_token) == new_site.admin_url_token
   end
   
+  test "should not create a new site if called from a URL that has frames" do
+    login_as :aaron
+    coming_from "http://www.opensourcetemplates.org/templates/preview/1361070670/"
+    
+    assert_no_difference "Site.count" do
+      # params[:has_frames] would be set by the bookmarklet code before hitting BookmarkletController#index
+      get :index, :format => :js, :has_frames => true
+    end
+    
+    assert assigns(:frames) == true
+    assert assigns(:site).nil?
+    assert assigns(:url_token).nil?
+  end
+  
   # test "should create a new page if called from a URL that matches one of your sites but not any existing page" do
   #   login_as :aaron
   #   admin = commenters(:aaron)
