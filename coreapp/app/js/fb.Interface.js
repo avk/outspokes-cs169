@@ -24,6 +24,7 @@
         contact: 'contactus',
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
+        numerical_height : 250,
         height : '250px',
         navigation : 'navigation',
         collapse : 'outspokes_collapse_all',
@@ -64,7 +65,7 @@
     this.show_widget = function() {
       var length;
       if (arguments.length == 0) {
-        length = 250;
+        length = this.dom.widget.numerical_height;
       } else if (! arguments[0]) {
         length = 0;
       }
@@ -82,7 +83,7 @@
     this.hide_widget = function() {
       var length;
       if (arguments.length == 0) {
-        length = 250;
+        length = this.dom.widget.numerical_height;
       } else if (! arguments[0]) {
         length = 0;
       }
@@ -492,6 +493,9 @@
     this.main_window.append(this.designs);
     this.main_window.append(this.help_content);
     this.main_window.appendTo($('body'));
+
+    // make vertical space to still be able to scroll to the bottom of the page when the widget is expanded
+    $('html').height( $(document).height() + this.dom.widget.numerical_height );
 
     this.comment = new fb.Interface.comment(this);
     this.user_style = new fb.Interface.user_style(this);
