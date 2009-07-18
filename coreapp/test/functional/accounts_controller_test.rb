@@ -75,25 +75,25 @@ class AccountsControllerTest < ActionController::TestCase
     assert_no_difference 'Account.count' do
       put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
            :password => 'foobara', :password_confirmation => 'foobar' }
-      assert_template 'accounts/edit.haml'
+      assert_template 'accounts/edit.html.erb'
     end
   end
 
   def test_should_update_account_preferred_notification
     login_as :quentin
-    new_preferred_notification = 'TEST_DATA'
-    assert commenters(:quentin).preferred_notification_delivery != new_preferred_notification, "change test data to be different"
+    new_preferred_notification = '1'
+    assert commenters(:quentin).preferred_deliver_notifications != new_preferred_notification, "change test data to be different"
     put :update, :id => commenters(:quentin).id, :account => {
-      :preferred_notification_delivery => new_preferred_notification
+      :preferred_deliver_notifications => new_preferred_notification
     }
-    assert commenters(:quentin).preferred_notification_delivery == new_preferred_notification
+    assert commenters(:quentin).preferred_deliver_notifications
   end
 
   def test_should_not_update_account_not_logged_in
     assert_no_difference 'Account.count' do
       put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
            :password => 'foobara', :password_confirmation => 'foobar' }
-      assert_template 'accounts/edit.haml'
+      assert_template 'accounts/edit.html.erb'
     end
   end
 

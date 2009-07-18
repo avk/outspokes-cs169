@@ -13,6 +13,12 @@ class UserStyleTest < ActiveSupport::TestCase
       assert !user_style.new_record?, "#{user_style.errors.full_messages.to_sentence}"
     end
   end
+
+  test "should put a notification after save" do
+    assert_difference 'Notification.count' do
+      create_user_style
+    end
+  end
   
   def test_should_require_a_page
     assert_no_difference "UserStyle.count" do

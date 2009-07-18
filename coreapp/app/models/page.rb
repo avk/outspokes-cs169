@@ -8,7 +8,6 @@ class Page < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :user_styles, :dependent => :destroy
 
-  delegate :admin_url, :to => :site
   delegate :account, :to => :site
 
   before_validation :create_invite_for_account
@@ -32,7 +31,16 @@ class Page < ActiveRecord::Base
     end
   end
 
-protected
+  def commenter_url(commenter_or_account)
+    url.sub(/\/$/i, '') + '#url_token=' + invites.find_by_commenter_id(commenter_or_account).url_token
+  end
+
+  def admin_url
+    commenter_url(site.account) + '&admin=true'
+  end
+
+  protected
+
   def create_invite_for_account
     if invites.empty?
       self.invites.build(:commenter => site.account)

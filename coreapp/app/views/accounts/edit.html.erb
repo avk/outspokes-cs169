@@ -1,0 +1,30 @@
+<h1>Editing Your Account</h1>
+
+<%= error_messages_for :account %>
+
+<% form_for @account do |f| %>
+  <p>
+    <%= label_tag 'email', nil, :class => 'wide_left' %>
+    <%= f.text_field :email %>
+  </p>
+
+  <p>
+    <%= label_tag 'password', nil, :class => 'wide_left' %>
+    <%= f.password_field :password %>
+  </p>
+
+  <p>
+    <%= label_tag 'password_confirmation', 'Confirm Password', :class => 'wide_left' %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+
+  <br/>
+  <p>
+    <%= f.check_box :preferred_deliver_notifications %>&nbsp;
+    <%= label_tag 'preferred_deliver_notifications', 'notify me of new feedbacks and opinions' %>
+  </p>
+
+  <p>
+    <%= submit_tag 'Edit', :class => 'submit' %>
+  </p>
+<% end %>

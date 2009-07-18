@@ -7,6 +7,8 @@ class Site < ActiveRecord::Base
 
   before_validation :reformat_url
 
+  delegate :admin_url, :commenter_url, :to => :home_page
+
   validates_presence_of :account
   validates_associated :account
   validates_length_of :pages, :minimum => 1
@@ -68,10 +70,6 @@ class Site < ActiveRecord::Base
   # misc logic ##########################################################################################
   def commenters
     home_page.commenters
-  end
-
-  def admin_url
-    home_page.url.sub(/\/$/i, '') + '#url_token=' + home_page.invites.find_by_commenter_id(account).url_token + '&admin=true'
   end
 
   def pages_with_latest_feedback

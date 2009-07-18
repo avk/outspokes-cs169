@@ -155,7 +155,17 @@ class Test::Unit::TestCase
   def create_user_style(options={})
     UserStyle.create(valid_options_for_user_style.merge(options))
   end
-  
+
+  # Notification
+
+  def valid_options_for_notification
+    site = sites(:five)
+    { :site => site }
+  end
+
+  def create_notification(options={})
+    Notification.create(valid_options_for_notification.merge(options))
+  end
   
   
   ### ACTUAL TEST HELPER METHODS ####
