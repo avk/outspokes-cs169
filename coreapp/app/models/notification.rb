@@ -74,14 +74,14 @@ class Notification < ActiveRecord::Base
   def do_delivery
     do_notify = Proc.new { |m| m.preferred_deliver_notifications }
     accounts   = [ site.account ].select(&do_notify)
-    # commenters = site.pages.collect(&:commenters).flatten.uniq.select(&do_notify)
-
-    # TODO: add commenters after we allow them a way to opt-out
-    recipients = accounts
+    commenters = site.commenters.select(&do_notify)
 
     begin
-      Mailer.deliver_notification(recipients, self)
+      (accounts + commenters).each do |recipient|
+        Mailer.deliver_notification(recipient, self)
+      end
     rescue Exception => e
+      logger.error(e.backtrace)
       HoptoadNotifier.notify(e)
       return false  # on failure
     end

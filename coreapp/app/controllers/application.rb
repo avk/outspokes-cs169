@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
+  # OPTIMIZE: create commenters in a background job
   # expects params[:emails] and @site
   def invite_commenters
     emails = Commenter.parse_email_addresses(params[:emails])

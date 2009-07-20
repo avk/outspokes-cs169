@@ -11,8 +11,16 @@ class Commenter < ActiveRecord::Base
   validates_length_of   :email, :within => 6..100 #r@a.wk
   validates_format_of   :email, :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  # FIXME: efficient way to check email is unique across Sites.
-  validates_uniqueness_of :email
+  # OPTIMIZE: efficient way to check email is unique across a given Site.
+  validates_each :email do |record, attr, value|
+    existing_sites = Commenter.all(:conditions => ["email = ?", value]).map(&:sites).flatten.uniq
+    my_sites = record.invites.map(&:page).uniq.map(&:site)
+
+    # if new_record, then can't look up sites through pages association
+    if my_sites.any? { |site| existing_sites.include?(site) }
+      record.errors.add(attr, "has been taken.")
+    end
+  end
 
   # pluginaweek/preferences
   preference :deliver_notifications, :default => true
@@ -58,6 +66,10 @@ class Commenter < ActiveRecord::Base
       end
     end
     return nil
+  end
+
+  def sites
+    self.pages.map(&:site).uniq
   end
   
   def feedbacks_for_site(site_id)

@@ -30,14 +30,22 @@ class CommenterTest < ActiveSupport::TestCase
     end
   end
 
-  test "cannot give non-unique email" do
-	  assert_difference 'Commenter.count' do
-      commenter = create_commenter(:email => 'abc@abc.com')
-    end  
-  	assert_no_difference 'Commenter.count' do
-       commenter2 = create_commenter(:email => 'abc@abc.com')
-       assert commenter2.errors.on(:email)
+  test "cannot give non-unique email for a given site" do
+    invite    = invites(:one)
+    commenter = invite.commenter
+
+    assert_no_difference 'Commenter.count' do
+      invalid_commenter = create_commenter(:email => commenter.email, :invites => [ invite ])
+      assert invalid_commenter.errors.on(:email)
     end
+    
+#	  assert_difference 'Commenter.count' do
+#      commenter = create_commenter(:email => 'abc@abc.com', :invites => [ invites(:one) ])
+#    end  
+#  	assert_no_difference 'Commenter.count' do
+#       commenter2 = create_commenter(:email => 'abc@abc.com', :invites => [ invites(:one) ])
+#       assert commenter2.errors.on(:email)
+#    end
   end
 
   test "should parse email addresses" do
