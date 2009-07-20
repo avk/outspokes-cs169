@@ -1,42 +1,28 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+msn:
+  account: quentin
+
 linkedin:
-  id: 1
-  account_id: 1
-  validation_token: donkey_balls
+  account: quentin
 
 facebook:
-  id: 2
-  account_id: 2
+  account: aaron
 
-public:
-  id: 3
-  account_id: 2
-  
-alt_public:
-  id: 4
-  account_id: 2
+myspace:
+  account: aaron
 
-five:
-  id: 5
-  account_id: 2
+rails:
+  account: aaron
 
-six:
-  id: 6
-  account_id: 2
+rails_spikes:
+  account: aaron
 
-seven:
-  id: 7
-  account_id: 2
+localhost3000:
+  account: aaron
 
-eight:
-  id: 8
-  account_id: 2
+localhost3001:
+  account: aaron
 
-nine:
-  id: 9
-  account_id: 2
-
-sixsixsix:
-  id: 666
-  account_id: 2
+lone_site:
+  account: aaron

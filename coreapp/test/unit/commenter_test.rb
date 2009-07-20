@@ -76,7 +76,7 @@ class CommenterTest < ActiveSupport::TestCase
 
   test 'should delete all associated invites when deleted' do
     commenter = create_commenter
-    pages = %w(from_fb fb_profile)
+    pages = %w(facebook fb_profile)
     
     assert_difference "Invite.count", pages.size do
       pages.each do |page|

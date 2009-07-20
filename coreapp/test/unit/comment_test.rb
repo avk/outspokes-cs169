@@ -145,7 +145,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test "should know the average number of votes per page" do
-    page = pages(:lone)
+    page = pages(:lone_page)
     actual = Feedback.avg_num_votes(page.id)
     expected = 10
     assert actual == expected, "got #{actual}, expected #{expected}"
