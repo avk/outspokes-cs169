@@ -441,37 +441,44 @@
     
     // HELP VIEW //////////////////////////////////////////////////////////////////
     
-    this.help_content = $('<div><h1>Outspokes Help</h1></div>').attr('id', this.dom.widget.help_content);
-    var help_copy = "<h2>About</h2>" +
-
-    "<p>Outspokes is the brainchild of a group of UC Berkeley CS 169 students." +
+    this.help_content = $('<div></div>').attr('id', this.dom.widget.help_content);
     
-    "<br /><a id='contact_us' href='mailto:outspokes@outspokes.com'>Contact Us</a></p>" +
+    var main_help = $('<div class="outspokes_left_panel"><h1>Help</h1></div>');
+    var secondary_help = $('<div class="outspokes_right_panel"></div>');
     
+    var who = (_fb.admin()) ? 'admin' : 'commenter';
     
-    "<h2>Minimized</h2>" +
-
-    "<p>Click on the center of the bar to expand Outspokes' feedback widget and start giving the owner of the page feedback!  " + 
-    "Also, you can click on our logo to go to outspokes.com and learn more about our service." +
-
-    "<h2>General</h2>" +
-
-    "<p>Click on a comment to minimize or maximize it.  If a comment is targeted, hover your mouse over it " + 
-    "to see what element of the page has been attached to the comment.</p>" +
-
-    "<p>To leave a comment, type in the text box on the right side of the widget, then click on the post button to the" + 
-    "bottom right of the text box to submit it.</p>" +
-    "<p>If you'd like to attach this comment to a portion of the page you're viewing, click the target icon on the top right of" + 
-    "the text box.</p>" +
-
-    "<p>To search the comments left on this page by keyword, type some text in the search bar on the top right of the widget panel," +
-    "and type enter." +
-    "To filter your result, use the drop-down bar above the list of comments to select how you'd want to filter the comments.</p>" +
-
-    "<p>Agreeing/disagreeing with a comment gives the person who requested feedback " +
-    "information about whether other commenters generally agree or disagree with a comment that another commenter has left.  " +
-    "Please note, once you have agreed or disagreed with a comment, you cannot change your vote.</p>";
-    this.help_content.append(help_copy);
+    main_help.append("" +
+    "<div class='outspokes_question'>" + 
+    "<h2>What's this bar at the bottom of the page?</h2>" +
+      "<p>The person running this site wants to know what you think. " + 
+      "The <a href='" + fb.env.base_domain + "'>Outspokes</a> widget " + 
+      "(where you're reading this now) is here to help!</p>" + 
+      
+      "<p>The Outspokes widget lives at the bottom of every page of this site. " + 
+      "It contains feedback people like you have left on the particular page you're on. " + 
+      "You can collapse (or expand) the widget by clicking on the silver bar above.</p>" + 
+      
+      "<p><a class='outspokes_widget_cta' href='" + 
+      fb.env.base_domain + "?intro=" + who + "'>" + 
+      "Watch a 30 second introduction!</a></p>" + 
+    "</div>");
+    
+    main_help.append("" +
+    "<div class='outspokes_question'>" + 
+    "<h2>How do I get rid of the bar?</h2>" +
+      "<p>You can close the Outspokes widget by clicking the 'Logout' link right next to the help link ('?') that got you here.</p>" + 
+    "</div>");
+    
+    secondary_help.append("" +
+    "<p><a href='" + fb.env.base_domain + "' style='font-size:2em'>Learn more</a><br />" + 
+    "Problems: " + 
+    "<a href='mailto:support@outspokes.com'>support@outspokes.com</a><br />" +
+    "Feedback: " + 
+    "<a href='mailto:feedback@outspokes.com'>feedback@outspokes.com</a><br />");
+    
+    this.help_content.append(main_help);
+    this.help_content.append(secondary_help);
     this.help_content.addClass("hide");
 
     // JUGGERNAUT
