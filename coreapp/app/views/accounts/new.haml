@@ -3,7 +3,15 @@
 
 = error_messages_for :account
 
-%h1 Sign up!
+%div.right_message.subliminal_yet_loud
+  Start reducing your time in the 
+  %em feedback loop
+
+%h1 
+  Sign up
+  (or 
+  = link_to 'log in', login_path
+  )
 
 - form_for :account, :url => accounts_path do |f|
   %p
