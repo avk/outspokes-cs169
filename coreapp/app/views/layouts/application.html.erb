@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex" />
+    
+    <title>Outspokes - <%= @title %></title>
+    
+    <%= stylesheet_link_tag 'reset-min', 'scaffold', 'main', :cache => 'application_cached' %>
+    <%= javascript_include_tag :defaults, 'accordion', :cache => 'application_cached' %>
+  </head>
+  
+  <body>
+    <div id="header">
+      <div class="inside">
+        <div id="branding">
+          <%= link_to image_tag('borderless-logo-beta-with-tagline.png', :alt => "Outspokes"), root_url %>
+        </div>
+        <div id="login_bar">
+          <%= render :partial => '/accounts/account_bar' %>
+        </div>
+      </div>
+    </div>
+    
+    <div id="main_content">
+      <div class="inside">
+        <%- if flash[:notice] -%>
+          <div id="flash_notice"><%= flash[:notice] %></div>
+        <% end -%>
+        <%- if flash[:error] -%>
+          <div id="flash_error"><%= flash[:error] %></div>
+        <% end -%>
+        <%- if flash[:warning] -%>
+          <div id="flash_warning"><%= flash[:warning] %></div>
+        <% end -%>
+        
+        <%= yield %>
+      </div>
+    </div>
+    
+    <div id="footer">
+      <p>
+        <a href="/">Home</a> | 
+        <a href="/about">About</a> | 
+        <a href="/contact">Contact Us</a>
+      </p>
+      <p>&copy; 2009 Outspokes</p>
+    </div>
+    
+    <%- javascript_tag do -%>
+      <%= render :partial => 'layouts/analytics' %>
+    <% end -%>
+  </body>
+</html>
