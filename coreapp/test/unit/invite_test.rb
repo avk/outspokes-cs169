@@ -69,7 +69,7 @@ class InviteTest < ActiveSupport::TestCase
   
   test 'should return account who initiated the invite via inviter' do
     inviter = commenters(:aaron)
-    commenter = commenters(:opinionated)
+    commenter = commenters(:old_password_holder)
     
     assert_difference "Invite.count", 1 do
       i = create_invite(:commenter => commenter, :page => inviter.sites.first.pages.first)

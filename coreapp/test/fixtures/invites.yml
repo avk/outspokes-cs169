@@ -2,35 +2,20 @@
 
 one:
   url_token: quentin
-  page_id: 1
-  commenter_id: 1
+  page: msn
+  commenter: aaron
 
 two:
   url_token: aaron
-  page_id: 1
-  commenter_id: 2
+  page: msn
+  commenter: old_password_holder
 
 page:
   url_token: aron
-  page_id: 2
-  commenter_id: 2
+  page: myspace
+  commenter: quentin
 
 aaron_admin:
   url_token: aaron_admin
-  page_id: 4
-  commenter_id: 2
-
-public_admin:
-  url_token: public_admin
-  page_id: 6
-  commenter_id: 2
-
-alt_public_admin:
-  url_token: alt_public_admin
-  page_id: 7
-  commenter_id: 1
-  
-lulz:
-  url_token: quentin2
-  page_id: 2
-  commenter_id: 1
+  page: facebook
+  commenter: quentin

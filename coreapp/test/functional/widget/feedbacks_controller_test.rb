@@ -87,7 +87,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   test "should list feedback for page for user" do
-    invite = invites(:two)
+    invite = invites(:page)
     callback = 'jsfeed'
     
     feedback = []
@@ -123,7 +123,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   test "should return appropriate comments after feedback is given" do
-    invite = invites(:two)
+    invite = invites(:one)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -291,7 +291,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "cannot reply to deleted comment" do
-    invite = invites(:one)
+    invite = invites(:page)
     callback = 'jsfeed'
     page = invite.page
 	  parent = page.feedbacks.first
@@ -345,7 +345,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
     # url_token, url_token valid, admin url_token, email & password, email & password valid
     get :feedback_for_page, :current_page => page.url, :callback => callback,
-        :url_token => admin_url_token, :email => '1@ex.com', :password => 'test123'
+        :url_token => admin_url_token, :email => '2@ex.com', :password => 'test123'
     site.reload
     validate_json :callback => callback, :authorized => true, :admin => site.validation_token
     last_validation_token = current_validation_token
@@ -353,7 +353,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
     # url_token, url_token valid, admin url_token, email & password, email & password invalid
     get :feedback_for_page, :current_page => page.url, :callback => callback,
-        :url_token => admin_url_token, :email => '1@ex.com', :password => 'blah'
+        :url_token => admin_url_token, :email => '3@ex.com', :password => 'blah'
     site.reload
     validate_json :callback => callback, :authorized => false, :admin => false
     assert site.validation_token == current_validation_token
@@ -415,7 +415,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_dont_return_site_id_if_not_admin
-    invite = invites(:two)
+    invite = invites(:page)
     page = invite.page
     assert page.account != invite.commenter
     get :feedback_for_page, :current_page => page.url, :callback => "callback", :url_token => invite.url_token

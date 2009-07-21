@@ -1,52 +1,51 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  id: 1
-  site_id: 1
+linkedin:
+  site: linkedin
+  url: http://www.linkedin.com
+
+msn:
+  site: msn
   url: http://www.msn.com
 
-two:
-  id: 2
-  site_id: 2
+msn_home:
+  url: http://www.msn.com/home
+  site: msn
+
+myspace:
+  site: myspace
   url: http://www.myspace.com
+
+myspace_tour:
+  site: myspace
+  url: http://www.myspace.com/index.cfm?fuseaction=userTour.home
   
 transactions:
-  id: 3
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
-  site_id: 3
+  site: rails
 
-from_fb:
-  id: 4
+facebook:
   url: http://www.facebook.com
-  site_id: 4
+  site: facebook
 
-from_msn:
-  id: 5
-  url: http://www.msn.com/home
-  site_id: 5
-
-another_page:
-  id: 6
+localhost3000:
   url: http://localhost:3000
-  site_id: 6
+  site: localhost3000
 
-yet_another_page:
-  id: 7
+localhost3001:
   url: http://localhost:3001
-  site_id: 7
+  site: localhost3001
 
 fb_profile:
-  id: 9
   url: http://www.facebook.com/asfdasdfsad
-  site_id: 9
+  site: facebook
 
 rails_spikes:
-  id: 8
   url: http://railspikes.com/2007/3/28/testing-transactions
-  site_id: 8
+  site: rails_spikes
   
-lone:
+lone_page:
   id: 666
-  site_id: 666
+  site: lone_site
   url: http://www.duskdesigns.com
 

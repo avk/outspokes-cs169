@@ -31,7 +31,7 @@ class CommenterTest < ActiveSupport::TestCase
   end
 
   test "cannot give non-unique email for a given site" do
-    invite    = invites(:one)
+    invite    = invites(:two)
     commenter = invite.commenter
 
     assert_no_difference 'Commenter.count' do
@@ -84,7 +84,7 @@ class CommenterTest < ActiveSupport::TestCase
 
   test 'should delete all associated invites when deleted' do
     commenter = create_commenter
-    pages = %w(from_fb fb_profile)
+    pages = %w(facebook fb_profile)
     
     assert_difference "Invite.count", pages.size do
       pages.each do |page|
