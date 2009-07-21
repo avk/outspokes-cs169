@@ -1,0 +1,39 @@
+<%- @title = 'About' -%>
+
+<h1>About Us</h1>
+
+<p style="padding-right: 150px">
+  <%= link_to "Outspokes", CONFIG.twitter %> 
+  began as a class project for UC Berkeley's Software Engineering class, CS 169, taught by 
+  <a href="http://www.cs.berkeley.edu/~brewer/">Professor Eric Brewer</a>
+  in Spring 2009. The original team was 
+  <a href="http://www.twitter.com/artvankilmer">Arthur Klepchukov</a>, 
+  <a href="http://www.twitter.com/andrewbernstein">Andrew Bernstein</a>, 
+  <a href="http://curg.us">Sanja Curgus</a>, 
+  James Duncan, 
+  <a href="http://www.twitter.com/curagea">Hannah Hu</a>, 
+  Matthew Kocher, and 
+  <a href="http://alex.turnlav.net">Alex Pretzlav</a>.
+</p>
+
+<p>
+  We are currently in private beta and rapidly evolving thanks to: 
+  <ul class="team">
+    <li>
+      <%= image_tag "arthur.jpg" %>
+      <%= mail_to "arthur@outspokes.com", "Arthur Klepchukov" %>
+    </li>
+    <li>
+      <%= image_tag "jerry.jpg" %>
+      <%= mail_to "jerry@outspokes.com", "Jerry Cheung" %>
+    </li>
+    <li>
+      <%= image_tag "sean.jpg" %>
+      <%= mail_to "sean@outspokes.com", "Sean Ahrens" %>
+    </li>
+    <li>
+      <%= image_tag "arielle.png" %>
+      <%= mail_to "arielle@outspokes.com", "Arielle Scott" %>
+    </li>
+  </ul>
+</p>
