@@ -1,0 +1,21 @@
+<%- @title = "Embed out script on your site" -%>
+
+<p id="new_site_breadcrumb">
+  <span class="before">1. Add URL</span>
+  &nbsp;&raquo;&nbsp;
+  <span class="now">2. Install Script</span>
+  &nbsp;&raquo;&nbsp;
+  <span class="next">3. Admin Link to Your Site</span>
+</p>
+
+<h1>Install our feedback widget</h1>
+
+Insert this script at the bottom of <b class="tag">&lt;body&gt;</b> in your site:<br />
+<%= text_field_tag 'jsinclude', 
+  "<script src='#{CONFIG.url}/widget/#{@site.id}' type='text/javascript'></script>", 
+  :class => 'code' %>
+
+<%= button_to "&nbsp;I've added it&nbsp;", @site.admin_url + "&admin_intro=true", :method => :get %>
+&nbsp;
+<%= link_to "I'll add it later", dashboard_account_path(current_account), 
+  :onclick => 'return confirm("You won\'t be able to invite people or start getting feedback until you install our widget. Are you sure you want to add it later?");' %>
