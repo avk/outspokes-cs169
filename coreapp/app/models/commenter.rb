@@ -11,14 +11,12 @@ class Commenter < ActiveRecord::Base
   validates_length_of   :email, :within => 6..100 #r@a.wk
   validates_format_of   :email, :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  # OPTIMIZE: efficient way to check email is unique across a given Site.
   validates_each :email do |record, attr, value|
-    existing_sites = Commenter.all(:conditions => ["email = ?", value]).map(&:sites).flatten.uniq
-    my_sites = record.invites.map(&:page).uniq.map(&:site)
-
-    # if new_record, then can't look up sites through pages association
-    if my_sites.any? { |site| existing_sites.include?(site) }
-      record.errors.add(attr, "has been taken.")
+    if record.new_record?
+      my_sites = record.invites.map(&:page).uniq.map(&:site)
+      if Commenter.count(:conditions => { "commenters.email" => value, "sites.id" => my_sites.map(&:id) }, :include => { :pages => :site }) > 0
+        record.errors.add(attr, "has been taken.")
+      end
     end
   end
 

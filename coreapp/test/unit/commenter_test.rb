@@ -31,21 +31,14 @@ class CommenterTest < ActiveSupport::TestCase
   end
 
   test "cannot give non-unique email for a given site" do
-    invite    = invites(:two)
-    commenter = invite.commenter
+    site       = sites(:msn)
+    commenter  = site.commenters.first
+    invite     = commenter.invites.first
 
     assert_no_difference 'Commenter.count' do
       invalid_commenter = create_commenter(:email => commenter.email, :invites => [ invite ])
       assert invalid_commenter.errors.on(:email)
     end
-    
-#	  assert_difference 'Commenter.count' do
-#      commenter = create_commenter(:email => 'abc@abc.com', :invites => [ invites(:one) ])
-#    end  
-#  	assert_no_difference 'Commenter.count' do
-#       commenter2 = create_commenter(:email => 'abc@abc.com', :invites => [ invites(:one) ])
-#       assert commenter2.errors.on(:email)
-#    end
   end
 
   test "should parse email addresses" do
@@ -91,6 +84,8 @@ class CommenterTest < ActiveSupport::TestCase
         Invite.create(:page => pages(page.to_sym), :commenter => commenter)
       end
     end
+    assert_equal pages.size, commenter.invites.size
+
     
     assert_difference "Invite.count", -(pages.size) do
       commenter.destroy
