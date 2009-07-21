@@ -2,35 +2,35 @@
 
 one:
   url_token: quentin
-  page_id: 1
-  commenter_id: 1
+  page: msn
+  commenter: quentin
 
 two:
   url_token: aaron
-  page_id: 1
-  commenter_id: 2
+  page: msn
+  commenter: opinionated
 
 page:
   url_token: aron
-  page_id: 2
-  commenter_id: 2
+  page: myspace
+  commenter: aaron
 
 aaron_admin:
   url_token: aaron_admin
-  page_id: 4
-  commenter_id: 2
+  page: facebook
+  commenter: aaron
 
 public_admin:
   url_token: public_admin
-  page_id: 6
-  commenter_id: 2
+  page: localhost3000
+  commenter: aaron
 
 alt_public_admin:
   url_token: alt_public_admin
-  page_id: 7
-  commenter_id: 1
+  page: localhost3001
+  commenter: quentin
   
 lulz:
   url_token: quentin2
-  page_id: 2
-  commenter_id: 1
+  page: myspace
+  commenter: quentin

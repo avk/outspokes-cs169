@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class AdminPanel::CommentersControllerTest < ActionController::TestCase
 
   def setup
-    @site = sites(:linkedin)
+    @site = sites(:msn)
     @site.new_validation_token
     @alt_site = sites(:facebook)
   end

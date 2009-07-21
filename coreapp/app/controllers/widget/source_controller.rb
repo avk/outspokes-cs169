@@ -5,6 +5,7 @@ class Widget::SourceController < Widget::WidgetController
     def index
       @site = Site.find(params[:id])
       @fb_hash = "fb_" + generate_hash
+      @bookmarklet = (params[:bookmarklet].nil?) ? false : true
       @ordered_files = %w(
         pre.js
         fb_hash.js.erb

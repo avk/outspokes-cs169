@@ -39,6 +39,19 @@ class Account < Commenter
     write_attribute :email, (value ? value.downcase : nil)
   end
 
+  def find_site_by_url(url)
+    url = Page.domainize(url)
+    found_site = nil
+    
+    sites.each do |site|
+      if ApplicationController.new.same_domain? Page.domainize(site.url), url
+        found_site = site
+      end
+    end
+    
+    return found_site
+  end
+
 
   protected
     
