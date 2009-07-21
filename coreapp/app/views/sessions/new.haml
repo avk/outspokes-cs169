@@ -1,6 +1,14 @@
 - @title = 'Login'
 
-%h3 Log in
+%div.right_message.subliminal_yet_loud
+  You're just one step away from 
+  %em better feedback
+
+%h3 
+  Welcome back 
+  (or 
+  = link_to 'get started', signup_path
+  )
 
 - form_tag session_path, :class => 'login' do
   = label_tag 'email', nil, :class => 'wide_left'
@@ -14,4 +22,4 @@
     = label_tag 'remember_me', 'Remember me'
     = check_box_tag 'remember_me', '1', @remember_me
   %br
-  = submit_tag 'Log in', :class => 'submit'
+  = submit_tag 'Log in', :class => 'submit login'
