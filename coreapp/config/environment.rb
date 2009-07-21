@@ -30,7 +30,6 @@ Rails::Initializer.run do |config|
   config.gem "rcov"
   config.gem "json"
   config.gem "ruby-debug"
-  config.gem "haml"  
   # config.gem "juggernaut"
   config.gem 'lukeredpath-simpleconfig', :source => 'http://gems.github.com', :lib => 'simple_config'
   config.gem 'rubyist-aasm', :source => 'http://gems.github.com', :lib => 'aasm'
