@@ -1,0 +1,79 @@
+<%- @title = 'Dashboard' -%>
+
+<script type="text/javascript" charset="utf-8">
+  function expandScript(el) {
+    var jsRow = el.parentNode.parentNode.nextSibling.nextSibling;
+    if (jsRow.style.display == "none") {
+      new Effect.Appear(jsRow, {duration: .2});
+    }
+    else {
+      new Effect.Fade(jsRow, {duration: .2});
+    }
+  }
+  function newSite(el) {
+    el.hide();
+    console.log($('new_site_wrapper'));
+    $('new_site_wrapper').show();
+  }
+</script>
+
+<h1>My Sites ( <%= link_to "add new", new_site_path, :style => "font-weight: normal" %> )</h1>
+<br />
+
+<div id="new_site_wrapper">
+  <h2>To add a new site</h2> 
+  <ol id="new_site_steps">
+    <li>
+      <%= link_to "Add the URL", new_site_path %>
+    </li>
+    <li>
+      <strong>Install</strong> our script
+    </li>
+    <li>
+      Follow the <br /><strong>Admin Link</strong>
+    </li>
+  </ol>
+</div>
+
+<table id="sites_table">
+  <%- if @sites.empty? -%>
+    <tr>
+      <td>None yet.</td>
+    </tr>
+  
+  <%- else -%>
+    <tr>
+      <th>Admin Link</th>
+      <th>Our Script</th>
+      <th class="centered">Delete</th>
+    </tr>
+    
+    <%- @sites.each do |site| -%>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td class="site_name">
+          <%= link_to h(site.name), site.admin_url %>
+        </td>
+        
+        <td class="jsinclude">
+          <span onclick="expandScript(this)">Embed</span>
+        </td>
+        
+        <td class="delete_link">
+          <%= link_to 'X', site, { :confirm => 'Are you sure?', :method => :delete, :style => 'text-decoration: none' } %>
+        </td>
+        
+      </tr>
+      
+      <tr class='jsinclude' style="display:none; background-color: #fff">
+        <td colspan="3">
+          Insert this at the bottom of <b class="tag">&lt;body&gt;</b> in your site: 
+          <%= text_field_tag 'jsinclude', "<script src='#{CONFIG.url}/widget/#{site.id}.js' type='text/javascript'></script>", :class => 'code' %>
+        </td>
+        
+      </tr>
+    <% end -%>
+    
+  <% end -%>
+</table>
+
+<div style="clear:both;"></div>

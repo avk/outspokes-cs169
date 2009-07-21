@@ -1,0 +1,29 @@
+<%- @title = 'Sign up!' -%>
+<%- @account.password = @account.password_confirmation = nil -%>
+
+<%= error_messages_for :account %>
+
+<div class="right_message subliminal_yet_loud">
+  Start reducing your time in the <em>feedback loop</em>
+</div>
+
+<h1>Sign up (or <%= link_to 'log in', login_path %>)</h1>
+
+<% form_for @account do |f| -%>
+  <p>
+    <%= label_tag 'email', nil, :class => 'wide_left' %>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= label_tag 'password', nil, :class => 'wide_left' %>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= label_tag 'password_confirmation', 'Confirm Password', :class => 'wide_left' %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <div style="clear:both;"></div>
+  <p>
+    <%= submit_tag 'Sign up', :class => 'submit' %>
+  </p>
+<% end -%>
