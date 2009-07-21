@@ -84,8 +84,8 @@ class CommenterTest < ActiveSupport::TestCase
         Invite.create(:page => pages(page.to_sym), :commenter => commenter)
       end
     end
+    commenter.reload
     assert_equal pages.size, commenter.invites.size
-
     
     assert_difference "Invite.count", -(pages.size) do
       commenter.destroy

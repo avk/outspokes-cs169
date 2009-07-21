@@ -20,12 +20,13 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test "put should find an existing pending notification for a site" do
-    notification = create_notification
-    site = notification.site
-    feedback = feedbacks(:notification)
+    feedback     = feedbacks(:notification)
+    notification = create_notification(:site => feedback.page.site)
+
     assert_no_difference "Notification.count" do
-      Notification.put(feedback)
-      assert_equal 1, Notification.first.feedbacks.size
+      assert_difference "notification.feedbacks.size", 1 do
+        notification = Notification.put(feedback)
+      end
     end
   end
 
@@ -38,7 +39,7 @@ class NotificationTest < ActiveSupport::TestCase
 
   test "deliver should send email to admins and commenters" do
     notification = create_notification
-    assert_difference "ActionMailer::Base.deliveries.size", 1 do
+    assert_difference "ActionMailer::Base.deliveries.size", 2 do
       notification.deliver!
     end
     assert_equal 'delivered', notification.aasm_state
