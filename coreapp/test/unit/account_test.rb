@@ -23,6 +23,14 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
+  test "should require unique email" do
+    create_account
+    assert_no_difference 'Account.count' do
+      u = create_account
+      assert u.errors.on(:email)
+    end
+  end
+
   def test_should_require_password_confirmation
     assert_no_difference 'Account.count' do
       u = create_account(:password_confirmation => nil)

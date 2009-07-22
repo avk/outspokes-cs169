@@ -13,6 +13,7 @@ class Account < Commenter
   # TODO: do we plan to use 'name' field at all?
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
   validates_length_of       :name,     :maximum => 100
+  validates_uniqueness_of   :email
 
   after_create :deliver_welcome_email
 
