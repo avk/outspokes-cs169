@@ -14,26 +14,26 @@
     this.dom = {
       widget  : { 
         wrapper : 'outspokes',
-        header  : 'topbar',
-        headerLeft : 'topbarLeft',
+        header  : 'outspokes_topbar',
+        headerLeft : 'outspokes_topbar_left',
         content : 'widget_content',
         designs : 'widget_designs',
-        help : 'help',
-        logout: 'logout',
-        help_content: 'help_content',
+        help : 'outspokes_help',
+        logout: 'outspokes_logout',
+        help_content: 'outspokes_help_content',
         contact: 'contactus',
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
         numerical_height : 250,
         height : '250px',
-        navigation : 'navigation',
+        navigation : 'outspokes_navigation',
         collapse : 'outspokes_collapse_all',
         uncollapse : 'outspokes_uncollapse_all'
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
         panel   : 'outspokes_admin_panel',
-        open    : 'open_admin_panel',
+        open    : 'outspokes_open_admin_panel',
         close   : 'outspokes_close_admin_panel',
         overlay : 'outspokes_overlay',
       },
@@ -256,7 +256,7 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
+    var sort_dropdown = $('<select id="outspokes_comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
     
@@ -420,14 +420,14 @@
       this.hide_widget();
       
       if (!_fb.admin()) { // only commenters see the intro on their first visit        
-        var intro_bubble = $('<div></div>').attr('id','bubble');
+        var intro_bubble = $('<div></div>').attr('id','outspokes_bubble');
         
-        var close_bubble = function() { $("#bubble").hide(); }
-        var close_bubble_link = $('<a>X</a>').attr('id','close_intro');
+        var close_bubble = function() { $("#outspokes_bubble").hide(); }
+        var close_bubble_link = $('<a>X</a>').attr('id','outspokes_close_intro');
         close_bubble_link.click( close_bubble );
         intro_bubble.append(close_bubble_link);
         
-        intro_bubble.append("<p id='bubble_content'>Welcome to <strong>Outspokes</strong>.<br />" + 
+        intro_bubble.append("<p id='outspokes_bubble_content'>Welcome to <strong>Outspokes</strong>.<br />" + 
           "<span>Give feedback by clicking on the bar. Bookmark this page to easily give feedback later.</span></p>");
         
         // the bubble should be closed when clicking on the following:

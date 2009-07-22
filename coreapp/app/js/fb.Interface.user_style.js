@@ -135,15 +135,15 @@
         } else { // this invitee should be allowed to vote on this comment
           var us_consensus = $('<div></div>').addClass(dom.designs_view.consensus_block);
           us_consensus.attr("id", dom.designs_view.consensus_wrapper(us.feedback_id));
-          var agree = this.button(us, 'agree').addClass('agree');
-          var disagree = this.button(us, 'disagree').addClass('disagree');
+          var agree = this.button(us, 'agree').addClass('outspokes_agree');
+          var disagree = this.button(us, 'disagree').addClass('outspokes_disagree');
 
           agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
           disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
 
           if (_fb.admin()) {
-            us_consensus.append($('<span class="agreed">' + us.agreed + '&nbsp;agreed,</span>&nbsp;'));
-            us_consensus.append($('<span class="disagreed">' + us.disagreed + '&nbsp;disagreed</span>'));
+            us_consensus.append($('<span class="outspokes_agreed">' + us.agreed + '&nbsp;agreed,</span>&nbsp;'));
+            us_consensus.append($('<span class="outspokes_disagreed">' + us.disagreed + '&nbsp;disagreed</span>'));
           } else {
             us_consensus.append(agree);
             us_consensus.append(disagree);
@@ -397,13 +397,13 @@
     });
     design_fields.push([bgColor.find('input')[0], 'background-color']);
     
-    var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
+    var bgColorApply = $('<input class="outspokes_button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
       apply_color(currBgColor.value, 'background-color', bg_error_message);
     });
     
-    var bgColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original background color." />');
+    var bgColorRevert = $('<input class="outspokes_button" type="submit" value="Revert" title="Revert to original background color." />');
     bgColorRevert.click( function() {
       fb.i.target.current.target.unset_style('background-color');
       bgColor.find('input')[0].value = get_background_color(fb.i.target.current.target);
@@ -420,13 +420,13 @@
     });
     design_fields.push([textColor.find('input')[0], 'color']);
     
-    var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
+    var textColorApply = $('<input class="outspokes_button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
       apply_color(currTextColor.value, 'color', textcolor_error_message);
     });
     
-    var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
+    var textColorRevert = $('<input class="outspokes_button" type="submit" value="Revert" title="Revert to original text color." />');
     textColorRevert.click( function() {
       fb.i.target.current.target.unset_style('color');
       textColor.find('input')[0].value = rgb_to_hash(fb.i.target.current.target.current_style('color'));
@@ -489,7 +489,7 @@
     // fontSize.append(font_error_message);
     fontSize.append($('<label class="outspokes_design_label" for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label>' +
       '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
-    var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    var fontSizeApply = $('<input class="outspokes_button" type="submit" value="Apply" />');
     var font_size_regex = /^[0-9]{1,3}$/; // precompile this
     // Local helper function for checking font size validity
     function validate_font_size(value) {
@@ -515,7 +515,7 @@
       }
     });
     
-    var fontSizeRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original font size." />');
+    var fontSizeRevert = $('<input class="outspokes_button" type="submit" value="Revert" title="Revert to original font size." />');
     fontSizeRevert.click( function() {
       fb.i.target.current.target.unset_style('font-size');
       fontSize.find('input')[0].value = parseInt(fb.i.target.current.target.current_style('font-size'), 10).toString(10);;
