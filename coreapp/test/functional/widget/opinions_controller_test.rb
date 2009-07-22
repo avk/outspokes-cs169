@@ -8,7 +8,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
   end
   
   test "should not allow opinions for an invalid URL token" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     page = invite.page
     feedback = feedbacks(:two)
@@ -23,7 +23,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
   end
   
   test "should not allow opinions given an invalid page" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     feedback = feedbacks(:two)
     assert invite.commenter_id != feedback.commenter_id
@@ -46,7 +46,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     # Also:
     # - Cannot be a JavaScript keyword
     
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     feedback = feedbacks(:two)
     assert invite.commenter_id != feedback.commenter_id
     
@@ -65,7 +65,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
   end
   
   test "should not allow opinions given invalid opinion values" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     feedback = feedbacks(:two)
     callback = 'jsfeed'
     assert invite.commenter_id != feedback.commenter_id

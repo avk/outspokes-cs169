@@ -31,15 +31,15 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     invite = invites(:one)
     callback = "rofflecopter"
     feedback = []
-    uninvited_page_url = Page.find(:first, :conditions => [ "id != ?", invite.page.id ]).url
-    
+    uninvited_page_url = invites(:page).page.url
+
     get :feedback_for_page, :url_token => invite.url_token, :current_page => uninvited_page_url, :callback => callback
     
     validate_json :callback => callback, :authorized => false, :admin => false, :feedback => feedback
   end
   
   test "should render an empty list of feedback for a valid page that doesn't exist" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'rover'
     feedback = []
     page_url = "http://" + URI.parse(invites(:one).page.url).host + "/nowayinhellshouldthisbeinourfixtures.xhtml"
@@ -74,7 +74,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
 
   test "should list all feedback for admin" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     feedback = invite.page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
     
@@ -87,7 +87,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   test "should list feedback for page for user" do
-    invite = invites(:two)
+    invite = invites(:page)
     callback = 'jsfeed'
     
     feedback = []
@@ -108,7 +108,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should add new feedback for page" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -123,7 +123,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   test "should return appropriate comments after feedback is given" do
-    invite = invites(:two)
+    invite = invites(:one)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -146,7 +146,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should create new page when adding feedback for new url" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -241,7 +241,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should render an html template when posting and format=html" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -261,7 +261,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     feedback = feedbacks(:one)
     page = feedback.page
     page.site.new_validation_token
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     url_token = invite.url_token
     callback = 'deleted_comment'
     validation_token = invite.page.site.validation_token
@@ -273,7 +273,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should add new threaded feedback for page" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     page = invite.page
 	  parent = page.feedbacks.first
@@ -291,7 +291,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "cannot reply to deleted comment" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     callback = 'jsfeed'
     page = invite.page
 	  parent = page.feedbacks.first
@@ -304,7 +304,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
           :current_page => page.url, :callback => callback, :content => content, :target => "html",
           :parent_id => parent.id, :email => "quentin@example.com", :password => "monkey"
     end
-
+    
     validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => false
   end
   
@@ -390,7 +390,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_return_site_id_if_admin
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     page = invite.page
     correct_site_id = page.site.id
     get :feedback_for_page, :current_page => page.url, :callback => "callback",
@@ -402,7 +402,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_dont_return_site_id_after_first_call_if_admin
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     page = invite.page
     correct_site_id = page.site.id
     get :feedback_for_page, :current_page => page.url, :callback => "callback",
@@ -415,7 +415,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_dont_return_site_id_if_not_admin
-    invite = invites(:two)
+    invite = invites(:page)
     page = invite.page
     assert page.account != invite.commenter
     get :feedback_for_page, :current_page => page.url, :callback => "callback", :url_token => invite.url_token
@@ -424,7 +424,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_should_indicate_one_admin_account_commenter_if_none_have_been_invited
-    invite = invites(:aaron_admin)
+    invite = invites(:aaron_admin_facebook)
     assert invite.page.site.commenters.length == 1, "The only commenter on this site should be the admin"
     assert invite.page.account == invite.commenter, "The commenter of the invite should be the admin"
 
@@ -436,7 +436,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_should_not_indicate_no_commenters_if_commenters_exist
-    invite = invites(:one)
+    invite = invites(:quentin_admin_msn)
     assert invite.page.site.commenters.length > 1, "The site should have at least one commenter aside from the admin"
     get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "quentin@example.com", :password => "monkey"

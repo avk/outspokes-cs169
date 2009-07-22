@@ -109,7 +109,7 @@ class PageTest < ActiveSupport::TestCase
   
   test 'should delete all associated invites when deleted' do
     page = create_page
-    commenters = %w(opinionated)
+    commenters = %w(old_password_holder)
 
     assert_difference "Invite.count", commenters.size do
       commenters.each do |name|

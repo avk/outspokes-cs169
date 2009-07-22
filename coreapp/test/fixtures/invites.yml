@@ -3,34 +3,29 @@
 one:
   url_token: quentin
   page: msn
-  commenter: quentin
+  commenter: aaron
 
 two:
   url_token: aaron
   page: msn
-  commenter: opinionated
+  commenter: old_password_holder
 
 page:
   url_token: aron
   page: myspace
-  commenter: aaron
-
-aaron_admin:
-  url_token: aaron_admin
-  page: facebook
-  commenter: aaron
-
-public_admin:
-  url_token: public_admin
-  page: localhost3000
-  commenter: aaron
-
-alt_public_admin:
-  url_token: alt_public_admin
-  page: localhost3001
   commenter: quentin
-  
-lulz:
-  url_token: quentin2
-  page: myspace
+
+
+<% %w(msn linkedin).each do |site_name| %>
+quentin_admin_<%= site_name %>:
+  url_token: quentin_admin_<%= site_name %>
+  page: <%= site_name %>
   commenter: quentin
+<% end %>
+
+<% %w(facebook myspace rails rails_spikes localhost3000 localhost3001 lone_site).each do |site_name| %>
+aaron_admin_<%= site_name %>:
+  url_token: aaron_admin_<%= site_name %>
+  page: <%= site_name %>
+  commenter: aaron
+<% end %>

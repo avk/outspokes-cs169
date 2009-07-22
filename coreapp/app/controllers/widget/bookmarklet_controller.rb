@@ -11,7 +11,6 @@ class Widget::BookmarkletController < ApplicationController
         @site = Site.new(:url => from_url)
         current_account.sites << @site
       end
-      
       @url_token = @site.admin_url_token
     end
     

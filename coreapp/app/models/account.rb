@@ -41,15 +41,12 @@ class Account < Commenter
 
   def find_site_by_url(url)
     url = Page.domainize(url)
-    found_site = nil
-    
     sites.each do |site|
       if ApplicationController.new.same_domain? Page.domainize(site.url), url
-        found_site = site
+        return site
       end
     end
-    
-    return found_site
+    nil
   end
 
 

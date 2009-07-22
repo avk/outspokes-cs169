@@ -133,7 +133,7 @@ neutral:
 <% for i in 1..3 %>
 avg<%= i %>:
   id: <%= 665 + i %>
-  page_id: 666
+  page: lone_site
   commenter_id: <%= 1000 + i %>
   content: leave me alone
   target: html
@@ -143,7 +143,7 @@ avg<%= i %>:
 <% end %>
 
 five:
-  page: transactions
+  page: rails
   commenter: aaron
   content: MyText2
   target: html
@@ -151,7 +151,7 @@ five:
   type: Comment
 
 six:
-  page: transactions
+  page: rails
   commenter: aaron
   content: MyText3
   target: html
@@ -159,7 +159,7 @@ six:
   type: Comment
 
 seven:
-  page: transactions
+  page: rails
   commenter: quentin
   content: MyText4
   target: html
@@ -167,7 +167,7 @@ seven:
   private: false
 
 five:
-  page: transactions
+  page: rails
   commenter: aaron
   content: I hate this page
   target: html
@@ -175,7 +175,7 @@ five:
   private: false
   
 six:
-  page: transactions
+  page: rails
   commenter: quentin
   content: I also  hate this page
   target: html
@@ -183,7 +183,7 @@ six:
   private: false
 
 privatecomment:
-  page: transactions
+  page: rails
   commenter: aaron
   content: I also  hate this page
   target: html
@@ -191,15 +191,15 @@ privatecomment:
   private: true
 
 notification:
-  page: fb_profile
-  commenter: quentin
+  page: localhost3000
+  commenter: aaron
   content: testing notifications
   target: html
   type: Comment
 
 user_style1:
-  page: fb_profile
-  commenter: quentin
+  page: localhost3000
+  commenter: aaron
   content: testing notifications
   target: html
   type: UserStyle

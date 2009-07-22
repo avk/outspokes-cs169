@@ -20,7 +20,7 @@ myspace_tour:
   site: myspace
   url: http://www.myspace.com/index.cfm?fuseaction=userTour.home
   
-transactions:
+rails:
   url: http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
   site: rails
 
@@ -44,8 +44,6 @@ rails_spikes:
   url: http://railspikes.com/2007/3/28/testing-transactions
   site: rails_spikes
   
-lone_page:
-  id: 666
-  site: lone_site
+lone_site:
   url: http://www.duskdesigns.com
-
+  site: lone_site
