@@ -5,7 +5,7 @@
     // Common identifiers used in this interface
     this.dom = {
       designs_view : {
-        wrapper : "designs_wrap", // id
+        wrapper : "outspokes_designs_wrap", // id
         design_id_format   : /design_\d+/i,
         design_id          : function(id) {
           return (this.design_id_format.test(id)) ? id : 'design_' + parseInt(id);
@@ -13,7 +13,7 @@
         number_from_id            : function(dom_id) {
           return parseInt(dom_id.match(/design_(\d+)/i)[1]);
         },
-        consensus_block : "design_consensus", // class
+        consensus_block : "outspokes_design_consensus", // class
         consensus_wrapper         : function(id) {
           return "consensus_on_comment_" + parseInt(id);
         },

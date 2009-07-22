@@ -26,7 +26,7 @@
       agreed              : 'outspokes_agreed',
       disagreed           : 'outspokes_disagreed',
       comment_form        : "outspokes_new_comment",
-      reply_links         : "comment-reply",
+      reply_links         : "outspokes_comment-reply",
       cform               : "outspokes_comment_form",
       reply_form          : function(id) {
         return this._prefix(id) + '_reply';

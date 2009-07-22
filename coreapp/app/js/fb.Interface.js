@@ -16,12 +16,11 @@
         wrapper : 'outspokes',
         header  : 'outspokes_topbar',
         headerLeft : 'outspokes_topbar_left',
-        content : 'widget_content',
+        content : 'outspokes_widget_content',
         designs : 'outspokes_widget_designs',
         help : 'outspokes_help',
         logout: 'outspokes_logout',
         help_content: 'outspokes_help_content',
-        contact: 'contactus',
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
         numerical_height : 250,
