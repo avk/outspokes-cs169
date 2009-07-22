@@ -1,0 +1,293 @@
+body
+  :width 100%
+  :height 100%
+  :font
+    :size 13pt
+    :family Helvetica, Arial, sans-serif
+a
+  &:link
+    :color #C1272D
+  &:visited
+    :color #7F0005
+
+strong
+  :font-weight bold
+  
+.code
+  :font-family "Courier New",sans-serif
+  :width 100%
+
+h1
+  :font
+    :size 25pt
+    :weight bold
+  :margin-bottom 0.5em
+
+h3
+  :font
+    :size 20pt
+    :weight bold
+  :margin-top .5em
+
+form
+  :margin-bottom 1em
+
+form.button-to
+  :display inline
+  :margin-top 5px
+  div
+    :display inline
+
+#tagline
+  :color #C1272D
+  :font
+    :size 25pt
+    :weight bold
+  :margin-bottom 1em
+  :line-height 1.1em
+
+p
+  :margin-bottom 1em
+
+ul, ol
+  :margin
+    :left 1em
+    :bottom 1em
+  li
+    :list-style-type disc
+    
+dl
+  :margin-bottom 1.5em
+  dt
+    :margin-bottom .5em
+    :font-weight bold
+  dd
+    :margin-bottom 1em
+  
+.inside
+  :width 80%
+  :min-width 740px
+  :max-width 950px
+  :margin 0 auto
+  :padding 1.5em
+  // :position relative
+  
+.even
+  :background-color white
+.odd
+  :background-color #ddd
+
+#header
+  .inside
+    :height 60px
+    :margin 0 auto
+    :padding 2em 0
+  
+#branding
+  :float left
+
+#branding
+  img
+    :position relative
+    :bottom 11px
+    :right 3px
+
+h1
+  :font-size 1.5em
+
+h1#company_name
+  :font-size 2em
+
+#login_bar
+  :float right
+  :text-align right
+
+form.login input
+  :margin 5px 0
+
+label.wide_left
+  :float left
+  :position relative
+  :top 5px
+  :width 100px
+
+.submit, 
+form.login .submit
+  :margin 10px 0 0 100px
+
+#new-site-url
+  :color #ccc
+  :font-size 2em
+  :height 35px
+  :width 70%
+
+#main_content
+  :background
+    :color #bbb
+    :image url(/images/gradient-bg.png)
+    :position bottom
+    :repeat repeat-x
+  
+  .inside
+    :background-color #efefef 
+
+.leftpanel
+  :float left
+  :margin-left 10px
+  :width 415px
+
+.rightpanel
+
+ol#steps
+  li
+    :list-style-type decimal
+    :margin-bottom .5em
+    :margin-left 20px
+  
+#signup-button
+  :background-image url(/images/signup-button.png)
+  :display block
+  :margin 0 auto
+  :height 30px
+  :width 230px
+  :padding 10px
+  :text-align center
+  :background-color transparent
+  :color white
+  :line-height 100%
+  :font
+    :size 25px
+    :weight bold
+
+.free-for-now
+  :color #777
+  :margin-top 5px
+  :text-align center
+
+#flash_error, #flash_warning, #flash_notice 
+  :border 1px solid
+  :margin 0 0 2em
+  :padding 13px 
+  :background-repeat no-repeat
+  :background-position 10px center
+  :width 90%
+
+#flash_error
+  :color #D8000C
+  :background-color #FFBABA
+#flash_warning
+  :color #9F6000
+  :background-color #FEEFB3
+#flash_notice
+  :color #4F8A10
+  :background-color #DFF2BF
+
+#new_site_breadcrumb
+  :background-color #DDD
+  :border 1px solid #CCC
+  :padding 5px
+  :text-align center
+  .before
+    :color #888
+    :text-decoration line-through
+  .now
+    :color #C1272D
+    :font-weight bold
+  .next
+    :color #888
+
+#new_site_wrapper
+  :background-color white
+  :bottom 5px
+  :float right
+  :padding 5px 0 0 15px
+  :position relative
+  :width 175px
+  h2
+    :color #C1272D
+    :font-size 1.1em
+  ol
+    :padding-top 7px
+    li
+      :margin 5px 0
+      :list-style-type decimal
+
+#jsinclude
+  :margin-bottom 10px
+
+#sites_table
+  :width 75%
+  th
+    :font-size 1.1em
+    :padding-left 9px
+    &.centered
+      :padding-left 0
+      :padding-right 9px
+  td
+    :padding .5em
+    &.jsinclude
+      :width 10.2em
+      span
+        :color #C1272D
+        :cursor pointer
+    &.delete_link
+      :width 1em
+    &.site_name
+  tr
+    &.even, &.odd
+      :border 1px solid #8E9AAF 
+    &.jsinclude td
+      :color #777
+      :border
+        :left 1px solid #8E9AAF
+        :right 1px solid #8E9AAF
+    input
+      :width 99%
+      
+#account_block
+  :position absolute
+  :right 0
+  :top 0
+  :width 25%
+  :margin 1em
+  :background-color #B3C9EF
+  form
+    :padding 5%
+    :width 90%
+  fieldset
+    :width 100%
+    legend
+      :font-size 1.2em
+      :font-weight bold
+    #account_email
+      :margin 2px 0
+      :width 90%
+
+.team
+  li
+    :list-style-type none
+  a
+    :position relative
+    :bottom 27px
+
+.right_message
+  :float right
+  :width 400px
+
+.subliminal_yet_loud
+  :border-left 2px dashed #CCC
+  :color #CCC
+  :font-size 3em
+  / :font-weight bold
+  :padding-left 20px
+  :text-align right
+  em
+    :color #bbb
+    :font-weight bold
+
+.contact_email
+  :font-size 1.25em
+
+#footer
+  :text-align center
+  :padding 20px 
