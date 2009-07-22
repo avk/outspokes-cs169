@@ -34,7 +34,7 @@
         iframe  : 'outspokes_admin_panel_iframe',
         panel   : 'outspokes_admin_panel',
         open    : 'open_admin_panel',
-        close   : 'close_admin_panel',
+        close   : 'outspokes_close_admin_panel',
         overlay : 'outspokes_overlay',
       },
       non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +

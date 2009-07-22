@@ -214,8 +214,8 @@ version: 3.0.0pr2
   width: 50%;
   z-index: 100002;
 }
-#outspokes_admin_panel a#close_admin_panel,
-#outspokes_admin_panel a#close_admin_panel:link {
+#outspokes_admin_panel a#outspokes_close_admin_panel,
+#outspokes_admin_panel a#outspokes_close_admin_panel:link {
   background-color: transparent;
   background-image: url(/images/x_icon_40x40_2.png);
   border-bottom: none;
@@ -232,10 +232,10 @@ version: 3.0.0pr2
   width: 40px;
   z-index: 1003;
 }
-#outspokes_admin_panel a#close_admin_panel:visited {
+#outspokes_admin_panel a#outspokes_close_admin_panel:visited {
   color: #333;
 }
-#outspokes_login_panel_inner.first_time_admin {
+#outspokes_login_panel_inner.outspokes_first_time_admin {
   height: 250px;
 }
 #outspokes_login_fields {
