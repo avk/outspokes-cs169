@@ -58,7 +58,7 @@ class Test::Unit::TestCase
   # Pages
   
   def valid_options_for_page_site
-    valid_site = sites(:linkedin)
+    valid_site = sites(:msn)
     { :url => valid_site.url + "/index.html", :site => valid_site }
   end
   
@@ -109,7 +109,7 @@ class Test::Unit::TestCase
   # Feedback / Comments
   
   def valid_options_for_comment
-    page = pages(:one)
+    page = pages(:msn)
     page.invites << invites(:one)
     commenter = commenters(:one)
     { :content=>'Hello, this is a feedback!', :page_id => page.id, :commenter_id => commenter.id, :target => 'html' }
@@ -127,7 +127,7 @@ class Test::Unit::TestCase
   # Invites
   
   def valid_options_for_invite
-    { :commenter => commenters(:one), :page => pages(:one) }
+    { :commenter => commenters(:one), :page => pages(:msn) }
   end
   
   def create_invite(options={})
@@ -147,7 +147,7 @@ class Test::Unit::TestCase
   # User Style
   
   def valid_options_for_user_style
-    page = pages(:one)
+    page = pages(:msn)
     commenter = commenters(:one)
     { :page_id => page.id, :commenter_id => commenter.id, :changeset => {}.to_json }
   end
@@ -159,7 +159,7 @@ class Test::Unit::TestCase
   # Notification
 
   def valid_options_for_notification
-    site = sites(:five)
+    site = sites(:facebook)
     { :site => site }
   end
 

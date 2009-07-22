@@ -35,11 +35,17 @@ class Page < ActiveRecord::Base
     url.sub(/\/$/i, '') + '#url_token=' + invites.find_by_commenter_id(commenter_or_account).url_token
   end
 
+  # converts "http://www.apple.com/itunes/" to "http://www.apple.com"
+  def self.domainize(url)
+    base_domain = /^(https?:\/\/[\w\d\-\.]*)/i
+    (url.match base_domain) ? $1 : nil
+  end
+
   def admin_url
     commenter_url(site.account) + '&admin=true'
   end
 
-  protected
+protected
 
   def create_invite_for_account
     if invites.empty?

@@ -1,0 +1,13 @@
+<%- @title = "Contact Us" -%>
+
+<img src="/images/contactus.png" class="right_message" />
+
+<h1>Go ahead, be outspoken.</h1>
+
+<p> 
+  <h2 class="contact_email"><%= mail_to CONFIG.emails.feedback %></h2>
+  <h2 class="contact_email"><%= mail_to CONFIG.emails.support %></h2>
+</p>    
+<br />
+
+<p>or follow us on <%= link_to "twitter", CONFIG.twitter %></p>

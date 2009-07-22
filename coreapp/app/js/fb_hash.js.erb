@@ -40,7 +40,9 @@ function() {
     fb.loading_wrapper = fb.$('<div></div>').attr('id','outspokes_loading_wrapper');
     fb.done_loading = false;
     
-    $(function() {
+    fb.bookmarklet = <%= @bookmarklet %>;
+    
+    var loading = function() {
       // callback which is supposed to remove what this creates has already executed
       if (fb.done_loading) {
         return;
@@ -59,9 +61,13 @@ function() {
       fb.loading_wrapper.append(loading_img);
       if (fb.env.url_token !== "") {
         fb.$('body').append(fb.loading_wrapper);
-      }
-    });
-
+      }      
+    };
+    
+    // fires when the page loads (i.e. Outspokes installed on a page you control)
+    $(function() { loading(); });
+    // fires after the loads (i.e. Outspokes installed via bookmarklet)
+    if (fb.bookmarklet) { loading(); } 
 
     // DO NOT USE THIS!!!!!
     // This is only for convenience in testing, and should never be
@@ -152,7 +158,8 @@ function() {
     };
 
     if (!_admin_validation_token && _wants_admin) {
-      fb.$(function() {
+      
+      var admin_login = function() {
         var first_time_admin = false;
         if (fb.getParams('admin_intro') === 'true') {
           first_time_admin = true;
@@ -205,7 +212,13 @@ function() {
         login_panel.find('div:eq(1)').append(form);
         fb.$('body').append(login_panel);
         return;
-      });
+      }
+      
+      // fires when the page loads (i.e. Outspokes installed on a page you control)
+      fb.$(function() { admin_login() });
+      // fires after the loads (i.e. Outspokes installed via bookmarklet)
+      if (fb.bookmarklet) { admin_login(); }
+      
       return;
     }
 

@@ -71,6 +71,7 @@
     target_button.click(function() {
       $(this)[0].value = "Change target";
       fb.i.comment.reset_target();
+      $("#outspokes_form_header").find('span').text("Pick a target for your comment");
       fb.select_target(function(e) {
         fb.i.comment.form.find("input[name='target']").attr("value", fb.getPath(e.target));
         $(e.target).removeClass("outspokes_currently_hovering");

@@ -21,7 +21,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test "it should not create a notification if commenter is account holder" do
-    page = pages(:one)
+    page = pages(:facebook)
     assert_no_difference 'Notification.count' do
       create_comment(:page => page, :commenter => page.account)
     end
@@ -158,7 +158,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test "should know the average number of votes per page" do
-    page = pages(:lone)
+    page = pages(:lone_page)
     actual = Feedback.avg_num_votes(page.id)
     expected = 10
     assert actual == expected, "got #{actual}, expected #{expected}"

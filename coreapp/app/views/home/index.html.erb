@@ -1,0 +1,25 @@
+<%- @title = "Feedback Evolved" -%>
+
+<div class="leftpanel">
+  <h1 id="tagline">
+    Get feedback from users <br />
+    as they browse your site!
+  </h1>
+
+  <ol id="steps">    
+    <li>Tell us your site.</li>
+    <li>Include a lil' Javascript.</li>
+    <li>Invite people to give feedback via our widget.</li>
+    <li>See people's feedback right on your site, <br /> along with all the relevant context.</li>
+  </ol>
+</div>
+
+<div class="rightpanel">
+  <%# the widget help panel links to this page and relies on there being some sort of introductory video here %>
+  <%= render :partial => 'brief_screencast' %>
+</div>
+
+<div style="clear:both;">&nbsp;</div>
+
+<%= link_to "Sign Up!", signup_path, { :title => "Create an account", :id => 'signup-button' } %>
+<p class='free-for-now'>Free while in beta!</p>
