@@ -48,8 +48,8 @@
       formHTML += form_header;
       var form_buttons =  '<div id="outspokes_form_buttons">'
       if ( !_fb.admin() ) {
-        form_buttons += '<div id="outspokes_private_wrapper"><input type="checkbox" id="isPrivate" name="isPrivate" value="true">' + 
-                        '&nbsp;<label for="isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>';
+        form_buttons += '<div id="outspokes_private_wrapper"><input type="checkbox" id="outspokes_isPrivate" name="isPrivate" value="true">' + 
+                        '&nbsp;<label for="outspokes_isPrivate" title="Only the person who asked for your feedback will see it.">Private</label></div>';
       } else {
         form_buttons += '<input type="hidden" value="false" name="isPrivate" />'
       }
@@ -163,9 +163,6 @@
           var agree = this.button(c, 'agree').addClass('outspokes_agree');
           var disagree = this.button(c, 'disagree').addClass('outspokes_disagree');
           
-          agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
-          disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
-          
           consensus_div[0].setAttribute("id", this.dom.consensus_wrapper(c.feedback_id));
           consensus_div[0].setAttribute("class", 'outspokes_cns_buttons');
 
@@ -216,7 +213,6 @@
       // constructs a "reply" link
       buildLink       : function(c_id) {
         var replyLink = $('<button type="button" class="' + this.dom.reply_links + '">reply&nbsp;&raquo;</button>');
-        replyLink.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
         replyLink.click(function(){ fb.i.comment.reply.start(c_id); });
         return replyLink;
       },
@@ -247,7 +243,6 @@
         form.find('#outspokes_form_buttons').html(
           '<input class="outspokes_button" type="reset" value="Cancel" />' +
           '<input class="outspokes_button" type="submit" value="Reply" />');
-        form.attr('class','reply');
         form.submit(function() { 
           fb.Comment.post(this.content.value, this.target.value, false);
           fb.i.comment.reply.finish(reply_form);
@@ -348,11 +343,11 @@
       options.append(tmp);
       options.append(this.reply.buildLink(c_id));
       
-      content.append($('<div></div>').addClass('cmt_text').append(c.content));
+      content.append($('<div></div>').addClass('outspokes_cmt_text').append(c.content));
       content.append(options);
 
       var replies = $('<div></div>').attr('id', this.dom.reply_list(c_id)).addClass('outspokes_replies');
-      var comment = $('<div></div>').addClass('comment');
+      var comment = $('<div></div>').addClass('outspokes_comment');
       comment.append(bar).append(content);
       
       rtn.append(comment).append(replies);
@@ -417,11 +412,11 @@
       if (c.target != "html" && c.target != "html > body" && !c.isReply()) {
         tmp = $(c.target);
         if (tmp.size() === 0) {
-          rtn.find('.cmt_text').before( this.missing_target() );
+          rtn.find('.outspokes_cmt_text').before( this.missing_target() );
         } else {
           // Render missing_target message when targeted element is removed
           tmp[0].addEventListener("DOMNodeRemoved", function(e) {
-            rtn.find('.cmt_text').before( fb.i.comment.missing_target() );
+            rtn.find('.outspokes_cmt_text').before( fb.i.comment.missing_target() );
           }, true);
           tmp = highlight_target(tmp.get(0));
           c.__unHover = tmp[1];
@@ -576,7 +571,7 @@
         $(".outspokes_cmt_date").hide();
         $(".outspokes_snippet").show();
         $(".outspokes_reply_count").show();
-        $(".comment").addClass("outspokes_collapsed");
+        $(".outspokes_comment").addClass("outspokes_collapsed");
     };
     
     this.uncollapse_all = function() {
@@ -584,12 +579,12 @@
         $(".outspokes_cmt_date").show();
         $(".outspokes_snippet").hide();
         $(".outspokes_reply_count").hide();
-        $(".comment").removeClass("outspokes_collapsed");
+        $(".outspokes_comment").removeClass("outspokes_collapsed");
     };
     
     this.reset_target = function() {
       // Stop targetting if currently in process
-      fb.i.dom.non_widget_elements.unbind(".elem_select");
+      fb.i.dom.non_widget_elements.unbind(".outspokes_elem_select");
       // Un-highlight element, first get its serialized path out of form
       var old_element = $(fb.i.comment.form.find("input[name='target']").attr("value"));
       // Remove any classes it may have had

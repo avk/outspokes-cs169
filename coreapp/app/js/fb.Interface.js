@@ -75,7 +75,7 @@
       );
       // should only display the sort menu for the current navigation link
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].filter('.outspokes-current').find('.hide_when_tab_unselected').show();
+        this.nav.elements.list[which_element].filter('.outspokes-current').find('.outspokes_hide_when_tab_unselected').show();
       }
     };
     
@@ -94,7 +94,7 @@
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
+        this.nav.elements.list[which_element].find('.outspokes_hide_when_tab_unselected').hide();
       }
     };
     
@@ -196,13 +196,13 @@
               }
               
               fb.i.nav.setCurrent(which_element);
-              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+              fb.i.nav.elements.list[which_element].find('.outspokes_hide_when_tab_unselected').show();
               // Save the current tab in widget cookie state
               fb.save_state("widget_tab", which_element);
               content.show();              
             } else {
               content.hide();
-              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
+              fb.i.nav.elements.list[which_element].find('.outspokes_hide_when_tab_unselected').hide();
             }
           }
         }
@@ -255,7 +255,7 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="outspokes_comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
+    var sort_dropdown = $('<select id="outspokes_comments_filter" class="outspokes_hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
     
@@ -286,7 +286,7 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a class="hide_when_tab_unselected" title="Collapse all comments">&nbsp;</a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link = $('<a class="outspokes_hide_when_tab_unselected" title="Collapse all comments">&nbsp;</a>').attr('id',this.dom.widget.collapse);
     this.nav.elements.list[0].append(this.collapse_link);
     this.collapse_link.click(function(e) {
         fb.i.comment.collapse_all();
@@ -297,7 +297,7 @@
         }
     })
 
-    this.uncollapse_link = $('<a class="hide_when_tab_unselected" title="Uncollapse all comments">&nbsp;</a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link = $('<a class="outspokes_hide_when_tab_unselected" title="Uncollapse all comments">&nbsp;</a>').attr('id',this.dom.widget.uncollapse);
     this.nav.elements.list[0].append(this.uncollapse_link);
     this.uncollapse_link.click(function(e) {
         fb.i.comment.uncollapse_all();

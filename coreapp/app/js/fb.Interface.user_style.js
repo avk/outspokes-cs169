@@ -138,9 +138,6 @@
           var agree = this.button(us, 'agree').addClass('outspokes_agree');
           var disagree = this.button(us, 'disagree').addClass('outspokes_disagree');
 
-          agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
-          disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
-
           if (_fb.admin()) {
             us_consensus.append($('<span class="outspokes_agreed">' + us.agreed + '&nbsp;agreed,</span>&nbsp;'));
             us_consensus.append($('<span class="outspokes_disagreed">' + us.disagreed + '&nbsp;disagreed</span>'));
@@ -177,21 +174,21 @@
       
       // define its contents
       us_block.click(function() {
-        if (!$(this).hasClass('active')) { // currently not active
+        if (!$(this).hasClass('outspokes_active')) { // currently not active
           $('.' + dom.designs_view.design_block).each(function(){ // for other design
             // this.checked = false;
-            $(this).removeClass('active');
+            $(this).removeClass('outspokes_active');
             var my_id = dom.designs_view.number_from_id( $(this).attr("id") );
             fb.UserStyle.all[my_id].unapply();
           });
           // this.checked = true;
-          $(this).addClass('active');
+          $(this).addClass('outspokes_active');
 
           fb.UserStyle.all[user_style.feedback_id].apply();
           current_clicked = $(this);
         } else {
           fb.UserStyle.all[user_style.feedback_id].unapply();
-          $(this).removeClass('active');
+          $(this).removeClass('outspokes_active');
           current_clicked = null;
         }
       });
@@ -411,7 +408,7 @@
     hide_error(textcolor_error_message);
     // textColor.append(textcolor_error_message);
     textColor.append($('<label class="outspokes_design_label" for="outspokes_textColor" title="Enter a valid hex color value">Text</label>' + 
-      '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
+      '<span class="outspokes_pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
     textColor.find('input').blur( function() {
       validate_colorstring(this.value, textcolor_error_message);
     });
