@@ -39,7 +39,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should render an empty list of feedback for a valid page that doesn't exist" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     callback = 'rover'
     feedback = []
     page_url = "http://" + URI.parse(invites(:one).page.url).host + "/nowayinhellshouldthisbeinourfixtures.xhtml"
@@ -74,7 +74,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
 
   test "should list all feedback for admin" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     callback = 'jsfeed'
     feedback = invite.page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
     
@@ -108,7 +108,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should add new feedback for page" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -146,7 +146,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should create new page when adding feedback for new url" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -241,7 +241,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should render an html template when posting and format=html" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     callback = 'jsfeed'
     page = invite.page
     content = "HUH THIS SITE IS LAME YO"
@@ -261,7 +261,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     feedback = feedbacks(:one)
     page = feedback.page
     page.site.new_validation_token
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     url_token = invite.url_token
     callback = 'deleted_comment'
     validation_token = invite.page.site.validation_token
@@ -273,7 +273,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "should add new threaded feedback for page" do
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     callback = 'jsfeed'
     page = invite.page
 	  parent = page.feedbacks.first
@@ -291,7 +291,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
   
   test "cannot reply to deleted comment" do
-    invite = invites(:page)
+    invite = invites(:quentin_admin)
     callback = 'jsfeed'
     page = invite.page
 	  parent = page.feedbacks.first
@@ -304,7 +304,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
           :current_page => page.url, :callback => callback, :content => content, :target => "html",
           :parent_id => parent.id, :email => "quentin@example.com", :password => "monkey"
     end
-
+    
     validate_json :callback => callback, :authorized => true, :admin => page.site.validation_token, :success => false
   end
   
@@ -345,7 +345,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
     # url_token, url_token valid, admin url_token, email & password, email & password valid
     get :feedback_for_page, :current_page => page.url, :callback => callback,
-        :url_token => admin_url_token, :email => '2@ex.com', :password => 'test123'
+        :url_token => admin_url_token, :email => '1@ex.com', :password => 'test123'
     site.reload
     validate_json :callback => callback, :authorized => true, :admin => site.validation_token
     last_validation_token = current_validation_token
@@ -353,7 +353,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
     # url_token, url_token valid, admin url_token, email & password, email & password invalid
     get :feedback_for_page, :current_page => page.url, :callback => callback,
-        :url_token => admin_url_token, :email => '3@ex.com', :password => 'blah'
+        :url_token => admin_url_token, :email => '1@ex.com', :password => 'blah'
     site.reload
     validate_json :callback => callback, :authorized => false, :admin => false
     assert site.validation_token == current_validation_token
@@ -390,7 +390,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_return_site_id_if_admin
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     page = invite.page
     correct_site_id = page.site.id
     get :feedback_for_page, :current_page => page.url, :callback => "callback",
@@ -402,7 +402,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_dont_return_site_id_after_first_call_if_admin
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     page = invite.page
     correct_site_id = page.site.id
     get :feedback_for_page, :current_page => page.url, :callback => "callback",
@@ -436,7 +436,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   end
 
   def test_should_not_indicate_no_commenters_if_commenters_exist
-    invite = invites(:one)
+    invite = invites(:quentin_admin)
     assert invite.page.site.commenters.length > 1, "The site should have at least one commenter aside from the admin"
     get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "quentin@example.com", :password => "monkey"

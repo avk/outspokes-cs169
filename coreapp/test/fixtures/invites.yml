@@ -15,7 +15,12 @@ page:
   page: myspace
   commenter: quentin
 
+quentin_admin:
+  url_token: quentin_admin
+  page: msn
+  commenter: quentin
+
 aaron_admin:
   url_token: aaron_admin
   page: facebook
-  commenter: quentin
+  commenter: aaron
