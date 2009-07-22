@@ -479,7 +479,7 @@
     
     this.help_content.append(main_help);
     this.help_content.append(secondary_help);
-    this.help_content.addClass("hide");
+    this.help_content.hide();
 
     // JUGGERNAUT
     // was this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="border:0;" height="0" width="0"></iframe>';
