@@ -17,7 +17,7 @@
         header  : 'outspokes_topbar',
         headerLeft : 'outspokes_topbar_left',
         content : 'widget_content',
-        designs : 'widget_designs',
+        designs : 'outspokes_widget_designs',
         help : 'outspokes_help',
         logout: 'outspokes_logout',
         help_content: 'outspokes_help_content',

@@ -23,8 +23,8 @@
       disagree_with             : function(id) {
         return "disagree_with_comment_" + parseInt(id);
       },
-      agreed              : 'agreed',
-      disagreed           : 'disagreed',
+      agreed              : 'outspokes_agreed',
+      disagreed           : 'outspokes_disagreed',
       comment_form        : "outspokes_new_comment",
       reply_links         : "comment-reply",
       cform               : "outspokes_comment_form",
