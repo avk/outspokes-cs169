@@ -1,10 +1,10 @@
 class Widget::FeedbacksController < Widget::WidgetController
   
-  before_filter :validate_callback, :only => [:index, :new_feedback_for_page, :destroy]
+  before_filter :validate_callback, :only => [:index, :create, :destroy]
   before_filter :authorize
   
   # Authenticity Token doesn't work with random JS calls unless we want to somehow hack that in to js?
-  skip_before_filter :verify_authenticity_token, :only => [:new_feedback_for_page, :destroy]
+  skip_before_filter :verify_authenticity_token, :only => [:create, :destroy]
 
   # GET /widget/feedbacks.js
   # params[:url_token] => 'abcdef'
@@ -41,13 +41,13 @@ class Widget::FeedbacksController < Widget::WidgetController
     end
   end
   
-  # POST /new_feedback_for_page.js
+  # POST /widget/feedbacks/create.js
   # params[:url_token] => 'abcdef'
   # params[:current_page] => 'http://hi.com/faq'
   # params[:callback] => 'some_function'
   # params[:target] => 'html'
   # params[:content] => 'blah blah blah blah'
-  def new_feedback_for_page
+  def create
     success = false
     if @authorized
       content = sanitize(params[:content], true)
@@ -116,8 +116,8 @@ class Widget::FeedbacksController < Widget::WidgetController
     
     respond_to do |format|
       format.html do
-          @json_data = result.to_json
-          render :action => :new_feedback_for_page
+        @json_data = result.to_json
+        render :action => :create
       end
     end
   end

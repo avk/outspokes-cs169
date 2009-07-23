@@ -12,8 +12,6 @@ ActionController::Routing::Routes.draw do |map|
   map.widget '/widget/:id.js', :controller => 'widget/source', :action => 'index'
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
 
-  map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
-  map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :post }
   map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
 

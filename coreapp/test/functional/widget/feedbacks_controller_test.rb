@@ -114,7 +114,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+      post :create, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html",
           :email => "quentin@example.com", :password => "monkey"
     end
@@ -129,7 +129,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
 
     assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+      post :create, :url_token => invite.url_token, :format => "js", 
            :current_page => page.url, :callback => callback, :content => content, :target => "html",
            :isPrivate => false
     end
@@ -153,7 +153,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     new_url = page.url + "/ASDFWUTLOL.asp.html"
     
     assert_difference "Page.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+      post :create, :url_token => invite.url_token, :format => "js", 
           :current_page => new_url, :callback => callback, :content => content, :target => "html",
           :email => "quentin@example.com", :password => "monkey"
     end
@@ -171,7 +171,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_no_difference "Comment.count" do
-      post :new_feedback_for_page, :url_token => "LOL!!!!!", :format => "js", 
+      post :create, :url_token => "LOL!!!!!", :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html"
     end
     
@@ -184,7 +184,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_no_difference "Comment.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
+      post :create, :url_token => invite.url_token, :format => "html", 
           :current_page => "bullshit", :callback => callback, :content => content, :target => "html"
     end
 
@@ -208,7 +208,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     
     illegal_callbacks = illegal_chars + js_keywords + spaces
     illegal_callbacks.each do |callback|
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+      post :create, :url_token => invite.url_token, :format => "js", 
            :current_page => invite.page.url, :callback => callback, :content => 'doesn\'t matter', :target => "html"
       assert @response.body == '{}'
     end
@@ -220,7 +220,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     callback = 'jsfeed'
     
     assert_no_difference "Comment.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html", 
+      post :create, :url_token => invite.url_token, :format => "html", 
           :current_page => page.url, :callback => callback, :content => '', :target => "html"
     end
     
@@ -233,7 +233,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     callback = 'jsfeed'
     
     assert_no_difference "Comment.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "html",
+      post :create, :url_token => invite.url_token, :format => "html",
           :current_page => page.url, :callback => callback, :content => 'anything at all', :target => ''
     end
     
@@ -247,12 +247,12 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     content = "HUH THIS SITE IS LAME YO"
     
     assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :current_page => page.url,
+      post :create, :url_token => invite.url_token, :current_page => page.url,
            :callback => callback, :content => content, :target => "html", :windowname => "true",
            :format => "html", :email => "quentin@example.com", :password => "monkey"
     end
     
-    assert_template "new_feedback_for_page"
+    assert_template "create"
     validate_windowname :authorized => true, :admin => page.site.validation_token, :success => true
   end
   
@@ -280,7 +280,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     content = "replying to first feedback a;lkjsdflkasdjfla"
     
     assert_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+      post :create, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html",
           :parent_id => parent.id, :email => "quentin@example.com", :password => "monkey"
     end
@@ -300,7 +300,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     parent.destroy
     
     assert_no_difference "page.feedbacks.count" do
-      post :new_feedback_for_page, :url_token => invite.url_token, :format => "js", 
+      post :create, :url_token => invite.url_token, :format => "js", 
           :current_page => page.url, :callback => callback, :content => content, :target => "html",
           :parent_id => parent.id, :email => "quentin@example.com", :password => "monkey"
     end

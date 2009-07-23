@@ -65,7 +65,7 @@ class Widget::UserStylesController < Widget::WidgetController
     respond_to do |wants|
       wants.html do
         @json_data = result.to_json
-        render :template => 'widget/feedbacks/new_feedback_for_page'
+        render :template => 'widget/feedbacks/create'
       end
     end
   end
