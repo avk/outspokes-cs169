@@ -15,7 +15,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     assert invite.commenter_id != feedback.commenter_id
     
     assert_no_difference "Opinion.count" do
-      post :opinion, :url_token => "LOL!!!!!", :current_page => page.url, 
+      post :create, :url_token => "LOL!!!!!", :current_page => page.url, 
            :feedback_id => feedback.id, :opinion => 'agree', :callback => callback, :format => "html"
     end
     
@@ -29,7 +29,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     assert invite.commenter_id != feedback.commenter_id
     
     assert_no_difference "Opinion.count" do
-      post :opinion, :url_token => invite.url_token, :current_page => 'bullshit', 
+      post :create, :url_token => invite.url_token, :current_page => 'bullshit', 
            :feedback_id => feedback.id, :opinion => 'agree', :callback => callback, :format => "html"
     end
     
@@ -57,7 +57,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     illegal_callbacks = illegal_chars + js_keywords + spaces
     illegal_callbacks.each do |callback|
       assert_no_difference "Opinion.count" do
-        post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
+        post :create, :url_token => invite.url_token, :current_page => invite.page.url, 
              :feedback_id => feedback.id, :opinion => 'agree', :callback => callback, :format => "html"
         assert @response.body == '{}'
       end
@@ -74,7 +74,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     
     invalid.each do |inv|
       assert_no_difference "Opinion.count" do
-        post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
+        post :create, :url_token => invite.url_token, :current_page => invite.page.url, 
              :feedback_id => feedback.id, :opinion => '', :callback => callback, :format => "html"
       end
       validate_post_fail
@@ -88,7 +88,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     
     bad_feedback_ids.each do |f_id|
       assert_no_difference "Opinion.count" do
-        post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
+        post :create, :url_token => invite.url_token, :current_page => invite.page.url, 
              :feedback_id => f_id, :opinion => 'agreed', :callback => callback, :format => "html"
       end
       validate_post_fail
@@ -103,7 +103,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     opinion = 'agree'
     
     assert_difference "Opinion.count" do
-      post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
+      post :create, :url_token => invite.url_token, :current_page => invite.page.url, 
            :feedback_id => feedback.id, :opinion => opinion, :callback => callback, :format => "html"
     end
     
@@ -118,7 +118,7 @@ class Widget::OpinionsControllerTest < ActionController::TestCase
     opinion = 'disagree'
     
     assert_difference "Opinion.count" do
-      post :opinion, :url_token => invite.url_token, :current_page => invite.page.url, 
+      post :create, :url_token => invite.url_token, :current_page => invite.page.url, 
            :feedback_id => feedback.id, :opinion => opinion, :callback => callback, :format => "html"
     end
     

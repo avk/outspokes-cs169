@@ -7,14 +7,13 @@ ActionController::Routing::Routes.draw do |map|
     widget.resources :user_styles
     widget.resources :bookmarklet
     widget.resources :feedbacks
+    widget.resources :opinions
   end
 
   map.widget '/widget/:id.js', :controller => 'widget/source', :action => 'index'
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
 
   map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :post }
-  map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
-
 
   ### coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'
