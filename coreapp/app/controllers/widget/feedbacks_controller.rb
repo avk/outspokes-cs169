@@ -1,16 +1,16 @@
 class Widget::FeedbacksController < Widget::WidgetController
   
-  before_filter :validate_callback, :only => [:feedback_for_page, :new_feedback_for_page, :destroy]
+  before_filter :validate_callback, :only => [:index, :new_feedback_for_page, :destroy]
   before_filter :authorize
   
   # Authenticity Token doesn't work with random JS calls unless we want to somehow hack that in to js?
   skip_before_filter :verify_authenticity_token, :only => [:new_feedback_for_page, :destroy]
 
-  # GET /feedback_for_page.js
+  # GET /widget/feedbacks.js
   # params[:url_token] => 'abcdef'
   # params[:current_page] => 'http://hi.com/faq'
   # params[:callback] => 'some_function'
-  def feedback_for_page
+  def index
     comments = []
     page_id = nil
     if @authorized
@@ -41,7 +41,7 @@ class Widget::FeedbacksController < Widget::WidgetController
     end
   end
   
-  # POST /feedback_for_page.js
+  # POST /new_feedback_for_page.js
   # params[:url_token] => 'abcdef'
   # params[:current_page] => 'http://hi.com/faq'
   # params[:callback] => 'some_function'

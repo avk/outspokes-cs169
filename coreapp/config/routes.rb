@@ -6,10 +6,12 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :widget do |widget|
     widget.resources :user_styles
     widget.resources :bookmarklet
+    widget.resources :feedbacks
   end
+
   map.widget '/widget/:id.js', :controller => 'widget/source', :action => 'index'
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
-  map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
+
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :post }

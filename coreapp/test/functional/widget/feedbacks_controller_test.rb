@@ -12,7 +12,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     callback = "rofflecopter"
     feedback = []
     
-    get :feedback_for_page, :url_token => 'bullshit', :current_page => invite.page.url, :callback => callback
+    get :index, :url_token => 'bullshit', :current_page => invite.page.url, :callback => callback
     
     validate_json :callback => callback, :authorized => false, :admin => false, :feedback => feedback
   end
@@ -22,7 +22,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     callback = "rofflecopter"
     feedback = []
     
-    get :feedback_for_page, :url_token => invite.url_token, :current_page => 'bullshit', :callback => callback
+    get :index, :url_token => invite.url_token, :current_page => 'bullshit', :callback => callback
     
     validate_json :callback => callback, :authorized => false, :admin => false, :feedback => feedback
   end
@@ -33,7 +33,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     feedback = []
     uninvited_page_url = invites(:page).page.url
 
-    get :feedback_for_page, :url_token => invite.url_token, :current_page => uninvited_page_url, :callback => callback
+    get :index, :url_token => invite.url_token, :current_page => uninvited_page_url, :callback => callback
     
     validate_json :callback => callback, :authorized => false, :admin => false, :feedback => feedback
   end
@@ -44,7 +44,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     feedback = []
     page_url = "http://" + URI.parse(invites(:one).page.url).host + "/nowayinhellshouldthisbeinourfixtures.xhtml"
     
-    get :feedback_for_page, :url_token => invite.url_token, :current_page => page_url,
+    get :index, :url_token => invite.url_token, :current_page => page_url,
         :callback => callback, :email => "quentin@example.com", :password => "monkey"
     
     validate_json :callback => callback, :authorized => true,
@@ -67,7 +67,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     
     illegal_callbacks = illegal_chars + js_keywords + spaces
     illegal_callbacks.each do |callback|
-      get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback, :format => "js"
+      get :index, :url_token => invite.url_token, :current_page => invite.page.url, :callback => callback, :format => "js"
       assert @response.body == '{}'
     end
   end
@@ -79,7 +79,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     feedback = invite.page.feedbacks.map { |f| f.json_attributes(invite.commenter) }
     
     assert invite.page.feedbacks.size > 0, "your feedbacks fixtures don't have enough data for this test"
-    get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url,
+    get :index, :url_token => invite.url_token, :current_page => invite.page.url,
         :callback => callback, :email => "quentin@example.com", :password => "monkey"
     
     validate_json :callback => callback, :authorized => true,
@@ -101,7 +101,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     #feedback = invite.page.feedbacks.find(:all, :conditions => 
     #           [ "private = ? OR commenter_id = ?", false, invite.commenter_id ]).map { |f| f.json_attributes(invite.commenter) }
 
-    get :feedback_for_page, :url_token => invite.url_token, :current_page => invite.page.url,
+    get :index, :url_token => invite.url_token, :current_page => invite.page.url,
         :callback => callback
     
     validate_json :callback => callback, :authorized => true, :feedback => feedback
@@ -326,25 +326,25 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     last_validation_token = nil
 
     # url_token, url_token not valid, commenter url_token
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => commenter_url_token + "blah"
     site.reload
     validate_json :callback => callback, :authorized => false, :admin => false
 
     # url_token, url_token not valid, admin url_token
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => admin_url_token + "blah"
     site.reload
     validate_json :callback => callback, :authorized => false, :admin => false
 
     # url_token, url_token valid, commenter url_token
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => commenter_url_token
     site.reload
     validate_json :callback => callback, :authorized => true, :admin => false
 
     # url_token, url_token valid, admin url_token, email & password, email & password valid
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => admin_url_token, :email => '1@ex.com', :password => 'test123'
     site.reload
     validate_json :callback => callback, :authorized => true, :admin => site.validation_token
@@ -352,7 +352,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     current_validation_token = site.validation_token
 
     # url_token, url_token valid, admin url_token, email & password, email & password invalid
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => admin_url_token, :email => '1@ex.com', :password => 'blah'
     site.reload
     validate_json :callback => callback, :authorized => false, :admin => false
@@ -360,7 +360,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
     # url_token, url_token valid, admin url_token
     # validation_token, validation_token valid, timestamp fine
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => admin_url_token, :validation_token => current_validation_token
     site.reload
     validate_json :callback => callback, :authorized => true, :admin => site.validation_token
@@ -371,7 +371,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     fake_timestamp = 5.hours.ago
     site.validation_timestamp = fake_timestamp
     site.save
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => admin_url_token, :validation_token => current_validation_token
     site.reload
     validate_json :callback => callback, :authorized => true, :admin => site.validation_token
@@ -382,7 +382,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
 
     # url_token, url_token valid, admin url_token
     # validation_token, validation_token invalid
-    get :feedback_for_page, :current_page => page.url, :callback => callback,
+    get :index, :current_page => page.url, :callback => callback,
         :url_token => admin_url_token, :validation_token => last_validation_token
     site.reload
     validate_json :callback => callback, :authorized => false, :admin => false
@@ -393,7 +393,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     invite = invites(:quentin_admin_msn)
     page = invite.page
     correct_site_id = page.site.id
-    get :feedback_for_page, :current_page => page.url, :callback => "callback",
+    get :index, :current_page => page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "quentin@example.com",
         :password => "monkey"
     page.site.reload
@@ -405,7 +405,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     invite = invites(:quentin_admin_msn)
     page = invite.page
     correct_site_id = page.site.id
-    get :feedback_for_page, :current_page => page.url, :callback => "callback",
+    get :index, :current_page => page.url, :callback => "callback",
         :url_token => invite.url_token, :site_id => correct_site_id,
         :email => "quentin@example.com", :password => "monkey"
     page.site.reload
@@ -418,7 +418,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     invite = invites(:page)
     page = invite.page
     assert page.account != invite.commenter
-    get :feedback_for_page, :current_page => page.url, :callback => "callback", :url_token => invite.url_token
+    get :index, :current_page => page.url, :callback => "callback", :url_token => invite.url_token
     json = get_json("callback")
     assert !json[:site_id], "site_id should not be present in the returned JSON, received #{json[:site_id].inspect}"
   end
@@ -428,7 +428,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
     assert invite.page.site.commenters.length == 1, "The only commenter on this site should be the admin"
     assert invite.page.account == invite.commenter, "The commenter of the invite should be the admin"
 
-    get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
+    get :index, :current_page => invite.page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "aaron@example.com", :password => "monkey"
     invite.reload
     validate_json :callback => "callback", :authorized => true, :admin => invite.page.site.validation_token,
@@ -438,7 +438,7 @@ class Widget::FeedbacksControllerTest < ActionController::TestCase
   def test_should_not_indicate_no_commenters_if_commenters_exist
     invite = invites(:quentin_admin_msn)
     assert invite.page.site.commenters.length > 1, "The site should have at least one commenter aside from the admin"
-    get :feedback_for_page, :current_page => invite.page.url, :callback => "callback",
+    get :index, :current_page => invite.page.url, :callback => "callback",
         :url_token => invite.url_token, :email => "quentin@example.com", :password => "monkey"
     invite.reload
     validate_json :callback => "callback", :authorized => true, :admin => invite.page.site.validation_token
