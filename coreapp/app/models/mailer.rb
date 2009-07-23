@@ -33,6 +33,13 @@ class Mailer < ActionMailer::Base
     body         :notification => notification
   end
 
+  def reset_password(account)
+    setup_email
+    recipients   account.email
+    subject      "Reset password request"
+    body         :account => account
+  end
+
   protected
 
   def setup_email

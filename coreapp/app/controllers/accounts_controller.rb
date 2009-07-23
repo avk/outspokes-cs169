@@ -56,4 +56,21 @@ class AccountsController < ApplicationController
     end
   end
 
+  # GET /reset-password
+  #   renders the reset page
+  # PUT /reset-password
+  #   params[:email] => 'jch@whatcodecraves.com'
+  def reset_password
+    @title = 'Reset password'
+    if request.put? && params[:email]
+      account = Account.find_by_email(params[:email])
+      if account.nil?
+        flash.now[:warning] = "Couldn't find a account with that email"
+      else
+        account.reset_password!
+        flash.now[:notice] = "Check your email for the reset password"
+      end
+    end
+  end
+
 end

@@ -105,6 +105,22 @@ class AccountsControllerTest < ActionController::TestCase
     assert commenters(:quentin).preferred_deliver_notifications
   end
 
+  test "should render reset_password.html.erb for GET reset-password" do
+    get :reset_password
+    assert_template 'accounts/reset_password.html.erb'
+  end
+
+  test "should warn if account can't be found by email" do
+    put :reset_password, :email => 'untouchable@outspokes.com'
+    assert_equal "Couldn't find a account with that email", flash[:warning]
+  end
+  
+  # see also: test/unit/account_test.rb for reset_password!
+  test "should reset password if email is found" do
+    put :reset_password, :email => commenters(:quentin).email
+    assert_equal "Check your email for the reset password", flash[:notice]
+  end
+
   protected
     def create_account(options = {})
       post :create, :account => {  :email => 'quire@example.com',
