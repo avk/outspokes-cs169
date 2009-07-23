@@ -7,5 +7,9 @@ module AuthenticatedTestHelper
   def authorize_as(account)
     @request.env["HTTP_AUTHORIZATION"] = account ? ActionController::HttpAuthentication::Basic.encode_credentials(commenters(account).email, 'monkey') : nil
   end
+
+  def assert_login_required
+    assert_redirected_to new_session_path
+  end
   
 end
