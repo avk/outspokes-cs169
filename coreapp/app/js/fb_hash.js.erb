@@ -27,7 +27,7 @@ function() {
       return "<%= CONFIG.url %>/widget/user_styles/" + id + ".css";
     };
     fb.env.design_css_address = "<%= CONFIG.url %>/stylesheets/userstyles.css";
-    fb.env.destroy_address = "<%= CONFIG.url %>/delete_feedback";
+    fb.env.destroy_address = "<%= CONFIG.url %>/widget/feedbacks";
     // will be set properly in the callback if authorized as the admin
     fb.env.admin_panel_address = null;
     fb.env.first_visit = (fb.cookie('fb_hash_url_token')) ? false : true;

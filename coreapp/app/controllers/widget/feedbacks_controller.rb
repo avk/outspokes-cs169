@@ -122,7 +122,7 @@ class Widget::FeedbacksController < Widget::WidgetController
     end
   end
 
-private
+  private
   
   # returns the appropriate comments for a page and account/commenter
   def get_comments(page)

@@ -13,8 +13,6 @@ ActionController::Routing::Routes.draw do |map|
   map.widget '/widget/:id.js', :controller => 'widget/source', :action => 'index'
   map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
 
-  map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :post }
-
   ### coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

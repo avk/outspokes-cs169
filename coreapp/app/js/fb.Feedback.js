@@ -59,7 +59,7 @@
       url_token: fb.env.url_token,
       current_page: fb.env.current_page,
       validation_token: _fb.admin(),
-      id: this.feedback_id
+      _method: 'delete'
     };
     var self = this;
     var callback = function(data) {
@@ -70,7 +70,7 @@
           self.remove();
       }
     };
-    $.post(fb.env.destroy_address, data, callback, "json")
+    $.post(fb.env.destroy_address + '/' + this.feedback_id, data, callback, "json")
     return true;
   }
   
