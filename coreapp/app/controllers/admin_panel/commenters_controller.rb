@@ -40,4 +40,20 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
     end
   end
 
+  # GET /admin_panel/resend-invite/:id
+  #   params[:id] - id of commenter to resend invite to
+  def resend_invite
+    if commenter = @site.commenters_without_account.find { |c| c.id.to_s == params[:id] }
+      if invite = commenter.invites.find_by_page_id(@site.home_page)
+        Mailer.deliver_commenter_invite(invite)
+        flash[:notice] = "Invitation resent"
+        redirect_to admin_panel_commenters_path(@site)
+        return
+      end
+    else
+      flash[:error] = "Could not resend invite to commenter"
+      render :template => "admin_panel/invalid"
+    end
+  end
+
 end

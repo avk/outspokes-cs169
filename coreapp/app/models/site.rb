@@ -7,7 +7,8 @@ class Site < ActiveRecord::Base
 
   before_validation :reformat_url
 
-  delegate :admin_url, :commenter_url, :to => :home_page
+  delegate :admin_url, :commenter_url, :commenters_without_account,
+    :to => :home_page
 
   validates_presence_of :account
   validates_associated :account
