@@ -112,7 +112,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   test "should warn if account can't be found by email" do
     put :reset_password, :email => 'untouchable@outspokes.com'
-    assert_equal "Couldn't find a account with that email", flash[:warning]
+    assert_equal "Couldn't find an account with that email", flash[:warning]
   end
   
   # see also: test/unit/account_test.rb for reset_password!
