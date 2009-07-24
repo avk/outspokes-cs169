@@ -23,7 +23,9 @@
     <div class="page_details">
       <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %>
       <span class="commenter_details">
-        <%= pluralize page.feedbacks.size, 'comment' %>
+        <%= pluralize(page.comments.size, 'comment') unless page.comments.empty? %>
+        <%= ", " unless page.comments.empty? %>
+        <%= pluralize(page.user_styles.size, 'design') unless page.user_styles.empty? %>
       </span>
       <span class="latest_feedback">
         <%= relative_date Date.parse(page.latest_feedback) %> @ 
