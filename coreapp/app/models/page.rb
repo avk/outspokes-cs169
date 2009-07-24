@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
   belongs_to :site
 
   has_many :invites, :dependent => :destroy, :validate => false
-  has_many :commenters, :through => :invites
+  has_many :commenters, :through => :invites  # reader doesn't include 'account'
   has_many :feedbacks, :dependent => :destroy, :validate => false
   has_many :comments, :dependent => :destroy
   has_many :user_styles, :dependent => :destroy
@@ -45,7 +45,11 @@ class Page < ActiveRecord::Base
     commenter_url(site.account) + '&admin=true'
   end
 
-protected
+  def commenters_without_account
+    commenters - [ account ]
+  end
+
+  protected
 
   def create_invite_for_account
     if invites.empty?

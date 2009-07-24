@@ -64,6 +64,13 @@ body {
   height: 20px;
 }
 
+form.button-to {
+  display: inline;
+}
+form.button-to div {
+  display: inline;
+}
+
 /* pages & commenters */
 
 /*.even {
@@ -99,7 +106,7 @@ body {
   color: #222;
 }
 
-.site_commenters li.invited_commenter a:hover {
+.site_commenters li.invited_commenter .commenter_email a:hover {
   border-bottom: 1px solid #444;
   color: #111;
 }
@@ -164,22 +171,29 @@ li.invited_commenter, li.site_page {
   font-size: .6em;
 }
 
-.remove_commenter,
+.resend_invite {
+  float: right;
+}
+.remove_commenter {
+  margin-left: 15px; /* for .resend_invite, above */
+}
+
+.site_commenters li.invited_commenter .remove_commenter,
 .remove_page {
   float: right;
   width: 20px;
 }
-.remove_commenter a,
-.remove_commenter a:link,
+.site_commenters li.invited_commenter .remove_commenter a,
+.site_commenters li.invited_commenter .remove_commenter a:link,
 .remove_page a,
 .remove_page a:link {
   background-color: transparent;
   color: #666;
   text-decoration: none;
 }
-.remove_commenter a:hover,
+.site_commenters li.invited_commenter .remove_commenter a:hover,
 .remove_page a:hover {
-  color: red;
+  color: #C1272D;
 }
 
 

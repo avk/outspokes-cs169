@@ -85,6 +85,12 @@ class PageTest < ActiveSupport::TestCase
     assert create_page.respond_to?(:commenters)
   end
 
+  test 'commenters_without_account should not include an account' do
+    page = create_page
+    assert_equal 1, page.commenters.size # include account
+    assert_equal 0, page.commenters_without_account.size
+  end
+
   test 'should delete all associated feedback instances when deleted' do
     page = nil
 
