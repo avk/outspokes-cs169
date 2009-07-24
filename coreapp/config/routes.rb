@@ -40,7 +40,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.commenters '/:site_id/:validation_token/commenters', :controller => 'commenters', :action => 'index', :conditions => { :method => :get }
     admin.invite '/:site_id/:validation_token/commenters', :controller => 'commenters', :action => 'create', :conditions => { :method => :post }
     admin.uninvite '/:site_id/:validation_token/commenters/:id', :controller => 'commenters', :action => 'destroy', :conditions => { :method => :delete }
-    admin.resend_invite '/:site_id/:validation_token/commenters/resend-invite/:id', :controller => 'commenters', :action => 'resend_invite', :conditions => { :method => :get }
+    admin.resend_invite '/:site_id/:validation_token/commenters/resend-invite/:id', :controller => 'commenters', :action => 'resend_invite', :conditions => { :method => :post }
   end
   
   # Sample of regular route:

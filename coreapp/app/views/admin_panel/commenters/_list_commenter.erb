@@ -6,10 +6,11 @@
     :method => :delete,
     :title => "Uninvite #{commenter.email}", :style => 'color:red' %>
   </div>
+  <%= button_to 'Resend Invite', admin_panel_resend_invite_path(@site, :id => commenter), :class => 'resend_invite' %>
+  &nbsp;
+  
   <span class="commenter_email">
     <%= mail_to commenter.email, commenter.truncated_email, { :subject => "Thanks for giving your feedback via Outspokes!"} %>
-    &nbsp;
-    <%= link_to '( resend invite )', admin_panel_resend_invite_path(@site, :id => commenter), :title => 'Resend invite', :style => 'color:teal' %>
     &nbsp;
     <%- if RAILS_ENV == "development" -%>
       <% final_url = @site.home_page.url.sub(/\/$/i, '') + '#url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>

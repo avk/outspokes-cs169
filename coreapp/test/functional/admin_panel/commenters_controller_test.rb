@@ -143,7 +143,7 @@ class AdminPanel::CommentersControllerTest < ActionController::TestCase
     commenter = commenters(:one)
     assert !@site.commenters_without_account.include?(commenter)
     
-    get :resend_invite, :site_id => @site.id, :validation_token => @site.validation_token, :id => commenter.id
+    post :resend_invite, :site_id => @site.id, :validation_token => @site.validation_token, :id => commenter.id
     assert_invalid
   end
 
@@ -151,7 +151,7 @@ class AdminPanel::CommentersControllerTest < ActionController::TestCase
     commenter = @site.commenters_without_account.first
 
     assert_difference "ActionMailer::Base.deliveries.size", 1 do
-      get :resend_invite, :site_id => @site.id, :validation_token => @site.validation_token, :id => commenter.id
+      post :resend_invite, :site_id => @site.id, :validation_token => @site.validation_token, :id => commenter.id
     end
     assert_redirected_to admin_panel_commenters_path(@site)
   end

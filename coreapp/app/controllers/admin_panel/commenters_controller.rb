@@ -40,7 +40,7 @@ class AdminPanel::CommentersController < AdminPanel::AdminController
     end
   end
 
-  # GET /admin_panel/resend-invite/:id
+  # POST /admin_panel/resend-invite/:id
   #   params[:id] - id of commenter to resend invite to
   def resend_invite
     if commenter = @site.commenters_without_account.find { |c| c.id.to_s == params[:id] }

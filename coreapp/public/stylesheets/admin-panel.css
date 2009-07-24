@@ -64,6 +64,13 @@ body {
   height: 20px;
 }
 
+form.button-to {
+  display: inline;
+}
+form.button-to div {
+  display: inline;
+}
+
 /* pages & commenters */
 
 /*.even {
@@ -164,7 +171,14 @@ li.invited_commenter, li.site_page {
   font-size: .6em;
 }
 
-.remove_commenter,
+.resend_invite {
+  float: right;
+}
+.remove_commenter {
+  margin-left: 15px; /* for .resend_invite, above */
+}
+
+.site_commenters li.invited_commenter .remove_commenter,
 .remove_page {
   float: right;
   width: 20px;
