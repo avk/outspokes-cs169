@@ -49,6 +49,22 @@ class AccountsControllerTest < ActionController::TestCase
       assert_response :success
     end
   end
+
+  test "should require login on GET edit" do
+    get :edit, :id => commenters(:quentin).id
+    assert_login_required
+  end
+
+  test "should require login on PUT update" do
+    put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
+      :password => 'foobara', :password_confirmation => 'foobar' }
+    assert_login_required
+  end
+
+  test "should require login on GET dashboard" do
+    get :dashboard, :id => commenters(:quentin).id
+    assert_login_required
+  end
   
   def test_should_update_account
     login_as :quentin
@@ -87,14 +103,6 @@ class AccountsControllerTest < ActionController::TestCase
       :preferred_deliver_notifications => new_preferred_notification
     }
     assert commenters(:quentin).preferred_deliver_notifications
-  end
-
-  def test_should_not_update_account_not_logged_in
-    assert_no_difference 'Account.count' do
-      put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
-           :password => 'foobara', :password_confirmation => 'foobar' }
-      assert_template 'accounts/edit.html.erb'
-    end
   end
 
   protected

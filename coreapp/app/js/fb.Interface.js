@@ -14,27 +14,26 @@
     this.dom = {
       widget  : { 
         wrapper : 'outspokes',
-        header  : 'topbar',
-        headerLeft : 'topbarLeft',
-        content : 'widget_content',
-        designs : 'widget_designs',
-        help : 'help',
-        logout: 'logout',
-        help_content: 'help_content',
-        contact: 'contactus',
+        header  : 'outspokes_topbar',
+        headerLeft : 'outspokes_topbar_left',
+        content : 'outspokes_widget_content',
+        designs : 'outspokes_widget_designs',
+        help : 'outspokes_help',
+        logout: 'outspokes_logout',
+        help_content: 'outspokes_help_content',
         topbar_height : '28px',
         topbar_int_height : 28, //same as topbar_height in int form
         numerical_height : 250,
         height : '250px',
-        navigation : 'navigation',
+        navigation : 'outspokes_navigation',
         collapse : 'outspokes_collapse_all',
         uncollapse : 'outspokes_uncollapse_all'
       },
       admin   : {
         iframe  : 'outspokes_admin_panel_iframe',
         panel   : 'outspokes_admin_panel',
-        open    : 'open_admin_panel',
-        close   : 'close_admin_panel',
+        open    : 'outspokes_open_admin_panel',
+        close   : 'outspokes_close_admin_panel',
         overlay : 'outspokes_overlay',
       },
       non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +
@@ -76,7 +75,7 @@
       );
       // should only display the sort menu for the current navigation link
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].filter('.outspokes-current').find('.hide_when_tab_unselected').show();
+        this.nav.elements.list[which_element].filter('.outspokes-current').find('.outspokes_hide_when_tab_unselected').show();
       }
     };
     
@@ -95,7 +94,7 @@
       // hide the sort menu for all navigation links, 
       // since it doesn't have any visible effect when the widget's collapsed
       for (var which_element = 0; which_element < this.nav.elements.list.length; which_element++) {
-        this.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
+        this.nav.elements.list[which_element].find('.outspokes_hide_when_tab_unselected').hide();
       }
     };
     
@@ -197,13 +196,13 @@
               }
               
               fb.i.nav.setCurrent(which_element);
-              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').show();
+              fb.i.nav.elements.list[which_element].find('.outspokes_hide_when_tab_unselected').show();
               // Save the current tab in widget cookie state
               fb.save_state("widget_tab", which_element);
               content.show();              
             } else {
               content.hide();
-              fb.i.nav.elements.list[which_element].find('.hide_when_tab_unselected').hide();
+              fb.i.nav.elements.list[which_element].find('.outspokes_hide_when_tab_unselected').hide();
             }
           }
         }
@@ -256,7 +255,7 @@
     
     // COMMENT SORT MENU //////////////////////////////////////////////////////////////////
     
-    var sort_dropdown = $('<select id="comments_filter" class="hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
+    var sort_dropdown = $('<select id="outspokes_comments_filter" class="outspokes_hide_when_tab_unselected"><option>Newest first</option><option>Oldest first</option>' + 
         '<option>Popular</option><option>Unpopular</option><option>Controversial</option>' +
         '<option>Neutral</option>');
     
@@ -287,7 +286,7 @@
     
     // COMMENT TOGGLE LINKS
     
-    this.collapse_link = $('<a class="hide_when_tab_unselected" title="Collapse all comments">&nbsp;</a>').attr('id',this.dom.widget.collapse);
+    this.collapse_link = $('<a class="outspokes_hide_when_tab_unselected" title="Collapse all comments">&nbsp;</a>').attr('id',this.dom.widget.collapse);
     this.nav.elements.list[0].append(this.collapse_link);
     this.collapse_link.click(function(e) {
         fb.i.comment.collapse_all();
@@ -298,7 +297,7 @@
         }
     })
 
-    this.uncollapse_link = $('<a class="hide_when_tab_unselected" title="Uncollapse all comments">&nbsp;</a>').attr('id',this.dom.widget.uncollapse);
+    this.uncollapse_link = $('<a class="outspokes_hide_when_tab_unselected" title="Uncollapse all comments">&nbsp;</a>').attr('id',this.dom.widget.uncollapse);
     this.nav.elements.list[0].append(this.uncollapse_link);
     this.uncollapse_link.click(function(e) {
         fb.i.comment.uncollapse_all();
@@ -420,14 +419,14 @@
       this.hide_widget();
       
       if (!_fb.admin()) { // only commenters see the intro on their first visit        
-        var intro_bubble = $('<div></div>').attr('id','bubble');
+        var intro_bubble = $('<div></div>').attr('id','outspokes_bubble');
         
-        var close_bubble = function() { $("#bubble").hide(); }
-        var close_bubble_link = $('<a>X</a>').attr('id','close_intro');
+        var close_bubble = function() { $("#outspokes_bubble").hide(); }
+        var close_bubble_link = $('<a>X</a>').attr('id','outspokes_close_intro');
         close_bubble_link.click( close_bubble );
         intro_bubble.append(close_bubble_link);
         
-        intro_bubble.append("<p id='bubble_content'>Welcome to <strong>Outspokes</strong>.<br />" + 
+        intro_bubble.append("<p id='outspokes_bubble_content'>Welcome to <strong>Outspokes</strong>.<br />" + 
           "<span>Give feedback by clicking on the bar. Bookmark this page to easily give feedback later.</span></p>");
         
         // the bubble should be closed when clicking on the following:
@@ -479,7 +478,7 @@
     
     this.help_content.append(main_help);
     this.help_content.append(secondary_help);
-    this.help_content.addClass("hide");
+    this.help_content.hide();
 
     // JUGGERNAUT
     // was this.juggernaut='<iframe src ="'+fb.env.juggernaut_iframe_address+_fb.page_id()+'" style="border:0;" height="0" width="0"></iframe>';

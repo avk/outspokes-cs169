@@ -29,7 +29,7 @@ class PageTest < ActiveSupport::TestCase
     assert new_page.new_record?
     assert !new_page.valid?
     new_page.url = site.url + "/this/doesnt/exist"
-    assert new_page.valid?
+    assert_valid new_page
     assert new_page.save
     assert !new_page.new_record?
   end

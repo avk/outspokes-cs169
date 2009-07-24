@@ -214,8 +214,8 @@ version: 3.0.0pr2
   width: 50%;
   z-index: 100002;
 }
-#outspokes_admin_panel a#close_admin_panel,
-#outspokes_admin_panel a#close_admin_panel:link {
+#outspokes_admin_panel a#outspokes_close_admin_panel,
+#outspokes_admin_panel a#outspokes_close_admin_panel:link {
   background-color: transparent;
   background-image: url(/images/x_icon_40x40_2.png);
   border-bottom: none;
@@ -232,10 +232,10 @@ version: 3.0.0pr2
   width: 40px;
   z-index: 1003;
 }
-#outspokes_admin_panel a#close_admin_panel:visited {
+#outspokes_admin_panel a#outspokes_close_admin_panel:visited {
   color: #333;
 }
-#outspokes_login_panel_inner.first_time_admin {
+#outspokes_login_panel_inner.outspokes_first_time_admin {
   height: 250px;
 }
 #outspokes_login_fields {
@@ -259,10 +259,6 @@ version: 3.0.0pr2
 
 #outspokes strong {
   font-weight: bold;
-}
-
-#outspokes .hide {
-  display: none;
 }
 
 #outspokes em {
@@ -306,7 +302,7 @@ version: 3.0.0pr2
 * COMMENTS
 */
 
-#outspokes #new_comment, #outspokes #comment_list {
+#outspokes #outspokes_comment_list {
   /*  must change this if heights are changed in fb.Interface and fb.Interface.comment
       Remember that you also have to consider padding in the top bar to set this correctly */
   height: 217px; 
@@ -314,42 +310,44 @@ version: 3.0.0pr2
 
 /* COMMENT LIST */
 
-#outspokes #comment_list {
+#outspokes #outspokes_comment_list {
   float: left;
   width: 70%;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #333;
   line-height: 120%;
-  
 }
 
-#outspokes #comment_list .options {
+#outspokes #outspokes_comment_list .outspokes_options {
   text-align: right;
 }
-#outspokes #comment_list .options button {
+#outspokes #outspokes_comment_list .outspokes_options button {
   cursor: pointer;
   padding:1px 5px;
   font-weight:bold;
   margin: 1px 0 3px;
 }
 
-#outspokes #comment_list .options button.agree:hover {
+#outspokes #outspokes_comment_list .outspokes_options button.outspokes_agree:hover {
   color: green;
 }
 
-#outspokes #comment_list .options button.disagree:hover {
+#outspokes #outspokes_comment_list .outspokes_options button.outspokes_disagree:hover {
   color: #C1272D;
 }
 
-#outspokes #comment_list .thread {
+#outspokes #outspokes_comment_list .outspokes_thread {
   margin: 0 0 7px 5px;
 }
-#outspokes #comment_list .replies .thread {
+#outspokes #outspokes_comment_list .outspokes_replies .outspokes_thread {
   margin-bottom: 0;
 }
+#outspokes #outspokes_comment_list .outspokes_replies {
+  margin-left:1.5em;
+}
 
-#outspokes #comment_list .cmt_bar {
+#outspokes #outspokes_comment_list .outspokes_cmt_bar {
   background: #fff url(/images/unopinionated_header.png) repeat-x center -4px;
   height: 15px;
   padding: 3px .7em;
@@ -358,26 +356,26 @@ version: 3.0.0pr2
   border-width: 0px 0px 0px 1px;
   overflow: hidden;
 }
-#outspokes #comment_list .cmt_bar .private {
+#outspokes #outspokes_comment_list .outspokes_cmt_bar .outspokes_private {
   float: left;
   color: #335588;
 }
 
-#outspokes #comment_list .cmt_bar.disagreed {
+#outspokes #outspokes_comment_list .outspokes_cmt_bar.outspokes_disagreed {
   background: #fff url(/images/disagreed_header.png) repeat-x center -4px;
 }
-#outspokes #comment_list .cmt_bar.agreed {
+#outspokes #outspokes_comment_list .outspokes_cmt_bar.outspokes_agreed {
   background: #fff url(/images/agreed_header.png) repeat-x center -4px;
 }
 
-#outspokes #comment_list .cmt_bar .snippet {
+#outspokes #outspokes_comment_list .outspokes_cmt_bar .outspokes_snippet {
   color: #333333;
   display: inline;
   font-style: italic;
   padding-left: 5px;
 }
 
-#outspokes #comment_list .cmt_bar .targeted_icon {
+#outspokes #outspokes_comment_list .outspokes_cmt_bar .outspokes_targeted_icon {
   width: 15px;
   height: 15px;
   float: left;
@@ -385,22 +383,22 @@ version: 3.0.0pr2
   padding: 0 5px;
 }
 
-#outspokes #comment_list .targeted .cmt_bar .targeted_icon {
+#outspokes #outspokes_comment_list .outspokes_targeted .outspokes_cmt_bar .outspokes_targeted_icon {
   background: url(/images/target-icon-small.png) no-repeat center center;
 }
 
-#outspokes #comment_list .targeted .cmt_bar .targeted_icon:hover {
+#outspokes #outspokes_comment_list .outspokes_targeted .outspokes_cmt_bar .outspokes_targeted_icon:hover {
   background-color: #ccc;
 }
 
-#outspokes #comment_list .missing_target {
+#outspokes #outspokes_comment_list .outspokes_missing_target {
   border-bottom: 1px solid #C1272D;
   color: #C1272D;
   font-style: italic;
   margin-bottom: 3px;
 }
 
-#outspokes #comment_list .cmt_content {
+#outspokes #outspokes_comment_list .outspokes_cmt_content {
   line-height: 120%;
   padding:.7em;
   background-color: white;
@@ -409,13 +407,13 @@ version: 3.0.0pr2
   border-width: 0px 0px 1px 1px;
 }
 
-#outspokes #comment_list .commenter_name {
+#outspokes #outspokes_comment_list .outspokes_commenter_name {
   font-weight: bold;
   float: left;
   margin-right: 10px;
 }
 
-#outspokes #comment_list .reply_count {
+#outspokes #outspokes_comment_list .outspokes_reply_count {
   float: right;
   margin-top: -13px;
   text-align: left;
@@ -424,67 +422,65 @@ version: 3.0.0pr2
   font-size: 0.9em;
 }
 
-#outspokes #comment_list .flattened .reply_to_text {
+#outspokes #outspokes_comment_list .outspokes_flattened .outspokes_reply_to_text {
   display: inline;
 }
 
-#outspokes #comment_list  .reply_to_text, #outspokes #comment_list  .collapsed .reply_to_text {
+#outspokes #outspokes_comment_list .outspokes_reply_to_text, 
+#outspokes #outspokes_comment_list .outspokes_collapsed .outspokes_reply_to_text {
   display: none;
 }
 
-#outspokes #comment_list  .collapsed .cmt_bar {
+#outspokes #outspokes_comment_list .outspokes_collapsed .outspokes_cmt_bar {
   -moz-border-radius-bottomleft: 7px;
 }
 
-#outspokes #comment_list .reply_to_text a:hover {
+#outspokes #outspokes_comment_list .outspokes_reply_to_text a:hover {
   text-decoration: underline;
 }
 
-#outspokes #comment_list .cmt_date {
+#outspokes #outspokes_comment_list .outspokes_cmt_date {
   font-size: 0.8em;
   float: right;
   width: 150px;
   text-align: right;
 }
 
-#outspokes #comment_list .cmt_delete_X {
+#outspokes #outspokes_comment_list .outspokes_cmt_delete_X {
   color: #C1272D;
   margin-left: 5px;
   padding: 5px;
   font-weight: bold;
 }
 
-#outspokes #comment_list .cmt_delete_X:hover {
+#outspokes #outspokes_comment_list .outspokes_cmt_delete_X:hover {
   background-color: #ccc;
 }
 
-#outspokes #comment_list .cns_buttons {
+#outspokes #outspokes_comment_list .outspokes_cns_buttons {
   padding: 0 5px;
   display: inline;
 }
 
-#outspokes #comment_list .cns_buttons span{
+#outspokes #outspokes_comment_list .outspokes_cns_buttons span{
   padding: 0 3px;
   width: 100%;
 }
 
-#outspokes #comment_list .cns_buttons .agreed {
+#outspokes #outspokes_comment_list .outspokes_cns_buttons .outspokes_agreed {
   color: green;
 }
-#outspokes #comment_list .cns_buttons .disagreed {
+#outspokes #outspokes_comment_list .outspokes_cns_buttons .outspokes_disagreed {
   color: #C1272D;
 }
 
-#outspokes #comment_list .replies {
-  margin-left:1.5em;
-}
 
 
 /* END COMMENT LIST */
 
 /* COMMENTING FORM */
 
-#outspokes #new-comment {
+#outspokes #outspokes_new_comment {
   background-color: transparent;
   color: #eee;
   float: right;
@@ -515,7 +511,7 @@ version: 3.0.0pr2
   position: relative;
   top: 1px;
 }
-#outspokes .outspokes_target_button.target_set {
+#outspokes .outspokes_target_button.outspokes_target_set {
   background-color: #C1272D;
   border: 1px solid #FFF;
   border-bottom: none;
@@ -527,11 +523,11 @@ version: 3.0.0pr2
   padding: 8px 5px;
 }
 
-#outspokes #comment_form {
+#outspokes #outspokes_comment_form {
   float: right;
   width: 100%;
 }
-#outspokes #comment_form textarea {
+#outspokes #outspokes_comment_form textarea {
   background-color: transparent;
   border: none;
   color: #333;
@@ -547,20 +543,20 @@ version: 3.0.0pr2
   font-size: 10px;
 }
 
-#outspokes #outspokes_form_buttons #private_wrapper {
+#outspokes #outspokes_form_buttons #outspokes_private_wrapper {
   float: left;
   position: relative;
   left: 5px;
   top: 2px;
 }
-#outspokes #outspokes_form_buttons #private_wrapper label {
+#outspokes #outspokes_form_buttons #outspokes_private_wrapper label {
   background-color: inherit;
   color: #464646;
   font-size: 1.1em;
   vertical-align: 15%
 }
 
-#outspokes #comment_form .button {
+#outspokes #outspokes_comment_form .outspokes_button {
   font-weight: bold;
   margin-left: 2%;
 }
@@ -585,11 +581,12 @@ version: 3.0.0pr2
 
 /* TOPBAR */
 
-#outspokes #topbar h1, #outspokes #topbar a{
+#outspokes #outspokes_topbar h1, 
+#outspokes #outspokes_topbar a{
   margin: 0 10px;
 }
 
-#outspokes #topbar {
+#outspokes #outspokes_topbar {
   cursor: pointer;
   height: 27px; /* topbar height : must match variables topbar_height and topbar_int_height in fb.Interface*/
   line-height: 180%;
@@ -600,12 +597,14 @@ version: 3.0.0pr2
   overflow: hidden;
 }
 
-#outspokes #topbar select#comments_filter {
+#outspokes #outspokes_topbar select#outspokes_comments_filter {
   margin: 0 10px;
   font-size: .8em;
 }
 
-#outspokes #topbar #open_admin_panel, #outspokes #topbar #logout, #outspokes #topbar #help {
+#outspokes #outspokes_topbar #outspokes_open_admin_panel, 
+#outspokes #outspokes_topbar #outspokes_logout, 
+#outspokes #outspokes_topbar #outspokes_help {
   border: 1px solid transparent;
   border-bottom: none;
   display: block;
@@ -615,14 +614,16 @@ version: 3.0.0pr2
   color: #C1272D;
   margin: 0 5px 0 2px;
 }
-#outspokes #topbar #open_admin_panel:hover, #outspokes #topbar #logout:hover, #outspokes #topbar #help:hover {
+#outspokes #outspokes_topbar #outspokes_open_admin_panel:hover, 
+#outspokes #outspokes_topbar #outspokes_logout:hover, 
+#outspokes #outspokes_topbar #outspokes_help:hover {
   background-color: #DDD;
   border-color: #FFF;
   color: #C1272D;
 }
 
-#outspokes #topbar #outspokes_collapse_all, 
-#outspokes #topbar #outspokes_uncollapse_all {
+#outspokes #outspokes_topbar #outspokes_collapse_all, 
+#outspokes #outspokes_topbar #outspokes_uncollapse_all {
   outline: none;
   padding: 0 3px;
   margin: 0 2px;
@@ -630,42 +631,42 @@ version: 3.0.0pr2
   top: 1px;
 }
 
-#outspokes #topbar #outspokes_collapse_all {
+#outspokes #outspokes_topbar #outspokes_collapse_all {
   background: url(/images/collapse.png) center center no-repeat;
 }
 
-#outspokes #topbar #outspokes_uncollapse_all {
+#outspokes #outspokes_topbar #outspokes_uncollapse_all {
   background: url(/images/uncollapse.png) center center no-repeat;
 }
 
-#outspokes #topbar #outspokes_collapse_all:hover {
+#outspokes #outspokes_topbar #outspokes_collapse_all:hover {
   background: url(/images/collapseHover.png) center center no-repeat;
 }
 
-#outspokes #topbar #outspokes_uncollapse_all:hover {
+#outspokes #outspokes_topbar #outspokes_uncollapse_all:hover {
   background: url(/images/uncollapseHover.png) center center no-repeat;
 }
 
 
 /* Topbar Left */
 
-#outspokes #topbarLeft {
+#outspokes #outspokes_topbar_left {
   float: left;
   height: 20px;
 }
 
-#outspokes #topbarLeft #outspokes_logo {
+#outspokes #outspokes_topbar_left #outspokes_logo {
   display : block;
   float   : left;
   height  : 20px;
   width   : 100px;
 }
 
-#outspokes #topbarLeft ul.navigation {
+#outspokes #outspokes_topbar_left ul.outspokes_navigation {
 /*  display : inline;*/
   float: left;
 }
-  #outspokes #topbarLeft ul.navigation li {
+  #outspokes #outspokes_topbar_left ul.outspokes_navigation li {
     border : 1px solid #999;
     float : left;
     padding : 2px 10px 0 10px;
@@ -675,13 +676,13 @@ version: 3.0.0pr2
     color: #333;
     
   }
-  #outspokes #topbarLeft ul.navigation li:hover {
+  #outspokes #outspokes_topbar_left ul.outspokes_navigation li:hover {
     background-color: #DDD;
     border-color: #FFF;
     color: #C1272D;
   }
-  #outspokes #topbarLeft ul.navigation li.outspokes-current, 
-  #outspokes #topbarLeft ul.navigation li.outspokes-current:hover {
+  #outspokes #outspokes_topbar_left ul.outspokes_navigation li.outspokes-current, 
+  #outspokes #outspokes_topbar_left ul.outspokes_navigation li.outspokes-current:hover {
     background-color: #FFF;
     border-color: #999;
     border-bottom: none;
@@ -689,12 +690,12 @@ version: 3.0.0pr2
     
     padding-bottom: 7px;
   }
-  #outspokes #topbarLeft ul.navigation li.outspokes-current * {
+  #outspokes #outspokes_topbar_left ul.outspokes_navigation li.outspokes-current * {
     padding-bottom: 0;
     margin-bottom: 0;
   }
 
-#outspokes #topbarLeft ul.navigation li.outspokes-current span {
+#outspokes #outspokes_topbar_left ul.outspokes_navigation li.outspokes-current span {
 }
 
 /* END TOPBAR */
@@ -702,7 +703,7 @@ version: 3.0.0pr2
 
 /* FIRST TIME BUBBLE */
 
-#outspokes #bubble {
+#outspokes #outspokes_bubble {
   width: 230px;
   height: 150px;
   position: absolute;
@@ -713,7 +714,7 @@ version: 3.0.0pr2
   padding: 10px;
 }
 
-#outspokes #bubble #close_intro {
+#outspokes #outspokes_bubble #outspokes_close_intro {
   color: #C1272D;
   font-size: 1.2em;
   font-weight: bold;
@@ -722,7 +723,7 @@ version: 3.0.0pr2
   top: 6px;
 }
 
-#outspokes #bubble_content {
+#outspokes #outspokes_bubble_content {
   bottom: 10px;
   float: left;
   font-size: 14px;
@@ -731,7 +732,7 @@ version: 3.0.0pr2
   right: 10px;
   width: 200px;
 }
-#outspokes #bubble_content span {
+#outspokes #outspokes_bubble_content span {
   padding-right: 2px;
   position: relative;
   top: 10px;
@@ -741,7 +742,7 @@ version: 3.0.0pr2
 
 /* HELP PANEL */
 
-#outspokes #help_content { }
+#outspokes #outspokes_help_content { }
 
 #outspokes .outspokes_left_panel {
   float: left;
@@ -758,20 +759,20 @@ version: 3.0.0pr2
   width: 26%;
 }
 
-#outspokes #help_content h1 {
+#outspokes #outspokes_help_content h1 {
   color: #fff;
   font-size: 1.5em;
   margin-left: 10px;
   text-decoration: underline;
 }
-#outspokes #help_content h2 {
+#outspokes #outspokes_help_content h2 {
   border-bottom: 1px dotted black;
   font-size: 1.2em;
   font-weight: bold;
   padding-bottom: 5px;
 }
 
-#outspokes #help_content .outspokes_question {
+#outspokes #outspokes_help_content .outspokes_question {
   background: #fff url(/images/unopinionated_header.png) repeat-x center -4px;
   border: 1px solid #777;
   border-width: 0px 0px 1px 1px;
@@ -780,7 +781,7 @@ version: 3.0.0pr2
   -moz-border-radius-bottomleft:7px;
   padding: 0.7em;
 }
-#outspokes #help_content p {
+#outspokes #outspokes_help_content p {
   display: block;
   margin: 5px 0;
 }
@@ -788,7 +789,7 @@ version: 3.0.0pr2
   color: #eee;
 }
 
-#outspokes #help_content a {
+#outspokes #outspokes_help_content a {
   color: #C1272D;
 }
 

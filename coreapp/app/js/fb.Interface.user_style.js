@@ -5,7 +5,7 @@
     // Common identifiers used in this interface
     this.dom = {
       designs_view : {
-        wrapper : "designs_wrap", // id
+        wrapper : "outspokes_designs_wrap", // id
         design_id_format   : /design_\d+/i,
         design_id          : function(id) {
           return (this.design_id_format.test(id)) ? id : 'design_' + parseInt(id);
@@ -13,27 +13,27 @@
         number_from_id            : function(dom_id) {
           return parseInt(dom_id.match(/design_(\d+)/i)[1]);
         },
-        consensus_block : "design_consensus", // class
+        consensus_block : "outspokes_design_consensus", // class
         consensus_wrapper         : function(id) {
           return "consensus_on_comment_" + parseInt(id);
         },
         agree_with : function(id) { return "agree_with_design_" + parseInt(id); },
         disagree_with : function(id) {return "disagree_with_design_" + parseInt(id); },
         
-        design_block : "design_block", // class
-        design_name : "design_name", // class
-        design_timestamp : "design_timestamp", // class
-        designs_list : "designs_list", // id
-        new_design_link : "new_design_link" // id
+        design_block : "outspokes_design_block", // class
+        design_name : "outspokes_design_name", // class
+        design_timestamp : "outspokes_design_timestamp", // class
+        designs_list : "outspokes_designs_list", // id
+        new_design_link : "outspokes_new_design_link" // id
       },
       
       new_design : {
-        wrapper : "new_design_wrap",
-        link_back : "back_to_designs_list",
-        your_designs : "your_designs",
-        your_designs_wrapper : "your_designs_wrapper",
-        navigation : "your_designs_nav",
-        your_targets : "your_targets"
+        wrapper : "outspokes_new_design_wrap",
+        link_back : "outspokes_back_to_designs_list",
+        your_designs : "outspokes_your_designs",
+        your_designs_wrapper : "outspokes_your_designs_wrapper",
+        navigation : "outspokes_your_designs_nav",
+        your_targets : "outspokes_your_targets"
       }
     };
     var dom = this.dom;
@@ -120,10 +120,10 @@
         us.addClass(consensus_class);
       },
       agree: function(us_id) {
-        this._opinion(us_id, 'agreed');
+        this._opinion(us_id, 'outspokes_agreed');
       },
       disagree: function(us_id) {
-        this._opinion(us_id, 'disagreed');
+        this._opinion(us_id, 'outspokes_disagreed');
       },
       build : function(us, markup) {
         if (us.opinion !== "" && !_fb.admin()) { // this invitee has voted on this comment
@@ -135,15 +135,12 @@
         } else { // this invitee should be allowed to vote on this comment
           var us_consensus = $('<div></div>').addClass(dom.designs_view.consensus_block);
           us_consensus.attr("id", dom.designs_view.consensus_wrapper(us.feedback_id));
-          var agree = this.button(us, 'agree').addClass('agree');
-          var disagree = this.button(us, 'disagree').addClass('disagree');
-
-          agree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
-          disagree.hover(function(){$(this).addClass('hover');},function(){$(this).removeClass('hover');});
+          var agree = this.button(us, 'agree').addClass('outspokes_agree');
+          var disagree = this.button(us, 'disagree').addClass('outspokes_disagree');
 
           if (_fb.admin()) {
-            us_consensus.append($('<span class="agreed">' + us.agreed + '&nbsp;agreed,</span>&nbsp;'));
-            us_consensus.append($('<span class="disagreed">' + us.disagreed + '&nbsp;disagreed</span>'));
+            us_consensus.append($('<span class="outspokes_agreed">' + us.agreed + '&nbsp;agreed,</span>&nbsp;'));
+            us_consensus.append($('<span class="outspokes_disagreed">' + us.disagreed + '&nbsp;disagreed</span>'));
           } else {
             us_consensus.append(agree);
             us_consensus.append(disagree);
@@ -176,24 +173,22 @@
       var us_block = $('<div></div>').attr('id', us_id).addClass(dom.designs_view.design_block);
       
       // define its contents
-      // var us_checkbox = $('<input type="checkbox" />').addClass('toggle_box');
-      // us_checkbox.attr('name', 'design_toggle').attr('value', user_style.feedback_id);
       us_block.click(function() {
-        if (!$(this).hasClass('active')) { // currently not active
+        if (!$(this).hasClass('outspokes_active')) { // currently not active
           $('.' + dom.designs_view.design_block).each(function(){ // for other design
             // this.checked = false;
-            $(this).removeClass('active');
+            $(this).removeClass('outspokes_active');
             var my_id = dom.designs_view.number_from_id( $(this).attr("id") );
             fb.UserStyle.all[my_id].unapply();
           });
           // this.checked = true;
-          $(this).addClass('active');
+          $(this).addClass('outspokes_active');
 
           fb.UserStyle.all[user_style.feedback_id].apply();
           current_clicked = $(this);
         } else {
           fb.UserStyle.all[user_style.feedback_id].unapply();
-          $(this).removeClass('active');
+          $(this).removeClass('outspokes_active');
           current_clicked = null;
         }
       });
@@ -202,7 +197,6 @@
       var us_timestamp = $('<span></span>').addClass(dom.designs_view.design_timestamp).append(fb.get_timestamp(user_style.timestamp));
       
       // attach to the container
-      // us_block.append(us_checkbox);
       us_block.append(us_name);
       us_block.append(us_timestamp);      
       // us_block.append(this.consensus.build(user_style));
@@ -347,7 +341,7 @@
     
     
     // NEW DESIGN: Color //////////////////////////////////////////////////////////////////
-    this.your_color = $('<div></div>').attr('id', 'color_design_wrap');
+    this.your_color = $('<div></div>').attr('id', 'outspokes_color_design_wrap');
     
     var hide_error = function(elem) {
       elem.css('visibility', 'hidden');
@@ -386,8 +380,8 @@
       'font-size': 'number'
     };
     
-    var bgColor = $('<div></div>').attr('id', 'color_bg_design_wrap');
-    var bg_error_message = $('<div class="input_error">Invalid background color:</div>');
+    var bgColor = $('<div></div>').attr('id', 'outspokes_color_bg_design_wrap');
+    var bg_error_message = $('<div class="outspokes_input_error">Invalid background color:</div>');
     hide_error(bg_error_message);
     // bgColor.append(bg_error_message);
     bgColor.append($('<label class="outspokes_design_label" for="outspokes_bgColor" title="Enter a valid hex color value">Background</label>' +
@@ -397,36 +391,36 @@
     });
     design_fields.push([bgColor.find('input')[0], 'background-color']);
     
-    var bgColorApply = $('<input class="button" type="submit" value="Apply" title="Apply background color." />');
+    var bgColorApply = $('<input class="outspokes_button" type="submit" value="Apply" title="Apply background color." />');
     bgColorApply.click( function() {
       currBgColor = bgColor.find('input')[0];
       apply_color(currBgColor.value, 'background-color', bg_error_message);
     });
     
-    var bgColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original background color." />');
+    var bgColorRevert = $('<input class="outspokes_button" type="submit" value="Revert" title="Revert to original background color." />');
     bgColorRevert.click( function() {
       fb.i.target.current.target.unset_style('background-color');
       bgColor.find('input')[0].value = get_background_color(fb.i.target.current.target);
     });
     
-    var textColor = $('<div></div>').attr('id', 'color_text_design_wrap');
-    var textcolor_error_message= $('<div class="input_error">Invalid text color:</div>');
+    var textColor = $('<div></div>').attr('id', 'outspokes_color_text_design_wrap');
+    var textcolor_error_message= $('<div class="outspokes_input_error">Invalid text color:</div>');
     hide_error(textcolor_error_message);
     // textColor.append(textcolor_error_message);
     textColor.append($('<label class="outspokes_design_label" for="outspokes_textColor" title="Enter a valid hex color value">Text</label>' + 
-      '<span class="pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
+      '<span class="outspokes_pound">#</span><input type="text" id="outspokes_textColor" name="outspokes_textColor" />'));
     textColor.find('input').blur( function() {
       validate_colorstring(this.value, textcolor_error_message);
     });
     design_fields.push([textColor.find('input')[0], 'color']);
     
-    var textColorApply = $('<input class="button" type="submit" value="Apply" title="Apply text color." />');
+    var textColorApply = $('<input class="outspokes_button" type="submit" value="Apply" title="Apply text color." />');
     textColorApply.click( function() {
       currTextColor = textColor.find('input')[0];
       apply_color(currTextColor.value, 'color', textcolor_error_message);
     });
     
-    var textColorRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original text color." />');
+    var textColorRevert = $('<input class="outspokes_button" type="submit" value="Revert" title="Revert to original text color." />');
     textColorRevert.click( function() {
       fb.i.target.current.target.unset_style('color');
       textColor.find('input')[0].value = rgb_to_hash(fb.i.target.current.target.current_style('color'));
@@ -447,7 +441,7 @@
     
     // NEW DESIGN: Font //////////////////////////////////////////////////////////////////
     
-    this.your_font = $('<div></div>').attr('id', 'font_design_wrap');
+    this.your_font = $('<div></div>').attr('id', 'outspokes_font_design_wrap');
     this.your_font.hide(); // because it's not the default view
 
     var fontFamilyOptions = [
@@ -465,7 +459,7 @@
       return rtn;
     });
     
-    var fontFamily = $('<div></div>').attr('id', 'font_family_design_wrap');
+    var fontFamily = $('<div></div>').attr('id', 'outspokes_font_family_design_wrap');
     fontFamily.append('<label class="outspokes_design_label" for="fontFamily">Family</label>');
     fontFamily.append('<select name="fontFamily"></select>');
     fontFamily.find('select').append('<option value="" selected="true"></option>');
@@ -483,13 +477,13 @@
     design_fields.push([fontFamily.find('select')[0], 'font-family']);
     
     
-    var fontSize = $('<div></div>').attr('id', 'font_size_design_wrap');
-    var font_error_message = $('<div class="input_error">Invalid font size:</div>');
+    var fontSize = $('<div></div>').attr('id', 'outspokes_font_size_design_wrap');
+    var font_error_message = $('<div class="outspokes_input_error">Invalid font size:</div>');
     hide_error(font_error_message);
     // fontSize.append(font_error_message);
     fontSize.append($('<label class="outspokes_design_label" for="outspokes_fontSize" title="Enter a size between 0 and 999">Size</label>' +
       '<input type="text" id="outspokes_fontSize" /><span>px</span>'));
-    var fontSizeApply = $('<input class="button" type="submit" value="Apply" />');
+    var fontSizeApply = $('<input class="outspokes_button" type="submit" value="Apply" />');
     var font_size_regex = /^[0-9]{1,3}$/; // precompile this
     // Local helper function for checking font size validity
     function validate_font_size(value) {
@@ -515,7 +509,7 @@
       }
     });
     
-    var fontSizeRevert = $('<input class="button" type="submit" value="Revert" title="Revert to original font size." />');
+    var fontSizeRevert = $('<input class="outspokes_button" type="submit" value="Revert" title="Revert to original font size." />');
     fontSizeRevert.click( function() {
       fb.i.target.current.target.unset_style('font-size');
       fontSize.find('input')[0].value = parseInt(fb.i.target.current.target.current_style('font-size'), 10).toString(10);;
@@ -613,7 +607,7 @@
     
     
     // NEW DESIGN: finishing up  //////////////////////////////////////////////////////////////////
-    var your_designs_left_wrapper = $('<div></div>').attr('id', 'your_designs_left_wrapper');
+    var your_designs_left_wrapper = $('<div></div>').attr('id', 'outspokes_your_designs_left_wrapper');
     // your_designs_left_wrapper.append(this.design_list_link);
     your_designs_left_wrapper.append(this.your_designs);
     this.new_design_view.append(this.your_targets);   

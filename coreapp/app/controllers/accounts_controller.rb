@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :login_required, :only => [:dashboard]
+  before_filter :login_required, :only => [:edit, :update, :dashboard]
   
   # render new.rhtml
   def new

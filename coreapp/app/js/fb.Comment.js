@@ -140,7 +140,7 @@
     }
     // The following is UI and should be moved to fb.Interface.comment
     fb.i.comment.refresh_count();
-    fb.$("#comments_filter :selected").click(); // Re-sort comments based on sort/filter dropdown
+    fb.$("#outspokes_comments_filter :selected").click(); // Re-sort comments based on sort/filter dropdown
   };
 
   fb.Comment.get = function(options, callback) {

@@ -4,7 +4,7 @@
   clear: both;
 }
 
-#outspokes #widget_designs {
+#outspokes #outspokes_widget_designs {
 }
 
 /* DESIGNS_LIST VIEW*/
@@ -13,7 +13,7 @@
   
 }
 
-#outspokes #designs_list {
+#outspokes #outspokes_designs_list {
   float: left;
   width: 70%;
   overflow-y: scroll;
@@ -22,7 +22,7 @@
   
 }
 
-#outspokes .design_block {
+#outspokes .outspokes_design_block {
   -moz-border-radius-bottomleft: 5px;
   border-bottom: 1px solid #777;
   background-image: none;
@@ -36,49 +36,44 @@
   color: #333;
 }
 
-#outspokes .design_block:hover {background-color: #999; color: black;}
+#outspokes .outspokes_design_block:hover {background-color: #999; color: black;}
 
-#outspokes .design_block.active {
+#outspokes .outspokes_design_block.active {
   /*margin-bottom: 5px;*/
   background:#FFFFFF url(/images/unopinionated_header.png) repeat-x scroll center -4px;
 }
 
-#outspokes .design_block.disagreed {
+#outspokes .outspokes_design_block.outspokes_disagreed {
   background: #fff url(/images/disagreed_header.png) repeat-x center -4px;
 }
 
-#outspokes .design_block.agreed {
+#outspokes .outspokes_design_block.outspokes_agreed {
   background: #fff url(/images/agreed_header.png) repeat-x center -4px;
 }
 
-#outspokes .design_block .toggle_box {
-  float:left; 
-  margin-right: 15px; 
-  height: 25px;
-}
-#outspokes .design_block .design_name, 
-#outspokes .design_block .design_timestamp {
+#outspokes .outspokes_design_block .outspokes_design_name, 
+#outspokes .outspokes_design_block .outspokes_design_timestamp {
   float: left;
   margin-right: 20px;
 }
-#outspokes .design_block .design_name {
+#outspokes .outspokes_design_block .outspokes_design_name {
   width: 200px;
   font-weight: bold;
 }
-#outspokes .design_block .design_timestamp {
+#outspokes .outspokes_design_block .outspokes_design_timestamp {
   font-size: 0.8em;
 }
-#outspokes .design_block .design_consensus {float: right;}
-#outspokes .design_block .design_consensus button {margin-top: -2px; font-weight: bold;}
-#outspokes .design_block .design_consensus button.agree:hover {color: green;}
-#outspokes .design_block .design_consensus button.disagree:hover {color: red;}
-#outspokes .design_block .design_consensus .agreed,
-#outspokes .design_block .design_consensus .disagreed  
+#outspokes .outspokes_design_block .design_consensus {float: right;}
+#outspokes .outspokes_design_block .design_consensus button {margin-top: -2px; font-weight: bold;}
+#outspokes .outspokes_design_block .design_consensus button.outspokes_agree:hover {color: green;}
+#outspokes .outspokes_design_block .design_consensus button.outspokes_disagree:hover {color: red;}
+#outspokes .outspokes_design_block .design_consensus .outspokes_agreed,
+#outspokes .outspokes_design_block .design_consensus .outspokes_disagreed  
 {margin-right: 5px;}
-#outspokes .design_block .design_consensus .agreed {color: green;}
-#outspokes .design_block .design_consensus .disagreed {color: #C1272D;}
+#outspokes .outspokes_design_block .design_consensus .outspokes_agreed {color: green;}
+#outspokes .outspokes_design_block .design_consensus .outspokes_disagreed {color: #C1272D;}
 
-#outspokes #new_design_link {
+#outspokes #outspokes_new_design_link {
   border: 2px solid transparent;
   float: right;
   font-size: 3em;
@@ -89,7 +84,8 @@
   text-align: center;
   padding: 40px 0;
 }
-#outspokes #new_design_link:hover, #outspokes #back_to_designs_list:hover {
+#outspokes #outspokes_new_design_link:hover, 
+#outspokes #outspokes_back_to_designs_list:hover {
   -moz-border-radius: 15px;
   border-color: #666;
   background-color: #3f3f3f;
@@ -99,18 +95,18 @@
 
 /* NEW_DESIGN VIEW */
 
-#outspokes #new_design_wrap {
+#outspokes #outspokes_new_design_wrap {
   background-color: #333;
   color: black;
   height: 217px;
   float: right;
   overflow: auto;
 }
-#outspokes #your_designs_left_wrapper {
+#outspokes #outspokes_your_designs_left_wrapper {
   float: right;
   width: 56%;
 }
-#outspokes #back_to_designs_list {
+#outspokes #outspokes_back_to_designs_list {
   border: 2px solid transparent;
   color: white;
   display: block;
@@ -123,10 +119,10 @@
 
 }
 
-#outspokes #your_designs {
+#outspokes #outspokes_your_designs {
   margin-top: 10px;
 }
-  #outspokes #your_designs h1 {
+  #outspokes #outspokes_your_designs h1 {
     font-size:14px;
     font-style:italic;
     font-weight:bold;
@@ -137,11 +133,12 @@
     margin-bottom: 8px;
   }
   
-  #outspokes #your_designs_wrapper {
+  #outspokes #outspokes_your_designs_wrapper {
     min-width: 325px;
   }
   
-  #outspokes #your_designs_wrapper #font_design_wrap, #outspokes #your_designs_wrapper #color_design_wrap{
+  #outspokes #outspokes_your_designs_wrapper #outspokes_font_design_wrap, 
+  #outspokes #outspokes_your_designs_wrapper #outspokes_color_design_wrap {
     border: 1px solid #999999;
     padding: 10px 0;
     background: #FFF;
@@ -151,13 +148,13 @@
     -moz-border-radius-bottomleft: 7px;
   }
   
-  #outspokes #your_designs .your_designs_nav {
+  #outspokes #outspokes_your_designs .outspokes_your_designs_nav {
     display: block;
 /*    height: 100%; */
     overflow: hidden;
     margin-bottom: 9px;
   }
-    #outspokes #your_designs .your_designs_nav li {
+    #outspokes #outspokes_your_designs .outspokes_your_designs_nav li {
       border : 1px solid #999;
       border-bottom : none;
       display : block;
@@ -167,25 +164,28 @@
       background: #EEE;
       border-bottom: none;
     }
-    #outspokes #your_designs .your_designs_nav li:hover {
+    #outspokes #outspokes_your_designs .outspokes_your_designs_nav li:hover {
       background-color: #EEE;
       color: #C1272D;
     }
-    #outspokes #your_designs .your_designs_nav li.outspokes-current-design {
+    #outspokes #outspokes_your_designs .outspokes_your_designs_nav li.outspokes-current-design {
       background-color: #FFF;
       color: #C1272D;
       padding-bottom: 3px;
     }
     
-    #outspokes #font_family_design_wrap {
+    #outspokes #outspokes_font_family_design_wrap {
       margin-top: 20px;
     }
-#outspokes #font_family_design_wrap, #outspokes #font_size_design_wrap,#outspokes #color_bg_design_wrap,#outspokes #color_text_design_wrap {
+#outspokes #outspokes_font_family_design_wrap, 
+#outspokes #outspokes_font_size_design_wrap, 
+#outspokes #outspokes_color_bg_design_wrap, 
+#outspokes #outspokes_color_text_design_wrap {
   margin-left: 10px;
   height: 30px;
 }
 
-#outspokes #your_designs_wrapper .input_error {
+#outspokes #outspokes_your_designs_wrapper .outspokes_input_error {
   color: red;
   font-weight: bold;
   margin: 0 0 5px 10px;
@@ -195,13 +195,13 @@
 #outspokes #outspokes_target_header .outspokes_target_button {
   left: 10px;
 }
-#outspokes #your_designs_wrapper input {
+#outspokes #outspokes_your_designs_wrapper input {
   width: 5em;
   margin: 5px;
   margin-left: 0;
 }
 
-#outspokes #your_designs_wrapper .outspokes_design_label {
+#outspokes #outspokes_your_designs_wrapper .outspokes_design_label {
   border-bottom:1px dotted #DDDDDD;
   float:left;
   font-size:12px;
@@ -211,9 +211,9 @@
   margin-right: 5px;
 }
 
-#outspokes #your_designs_wrapper .outspokes_pound {margin-left: 5px;}
+#outspokes #outspokes_your_designs_wrapper .outspokes_pound {margin-left: 5px;}
 
-#outspokes #your_targets {
+#outspokes #outspokes_your_targets {
   margin-right: 2%;
   float: right;
   width: 26%;
@@ -244,7 +244,8 @@
 }
 
 
-#outspokes #outspokes_target_footer #outspokes_save_design, #outspokes #outspokes_target_footer #outspokes_clear_styles {
+#outspokes #outspokes_target_footer #outspokes_save_design, 
+#outspokes #outspokes_target_footer #outspokes_clear_styles {
   font-weight: bold;
   margin-left: 2%;
 }

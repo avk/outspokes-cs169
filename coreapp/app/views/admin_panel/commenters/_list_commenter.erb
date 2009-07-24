@@ -18,8 +18,7 @@
   <ul class="commenter_details">    
     <%- commenter.commented_pages(@site).each do |page| -%>
       <li>
-        <%= commenter.feedbacks_for_page(page.id).length %> 
-        <%= commenter.feedbacks_for_page(page.id).length == 1 ? 'comment' : 'comments' %> on
+        <%= pluralize commenter.feedbacks_for_page(page.id).size, 'comment' %> on
         <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %> <!-- should link to comment list filtered by commenter -->
       </li>
     <% end %>

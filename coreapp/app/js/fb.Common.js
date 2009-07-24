@@ -220,13 +220,13 @@
     // Store most recently mouseoever'ed-element in case it doesn't get mouseout'ed
     var prev_element;
     // Mark clicked-on elemement
-    page_elements.bind('click.elem_select', function (e) {
+    page_elements.bind('click.outspokes_elem_select', function (e) {
       select_function(e);
-      page_elements.unbind(".elem_select");
+      page_elements.unbind(".outspokes_elem_select");
       e.stopPropagation();
       return false; // Hopefully prevents link from being followed
     });
-    page_elements.bind("mouseenter.elem_select", function (e) {
+    page_elements.bind("mouseenter.outspokes_elem_select", function (e) {
       mouseover_function(e);
       if (prev_element) {
         // Call mouseout_function on the last element to be hovered over in case mouseleave didn't fire
@@ -238,7 +238,7 @@
       prev_element = e.target;
       e.stopPropagation();
     });
-    page_elements.bind("mouseleave.elem_select", function (e) {
+    page_elements.bind("mouseleave.outspokes_elem_select", function (e) {
       if (prev_element) {
         prev_element = null;
         mouseout_function(e);

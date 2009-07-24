@@ -68,7 +68,7 @@ forward DNS to server
 Google apps - http://www.google.com/a/cpanel/domain/new
 
 ### Cron
-added /etc/cron.daily/outspokes_cron to rake cron every hour
+added 'rake cron' every hour in /etc/crontab to run as 'deploy' user
 
 ### Backups
 backup database nightly to /mnt/backups

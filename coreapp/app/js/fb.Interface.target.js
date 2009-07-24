@@ -52,7 +52,7 @@
     
     this.target_footer = $('<div></div>').attr('id','outspokes_target_footer');
     //var clear_targets = $('<a>Clear</a>').attr('id', 'outspokes_clear_styles');
-    var clear_targets = $('<input class="button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
+    var clear_targets = $('<input class="outspokes_button" type="submit" value="Clear" />').attr('id', 'outspokes_clear_styles');
     clear_targets.click(function(e) {
       var answer = confirm("This will delete all of your changes.  Are you sure?");
       if (answer) {
@@ -61,7 +61,7 @@
       return false;
     });
     //var save_targets = $('<a>Save</a>').attr('id', 'outspokes_save_design');
-    var save_targets = $('<input class="button" type="submit" value="Save" />').attr('id', 'outspokes_save_design');
+    var save_targets = $('<input class="outspokes_button" type="submit" value="Save" />').attr('id', 'outspokes_save_design');
     save_targets.click(function(e) {
       if (fb.i.target.changes_to_targets()) {
         fb.UserStyle.post(fb.i.target.all);

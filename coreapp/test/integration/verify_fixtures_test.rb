@@ -8,9 +8,9 @@ class VerifyFixturesTest < ActionController::IntegrationTest
     classes.each do |cls|
       cls.find(:all).each do |fixture|
         begin
-          assert fixture.valid?, "The object #{fixture.inspect} is invalid. Errors: #{fixture.errors.full_messages.to_sentence}"
+          assert_valid fixture
         rescue Exception => e
-          assert false, "'#{fixture.inspect}' fixture.valid? caused exception: #{e.message}"
+          flunk "'#{fixture.inspect}' fixture.valid? caused exception: #{e.message}"
         end
       end
     end
@@ -27,7 +27,7 @@ class VerifyFixturesTest < ActionController::IntegrationTest
       begin
         assert site.admin_url, "admin url must exist"
       rescue Exception => e
-        assert false, "site.admin_url caused an exception: '#{site.inspect}'\n #{site.url}"
+        flunk "site.admin_url caused an exception: '#{site.inspect}'\n #{site.url}"
       end
     end
   end

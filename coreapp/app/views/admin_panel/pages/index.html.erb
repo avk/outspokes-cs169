@@ -22,6 +22,9 @@
     </div>
     <div class="page_details">
       <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %>
+      <span class="commenter_details">
+        <%= pluralize page.feedbacks.size, 'comment' %>
+      </span>
       <span class="latest_feedback">
         <%= relative_date Date.parse(page.latest_feedback) %> @ 
         <%= prettier_time Time.parse(page.latest_feedback) %>
