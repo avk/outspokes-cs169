@@ -72,7 +72,10 @@ class Notification < ActiveRecord::Base
   # 
   # Do not call this method directly.  See event deliver!
   def do_delivery
-    do_notify = Proc.new { |m| m.preferred_deliver_notifications }
+    do_notify = Proc.new do |m|
+      m.preferred_deliver_notifications(site.id)
+    end
+
     accounts   = [ site.account ].select(&do_notify)
     commenters = site.commenters.select(&do_notify)
 

@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => 'home', :action => 'about'
   map.contact '/contact', :controller => 'home', :action => 'contact'
 
+  map.resources :commenters
   map.resources :accounts, :member => { :dashboard => :get }
   map.resource :session
   map.resources :sites, :member => { :embed => :get }

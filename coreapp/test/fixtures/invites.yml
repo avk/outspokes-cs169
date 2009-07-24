@@ -15,6 +15,10 @@ page:
   page: myspace
   commenter: quentin
 
+wendy_invite:
+  url_token: wendy_token
+  page: msn
+  commenter: wendy
 
 <% %w(msn linkedin).each do |site_name| %>
 quentin_admin_<%= site_name %>:

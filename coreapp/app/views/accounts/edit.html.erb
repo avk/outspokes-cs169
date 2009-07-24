@@ -19,11 +19,19 @@
   </p>
 
   <br/>
+  <h3>
+    Notification settings
+  </h3>
+  <br/>
   <p>
-    <%= f.check_box :preferred_deliver_notifications %>&nbsp;
-    <%= label_tag 'preferred_deliver_notifications', 'notify me of new feedbacks and opinions' %>
+    Send me an email when these sites get new feedback:
   </p>
-
+  <%= render :partial => 'commenters/notification_preferences',
+        :locals => {
+          :commenter_or_account => @account,
+          :form => f
+        }
+      %>
   <p>
     <%= submit_tag 'Update preferences', :class => 'submit' %>
   </p>

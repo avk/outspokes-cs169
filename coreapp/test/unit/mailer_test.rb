@@ -29,4 +29,30 @@ class MailerTest < ActionMailer::TestCase
     assert mail.subject == account_email.to_s + " has invited you to give feedback via Outspokes"
   end
 
+  test "notification to account should have an opt-out link" do
+    account = commenters(:quentin)
+    invite = account.invites.first
+    site = invite.page.site
+    
+    assert_difference "ActionMailer::Base.deliveries.size", 1 do
+      Mailer.deliver_notification(account, create_notification(:site => site))
+    end
+    mail = ActionMailer::Base.deliveries.first
+    # assert mail.body.include?("edit?url_token=wendy_token")
+    assert_match /accounts\/.*\/edit/, mail.body
+  end
+
+  test "notification to commenter should have an opt-out link" do
+    commenter = commenters(:wendy)
+    invite = commenter.invites.first
+    site = invite.page.site
+    
+    assert_difference "ActionMailer::Base.deliveries.size", 1 do
+      Mailer.deliver_notification(commenter, create_notification(:site => site))
+    end
+    mail = ActionMailer::Base.deliveries.first
+    # assert mail.body.include?(edit_commenter_url(commenter, :url_token => invite.url_token))
+    assert_match /commenters\/.*\/edit\?url_token=wendy_token/, mail.body
+  end
+
 end

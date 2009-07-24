@@ -1,0 +1,15 @@
+<% form_for(@commenter) do |f| %>
+  <p>
+    Notify me of changes on these sites:
+  </p>
+  <%= hidden_field_tag :url_token, params[:url_token] %>
+  <%= render :partial => 'notification_preferences',
+        :locals => {
+          :commenter_or_account => @commenter,
+          :form => f
+        } %>
+
+  <p>
+    <%= submit_tag 'Update preferences', :class => 'submit' %>
+  </p>
+<% end %>

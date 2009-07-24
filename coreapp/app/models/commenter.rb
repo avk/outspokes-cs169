@@ -100,5 +100,12 @@ class Commenter < ActiveRecord::Base
   def short_email
     self.email.split('@').first
   end
+
+  # 'h' - { 'site_id1' => '1', 'site_id2' => '0' }
+  def preferred_deliver_notifications_by_site=(h)
+    h.each_pair do |site_id, pref|
+      self.preferred_deliver_notifications = pref, site_id
+    end
+  end
   
 end

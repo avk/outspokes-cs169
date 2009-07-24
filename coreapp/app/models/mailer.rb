@@ -26,11 +26,18 @@ class Mailer < ActionMailer::Base
     body         :admin_url => dashboard_account_url(account), :tour_url => root_path
   end
 
-  def notification(to_users, notification)
+  def notification(commenter_or_account, notification)
     setup_email
-    recipients   Array(to_users).map(&:email)
+    recipients   commenter_or_account.email
     subject      "Recent feedback left on your site"
-    body         :notification => notification
+    if commenter_or_account.is_a?(Account)
+      url = edit_account_url(commenter_or_account)
+    else
+      url_token = commenter_or_account.invites.find_by_page_id(notification.site.home_page.id).url_token
+      url = edit_commenter_url(commenter_or_account, :url_token => url_token)
+    end
+
+    body :notification => notification, :url => url
   end
 
   protected

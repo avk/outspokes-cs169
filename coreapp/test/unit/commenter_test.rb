@@ -198,4 +198,22 @@ class CommenterTest < ActiveSupport::TestCase
     commenter = create_commenter
     assert commenter.preferred_deliver_notifications
   end
+
+  test 'should set deliver notification preferences by site' do
+    commenter = commenters(:aaron)
+    sites = commenter.sites
+    sites.each do |site|
+      assert commenter.preferred_deliver_notifications(site.id), "default preference should be true"
+    end
+
+    pref_hash = sites.inject({}) do |memo, site|
+      memo[site.id] = false
+      memo
+    end
+    commenter.preferred_deliver_notifications_by_site = pref_hash
+    
+    sites.each do |site|
+      assert !commenter.preferred_deliver_notifications(site.id), "set preference should be value of pref hash"
+    end    
+  end
 end

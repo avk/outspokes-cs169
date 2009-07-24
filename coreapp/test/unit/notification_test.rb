@@ -45,6 +45,20 @@ class NotificationTest < ActiveSupport::TestCase
     assert_equal 'delivered', notification.aasm_state
   end
 
+  test "deliver should not delivery if user opted out" do
+    notification = create_notification
+    site = notification.site
+    [ site.account, site.commenters ].flatten.each do |c|
+      c.preferred_deliver_notifications = false, site.id
+      c.save!
+    end
+
+    assert_no_difference "ActionMailer::Base.deliveries.size" do
+      notification.deliver!
+    end
+    assert_equal 'delivered', notification.aasm_state
+  end
+
   test "feedbacks_by_page should sort feedbacks by page, and feedback type" do
     comment = feedbacks(:notification)
     user_style = feedbacks(:user_style1)
