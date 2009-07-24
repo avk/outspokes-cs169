@@ -1,10 +1,10 @@
 <li class="invited_commenter <%= cycle('odd','even') %>">
   <div class="remove_commenter">
-    <%= link_to 'X', 
+    <%= link_to 'x', 
     admin_panel_uninvite_path(@site, @site.validation_token, commenter), 
     :confirm => "This will remove all of #{commenter.email}'s feedback and prevent him or her from leaving new feedback. Are you sure?", 
     :method => :delete,
-    :title => "Uninvite #{commenter.email}", :style => 'color:red' %>
+    :title => "Uninvite #{commenter.email}" %>
   </div>
   <%= button_to 'Resend Invite', admin_panel_resend_invite_path(@site, :id => commenter), :class => 'resend_invite' %>
   &nbsp;
@@ -14,11 +14,11 @@
     &nbsp;
     <%- if RAILS_ENV == "development" -%>
       <% final_url = @site.home_page.url.sub(/\/$/i, '') + '#url_token=' + commenter.invites.find_by_page_id(@site.home_page.id).url_token %>
-      <%= link_to '( login )', final_url, { :title => 'Log in as this user', :style => 'color:teal' } %>
+      <%= link_to '( login )', final_url, { :title => 'Log in as this user', :style => 'color:#C1272D' } %>
     <%- end -%>
   </span> 
   <% unless commenter.feedbacks.empty? %>
-  <ul class="commenter_details">    
+  <ul class="commenter_details">
     <%- commenter.commented_pages(@site).each do |page| -%>
       <li>
         <%= commenter.feedbacks_for_page(page.id).length %> 
