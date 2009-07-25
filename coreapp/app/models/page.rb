@@ -34,13 +34,7 @@ class Page < ActiveRecord::Base
   def commenter_url(commenter_or_account)
     url.sub(/\/$/i, '') + '#url_token=' + invites.find_by_commenter_id(commenter_or_account).url_token
   end
-
-  # converts "http://www.apple.com/itunes/" to "http://www.apple.com"
-  def self.domainize(url)
-    base_domain = /^(https?:\/\/[\w\d\-\.]*)/i
-    (url.match base_domain) ? $1 : nil
-  end
-
+  
   def admin_url
     commenter_url(site.account) + '&admin=true'
   end
@@ -75,10 +69,8 @@ class Page < ActiveRecord::Base
     return true if site.home_page === self # I am the homepage
 
     if errors.on(:url).blank?
-      this_host = URI.parse(url).host
-      root_host = URI.parse(site.url).host
-      unless this_host.match(root_host) or root_host.match(this_host)
-        errors.add(:url, "This page's url has a different domain (#{this_host}) than the site's (#{root_host})")
+      unless URI.same_domain?(url, site.url)
+        errors.add(:url, "This page's url has a different domain (#{URI.base_domain(url)}) than the site's (#{URI.base_domain(site.url)})")
       end
     end
   end
