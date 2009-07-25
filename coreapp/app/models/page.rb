@@ -16,7 +16,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :url
   validate :validate_format_of_url
  
-  validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? }
+  validates_uniqueness_of :url, :scope => :site_id, :unless => Proc.new { |page| page.site_id.blank? } # FIXME: singleton pages relic? site_id should never be blank
   validates_length_of :invites, :minimum => 1
   
   validate :is_child_of_site
@@ -24,7 +24,7 @@ class Page < ActiveRecord::Base
   
   
   def url=(url)
-    if self.url and !self.site_id.blank?
+    if self.url and !self.site_id.blank? # FIXME: singleton pages relic? site_id should never be blank
       raise "Cannot set url for a page attached to a site"
     else
       super url
@@ -71,7 +71,7 @@ class Page < ActiveRecord::Base
 
   # Verify that this url has the same domain as the associated Site's home_page's url
   def is_child_of_site
-    return true if url.nil?
+    return true if url.nil? # FIXME: I think this is a bug
     return true if site.home_page === self # I am the homepage
 
     if errors.on(:url).blank?
