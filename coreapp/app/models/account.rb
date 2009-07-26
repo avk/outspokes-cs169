@@ -41,9 +41,8 @@ class Account < Commenter
   end
 
   def find_site_by_url(url)
-    url = Page.domainize(url)
     sites.each do |site|
-      if ApplicationController.new.same_domain? Page.domainize(site.url), url
+      if URI.same_domain?(site.url, url)
         return site
       end
     end

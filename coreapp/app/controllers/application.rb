@@ -78,10 +78,6 @@ class ApplicationController < ActionController::Base
     render :text => '{}' unless okay
   end
   
-  def same_domain?(url1, url2)
-    URI.parse(url1).host() == URI.parse(url2).host() && URI.parse(url1).port() == URI.parse(url2).port()
-  end
-
   def sanitize(value, newlines)
     value = ERB::Util.html_escape(value)
     if newlines

@@ -50,10 +50,18 @@ class PageTest < ActiveSupport::TestCase
     end
   end
 
-  test 'should only accept the http and https URL schemes' do
-    %w(http https).each do |scheme|
-      assert_difference "Page.count" do
-        page = create_page(:url => scheme + '://msn.com')
+  test 'should accept the http URL scheme' do
+    assert_difference "Page.count" do
+      page = create_page(:url => 'http://msn.com')
+      assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
+    end
+  end
+  
+  test "should accept the https URL scheme" do
+    assert_difference "Site.count", 1 do
+      site = create_site(:url => "https://mail.google.com")
+      assert_difference "Page.count", 1 do
+        page = create_page(:url => "https://mail.google.com/contacts", :site => site)
         assert !page.new_record?, "#{page.errors.full_messages.to_sentence}"
       end
     end
@@ -135,48 +143,6 @@ class PageTest < ActiveSupport::TestCase
   test 'should delegate it\'s account to it\'s site' do
     page = Page.first
     assert page.account == page.site.account
-  end
-
-  test "should be able to convert a URL string with extra parameters to it's base domain" do
-    url = "http://www.pt.com/stories/9342"
-    got = Page.domainize(url) 
-    expected = "http://www.pt.com"
-    assert got == expected, "got #{got} but expected #{expected}"
-  end
-    
-  test "should be able to convert a URL string without 'www' to it's base domain" do
-    url = "http://ruby.com/"
-    got = Page.domainize(url) 
-    expected = "http://ruby.com"
-    assert got == expected, "got #{got} but expected #{expected}"
-  end
-  
-  test "should be able to convert a URL string with 'www' to it's base domain" do
-    url = "http://www.rails.com"
-    got = Page.domainize(url)
-    expected = "http://www.rails.com"
-    assert got == expected, "got #{got} but expected #{expected}"
-  end
-    
-  test "should be able to convert an https URL string to it's base domain" do
-    url = "https://www.java.com"
-    got = Page.domainize(url) 
-    expected = "https://www.java.com"
-    assert got == expected, "got #{got} but expected #{expected}"
-  end
-    
-  test "should be able to convert a URL string with a non-.com TLD to it's base domain" do
-    url = "http://cpp.gd"
-    got = Page.domainize(url)
-    expected = "http://cpp.gd"
-    assert got == expected, "got #{got} but expected #{expected}"
-  end
-  
-  test "should be able to convert a URL string pointing to a .html document to it's base domain" do
-    url = "http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html"
-    got = Page.domainize(url)
-    expected = "http://api.rubyonrails.org"
-    assert got == expected, "got #{got} but expected #{expected}"
   end
 
 end

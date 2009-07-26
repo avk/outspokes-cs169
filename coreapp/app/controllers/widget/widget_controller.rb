@@ -10,7 +10,7 @@ class Widget::WidgetController < ApplicationController
     @site = nil
     if params[:url_token]
       @invite = Invite.find_by_url_token(params[:url_token])
-      return unless (@invite and same_domain?(@invite.page.url, params[:current_page]))
+      return unless (@invite and URI.same_domain?(@invite.page.url, params[:current_page]))
 
       site = @invite.page.site
       return if site.nil?
