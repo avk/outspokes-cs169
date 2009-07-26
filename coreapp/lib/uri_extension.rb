@@ -61,15 +61,15 @@ module URIExtension
         
         # test for existence because userinfo is optional
         if self.userinfo
-          auth += "#{self.userinfo}@"
+          auth << "#{self.userinfo}@"
         end
         
         # ignore the "www" subdomain
-        auth += self.host.sub(/www\./i, '')
+        auth << self.host.sub(/^www\./i, '')
         
         # test for existence because port is optional
         if self.port and self.port != DEFAULT_PORT # ignore the default port
-          auth += ":#{self.port}"
+          auth << ":#{self.port}"
         end
         auth
       end

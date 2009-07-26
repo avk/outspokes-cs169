@@ -23,8 +23,8 @@ class URIExtensionTest < ActiveSupport::TestCase
     }
   }
   
-  BASE_URL = "http://" + AUTHORITY[:legal].first[1]
-  ILLEGAL_URL = "http://" + AUTHORITY[:illegal].first[1]
+  BASE_URL = "http://" + AUTHORITY[:legal]["just host"]
+  ILLEGAL_URL = "http://" + AUTHORITY[:illegal]["userinfo@ without host"]
   
   URL = { # all of the following are legal URLs
     "just authority" =>                             BASE_URL, 
@@ -56,6 +56,18 @@ class URIExtensionTest < ActiveSupport::TestCase
     got = URI.parse( "http://" + "www." + HOST).authority
     expected = HOST
     assert got == expected, "'authority' did not ignore a blank port:\n got: #{got} but expected: #{expected}"
+  end
+
+  test "authority doesn't strip out 'www' from middle of domain" do
+    expected = "foo-www.com"
+    got = URI.parse( "http://foo-www.com").authority
+    assert got == expected, "'authority' did not respect www in the middle of the url:\n got: #{got} but expected: #{expected}"
+  end
+
+  test "authority doesn't strip www-* domains" do
+    expected = "www-1.google.com"
+    got = URI.parse( "http://www-1.google.com").authority
+    assert got == expected, "'authority' did not respect www-1 in the the url:\n got: #{got} but expected: #{expected}"
   end
   
   test "authority ignores blank userinfo (@)" do
