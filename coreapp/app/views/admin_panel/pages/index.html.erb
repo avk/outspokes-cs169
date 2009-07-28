@@ -22,15 +22,18 @@
     </div>
     <div class="page_details">
       <%= link_to url_link_text(page.url), page.url, :class => 'page_url' %>
-      <span class="commenter_details">
+      <p class="commenter_details">
         <%= pluralize(page.comments.size, 'comment') unless page.comments.empty? %>
-        <%= ", " unless page.comments.empty? %>
+        <%= ", " unless page.comments.empty? or page.user_styles.empty? %>
         <%= pluralize(page.user_styles.size, 'design') unless page.user_styles.empty? %>
-      </span>
-      <span class="latest_feedback">
-        <%= relative_date Date.parse(page.latest_feedback) %> @ 
-        <%= prettier_time Time.parse(page.latest_feedback) %>
-      </span>
+        <br />
+        <span class="latest_feedback">
+          Latest: 
+          <%= relative_date Date.parse(page.latest_feedback) %> @ 
+          <%= prettier_time Time.parse(page.latest_feedback) %>
+        </span>
+      </p>
+      
       <%- if @search_comments && @search_comments[page.id] -%>        
         <div class="search_match">
           <span>Search Results for This Page</span>

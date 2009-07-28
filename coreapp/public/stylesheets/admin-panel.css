@@ -168,7 +168,7 @@ li.invited_commenter, li.site_page {
 .page_details .latest_feedback {
   color: #999;
   display: block;
-  font-size: .6em;
+  font-size: .8em;
 }
 
 .resend_invite {
