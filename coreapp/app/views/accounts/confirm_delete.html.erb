@@ -1,0 +1,10 @@
+<h1>Delete your account</h1>
+
+<% form_tag account_path(current_account), :method => :delete do %>
+  <label for="reason">Would you mind telling us why you're leaving? <span class="optional">(optional)</span></label><br />
+  <%= text_area_tag 'reason', '', :rows => 5, :cols => 45 %>
+  
+  <br /><br />
+  <span class="warning">Warning: you cannot undo this!</span><br />
+  <%= submit_tag "Delete my Account" %>
+<% end %>

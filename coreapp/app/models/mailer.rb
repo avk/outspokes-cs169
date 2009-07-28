@@ -32,6 +32,14 @@ class Mailer < ActionMailer::Base
     subject      "Recent feedback left on your site"
     body         :notification => notification
   end
+  
+  def account_deletion(account, reason)
+    setup_email
+    recipients  CONFIG.emails.feedback
+    subject     "#{account.email} has deleted his or her account"
+    body        :reason => reason
+  end
+  
 
   protected
 
