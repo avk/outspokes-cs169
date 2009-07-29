@@ -16,6 +16,7 @@
         wrapper : 'outspokes',
         header  : 'outspokes_topbar',
         headerLeft : 'outspokes_topbar_left',
+        headerRight : 'outspokes_topbar_right', 
         content : 'outspokes_widget_content',
         designs : 'outspokes_widget_designs',
         help : 'outspokes_help',
@@ -107,6 +108,8 @@
     
     var topbarLeft = $('<div></div>').attr('id',this.dom.widget.headerLeft);
     this.topbar.append(topbarLeft);
+    var topbarRight = $('<div></div>').attr('id',this.dom.widget.headerRight);
+    this.topbar.append(topbarRight);
     
     // Logo
     var logo = $('<a href="' + fb.env.base_domain + '" target="_blank"></a>');
@@ -311,7 +314,8 @@
     // HELP LINK //////////////////////////////////////////////////////////////////
 
     this.help_link = $('<a></a>').attr('id',this.dom.widget.help);
-    this.help_link.append('<img src="' +  fb.env.help_address  + '" alt="Outspokes Help" title="Outspokes Help"/>');
+    // this.help_link.append('<img src="' +  fb.env.help_address  + '" alt="Outspokes Help" title="Outspokes Help"/>');
+    this.help_link.append('?');
     
     // the help link will behave like the other navigation links (part 1):
     this.nav.elements.list.push(this.help_link);
@@ -326,10 +330,10 @@
         e.stopPropagation();
       }
     });
-    this.topbar.append(this.help_link);
+    topbarRight.append(this.help_link);
 
     // WIDGET LOGOUT LINK /////////////////////////////////////////////////////////
-    this.logout_link = $('<a>Logout</a>').attr('id',this.dom.widget.logout);
+    this.logout_link = $('<a>X</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
       // do logout stuff here
       
@@ -356,7 +360,7 @@
       }
       return false;
     });
-    this.topbar.append(this.logout_link);
+    topbarRight.append(this.logout_link);
 
     // ADMIN PANEL //////////////////////////////////////////////////////////////////
     

@@ -614,6 +614,12 @@ version: 3.0.0pr2
   color: #C1272D;
   margin: 0 5px 0 2px;
 }
+#outspokes #outspokes_topbar #outspokes_logout, 
+#outspokes #outspokes_topbar #outspokes_help {
+  float: left;
+  font-size: 13px;
+  margin: 0 2px;
+}
 #outspokes #outspokes_topbar #outspokes_open_admin_panel:hover, 
 #outspokes #outspokes_topbar #outspokes_logout:hover, 
 #outspokes #outspokes_topbar #outspokes_help:hover {
@@ -653,6 +659,9 @@ version: 3.0.0pr2
 #outspokes #outspokes_topbar_left {
   float: left;
   height: 20px;
+}
+#outspokes #outspokes_topbar_right {
+  float: right;
 }
 
 #outspokes #outspokes_topbar_left #outspokes_logo {
