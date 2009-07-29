@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
-  before_filter :login_required, :only => [:edit, :update, :dashboard]
+  
+  before_filter :login_required, :only => [ :edit, :update, :dashboard, :destroy ]
   
   # render new.rhtml
   def new
@@ -55,6 +56,25 @@ class AccountsController < ApplicationController
       format.html
     end
   end
+  
+  def confirm_delete
+  end
+  
+  def destroy
+    @account = Account.find(params[:id])
+    if @account == current_account
+      Mailer.deliver_account_deletion(@account, params[:reason])
+      @account.destroy
+      flash[:notice] = "Your account has been deleted. We're sorry to see you go."
+    else
+      flash[:error] = "You cannot delete another user's account!"
+    end
+    
+    respond_to do |wants|
+      wants.html { redirect_to root_path }
+    end
+  end
+  
 
   # GET /reset-password
   #   renders the reset page

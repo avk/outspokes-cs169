@@ -104,6 +104,34 @@ class AccountsControllerTest < ActionController::TestCase
     }
     assert commenters(:quentin).preferred_deliver_notifications
   end
+  
+  def test_should_delete_account
+    login_as :quentin
+    assert_difference "Account.count", -1 do
+      delete :destroy, :id => commenters(:quentin).id
+    end
+    assert_not_nil flash[:notice]
+    assert_redirected_to root_path
+  end
+  
+  def test_should_not_delete_account_unless_logged_in
+    assert_no_difference "Account.count" do
+      delete :destroy, :id => commenters(:quentin).id
+    end
+    assert_redirected_to new_session_path
+  end
+  
+  def test_should_not_delete_someone_elses_account
+    login_as :aaron
+    assert_no_difference "Account.count" do
+      delete :destroy, :id => commenters(:quentin).id
+    end
+    assert_not_nil flash[:error]
+    assert_redirected_to root_path
+  end
+  
+  
+  
 
   test "should render reset_password.html.erb for GET reset-password" do
     get :reset_password

@@ -1,0 +1,12 @@
+<p>
+  Another one bites the dust... 
+</p><br/>
+
+<p>
+  <%- if @reason -%>
+    Their reason: <br /><br />
+    <%=h @reason %>
+  <%- else -%>
+    They didn't give a reason.
+  <% end -%>
+</p><br/>

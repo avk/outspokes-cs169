@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => 'home', :action => 'about'
   map.contact '/contact', :controller => 'home', :action => 'contact'
 
-  map.resources :accounts, :member => { :dashboard => :get, :reset_password => [:get, :put] }
+  map.resources :accounts, :member => { :dashboard => :get, :reset_password => [:get, :put], :confirm_delete => :get }
   map.resource :session
   map.resources :sites, :member => { :embed => :get }
   
