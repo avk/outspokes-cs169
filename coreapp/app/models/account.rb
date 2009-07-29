@@ -51,7 +51,7 @@ class Account < Commenter
 
   # generate a temporary password, and send it to the user
   def reset_password!
-    new_password = `head -c 12 /dev/random | openssl base64`.chomp
+    new_password = `head -n 1 /dev/random | openssl base64`[0..12].chomp
     self.update_attribute(:password, new_password)
     Mailer.deliver_reset_password(self)
   end
