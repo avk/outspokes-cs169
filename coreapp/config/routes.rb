@@ -21,10 +21,11 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
+  map.reset_password '/reset-password', :controller => 'accounts', :action => 'reset_password'
   map.about '/about', :controller => 'home', :action => 'about'
   map.contact '/contact', :controller => 'home', :action => 'contact'
 
-  map.resources :accounts, :member => { :dashboard => :get }
+  map.resources :accounts, :member => { :dashboard => :get, :reset_password => [:get, :put] }
   map.resource :session
   map.resources :sites, :member => { :embed => :get }
   

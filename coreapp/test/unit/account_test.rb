@@ -135,4 +135,21 @@ class AccountTest < ActiveSupport::TestCase
     assert account.find_site_by_url(site.url) == site
   end
 
+  test "reset_password should crypt a new password and deliver a reset email" do
+    account = commenters(:quentin)
+    old_crypted_password = account.crypted_password
+
+    account.reset_password!
+
+    assert_not_nil account.password, "temporary password should be set"
+    assert Account.authenticate(account.email, account.password), "temporary password should work"
+    assert_not_equal account.crypted_password, old_crypted_password, "new crypted password should be different than the old one"
+    
+    if password_email = ActionMailer::Base.deliveries.first
+      assert password_email.body.include?(account.password), "new temporary password should be in the email body"
+    else
+      flunk("No password reset email was sent")
+    end
+  end
+
 end
