@@ -421,6 +421,8 @@
           tmp = highlight_target(tmp.get(0));
           c.__unHover = tmp[1];
           rtn.hover(tmp[0], tmp[1]);
+          // scroll to whatever element this comment is talking about
+          rtn.hover( function() { $.scrollTo($(c.target), 300); } );
         }
         rtn.addClass('outspokes_targeted');
         
