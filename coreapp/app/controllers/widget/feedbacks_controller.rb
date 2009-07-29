@@ -90,12 +90,8 @@ class Widget::FeedbacksController < Widget::WidgetController
     push_update_to page if success
 
     respond_to do |wants|
-      wants.html do
-          @json_data = result.to_json
-      end
       wants.js do
-        render :json => result,
-               :callback => @callback
+        render :json => result
       end
     end
   end

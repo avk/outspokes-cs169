@@ -61,11 +61,10 @@ class Widget::UserStylesController < Widget::WidgetController
         :selectors => selectors_and_class_names(@user_style)
       }
     end
-    
+
     respond_to do |wants|
-      wants.html do
-        @json_data = result.to_json
-        render :template => 'widget/feedbacks/create'
+      wants.js do
+        render :json => result
       end
     end
   end

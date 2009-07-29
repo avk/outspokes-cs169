@@ -29,11 +29,17 @@ class Widget::OpinionsController < Widget::WidgetController
       end
     end
 
+    result = {
+      :authorized => @authorized,
+      :admin => @admin,
+      :success => success,
+      :feedback_id => feedback_id,
+      :opinion => params[:opinion]
+    }
+
     respond_to do |wants|
-      wants.html do
-        @json_data = {:authorized => @authorized, :admin => @admin, :success => success,
-                      :feedback_id => feedback_id, :opinion => params[:opinion]}.to_json
-        render :template => 'widget/feedbacks/create'
+      wants.js do
+        render :json => result
       end
     end
   end
