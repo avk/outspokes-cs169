@@ -332,6 +332,13 @@
     this.logout_link = $('<a>Logout</a>').attr('id',this.dom.widget.logout);
     this.logout_link.click(function() {
       // do logout stuff here
+      
+      // add the url_token back to the URL so people will bookmark the right thing
+      window.location.hash = "url_token" + fb.env.url_token;
+      if (_fb.admin()) { 
+        window.location.hash += "&admin=true";
+      }
+      
       if (_fb.admin()) {
         var answer = confirm("Are you sure you want to log out? To log back in, bookmark this page or visit your Outspokes.com dashboard.");
       } else {
