@@ -1,0 +1,16 @@
+<h3><%= link_to(@notification.site.commenter_url(@commenter), @notification.site.commenter_url(@commenter)) %></h3>
+
+<% @notification.feedbacks_by_page(:ignore_commenter => @commenter, :ignore_private => true).each_pair do |page, feedbacks| %>
+  <h4><%= link_to(page.url, page.commenter_url(@commenter)) %></h4>
+  <ul>
+    <li><%= pluralize feedbacks[:comments].size, 'new comment' %></li>
+    <li><%= pluralize feedbacks[:user_styles].size, 'new design' %></li>
+  </ul>
+  <br/>
+<% end %>
+
+<p>
+  <% invite = @notification.site.home_page.invites.detect { |i| i.commenter == @commenter } %>
+  To manage your notifications, <%= link_to('click here.', edit_commenter_url(@commenter, :url_token => invite.url_token)) %>
+</p>
+<br/>

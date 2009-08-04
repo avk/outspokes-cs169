@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserStyleTest < ActiveSupport::TestCase
+  include NotificationTestHelper
 
   def test_must_not_be_abstract
     user_style = create_user_style
@@ -11,12 +12,6 @@ class UserStyleTest < ActiveSupport::TestCase
     assert_difference "UserStyle.count", 1 do
       user_style = create_user_style
       assert !user_style.new_record?, "#{user_style.errors.full_messages.to_sentence}"
-    end
-  end
-
-  test "should put a notification after save" do
-    assert_difference 'Notification.count' do
-      create_user_style
     end
   end
   

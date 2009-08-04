@@ -35,7 +35,7 @@ class MailerTest < ActionMailer::TestCase
     site = invite.page.site
     
     assert_difference "ActionMailer::Base.deliveries.size", 1 do
-      Mailer.deliver_notification(account, create_notification(:site => site))
+      Mailer.deliver_account_notification(account, create_notification(:site => site))
     end
     mail = ActionMailer::Base.deliveries.first
     # assert mail.body.include?("edit?url_token=wendy_token")
@@ -48,7 +48,7 @@ class MailerTest < ActionMailer::TestCase
     site = invite.page.site
     
     assert_difference "ActionMailer::Base.deliveries.size", 1 do
-      Mailer.deliver_notification(commenter, create_notification(:site => site))
+      Mailer.deliver_commenter_notification(commenter, create_notification(:site => site))
     end
     mail = ActionMailer::Base.deliveries.first
     # assert mail.body.include?(edit_commenter_url(commenter, :url_token => invite.url_token))

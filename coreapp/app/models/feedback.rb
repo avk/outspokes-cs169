@@ -3,6 +3,9 @@ class Feedback < ActiveRecord::Base
   belongs_to :commenter
   belongs_to :page
   has_many :opinions, :dependent => :destroy, :validate => false
+
+  named_scope :private, :conditions => { :private => true }
+  named_scope :public, :conditions => { :private => false }
   
   validates_presence_of :page
   validates_associated :page
@@ -164,9 +167,7 @@ class Feedback < ActiveRecord::Base
   end
 
   def deliver_notification
-    Notification.put(self) unless commenter == page.account
+    Notification.put(self)
     true
-  end
-  
-  
+  end  
 end

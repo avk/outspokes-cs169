@@ -44,11 +44,24 @@ class Notification < ActiveRecord::Base
   #   :comments    => [ comment1,...,commentN ],
   #   :user_styles => [ style1,...,styleN ]
   #  }
-  def feedbacks_by_page
+  #
+  # optional arguments
+  #  :ignore_commenter - filter out feedbacks left by a given commenter.
+  #  :ignore_private   - include only public feedbacks if true, all feedbacks otherwise
+  def feedbacks_by_page(options = {})
+    options.assert_valid_keys(:ignore_commenter, :ignore_private)
+    options.reverse_merge!(:ignore_private => true)
+
+    conditions = ""
+    if options[:ignore_commenter]
+      conditions = ["feedbacks.commenter_id != ?", options[:ignore_commenter].id]
+    end
+    scoped_feedbacks = (options[:ignore_private] ? feedbacks.public : feedbacks).all(:conditions => conditions)
+
     returning({}) do |h|
-      feedbacks.each do |feedback|
+      scoped_feedbacks.each do |feedback|
         h[feedback.page] ||= { :comments => [], :user_styles => [] }
-        h[feedback.page][feedback.type.underscore.pluralize.to_sym] << feedback
+        h[feedback.page][feedback.class.name.underscore.pluralize.to_sym] << feedback
       end
     end
   end
@@ -77,17 +90,22 @@ class Notification < ActiveRecord::Base
     end
 
     accounts   = [ site.account ].select(&do_notify)
-    commenters = site.commenters.select(&do_notify)
+    commenters = (site.commenters.all - [ site.account ]).select(&do_notify)
 
-    begin
-      (accounts + commenters).each do |recipient|
-        Mailer.deliver_notification(recipient, self)
+    all_success = true
+
+    accounts.each do |recipient|
+      all_success = all_success && HoptoadNotifier.fail_silently do
+        Mailer.deliver_account_notification(recipient, self)
       end
-    rescue Exception => e
-      logger.error(e.backtrace)
-      HoptoadNotifier.notify(e)
-      return false  # on failure
     end
-    true
+
+    commenters.each do |recipient|
+      all_success = all_success && HoptoadNotifier.fail_silently do
+        Mailer.deliver_commenter_notification(recipient, self)
+      end
+    end
+
+    all_success
   end
 end
