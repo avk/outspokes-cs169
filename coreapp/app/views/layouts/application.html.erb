@@ -48,8 +48,10 @@
       <p>&copy; 2009 Outspokes</p>
     </div>
     
-    <%- javascript_tag do -%>
-      <%= render :partial => 'layouts/analytics' %>
-    <% end -%>
+    <%- if RAILS_ENV == "production" -%>
+      <%- javascript_tag do -%>
+        <%= render :partial => 'layouts/analytics' %>
+      <% end -%>
+    <%- end -%>
   </body>
 </html>
