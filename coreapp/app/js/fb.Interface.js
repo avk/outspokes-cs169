@@ -477,7 +477,7 @@
     main_help.append("" +
     "<div class='outspokes_question'>" + 
     "<h2>How do I get rid of the bar?</h2>" +
-      "<p>You can close the Outspokes widget by clicking the 'Logout' link right next to the help link ('?') that got you here.</p>" + 
+      "<p>You can close the Outspokes widget by clicking the 'x' right next to the help link ('?') that got you here.</p>" + 
     "</div>");
     
     secondary_help.append("" +
