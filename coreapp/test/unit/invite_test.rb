@@ -82,6 +82,13 @@ class InviteTest < ActiveSupport::TestCase
     assert i1.url_token != i2.url_token
   end
   
+  test "an admin cannot invite himself to his own site" do
+    site = create_site
+    assert_no_difference "Invite.count" do
+      create_invite(:page => site.home_page, :commenter => site.account)
+    end
+  end
+  
   test 'should return account who initiated the invite via inviter' do
     inviter = commenters(:aaron)
     commenter = commenters(:old_password_holder)
