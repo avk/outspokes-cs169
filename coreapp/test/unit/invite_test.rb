@@ -55,6 +55,17 @@ class InviteTest < ActiveSupport::TestCase
     end
   end
   
+  test "should not allow duplicate URL tokens" do
+    i1 = invites(:page)
+    i2 = create_invite
+    
+    i2.url_token = i1.url_token
+    i2.save
+    i2.reload
+    
+    assert i2.url_token != i1.url_token, "allowing duplicate url tokens"
+  end
+  
   test 'should generate unique URL tokens when inviting the same commenter to different pages' do
     commenter = create_commenter
     i1, i2 = nil, nil

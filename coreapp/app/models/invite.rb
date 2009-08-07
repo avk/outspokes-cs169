@@ -10,6 +10,7 @@ class Invite < ActiveRecord::Base
   validates_associated :commenter
   
   validates_uniqueness_of :page_id, :scope => :commenter_id
+  validates_uniqueness_of :url_token
   
   before_create :generate_url_token
   
