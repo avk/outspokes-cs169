@@ -67,6 +67,21 @@ class InviteTest < ActiveSupport::TestCase
     assert i1.url_token != i2.url_token
   end
   
+  test "should generate unique URL tokens when inviting the same commenter at different times to pages with the same URL" do
+    commenter = create_commenter
+    i1, i2 = nil, nil
+    s1 = create_site(:url => "http://www.bing.com")
+    s2 = create_site(:url => "http://www.bing.com")
+    
+    assert_difference "Invite.count", 2 do
+      i1 = create_invite(:page => s1.home_page, :commenter => commenter)
+      sleep 1
+      i2 = create_invite(:page => s2.home_page, :commenter => commenter)
+    end
+    
+    assert i1.url_token != i2.url_token
+  end
+  
   test "an admin cannot invite himself to his own site" do
     site = create_site
     assert_no_difference "Invite.count" do
