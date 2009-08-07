@@ -89,6 +89,19 @@ class InviteTest < ActiveSupport::TestCase
     end
   end
   
+  test "should only generate url tokens on creation" do
+    invite = invites(:page)
+    old_token = invite.url_token
+    
+    invite.last_visited_at = 1.day.ago
+    invite.save
+    invite.reload
+    
+    new_token = invite.url_token
+    
+    assert old_token == new_token, "url tokens are getting changed upon update"
+  end
+  
   test 'should return account who initiated the invite via inviter' do
     inviter = commenters(:aaron)
     commenter = commenters(:old_password_holder)
