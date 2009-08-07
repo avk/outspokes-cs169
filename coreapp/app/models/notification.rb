@@ -77,7 +77,7 @@ class Notification < ActiveRecord::Base
     commenters = site.commenters.select(&do_notify)
 
     begin
-      (accounts + commenters).each do |recipient|
+      accounts.each do |recipient|
         Mailer.deliver_notification(recipient, self)
       end
     rescue Exception => e
