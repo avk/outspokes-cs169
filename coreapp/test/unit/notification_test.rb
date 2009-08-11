@@ -39,16 +39,19 @@ class NotificationTest < ActiveSupport::TestCase
 
   test "deliver should send email to admins and commenters" do
     # TODO: fixture hell makes this impossible to test.
+    # setup notification with one admin, one commenter, and feedbacks. 
     assert true
   end
 
-  test "deliver should not delivery if user opted out" do
+  test "deliver should not deliver notification if user opted out" do
     notification = create_notification
     site = notification.site
-    [ site.account, site.commenters ].flatten.each do |c|
+    recipients = [ site.account, site.commenters ].flatten
+    recipients.each do |c|
       c.preferred_deliver_notifications = false, site.id
       c.save!
     end
+    assert recipients.size > 2
 
     assert_no_difference "ActionMailer::Base.deliveries.size" do
       notification.deliver!

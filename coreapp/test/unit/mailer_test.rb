@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class MailerTest < ActionMailer::TestCase
+  include ActionController::UrlWriter
 
   def setup
     ActionMailer::Base.delivery_method = :test
@@ -38,8 +39,7 @@ class MailerTest < ActionMailer::TestCase
       Mailer.deliver_account_notification(account, create_notification(:site => site))
     end
     mail = ActionMailer::Base.deliveries.first
-    # assert mail.body.include?("edit?url_token=wendy_token")
-    assert_match /accounts\/.*\/edit/, mail.body
+    assert mail.body.include?(edit_account_url(account))
   end
 
   test "notification to commenter should have an opt-out link" do
@@ -51,8 +51,7 @@ class MailerTest < ActionMailer::TestCase
       Mailer.deliver_commenter_notification(commenter, create_notification(:site => site))
     end
     mail = ActionMailer::Base.deliveries.first
-    # assert mail.body.include?(edit_commenter_url(commenter, :url_token => invite.url_token))
-    assert_match /commenters\/.*\/edit\?url_token=wendy_token/, mail.body
+    assert mail.body.include?(edit_commenter_url(commenter, :url_token => invite.url_token))
   end
 
 end

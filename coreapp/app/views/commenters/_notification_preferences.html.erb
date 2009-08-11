@@ -4,7 +4,7 @@
   <% commenter_or_account.sites.each do |site| %>
     <p>
       <%# commenter[preferred_deliver_notifications_by_site][:site_id] %>
-      <%= p.check_box :"#{site.id}", { :checked => commenter_or_account.preferred_deliver_notifications(site.id) } %> &nbsp; <%= site.url %>
+      <%= p.check_box :"#{site.id}", { :checked => commenter_or_account.preferred_deliver_notifications(site.id) } %> &nbsp; <%= site.name %>
     </p>
   <% end %>
 <% end %>

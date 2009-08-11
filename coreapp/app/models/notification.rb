@@ -96,13 +96,15 @@ class Notification < ActiveRecord::Base
 
     accounts.each do |recipient|
       all_success = all_success && HoptoadNotifier.fail_silently do
-        Mailer.deliver_account_notification(recipient, self)
+        Mailer.deliver_account_notification(recipient, site, feedbacks)
       end
     end
 
     commenters.each do |recipient|
       all_success = all_success && HoptoadNotifier.fail_silently do
-        Mailer.deliver_commenter_notification(recipient, self)
+        feedbacks = feedbacks_by_page(:ignore_commenter => recipient,
+                                      :ignore_private => true)
+        Mailer.deliver_commenter_notification(recipient, site, feedbacks)
       end
     end
 

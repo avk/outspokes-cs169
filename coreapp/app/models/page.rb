@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
   belongs_to :site
 
   has_many :invites, :dependent => :destroy, :validate => false
-  has_many :commenters, :through => :invites
+  has_many :commenters, :through => :invites  #, :conditions => "type != 'Account'"
   has_many :feedbacks, :dependent => :destroy, :validate => false
   has_many :comments, :dependent => :destroy
   has_many :user_styles, :dependent => :destroy

@@ -1,4 +1,6 @@
-<h3><%= link_to(@notification.site.commenter_url(@commenter), @notification.site.commenter_url(@commenter)) %></h3>
+<h3>
+  <%= link_to(@notification.site.name, @notification.site.commenter_url(@commenter)) %>
+</h3>
 
 <% @notification.feedbacks_by_page(:ignore_commenter => @commenter, :ignore_private => true).each_pair do |page, feedbacks| %>
   <h4><%= link_to(page.url, page.commenter_url(@commenter)) %></h4>
