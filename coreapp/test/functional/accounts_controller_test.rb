@@ -132,6 +132,6 @@ class AccountsControllerTest < ActionController::TestCase
 
   protected
     def create_account(options = {})
-      post :create, :account => {  :email => 'quire@example.com', :password => 'quire69' }.merge(options)
+      post :create, :account => { :name => 'Quentin', :email => 'quire@example.com', :password => 'quire69' }.merge(options)
     end
 end

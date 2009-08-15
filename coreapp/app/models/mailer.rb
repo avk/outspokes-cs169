@@ -13,9 +13,9 @@ class Mailer < ActionMailer::Base
     site = page.site
 
     name = site.name
-    account_email = site.account.email
-    subject      account_email + " has invited you to give feedback via Outspokes"
-    body         :url => url, :name => name, :account_email => account_email 
+    who = site.account.name
+    subject      who + " has invited you to give feedback via Outspokes"
+    body         :url => url, :name => name, :who => who
   end
 
   def account_signup(account)

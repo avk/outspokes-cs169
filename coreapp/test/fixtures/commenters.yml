@@ -7,6 +7,7 @@ two:
   email: lol@lulz.com
 
 quentin:
+  name:                      Quentin
   email:                     quentin@example.com
   salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
   crypted_password:          fa2428820f5732a72374d8715966f637e42ef68f # 'monkey'
@@ -16,6 +17,7 @@ quentin:
   type:                      Account
 
 aaron:
+  name:                      Aaron
   email:                     aaron@example.com
   salt:                      da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('1')
   crypted_password:          c9e539bf216fa7e991d469917ee343a7197543d2 # 'monkey'
@@ -25,6 +27,7 @@ aaron:
   type:                      Account
 
 old_password_holder:
+  name:                      Old
   email:                     salty_dog@example.com
   salt:                      7e3041ebc2fc05a40c60028e2c4901a81035d3cd
   crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test

@@ -11,11 +11,15 @@
 
 <% form_for @account do |f| -%>
   <p>
-    <%= label_tag 'email', nil, :class => 'wide_left' %>
+    <%= f.label 'name', 'Full Name', :class => 'wide_left' %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label 'email', nil, :class => 'wide_left' %>
     <%= f.text_field :email %>
   </p>
   <p>
-    <%= label_tag 'password', nil, :class => 'wide_left' %>
+    <%= f.label 'password', nil, :class => 'wide_left' %>
     <%= f.password_field :password %>
   </p>
   <div style="clear:both;"></div>

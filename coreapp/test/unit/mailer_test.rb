@@ -19,14 +19,14 @@ class MailerTest < ActionMailer::TestCase
     body = mail.body
     url = invite.page.url + '?url_token=' + invite.url_token
     name = invite.page.site.name
-    account_email = invite.inviter.email
+    account_name = invite.inviter.name
 
-    assert body.scan(account_email.to_s + " has invited you to")
+    assert body.scan(account_name.to_s + " has invited you to")
     assert body.scan("give feedback on " + name.to_s)
     assert body.scan(url)
     assert mail.to[0] == invite.commenter.email.to_s
     assert mail.from[0] == "outspokes-no-reply@outspokes.com"
-    assert mail.subject == account_email.to_s + " has invited you to give feedback via Outspokes"
+    assert mail.subject == account_name.to_s + " has invited you to give feedback via Outspokes"
   end
 
 end

@@ -9,6 +9,27 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
+  test "should require name" do
+    assert_no_difference "Account.count" do
+      u = create_account(:name => nil)
+      assert u.errors.on(:name)
+    end
+  end
+  
+  test "should not accept names of > 100 characters" do
+    assert_no_difference "Account.count" do
+      u = create_account(:name => "987098709870987098709870879870870987098708709870987098709870987087098708709870987098708708708708708709870987")
+      assert u.errors.on(:name)
+    end
+  end
+  
+  test "should not accept non-printing characters in the name" do
+    assert_no_difference "Account.count" do
+      u = create_account(:name => 'Andrew\tSlaughter<>')
+      assert u.errors.on(:name)
+    end
+  end
+
   def test_should_require_email
     assert_no_difference 'Account.count' do
       u = create_account(:email => nil)
