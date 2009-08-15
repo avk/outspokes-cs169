@@ -34,14 +34,6 @@ class AccountsControllerTest < ActionController::TestCase
     end
   end
 
-  def test_should_require_password_confirmation_on_signup
-    assert_no_difference 'Account.count' do
-      create_account(:password_confirmation => nil)
-      assert assigns(:account).errors.on(:password_confirmation)
-      assert_response :success
-    end
-  end
-
   def test_should_require_email_on_signup
     assert_no_difference 'Account.count' do
       create_account(:email => nil)
@@ -56,8 +48,7 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   test "should require login on PUT update" do
-    put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
-      :password => 'foobara', :password_confirmation => 'foobar' }
+    put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com', :password => 'foobara' }
     assert_login_required
   end
 
@@ -73,8 +64,7 @@ class AccountsControllerTest < ActionController::TestCase
     newemail = 'quire@foo.com'
     newpass = 'foobar'
     assert_no_difference 'Account.count' do
-      put :update, :id => commenters(:quentin).id, :account => { :email => newemail,
-           :password => newpass, :password_confirmation => newpass }
+      put :update, :id => commenters(:quentin).id, :account => { :email => newemail, :password => newpass }
       assert_response :redirect
 
       commenters(:quentin).reload
@@ -86,15 +76,6 @@ class AccountsControllerTest < ActionController::TestCase
     end
   end
   
-  def test_should_not_update_account_mismatched_passwords
-    login_as :quentin
-    assert_no_difference 'Account.count' do
-      put :update, :id => commenters(:quentin).id, :account => { :email => 'quire@example.com',
-           :password => 'foobara', :password_confirmation => 'foobar' }
-      assert_template 'accounts/edit.html.erb'
-    end
-  end
-
   def test_should_update_account_preferred_notification
     login_as :quentin
     new_preferred_notification = '1'
@@ -151,7 +132,6 @@ class AccountsControllerTest < ActionController::TestCase
 
   protected
     def create_account(options = {})
-      post :create, :account => {  :email => 'quire@example.com',
-        :password => 'quire69', :password_confirmation => 'quire69' }.merge(options)
+      post :create, :account => {  :email => 'quire@example.com', :password => 'quire69' }.merge(options)
     end
 end

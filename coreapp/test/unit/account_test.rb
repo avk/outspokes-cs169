@@ -31,13 +31,6 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
-  def test_should_require_password_confirmation
-    assert_no_difference 'Account.count' do
-      u = create_account(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
-    end
-  end
-
   def test_should_require_email
     assert_no_difference 'Account.count' do
       u = create_account(:email => nil)
@@ -53,7 +46,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   def test_should_reset_password
-    commenters(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
+    commenters(:quentin).update_attributes(:password => 'new password')
     assert_equal commenters(:quentin), Account.authenticate('quentin@example.com', 'new password')
   end
 

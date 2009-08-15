@@ -91,7 +91,7 @@ class Test::Unit::TestCase
   
   def valid_options_for_account
     commenter = commenters(:one)
-    {:email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }
+    {:email => 'quire@example.com', :password => 'quire69' }
   end
   
   def invalid_options_for_account
