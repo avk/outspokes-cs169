@@ -9,17 +9,10 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
-  def test_should_require_login
+  def test_should_require_email
     assert_no_difference 'Account.count' do
       u = create_account(:email => nil)
       assert u.errors.on(:email)
-    end
-  end
-
-  def test_should_require_password
-    assert_no_difference 'Account.count' do
-      u = create_account(:password => nil)
-      assert u.errors.on(:password)
     end
   end
 
@@ -31,10 +24,10 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
-  def test_should_require_email
+  def test_should_require_password
     assert_no_difference 'Account.count' do
-      u = create_account(:email => nil)
-      assert u.errors.on(:email)
+      u = create_account(:password => nil)
+      assert u.errors.on(:password)
     end
   end
 
