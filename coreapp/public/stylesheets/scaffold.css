@@ -1,7 +1,11 @@
 .fieldWithErrors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+  margin-bottom: 1em;
+}
+.fieldWithErrors label {
+  color: red;
+}
+.fieldWithErrors input {
+  border: 2px solid red;
 }
 
 #errorExplanation {
