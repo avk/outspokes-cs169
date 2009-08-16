@@ -26,7 +26,7 @@ role :web, "outspokes.com"
 role :db,  "outspokes.com", :primary => true
 
 before "deploy", "backup"
-before "deploy", "db:migrate"
+after  "deploy:symlink", "db:migrate"
 before "deploy:restart", "deploy:remove_cached_assets"
 after  "deploy:restart", "deploy:warm_up_app"
 
