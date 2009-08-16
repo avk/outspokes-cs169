@@ -126,7 +126,7 @@ function() {
 
       fb.i = new fb.Interface();
       fb.Comment.get_callback(data, true);
-      if (data.no_commenters) {
+      if (data.no_commenters && fb.env.first_visit) {
         fb.i.admin_panel.set_to_commenters();
         fb.i.admin_panel.show();
       }
