@@ -12,10 +12,10 @@ class Mailer < ActionMailer::Base
     page = invite.page
     site = page.site
 
-    name = site.name
+    site_name = site.name
     who = site.account.name
     subject      who + " has invited you to give feedback via Outspokes"
-    body         :url => url, :name => name, :who => who
+    body         :url => url, :site_name => site_name, :who => who
   end
 
   def account_signup(account)
