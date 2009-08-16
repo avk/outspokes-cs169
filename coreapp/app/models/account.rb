@@ -20,7 +20,7 @@ class Account < Commenter
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible  :email, :name, :password, :type, :preferred_deliver_notifications
+  attr_accessible  :email, :name, :password, :type, :preferred_deliver_notifications, :job_title
 
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

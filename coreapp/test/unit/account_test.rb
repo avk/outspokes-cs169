@@ -9,6 +9,13 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
+  test "should create account without job title" do
+    assert_difference "Account.count" do
+      account = create_account(:job_title => nil)
+      assert !account.new_record?, "#{account.errors.full_messages.to_sentence}"
+    end
+  end
+
   test "should require name" do
     assert_no_difference "Account.count" do
       u = create_account(:name => nil)
@@ -29,7 +36,7 @@ class AccountTest < ActiveSupport::TestCase
       assert u.errors.on(:name)
     end
   end
-
+  
   def test_should_require_email
     assert_no_difference 'Account.count' do
       u = create_account(:email => nil)
