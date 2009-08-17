@@ -1,8 +1,8 @@
 <h3>
-  <%= link_to(@notification.site.name, @notification.site.admin_url) %>
+  <%= link_to(@site.name, @site.admin_url) %>
 </h3>
 
-<% @notification.feedbacks_by_page(:ignore_commenter => @account, :ignore_private => false).each_pair do |page, feedbacks| %>
+<% @feedbacks.each_pair do |page, feedbacks| %>
   <h4><%= link_to(page.url, page.admin_url) %></h4>
   <ul>
     <li><%= pluralize feedbacks[:comments].size, 'new comment' %></li>

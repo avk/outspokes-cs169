@@ -34,9 +34,10 @@ class MailerTest < ActionMailer::TestCase
     account = commenters(:quentin)
     invite = account.invites.first
     site = invite.page.site
+    feedbacks = Notification.feedbacks_by_page([feedbacks(:one)])
     
     assert_difference "ActionMailer::Base.deliveries.size", 1 do
-      Mailer.deliver_account_notification(account, create_notification(:site => site))
+      Mailer.deliver_account_notification(account, site, feedbacks)
     end
     mail = ActionMailer::Base.deliveries.first
     assert mail.body.include?(edit_account_url(account))
@@ -46,9 +47,10 @@ class MailerTest < ActionMailer::TestCase
     commenter = commenters(:wendy)
     invite = commenter.invites.first
     site = invite.page.site
+    feedbacks = Notification.feedbacks_by_page([feedbacks(:one)])
     
     assert_difference "ActionMailer::Base.deliveries.size", 1 do
-      Mailer.deliver_commenter_notification(commenter, create_notification(:site => site))
+      Mailer.deliver_commenter_notification(commenter, site, feedbacks)
     end
     mail = ActionMailer::Base.deliveries.first
     assert mail.body.include?(edit_commenter_url(commenter, :url_token => invite.url_token))

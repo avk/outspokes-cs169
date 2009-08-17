@@ -6,7 +6,21 @@ class Feedback < ActiveRecord::Base
 
   named_scope :private, :conditions => { :private => true }
   named_scope :public, :conditions => { :private => false }
-  
+  named_scope :by, lambda { |*commenters|
+    raise ArgumentError.new("No commenters specified") if commenters.empty?
+    {
+      :conditions => ["commenters.id IN (?)", commenters],
+      :include => :commenter
+    }
+  }
+  named_scope :not_by, lambda { |*commenters|
+    raise ArgumentError.new("No commenters specified") if commenters.empty?
+    {
+      :conditions => ["commenters.id NOT IN (?)", commenters],
+      :include => :commenter
+    }
+  }
+
   validates_presence_of :page
   validates_associated :page
   validates_presence_of :commenter
@@ -147,14 +161,13 @@ class Feedback < ActiveRecord::Base
   def neutral?
     few_votes? and close_agree_disagree_ratio?
   end
-  
+
   def self.controversial(page_id)
     self.find_all_by_page_id(page_id).select {|fb| fb.controversial? }
   end
   
   def self.neutral(page_id)
     self.find_all_by_page_id(page_id).select {|fb| fb.neutral? }
-
   end
   
   protected

@@ -29,16 +29,16 @@ class Mailer < ActionMailer::Base
   def account_notification(account, site, feedbacks)
     setup_email
     recipients   account.email
-    subject      "Recent feedback left on your site: #{notification.site.name}"
+    subject      "Recent feedback left on your site: #{site.name}"
 
     body :account => account, :site => site, :feedbacks => feedbacks
   end
 
-  def commenter_notification(commenter, notification)
+  def commenter_notification(commenter, site, feedbacks)
     setup_email
     recipients   commenter.email
-    subject      "Recent feedback on #{notification.site.name}"
-    
+    subject      "Recent feedback on #{site.name}"
+
     body :commenter => commenter, :site => site, :feedbacks => feedbacks
   end
 
