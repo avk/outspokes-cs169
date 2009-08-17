@@ -2,7 +2,9 @@ class Invite < ActiveRecord::Base
 
   belongs_to :page
   belongs_to :commenter
-
+  
+  attr_protected :url_token
+  
   validates_presence_of :page
   validates_associated :page
 
@@ -10,6 +12,7 @@ class Invite < ActiveRecord::Base
   validates_associated :commenter
   
   validates_uniqueness_of :page_id, :scope => :commenter_id
+  validates_uniqueness_of :url_token
   
   before_create :generate_url_token
   

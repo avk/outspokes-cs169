@@ -36,7 +36,7 @@ class InviteTest < ActiveSupport::TestCase
       assert i.errors.on(:commenter), "allowing invites to be created with invalid commenters"
     end
   end
-
+  
   test 'should generate a URL token after creation' do
     i = create_invite
     assert !i.new_record?, "#{i.errors.full_messages.to_sentence}"
@@ -53,6 +53,25 @@ class InviteTest < ActiveSupport::TestCase
       assert !i1.new_record?, "#{i1.errors.full_messages.to_sentence}"
       assert i2.errors.on(:page_id), "#{i2.errors.full_messages.to_sentence}"
     end
+  end
+  
+  test "should not allow duplicate URL tokens" do
+    i1 = invites(:page)
+    i2 = create_invite
+    
+    i2.url_token = i1.url_token
+    i2.save
+    i2.reload
+    
+    assert i2.url_token != i1.url_token, "allowing duplicate url tokens"
+  end
+  
+  test "should not be able to set a URL token via mass assignment" do
+    my_token = "anything"
+    i = create_invite
+    i.update_attributes(:url_token => my_token)
+    i.reload
+    assert i.url_token != my_token, "allowing url token to be set via mass assignment"
   end
   
   test 'should generate unique URL tokens when inviting the same commenter to different pages' do
