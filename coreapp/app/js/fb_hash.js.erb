@@ -2,12 +2,6 @@ function() {
   
   return (function(fb){
     
-    if (!(/firefox/i.test(navigator.userAgent))) {
-      alert("Sorry, Firefox is currently the only officially supported browser for Outspokes.");
-      fb.env = {};
-      fb.env.init = true;
-    }
-    
     var $ = fb.$;
     if (fb.env && fb.env.init) {
       return true;
@@ -47,6 +41,15 @@ function() {
     fb.done_loading = false;
     
     fb.bookmarklet = <%= @bookmarklet %>;
+    
+    // If they're trying to view Outspokes but are not using Firefox, error out
+    // We don't need to check cookies because in order for them to be set, 
+    // a url_token had to be in the URL first
+    if (fb.getParams('url_token') && !(/firefox/i.test(navigator.userAgent))) {
+      alert("Sorry, Firefox is currently the only officially supported browser for Outspokes.");
+      fb.env.init = true;
+      return true;
+    }
     
     var loading = function() {
       // callback which is supposed to remove what this creates has already executed
