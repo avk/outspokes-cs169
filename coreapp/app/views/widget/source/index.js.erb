@@ -19,7 +19,6 @@
 <%= @fb_hash + "();" %>
 
 <%- if RAILS_ENV == "development" -%>
-  <%= 'console.log("' + @fb_hash + '");'  %>
   <%= 'fb = ' + @fb_hash + ';' %>
 <%- end -%>
 
