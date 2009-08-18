@@ -334,7 +334,7 @@
         this.setCurrent(0);
         
         return this.bar;
-      },
+      }
     }
     this.your_designs_wrapper.append(this.nav.build());
     
@@ -582,7 +582,7 @@
       // Safari:  rgba(0, 0, 0, 0)
       var rgbStr = /rgba?\((\d{1,3}), (\d{1,3}), (\d{1,3}).*\)/.exec(str);
       if (!rgbStr) {
-        console.log("ERROR: Unable to match rgbStr for userStyle");
+        // console.log("ERROR: Unable to match rgbStr for userStyle");
       }
       var rgb = rgbStr.slice(1, 4);
       var rtn = "";

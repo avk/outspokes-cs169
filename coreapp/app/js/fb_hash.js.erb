@@ -1,6 +1,13 @@
 function() {
   
   return (function(fb){
+    
+    if (!(/firefox/i.test(navigator.userAgent))) {
+      alert("Sorry, Firefox is currently the only officially supported browser for Outspokes.");
+      fb.env = {};
+      fb.env.init = true;
+    }
+    
     var $ = fb.$;
     if (fb.env && fb.env.init) {
       return true;

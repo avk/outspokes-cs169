@@ -35,10 +35,9 @@
         panel   : 'outspokes_admin_panel',
         open    : 'outspokes_open_admin_panel',
         close   : 'outspokes_close_admin_panel',
-        overlay : 'outspokes_overlay',
+        overlay : 'outspokes_overlay'
       },
-      non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel," +
-        " #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)"),
+      non_widget_elements : $("body *:not(#outspokes *, #outspokes, #outspokes_admin_panel, #outspokes_admin_panel *, #outspokes_overlay, #outspokes_overlay *)")
     };
     
     this.main_window = $('<div></div>').attr('id',this.dom.widget.wrapper);
@@ -386,7 +385,7 @@
           src : fb.env.admin_panel_address.pages,
           width : '100%',
           height : '100%', 
-          frameborder : 0,
+          frameborder : 0
         });
         admin_panel.append(iframe);
         admin_panel.appendTo($('body'));

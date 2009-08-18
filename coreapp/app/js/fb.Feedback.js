@@ -64,10 +64,10 @@
     var self = this;
     var callback = function(data) {
       if (!data.success) {
-//        console.log("delete fail!");
+        // console.log("delete fail!");
       } else {
-//        console.log("delete win!");
-          self.remove();
+        // console.log("delete win!");
+        self.remove();
       }
     };
     $.post(fb.env.destroy_address, data, callback, "json")
