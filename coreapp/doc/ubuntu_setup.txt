@@ -1,12 +1,15 @@
 ### Setting up Ubuntu for hosting Outspokes
 
 ### Base system and utils
-sudo aptitude install apache2 mysql-server screen git git-core emacs ack
+sudo aptitude install apache2 mysql-server libmysqlclient15-dev screen git git-core emacs ack
+sudo gem install mysql
 
 ### Adding new users
 sudo adduser deploy
 # add deploy to /etc/sudoers
 # deploy ALL=(ALL) NOPASSWD: ALL
+
+# add RAILS_ENV=production to deploy user's aliases
 
 ### Setup your *local* machine to connect to server as 'deploy' user - http://pkeck.myweb.uga.edu/ssh/
 # use blank password unless you want to setup ssh agent: 
@@ -20,6 +23,11 @@ Host *.outspokes.com
 
 # add public keys to ~deploy/.ssh/authorized_keys
 cat ~/.ssh/outspokes_deploy.pub | ssh outspokes.com 'sh -c "cat - >> ~/.ssh/authorized_keys"'
+
+### MySQL Setup
+* create database feedback_production;
+* create user 'feedback'@'localhost' identified by 'somepassword';
+* grant all on feedback_production.* to 'feedback'@'localhost';
 
 ### Ruby enterprise edition - http://www.rubyenterpriseedition.com/download.html
 * installed to [/opt/ruby-enterprise-1.8.6-20090610]
@@ -36,7 +44,7 @@ cat ~/.ssh/outspokes_deploy.pub | ssh outspokes.com 'sh -c "cat - >> ~/.ssh/auth
 ### Rubygems - http://rubygems.org/read/chapter/3
 sudo gem update --system
 sudo gem sources --add http://gems.github.com
-sudo gem install rails capistrano --no-ri --no-rdoc
+sudo gem install rails capistrano capistrano-ext --no-ri --no-rdoc
 
 symlinks /usr/bin to /opt/ruby-enterprise/bin, ugly but makes sudo work
 

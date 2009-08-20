@@ -1,37 +1,30 @@
 set :application, "outspokes"
-
 set :scm, :git
 set :repository, "git@github.com:avk/feedback.git"
 set :branch, "master"
 set :deploy_via, :remote_cache
-
-# If you aren't deploying to /u/apps/#{application} on the target
-# servers (which is the default), you can specify the actual location
-# via the :deploy_to variable:
-#set :deploy_to, "/var/www/#{application}"
 set :deploy_to, "/var/www/outspokes.com"
-
-
-# If you aren't using Subversion to manage your source code, specify
-# your SCM below:
-# set :scm, :subversion
-
 set :user, 'deploy'
-ssh_options[:forward_agent] = true
-
 set :use_sudo, false
 
-role :app, "outspokes.com"
-role :web, "outspokes.com"
-role :db,  "outspokes.com", :primary => true
+ssh_options[:forward_agent] = true
 
-before "deploy", "backup"
-after  "deploy:symlink", "db:migrate"
-before "deploy:restart", "deploy:remove_cached_assets"
-after  "deploy:restart", "deploy:warm_up_app"
+set :env_type, 'staging'
+role :app, "whatcodecraves.com"
+role :web, "whatcodecraves.com"
+role :db,  "whatcodecraves.com", :primary => true
+
+desc "Settings for production deployment" 
+task :production do
+  set :env_type, 'production'
+  role :app, "outspokes.com"
+  role :web, "outspokes.com"
+  role :db,  "outspokes.com", :primary => true
+end
 
 desc "Backup the database"
 task :backup do
+  # TODO: copy backup offsite
   run "cd #{current_path}/coreapp && RAILS_ENV=production rake backup"
 end
 
@@ -43,6 +36,27 @@ end
 
 ## from http://www.zorched.net/2008/06/17/capistrano-deploy-with-git-and-passenger/
 namespace :deploy do
+  task :default do
+    if env_type == 'staging' || "YES" == Capistrano::CLI.ui.ask("Did you test on staging? Are you sure you want to DEPLOY TO PRODUCTION?? (YES/no)")
+      # deploy.web.disable
+      backup if env_type == 'production'
+      deploy.update_code
+
+      # symlinks current_path/coreapp/current, 'current_path' is
+      # updated to this new release after this line.
+      deploy.symlink
+
+      deploy.symlink_database_yml
+      deploy.symlink_log
+      db.migrate
+      deploy.remove_cached_assets
+      deploy.restart
+      # TODO: run tests? fail -> rollback
+      # deploy.web.enable
+      deploy.notify_hoptoad
+    end
+  end
+
   desc "Restarting mod_rails with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "mkdir -p #{current_path}/coreapp/tmp" 
@@ -53,52 +67,20 @@ namespace :deploy do
   task :remove_cached_assets do
     run "rm -f #{current_path}/coreapp/public/stylesheets/*_cached.css"
     run "rm -f #{current_path}/coreapp/public/javascripts/*_cached.js"
+    run "rm -f #{current_path}/coreapp/public/widget/*"
   end
 
-  task :warm_up_app do
-    run "curl beta.outspokes.com > /dev/null"
+  task :symlink_database_yml do
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{current_path}/coreapp/config/database.yml" 
   end
- 
+
+  task :symlink_log do
+    run "rm -rf #{current_path}/log"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/log #{current_path}/coreapp/log" 
+  end
+
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
   end
 end
-
-### from http://archive.jvoorhis.com/articles/2006/07/07/managing-database-yml-with-capistrano
-### but modified, because it was from capistrano v1
-desc "Create database.yml in shared/config" 
-task :after_setup do
-  database_configuration = <<-EOF
-
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  timeout: 5000
-
-test:
-  database: #{application}_testing
-  adapter: mysql
-  username: outspokes
-  password: inktomi2009
-  host: localhost
-  socket: /var/run/mysqld/mysqld.sock
-  
-production:
-  database: #{application}_production
-  adapter: mysql
-  username: outspokes
-  password: inktomi2009
-  host: localhost
-  socket: /var/run/mysqld/mysqld.sock
-EOF
-
-  run "mkdir -p #{deploy_to}/#{shared_dir}/config" 
-  put database_configuration, "#{deploy_to}/#{shared_dir}/config/database.yml" 
-end
-
-desc "Link in the production database.yml" 
-task :after_update_code do
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/coreapp/config/database.yml" 
-end
-
