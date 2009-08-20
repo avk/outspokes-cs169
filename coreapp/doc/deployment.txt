@@ -14,7 +14,7 @@ Initial Setup
      User deploy
 
 Once your local changes are reviewed, tested, and pushed to master, do
-the following to deploy to staging
+the following to deploy to staging (http://outspokes-stage.whatcodecraves.com/)
 
     cap deploy
 
