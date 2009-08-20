@@ -56,8 +56,11 @@ sudo chmod -R 775 /var/www
 
 ### Setup app
 # http://www.softiesonrails.com/2007/4/5/the-absolute-moron-s-guide-to-capistrano
-mkdir -p /var/www/beta.outspokes.com/{shared,releases}
-mkdir -p /var/www/beta.outspokes.com/shared/{log,system}
+cap deploy:setup
+  mkdir -p /var/www/beta.outspokes.com/{shared,releases}
+  mkdir -p /var/www/beta.outspokes.com/shared/{log,system}
+write a database.yml in shared/config/database.yml
+write a local.rb in shared/config/settings/local.rb
 cap deploy
 
 ### Symlink config files

@@ -48,6 +48,7 @@ namespace :deploy do
 
       deploy.symlink_database_yml
       deploy.symlink_log
+      deploy.symlink_local_settings
       db.migrate
       deploy.remove_cached_assets
       deploy.restart
@@ -77,6 +78,10 @@ namespace :deploy do
   task :symlink_log do
     run "rm -rf #{current_path}/log"
     run "ln -nfs #{deploy_to}/#{shared_dir}/log #{current_path}/coreapp/log" 
+  end
+
+  task :symlink_local_settings do
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/settings/local.rb #{current_path}/coreapp/config/settings/local.rb" 
   end
 
   [:start, :stop].each do |t|
