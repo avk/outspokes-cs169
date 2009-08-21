@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  
+  ssl_required :new, :edit, :create, :update  
   before_filter :login_required, :only => [ :edit, :update, :dashboard, :destroy ]
   
   # render new.rhtml
