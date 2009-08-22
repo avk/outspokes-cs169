@@ -1,3 +1,7 @@
+# http://selenium-client.rubyforge.org/classes/Selenium/Rake/RemoteControlStartTask.html
+#
+# http://selenium-client.rubyforge.org/classes/Selenium/Rake/RemoteControlStopTask.html
+
 require 'selenium/rake/tasks'
 require 'test/selenium_helper'
 
@@ -29,26 +33,18 @@ namespace :selenium do
 
   desc "Runs all the selenium tests #{MAIN_TESTS} and #{BROWSER_SPECIFIC_TESTS} for BROWSER= (defaults to firefox)"
   task :test do
-    browser_name = (ENV['BROWSER'].blank?) ? DEFAULT_BROWSER : ENV['BROWSER'].downcase
+    ENV['BROWSER'] ||= DEFAULT_BROWSER
+    browser_name = ENV['BROWSER'].downcase
     unless SUPPORTED_BROWSERS.include?(browser_name)
       raise "Sorry, I don't recognize that browser! Only #{SUPPORTED_BROWSERS.join(', ')} are supported."
     end
     puts "Don't forget to ENABLE popups in your #{browser_name.capitalize}'s preferences" if browser_name != DEFAULT_BROWSER
     
-    SeleniumTestCase.open_browser(browser_name)
-    
     Rake::TestTask.new(:browser_test) do |t|
       t.libs << 'test'
       t.test_files = FileList.new(MAIN_TESTS, BROWSER_SPECIFIC_TESTS + '*firefox*.rb')
-      # t.test_files = FileList.new('test/integration/*.rb')
       t.verbose = true
     end
     task(:browser_test).invoke
-    
-    SeleniumTestCase.close_browser
   end
-end
-
-def hi
-  puts "hi"
 end

@@ -1,7 +1,17 @@
 # Goal:       Get Selenium & Selenium RC up and running beside the spokes
 # Author:     Arthur Klepchukov
 # Created:    08/19/2009
-# Modified:   08/19/2009
+# Modified:   08/22/2009
+
+# Quickstart #
+    cd RAILS_ROOT
+    wget http://release.seleniumhq.org/selenium-remote-control/1.0.1/selenium-remote-control-1.0.1-dist.zip
+    unzip selenium-remote-control-1.0.1-dist.zip
+    sudo gem install selenium-client
+    rake selenium:rc:start
+    rake selenium:test
+
+# Detailed Setup #
 
 # 0. put yourself in the right place (wherever Outspokes is on the system)
     cd RAILS_ROOT
@@ -76,7 +86,7 @@
 # and: http://selenium-client.rubyforge.org/classes/Selenium/Rake/RemoteControlStopTask.html
 # in lib/tasks/selenium.rake:
     
-    require ‘selenium/rake/tasks‘
+    require 'selenium/rake/tasks'
     
     # selenium:rc:start
     Selenium::Rake::RemoteControlStartTask.new do |rc| 
