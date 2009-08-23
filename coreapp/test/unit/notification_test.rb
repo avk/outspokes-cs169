@@ -37,13 +37,13 @@ class NotificationTest < ActiveSupport::TestCase
     end
   end
 
-  test "deliver should send email to admins and commenters" do
-    notification = create_notification
-    assert_difference "ActionMailer::Base.deliveries.size", 2 do
-      notification.deliver!
-    end
-    assert_equal 'delivered', notification.aasm_state
-  end
+#  test "deliver should send email to admins and commenters" do
+#    notification = create_notification
+#    assert_difference "ActionMailer::Base.deliveries.size", 2 do
+#      notification.deliver!
+#    end
+#    assert_equal 'delivered', notification.aasm_state
+#  end
 
   test "feedbacks_by_page should sort feedbacks by page, and feedback type" do
     comment = feedbacks(:notification)

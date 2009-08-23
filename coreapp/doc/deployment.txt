@@ -1,0 +1,24 @@
+Initial Setup
+
+* add your public key to staging and production servers:
+
+  - ssh as 'deploy' user to staging and production
+  - add your public key to .ssh/authorized_keys
+  - add to your local .ssh/config
+     Host outspokes.com
+     IdentityFile ~/.ssh/your_key
+     User deploy
+
+     Host whatcodecraves.com
+     IdentityFile ~/.ssh/your_key
+     User deploy
+
+Once your local changes are reviewed, tested, and pushed to master, do
+the following to deploy to staging (http://outspokes-stage.whatcodecraves.com/)
+
+    cap deploy
+
+If that succeeds and you're *sure* it's ready to go into production, run:
+
+    cap production deploy
+
