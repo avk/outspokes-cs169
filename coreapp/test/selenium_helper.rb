@@ -25,7 +25,7 @@ class SeleniumTestCase < Test::Unit::TestCase
       :host => "localhost",
       :port => 4444,
       :browser => "*#{which}",
-      :url => "http://outspokes.com/",
+      :url => CONFIG.selenium_demo_url,
       :timeout_in_second => 60
 
     @@browser.start_new_browser_session

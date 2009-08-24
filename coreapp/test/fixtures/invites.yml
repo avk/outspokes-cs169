@@ -1,5 +1,18 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+# For Selenium
+demo_admin_invite:
+  url_token: demo1234
+  page: demo
+  commenter: demo_admin
+
+# For Selenium
+demo_commenter_invite:
+  url_token: demo5678
+  page: demo
+  commenter: demo_commenter
+
+
 one:
   url_token: quentin
   page: msn

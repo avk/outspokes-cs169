@@ -10,7 +10,7 @@
     sudo gem install selenium-client
     # the following steps require more setup, see below
     rake selenium:rc:start
-    rake selenium:test
+    rake selenium:test RAILS_ENV=test
 
 # Detailed Setup #
 
@@ -65,6 +65,7 @@
     
     # All tests should extend the SeleniumTestCase class (from test/selenium_helper.rb) 
     #   and thus, will interface with Selenium via @@browser
+    #   @@browser is an instance of Selenium::Client::Driver (http://selenium-client.rubyforge.org/)
     # Tests to be run in all supported browsers go in test/selenium/ 
     #   (supported browsers defined in lib/tasks/selenium.rake)
     # Tests to be run in a specific browser (e.g. Firefox) go in test/selenium/browser-specific/ 

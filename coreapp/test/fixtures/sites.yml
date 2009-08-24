@@ -1,5 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+# For Selenium
+demo:
+  account: demo_admin
+
 msn:
   account: quentin
 
