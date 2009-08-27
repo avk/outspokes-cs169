@@ -3,8 +3,10 @@ require 'test/test_helper'
 require 'selenium/client'
 
 class SeleniumTestCase < Test::Unit::TestCase
-
+  include ActionController::UrlWriter
   cattr_accessor :browser
+  @@testing_browser = ENV['BROWSER'] || 'firefox'
+  @@default_url_options = { :host => CONFIG.selenium_demo_domain }
 
   # must be disabled for Selenium to access database changes during a test
   self.use_transactional_fixtures = false
@@ -13,7 +15,7 @@ class SeleniumTestCase < Test::Unit::TestCase
   def setup
     # reload the fixtures since each test is NOT wrapped in a transaction
     self.class.fixtures :all
-    self.class.open_browser(ENV['BROWSER'])
+    self.class.open_browser(@@testing_browser)
   end
 
   def teardown
@@ -33,6 +35,21 @@ class SeleniumTestCase < Test::Unit::TestCase
 
   def self.close_browser
     @@browser.close_current_browser_session
+  end
+
+  def home_page
+    @@browser.click "home_link"
+  end
+
+  def register_account(options = {})
+    options.reverse_merge!(valid_options_for_account)
+    @@browser.open signup_path
+    @@browser.type "account_name", options[:name]
+    @@browser.type "account_job_title", options[:job_title]
+    @@browser.type "account_email", options[:email]
+    @@browser.type "account_password", options[:password]
+    @@browser.click "new-account-submit", :wait_for => :page
+    assert_equal new_site_url, @@browser.location, "should redirect to new site creation on successful registration"
   end
 
 end
