@@ -52,4 +52,18 @@ class SeleniumTestCase < Test::Unit::TestCase
     assert_equal new_site_url, @@browser.location, "should redirect to new site creation on successful registration"
   end
 
+  def login_account(options = {})
+    options.reverse_merge!(valid_options_for_account)
+    @@browser.click 'login-link', :wait_for => :page
+    @@browser.type "email", options[:email]
+    @@browser.type "password", options[:password]
+    @@browser.click "login-account-submit", :wait_for => :page
+    account = Account.find_by_email(options[:email])
+    assert_equal dashboard_account_url(account), @@browser.location
+  end
+
+  def logout_account(options = {})
+    @@browser.click 'logout-link', :wait_for => :page
+    assert_equal root_url, @@browser.location
+  end
 end
