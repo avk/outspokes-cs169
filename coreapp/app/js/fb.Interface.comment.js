@@ -312,7 +312,7 @@
       
       //Number of replies
       
-      bar.append($('<span></span>').addClass('outspokes_reply_count').append('0 replies').hide());
+      // bar.append($('<span></span>').addClass('outspokes_reply_count').append('0 replies').hide());
       
       var timestamp_close = $('<span></span>').addClass('outspokes_cmt_date').append(fb.get_timestamp(c.timestamp))
       
