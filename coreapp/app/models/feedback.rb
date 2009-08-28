@@ -4,6 +4,13 @@ class Feedback < ActiveRecord::Base
   belongs_to :page
   has_many :opinions, :dependent => :destroy, :validate => false
   
+  named_scope :comments, :conditions => { :type => 'Comment' }
+  named_scope :user_styles, :conditions => { :type => 'UserStyle' }
+  named_scope :across_site, lambda { |site| 
+    { :conditions => ["page_id IN (?)", site.page_ids] }
+  }
+  named_scope :latest, :order => "created_at DESC"
+    
   validates_presence_of :page
   validates_associated :page
   validates_presence_of :commenter

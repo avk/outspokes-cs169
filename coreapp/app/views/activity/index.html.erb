@@ -48,9 +48,12 @@
               <tr class="site">
                 <td class="url"><a href="<%= site.url %>"><%= site.url %></a></td>
                 <td class="commenters"><%= site.commenters.size %></td>
-                <td class="comments"><%= site.home_page.comments.size %></td>
-                <td class="designs"><%= site.home_page.user_styles.size %></td>
-                <%- latest = site.latest_feedback -%>
+                
+                <%- site_feedback = Feedback.across_site(site) -%>
+                <td class="comments"><%= site_feedback.comments.size %></td>
+                <td class="designs"><%= site_feedback.user_styles.size %></td>
+                
+                <%- latest = site_feedback.latest.first -%>
                 <td class="latest_feedback"><%= (latest) ? latest.created_at : 'N/A' %></td>
               </tr>
             <% end -%>
