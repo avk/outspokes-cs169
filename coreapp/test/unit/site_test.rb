@@ -249,5 +249,16 @@ class SiteTest < ActiveSupport::TestCase
     assert got == expected, "got #{got} instead of #{expected}"
   end
   
+  test "should be able to detect latest feedback" do
+    site = sites(:msn)
+    latest = nil
+    assert_difference "Feedback.count", 1 do
+      latest = create_comment(:page_id => site.pages.last.id, :commenter_id => site.account.id)
+    end
+    
+    expected = latest
+    got = site.latest_feedback
+    assert expected == got, "latest feedback is #{expected.inspect} but got #{got.inspect}"
+  end
   
 end

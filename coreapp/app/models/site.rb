@@ -88,6 +88,12 @@ class Site < ActiveRecord::Base
     :group => "pages.id",
     :order => "f.created_at DESC")
   end
+  
+  def latest_feedback
+    page_ids = pages.map(&:id).join(', ')
+    Feedback.find(:all, :conditions => "page_id IN (#{ page_ids })", :order => "created_at DESC", :limit => 1).first
+  end
+  
 
 
   # callbacks ###########################################################################################
