@@ -1,0 +1,62 @@
+<table id="totals">
+  <caption>Total Users</caption>
+  <tr>
+    <td><%= @accounts.size %></td>
+    <td>Accounts</td>
+  </tr>
+  <tr>
+    <td><%= @commenters.size %></td>
+    <td>Commenters</td>
+  </tr>
+</table>
+
+<h1>What folks are up to</h1>
+<p>Latest activity from account holders, ordered by date of signup (descending).</p>
+
+<table id="accounts" border="1">
+  <tr id="account_headings">
+    <!-- number of header columns related to ".account_sites td" colspan below -->
+    <th>Date of Signup</th>
+    <th>Last Login</th>
+    <th>Full Name</th>
+    <th>Job Title</th>
+    <th>Email</th>
+    <th>Sites</th>
+  </tr>
+  <%- @accounts.each do |account| -%>
+    <tr class="account">
+      <td class="date_of_signup"><%= account.created_at %></td>
+      <td class="last_login"><%= account.updated_at %></td>
+      <td class="full_name"><%= account.name %></td>
+      <td class="job_title"><%= account.job_title %></td>
+      <td class="email"><%= account.email %></td>
+      <td class="num_sites"><%= account.sites.size %></td>
+    </tr>
+    <%- unless account.sites.empty? -%>
+      <tr class="account_sites">
+        <!-- colspan related to number of header columns above -->
+        <td colspan="6">
+          <table class="sites" border="1">
+            <tr class="site_headings">
+              <th>Site</th>
+              <th>Commenters</th>
+              <th>Comments</th>
+              <th>Designs</th>
+              <th>Latest Feedback</th>
+            </tr>
+            <%- account.sites.each do |site| -%>
+              <tr class="site">
+                <td class="url"><a href="<%= site.url %>"><%= site.url %></a></td>
+                <td class="commenters"><%= site.commenters.size %></td>
+                <td class="comments"><%= site.home_page.comments.size %></td>
+                <td class="designs"><%= site.home_page.user_styles.size %></td>
+                <%- latest = site.latest_feedback -%>
+                <td class="latest_feedback"><%= (latest) ? latest.created_at : 'N/A' %></td>
+              </tr>
+            <% end -%>
+          </table>
+        </td>
+      </tr>
+    <% end -%>
+  <% end -%>
+</table>
