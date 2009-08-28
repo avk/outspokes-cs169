@@ -65,6 +65,17 @@ class SessionsControllerTest < ActionController::TestCase
     get :new
     assert !@controller.send(:logged_in?)
   end
+  
+  def test_should_record_each_successful_login
+    admin = commenters(:aaron)
+    old_updated_at = admin.updated_at
+    post :create, :email => 'aaron@example.com', :password => 'monkey'
+    admin.reload
+    new_updated_at = admin.updated_at
+    # debugger
+    assert new_updated_at > old_updated_at
+  end
+  
 
   protected
     def auth_token(token)
