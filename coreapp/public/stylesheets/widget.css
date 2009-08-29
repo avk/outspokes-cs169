@@ -414,12 +414,14 @@ version: 3.0.0pr2
 }
 
 #outspokes #outspokes_comment_list .outspokes_reply_count {
-  float: right;
+  display: none;
+/*  float: right;
   margin-top: -13px;
   text-align: left;
   width: 60px;
   color: #333;
   font-size: 0.9em;
+*/
 }
 
 #outspokes #outspokes_comment_list .outspokes_flattened .outspokes_reply_to_text {

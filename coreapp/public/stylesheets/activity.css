@@ -1,0 +1,28 @@
+
+#totals {
+  background-color: white;
+  border: 1px solid #333;
+  font-family: Georgia, serif;
+  float: right; }
+  #totals caption {
+    font-weight: bold; }
+  #totals td {
+    padding: 3px; }
+
+#accounts, .sites {
+  clear: both; }
+  #accounts th,   .sites th {
+    font-weight: bold; }
+  #accounts th, #accounts td,   .sites th, .sites td {
+    padding: 10px; }
+
+#accounts {
+  width: 100%; }
+  #accounts th {
+    background-color: orange; }
+
+#accounts .sites {
+  margin-left: 50px;
+  width: 90%; }
+  #accounts .sites th {
+    background-color: #88C2E5; }

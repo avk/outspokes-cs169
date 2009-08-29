@@ -24,6 +24,7 @@ class Widget::WidgetController < ApplicationController
       if @commenter == site.account
         if params[:email] and params[:password]
           if @commenter == Account.authenticate(params[:email], params[:password])
+            @commenter.update_attribute(:updated_at, Time.now)
             @admin = site.new_validation_token
             return
           end

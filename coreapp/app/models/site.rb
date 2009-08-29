@@ -88,6 +88,7 @@ class Site < ActiveRecord::Base
     :group => "pages.id",
     :order => "f.created_at DESC")
   end
+  
 
 
   # callbacks ###########################################################################################

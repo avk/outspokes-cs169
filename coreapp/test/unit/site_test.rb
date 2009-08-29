@@ -249,5 +249,4 @@ class SiteTest < ActiveSupport::TestCase
     assert got == expected, "got #{got} instead of #{expected}"
   end
   
-  
 end
