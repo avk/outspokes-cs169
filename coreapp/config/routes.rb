@@ -7,8 +7,11 @@ ActionController::Routing::Routes.draw do |map|
     widget.resources :user_styles
     widget.resources :bookmarklet
   end
-  map.widget '/widget/:id.js', :controller => 'widget/source', :action => 'index'
-  map.widget '/widget/:id', :controller => 'widget/source', :action => 'index'
+
+  map.widget '/widget.js', :controller => 'widget/source', :action => 'index'
+  map.widget_deprecated_1 '/widget/:id.js', :controller => 'widget/source', :action => 'index'
+  map.widget_deprecated_2 '/widget/:id', :controller => 'widget/source', :action => 'index'
+
   map.feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'feedback_for_page', :conditions => { :method => :get }
   map.new_feedback_for_page '/feedback_for_page.js', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }
   map.feedback_for_page_test '/post_feedback_for_page', :controller => 'widget/feedbacks', :action => 'new_feedback_for_page', :conditions => { :method => :post }

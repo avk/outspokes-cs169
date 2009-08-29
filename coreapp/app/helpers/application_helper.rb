@@ -17,5 +17,8 @@ module ApplicationHelper
     link_text = URI.parse(url).path
     return link_text.empty? ? "/" : link_text
   end
-  
+
+  def widget_include_field
+    text_field_tag 'jsinclude', javascript_include_tag(widget_url), :class => 'code'
+  end  
 end

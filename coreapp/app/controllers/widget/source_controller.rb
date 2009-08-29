@@ -1,12 +1,11 @@
 class Widget::SourceController < Widget::WidgetController
-    Widget::SourceController.page_cache_extension = '.js'
-    caches_page :index
+  Widget::SourceController.page_cache_extension = '.js'
+  caches_page :index
 
-    def index
-      @site = Site.find(params[:id])
-      @fb_hash = "fb_" + generate_hash
-      @bookmarklet = (params[:bookmarklet].nil?) ? false : true
-      @ordered_files = %w(
+  def index
+    # @site = Site.find(params[:id])
+    @fb_hash = "fb_" + generate_hash
+    @ordered_files = %w(
         pre.js
         fb_hash.js.erb
         fb.jQuery.js
@@ -20,17 +19,17 @@ class Widget::SourceController < Widget::WidgetController
         fb.Comment.js
         fb.UserStyle.js
       )
-      @ordered_files.map! { |f| (RAILS_ROOT + '/app/js/' + f).to_s }
-      if(@site)
-        respond_to do |wants|
-          wants.js # index.js.erb
-        end
+    @ordered_files.map! { |f| (RAILS_ROOT + '/app/js/' + f).to_s }
+    # if(@site)
+      respond_to do |wants|
+        wants.js # index.js.erb
       end
-    end
+    # end
+  end
 
   protected
 
-    def generate_hash
-      Digest::MD5::hexdigest(rand().to_s)
-    end
+  def generate_hash
+    Digest::MD5::hexdigest(Time.now.to_f.to_s + rand.to_s)
+  end
 end
