@@ -72,7 +72,6 @@ class SessionsControllerTest < ActionController::TestCase
     post :create, :email => 'aaron@example.com', :password => 'monkey'
     admin.reload
     new_updated_at = admin.updated_at
-    # debugger
     assert new_updated_at > old_updated_at
   end
   
