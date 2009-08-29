@@ -40,7 +40,7 @@ function() {
     fb.loading_wrapper = fb.$('<div></div>').attr('id','outspokes_loading_wrapper');
     fb.done_loading = false;
     
-    fb.bookmarklet = <%= @bookmarklet %>;
+    fb.bookmarklet = fb.getParams('bookmarklet');
     
     // If they're trying to view Outspokes but are not using Firefox, error out
     // We don't need to check cookies because in order for them to be set, 
