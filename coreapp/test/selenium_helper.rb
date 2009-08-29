@@ -6,7 +6,6 @@ class SeleniumTestCase < Test::Unit::TestCase
   include ActionController::UrlWriter
   cattr_accessor :browser
   @@testing_browser = ENV['BROWSER'] || 'firefox'
-  @@default_url_options = { :host => CONFIG.selenium_demo_domain }
 
   # must be disabled for Selenium to access database changes during a test
   self.use_transactional_fixtures = false
@@ -27,8 +26,8 @@ class SeleniumTestCase < Test::Unit::TestCase
       :host => "localhost",
       :port => 4444,
       :browser => "*#{which}",
-      :url => CONFIG.selenium_demo_url,
-      :timeout_in_second => 60
+      :url => 'http://' + @@default_url_options[:host],
+      :timeout_in_second => 5
 
     @@browser.start_new_browser_session
   end
