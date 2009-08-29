@@ -2,6 +2,7 @@
 
 # For Selenium
 demo:
+  id: 169
   account: demo_admin
 
 msn:

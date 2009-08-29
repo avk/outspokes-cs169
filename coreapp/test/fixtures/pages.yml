@@ -2,8 +2,8 @@
 
 # For Selenium
 demo:
-  site: demo
-  url: http://<%= CONFIG.selenium_demo_domain %>
+  site_id: 169
+  url: <%= CONFIG.selenium_demo_url %>
 
 linkedin:
   site: linkedin
