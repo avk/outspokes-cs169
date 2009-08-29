@@ -16,3 +16,4 @@ public/javascripts/*_cached.js
 public/stylesheets/*_cached.css
 public/stylesheets/main.css
 public/widget/*
+public/widget.js

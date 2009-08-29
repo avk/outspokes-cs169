@@ -3,6 +3,7 @@ namespace :jscache do
   desc "Generate widget js"
   task :generate_widget_js => :environment do
     `curl #{CONFIG.domain}/widget.js`
+    `java -jar vendor/yuicompressor-2.4.2.jar -o public/widget.js public/widget.js`
   end
   
   desc "clear the page cached JavaScript from Widget::SourceController#index"
