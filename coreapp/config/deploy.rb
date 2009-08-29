@@ -51,6 +51,7 @@ namespace :deploy do
       deploy.symlink_local_settings
       db.migrate
       deploy.remove_cached_assets
+      deploy.generate_widget_js
       deploy.restart
       # TODO: run tests? fail -> rollback
       # deploy.web.enable
@@ -68,7 +69,12 @@ namespace :deploy do
   task :remove_cached_assets do
     run "rm -f #{current_path}/coreapp/public/stylesheets/*_cached.css"
     run "rm -f #{current_path}/coreapp/public/javascripts/*_cached.js"
-    run "rm -f #{current_path}/coreapp/public/widget/*"
+  end
+
+  desc "Generate widget js for all sites"
+  task :generate_widget_js do
+    run "rm -f #{current_path}/coreapp/public/widget.js"
+    run "cd #{current_path}/coreapp && RAILS_ENV=production rake jscache:generate_widget_js"
   end
 
   task :symlink_database_yml do
