@@ -47,7 +47,8 @@ module SslRequirement
 
   private
     def ensure_proper_protocol
-      return true if ssl_allowed?
+      # TODO: instructions on setting up passenger locally so we can test ssl
+      return true if ssl_allowed? || RAILS_ENV != 'production'
 
       if ssl_required? && !request.ssl?
         redirect_to "https://" + request.host + request.request_uri
