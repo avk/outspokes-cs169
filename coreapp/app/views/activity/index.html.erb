@@ -49,7 +49,7 @@
                 <td class="url"><a href="<%= site.url %>"><%= site.url %></a></td>
                 <td class="commenters"><%= site.commenters.size %></td>
                 
-                <%- site_feedback = Feedback.across_site(site) -%>
+                <%- site_feedback = Feedback.for_site(site) -%>
                 <td class="comments"><%= site_feedback.comments.size %></td>
                 <td class="designs"><%= site_feedback.user_styles.size %></td>
                 

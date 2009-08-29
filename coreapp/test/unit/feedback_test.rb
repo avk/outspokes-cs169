@@ -25,7 +25,7 @@ class FeedbackTest < ActiveSupport::TestCase
     f << create_user_style(:page => another_page, :commenter => account)
     
     expected = f
-    got = Feedback.across_site(site)
+    got = Feedback.for_site(site)
     assert expected == got, "all feedback: \n#{expected.inspect}\nbut got: \n#{got.inspect}"
   end
   

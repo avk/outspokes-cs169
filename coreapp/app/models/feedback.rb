@@ -6,7 +6,7 @@ class Feedback < ActiveRecord::Base
   
   named_scope :comments, :conditions => { :type => 'Comment' }
   named_scope :user_styles, :conditions => { :type => 'UserStyle' }
-  named_scope :across_site, lambda { |site| 
+  named_scope :for_site, lambda { |site| 
     { :conditions => ["page_id IN (?)", site.page_ids] }
   }
   named_scope :latest, :order => "created_at DESC"
