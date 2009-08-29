@@ -5,9 +5,10 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="robots" content="noindex" />
     
-    <title>Outspokes - <%= @title %></title>
+    <title><%= controller.controller_name %> || Outspokes - <%= @title %></title>
     
     <%= stylesheet_link_tag 'reset-min', 'scaffold', 'main', :cache => 'application_cached' %>
+    <%= stylesheet_link_tag 'activity' if controller.controller_name == 'activity' %>
     <%= javascript_include_tag :defaults, 'accordion', :cache => 'application_cached' %>
   </head>
   
