@@ -337,7 +337,7 @@
       // do logout stuff here
       
       // add the url_token back to the URL so people will bookmark the right thing
-      window.location.hash = "url_token" + fb.env.url_token;
+      window.location.hash = "url_token=" + fb.env.url_token;
       if (_fb.admin()) { 
         window.location.hash += "&admin=true";
       }
