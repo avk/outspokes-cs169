@@ -73,6 +73,7 @@ namespace :deploy do
 
   desc "Generate widget js for all sites"
   task :generate_widget_js do
+    run "rm -rf #{current_path}/coreapp/public/widget"
     run "rm -f #{current_path}/coreapp/public/widget.js"
     run "cd #{current_path}/coreapp && RAILS_ENV=production rake jscache:generate_widget_js"
   end
