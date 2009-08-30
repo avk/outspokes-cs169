@@ -9,10 +9,13 @@ set :use_sudo, false
 
 ssh_options[:forward_agent] = true
 
-set :env_type, 'staging'
-role :app, "whatcodecraves.com"
-role :web, "whatcodecraves.com"
-role :db,  "whatcodecraves.com", :primary => true
+desc "Settings for staging deployment"
+task :staging do
+  set :env_type, 'staging'
+  role :app, "whatcodecraves.com"
+  role :web, "whatcodecraves.com"
+  role :db,  "whatcodecraves.com", :primary => true
+end
 
 desc "Settings for production deployment" 
 task :production do
@@ -37,6 +40,10 @@ end
 ## from http://www.zorched.net/2008/06/17/capistrano-deploy-with-git-and-passenger/
 namespace :deploy do
   task :default do
+    unless respond_to?(:env_type)
+      puts "please specify 'staging' or 'production' before 'deploy'"
+      exit 1
+    end
     if env_type == 'staging' || "YES" == Capistrano::CLI.ui.ask("Did you test on staging? Are you sure you want to DEPLOY TO PRODUCTION?? (YES/no)")
       # deploy.web.disable
       backup if env_type == 'production'
