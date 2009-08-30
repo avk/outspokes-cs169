@@ -1,5 +1,6 @@
 ENV["RAILS_ENV"] = "test"
 require 'test/test_helper'
+require 'test/selenium/lib/widget_helper'
 require 'selenium/client'
 
 class SeleniumTestCase < Test::Unit::TestCase

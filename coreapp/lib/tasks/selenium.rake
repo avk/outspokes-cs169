@@ -9,7 +9,7 @@ Selenium::Rake::RemoteControlStartTask.new do |rc|
   rc.wait_until_up_and_running = true
   rc.jar_file = File.join(RAILS_ROOT + "/vendor/selenium-remote-control/selenium-server.jar")
   # rc.additional_args << "-singleWindow" # left out because it hinders cross-domain communication
-  rc.additional_args << "-browserSessionReuse -log log/selenium_rc.log"
+  rc.additional_args << "-browserSideLog -browserSessionReuse -log log/selenium_rc.log"
 end
 
 # selenium:rc:stop
