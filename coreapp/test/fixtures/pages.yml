@@ -1,5 +1,10 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+# For Selenium
+demo:
+  site_id: 169
+  url: <%= CONFIG.selenium_demo_url %>
+
 linkedin:
   site: linkedin
   url: http://www.linkedin.com

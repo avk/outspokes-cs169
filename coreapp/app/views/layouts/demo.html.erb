@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta content='text/html' http-equiv='Content-Type' />
+    <title>
+      Initech - What's good for the company? AAAA
+    </title>
+    <%= stylesheet_link_tag 'demo/demo' %>
+  </head>
+  <body>
+    <div id="header">
+      <%= image_tag 'demo/logo.png' %>
+    </div>
+    
+    <div id="navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tps.html">TPS</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+    <br style="clear:both" />
+
+    <div id="main_content">
+      <%= yield %>
+    </div>
+
+    <div id="footer">
+      Copyright 2009 - <a href="http://en.wikipedia.org/wiki/Office_Space">Initech Industries</a>
+    </div>
+    
+    <!-- site id below based on sites.yml fixtures -->
+    <script type="text/javascript" src="<%= CONFIG.url + '/widget/169' %>"></script>
+  </body>
+</html>
+

@@ -1,5 +1,22 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+# For Selenium
+demo_admin:
+  name:                      Outspokes
+  job_title:                 'Kick-ass web app'
+  email:                     demo_admin@outspokes.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  # Selenium tests depend on the following password
+  crypted_password:          fa2428820f5732a72374d8715966f637e42ef68f # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s %>
+  remember_token:            77de68daecd823babbb58edb1c8e14d7106e83bb
+  type:                      Account
+
+# For Selenium
+demo_commenter:
+  email: demo_commenter@outpokes.com
+
 one:
   email: abcd@abcd.com
 

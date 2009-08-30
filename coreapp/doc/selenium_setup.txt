@@ -1,0 +1,72 @@
+# Goal:       Get Selenium & Selenium RC up and running beside the spokes
+# Author:     Arthur Klepchukov
+# Created:    08/19/2009
+# Modified:   08/22/2009
+
+# Quickstart #
+    cd RAILS_ROOT
+    wget http://release.seleniumhq.org/selenium-remote-control/1.0.1/selenium-remote-control-1.0.1-dist.zip
+    unzip selenium-remote-control-1.0.1-dist.zip
+    sudo gem install selenium-client
+    # the following steps require more setup, see below
+    rake selenium:rc:start
+    rake selenium:test RAILS_ENV=test
+
+# Detailed Setup #
+
+# 0. put yourself in the right place (wherever Outspokes is on the system)
+    cd RAILS_ROOT
+
+
+# 1. Get and unwrap Selenium RC
+# (from http://seleniumhq.org/download/)
+
+    wget http://release.seleniumhq.org/selenium-remote-control/1.0.1/selenium-remote-control-1.0.1-dist.zip
+    unzip selenium-remote-control-1.0.1
+
+
+# 2. Copy the server jar to a logical place in your Rails app
+
+    mkdir vendor/selenium-remote-control
+    cp selenium-remote-control-1.0.1/selenium-server-1.0.1/selenium-server.jar vendor/selenium-remote-control/
+
+
+# 3. Install the Selenium Client gem so you can talk to Selenium RC using Ruby
+
+    sudo gem install selenium-client
+
+# in config/environment.rb:
+# config.gem 'selenium-client', :lib => 'selenium/client'
+
+
+# OPTIONAL: test what you have so far works
+
+    java -jar vendor/selenium-remote-control/selenium-server.jar
+    ruby vendor/selenium-remote-control/test.rb
+
+    # You should see Firefox open, go to Google.com, do a search, and close
+    # The server process should end with something like: 
+    #    Got result: OK on session 5e16317d22a441afb731c13b319c5ba4
+
+    # If you see any errors or different behavior, consult Selenium site: http://seleniumhq.org/
+
+
+# 4. Create rake tasks to manage the Selenium RC server and run tests in diff browsers
+# from: http://selenium-client.rubyforge.org/classes/Selenium/Rake/RemoteControlStartTask.html
+# and: http://selenium-client.rubyforge.org/classes/Selenium/Rake/RemoteControlStopTask.html
+
+    # See lib/tasks/selenium.rake:
+
+# 5. Make a special subclass of Test::Unit::TestCase for your Selenium tests
+
+    # See test/selenium_helper.rb
+
+# 6. Write Selenium tests 
+    
+    # All tests should extend the SeleniumTestCase class (from test/selenium_helper.rb) 
+    #   and thus, will interface with Selenium via @@browser
+    #   @@browser is an instance of Selenium::Client::Driver (http://selenium-client.rubyforge.org/)
+    # Tests to be run in all supported browsers go in test/selenium/ 
+    #   (supported browsers defined in lib/tasks/selenium.rake)
+    # Tests to be run in a specific browser (e.g. Firefox) go in test/selenium/browser-specific/ 
+    #   (e.g. test/selenium/browser-specific/firefox.rb)
