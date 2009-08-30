@@ -9,12 +9,13 @@ set :use_sudo, false
 
 ssh_options[:forward_agent] = true
 
+# TODO: use capistrano roles, or switch to Rake or Vlad
 desc "Settings for staging deployment"
 task :staging do
   set :env_type, 'staging'
-  role :app, "whatcodecraves.com"
-  role :web, "whatcodecraves.com"
-  role :db,  "whatcodecraves.com", :primary => true
+  role :app, "staging.outspokes.com"
+  role :web, "staging.outspokes.com"
+  role :db,  "staging.outspokes.com", :primary => true
 end
 
 desc "Settings for production deployment" 
@@ -27,8 +28,12 @@ end
 
 desc "Backup the database"
 task :backup do
-  # TODO: copy backup offsite
   run "cd #{current_path}/coreapp && RAILS_ENV=production rake backup"
+end
+
+desc "Loads the latest backup from /mnt/backup into prod db"
+task :load_backup do
+  run "cd #{current_path}/coreapp && RAILS_ENV=production rake load_backup"
 end
 
 namespace :db do
@@ -46,7 +51,13 @@ namespace :deploy do
     end
     if env_type == 'staging' || "YES" == Capistrano::CLI.ui.ask("Did you test on staging? Are you sure you want to DEPLOY TO PRODUCTION?? (YES/no)")
       # deploy.web.disable
+
+      # TODO: should be split up by roles and different tasks
       backup if env_type == 'production'
+
+      # WARNING: load_backup will replace the prod db from latest backup
+      load_backup if env_type == 'staging'
+
       deploy.update_code
 
       # symlinks current_path/coreapp/current, 'current_path' is
