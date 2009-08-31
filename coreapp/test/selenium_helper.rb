@@ -28,7 +28,7 @@ class SeleniumTestCase < Test::Unit::TestCase
       :port => 4444,
       :browser => "*#{which}",
       :url => 'http://' + @@default_url_options[:host],
-      :timeout_in_second => 5
+      :timeout_in_second => 30
 
     @@browser.start_new_browser_session
   end

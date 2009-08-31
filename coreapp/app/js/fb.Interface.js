@@ -144,6 +144,7 @@
       },
       
       // ordered set of navigation elements:
+      <%# TODO: use an object for a nav element rather than array indexing all its parts %>
       elements : {
         // ordered set of DOM elements
         list : [],
@@ -152,6 +153,10 @@
         labels : [
           'Comment',
           'Design'
+        ],
+        label_ids : [
+          'outspokes_comments_tab',
+          'outspokes_designs_tab'
         ],
         // the number of feebdacks under this navigation element
         // same order as list of elements
@@ -223,7 +228,7 @@
         
         // builds each element, labels it, and attaches a uniform onclick handler
         for (var which_element = 0; which_element < this.elements.labels.length; which_element++) {
-          var element = $('<li></li>');
+          var element = $('<li></li>').attr('id', this.elements.label_ids[which_element]);
           element.append('<span></span>'); // for the text label
           
           // set_label_count depends on element being in this.elements.list:
