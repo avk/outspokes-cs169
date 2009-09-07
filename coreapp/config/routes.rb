@@ -15,6 +15,9 @@ ActionController::Routing::Routes.draw do |map|
   map.delete_feedback '/delete_feedback', :controller => 'widget/feedbacks', :action => 'destroy', :conditions => { :method => :post }
   map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
 
+  ### plans and pricing
+  map.pricing '/pricing', :controller => 'plans', :action => 'index'
+
 
   ### coreapp
   map.login '/login', :controller => 'sessions', :action => 'new'
