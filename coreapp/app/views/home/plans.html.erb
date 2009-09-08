@@ -4,11 +4,46 @@
       <div class="pricing_plan">
         <h3>Large</h3>
         <p>$99</p>
-        <%= link_to 'Signup', signup_path(:plan_name => 'large') %>
+        <ul>
+          <li>25 Users</li>
+          <li>1000 MB Bandwidth/month</li>
+          <li>100 Sites</li>
+          <li>Design Tools</li>
+          <li>Copy Editing Tools</li>
+          <li>Commenting Tools</li>
+          <li>Bug Reporting Tools</li>
+        </ul>
       </div>
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>
+      <div class="pricing_plan">
+        <h3>Medium</h3>
+        <p>$79</p>
+        <ul>
+          <li>10 Users</li>
+          <li>500 MB Bandwidth/month</li>
+          <li>20 Sites</li>
+          <li>Commenting Tools</li>
+          <li>Bug Reporting Tools</li>
+        </ul>
+      </div>
+    </td>
+    <td>
+      <div class="pricing_plan">
+        <h3>Small</h3>
+        <p>$49</p>
+        <ul>
+          <li>5 Users</li>
+          <li>250 MB Bandwidth/month</li>
+          <li>5 Sites</li>
+          <li>Commenting Tools</li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Signup', signup_path(:plan_name => 'large') %></td>
+    <td><%= link_to 'Signup', signup_path(:plan_name => 'medium') %></td>
+    <td><%= link_to 'Signup', signup_path(:plan_name => 'small') %></td>
   </tr>
 </table>
