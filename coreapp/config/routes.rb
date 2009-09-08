@@ -16,7 +16,9 @@ ActionController::Routing::Routes.draw do |map|
   map.opinion_on_feedback '/opinion_on_feedback', :controller => 'widget/opinions', :action => 'opinion', :conditions => { :method => :post }
 
   ### plans and pricing
-  map.pricing '/pricing', :controller => 'plans', :action => 'index'
+  map.pricing '/pricing', :controller => 'home', :action => 'plans'
+  map.privacy '/privacy', :controller => 'home', :action => 'privacy'
+  map.tou '/tou', :controller => 'home', :action => 'tou'
 
 
   ### coreapp

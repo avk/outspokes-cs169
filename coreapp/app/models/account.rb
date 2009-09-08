@@ -11,6 +11,7 @@ class Account < Commenter
   belongs_to :commenter
 
   validates_presence_of     :name
+  validates_presence_of     :plan_name
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message
   validates_length_of       :name,     :maximum => 100
   validates_uniqueness_of   :email
@@ -54,6 +55,27 @@ class Account < Commenter
     new_password = `head -n 1 /dev/random | openssl base64`[0..12].chomp
     self.update_attribute(:password, new_password)
     Mailer.deliver_reset_password(self)
+  end
+
+  def free?
+    plan_name == 'free'
+  end
+
+  def paid?
+    !free?
+  end
+
+  def plan_price
+    case plan_name
+    when 'large'
+      '99'
+    when 'medium'
+      '79'
+    when 'small'
+      '49'
+    else
+      '0'
+    end
   end
 
   protected

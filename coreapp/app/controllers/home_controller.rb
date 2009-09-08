@@ -6,4 +6,13 @@ class HomeController < ApplicationController
     end
   end
 
+  def plans
+  end
+
+  def privacy
+  end
+
+  def tou
+  end
+
 end

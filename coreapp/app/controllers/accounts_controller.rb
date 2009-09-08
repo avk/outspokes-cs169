@@ -5,6 +5,7 @@ class AccountsController < ApplicationController
   # render new.rhtml
   def new
     @account = Account.new
+    @account.plan_name = params[:plan_name]
   end
  
   def create

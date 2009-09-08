@@ -27,6 +27,25 @@
     <%= f.password_field :password %>
   </p>
   <div style="clear:both;"></div>
+
+  <% if @account.paid? %>
+    <h3>Billing Information</h3>
+    <%= render :partial => 'credit_card' %>
+    
+    <p style="line-height: 1.3em; width: 400px">
+      Your free trial lasts until midnight on October 7, 2009. If you
+      don’t want to continue using Outspokes, just cancel before the
+      trial ends and you won't be charged (we'll email you 5 days
+      before the trial ends to remind you). Otherwise, you'll pay just
+      $<%= @account.plan_price %>/month for the
+      '<%= @account.plan_name %>' plan as long as your account is
+      open. You can upgrade, downgrade, or cancel any time.
+    </p>
+
+    <p><strong>No Refunds</strong></p>
+  <% end %>
+  <%= f.hidden_field :plan_name %>
+
   <p>
     <%= submit_tag 'Sign up', :class => 'submit', :id => 'new-account-submit' %>
   </p>
